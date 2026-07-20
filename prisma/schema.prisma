@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Categoria {
+  id            String    @id @default(cuid())
+  nome          String
+  slug          String    @unique
+  descricao     String?
+  icone         String?
+  cor           String?
+  imagem        String?
+  ordem         Int       @default(0)
+  ativo         Boolean   @default(true)
+  criadoEm      DateTime  @default(now())
+  atualizadoEm  DateTime  @updatedAt
+
+  pastas        Pasta[]
+  produtos      Produto[]
+  artigos       Artigo[]
+
+  @@map("categorias")
+}
+
+model Pasta {
+  id            String    @id @default(cuid())
+  nome          String
+  slug          String    @unique
+  descricao     String?
+  imagemCapa    String?
+  categoriaId   String
+  categoria     Categoria @relation(fields: [categoriaId], references: [id])
+  destaque      Boolean   @default(false)
+  ordem         Int       @default(0)
+  ativo         Boolean   @default(true)
+  criadoEm      DateTime  @default(now())
+  atualizadoEm  DateTime  @updatedAt
+
+  produtos      ProdutoPasta[]
+  artigos       ArtigoPasta[]
+
+  @@map("pastas")
+}
+
+model Produto {
+  id              String    @id @default(cuid())
+  nome            String
+  slug            String    @unique
+  descricao       String?
+  descricaoCurta  String?
+  imagemPrincipal String
+  imagens         String[]
+  preco           Float?
+  precoOriginal   Float?
+  moeda           String    @default("BRL")
+  linkAfiliado    String
+  loja            String
+  avaliacao       Float?    @default(0)
+  numAvaliacoes   Int       @default(0)
+  tags            String[]
+  categoriaId     String
+  categoria       Categoria @relation(fields: [categoriaId], references: [id])
+  destaque        Boolean   @default(false)
+  viral           Boolean   @default(false)
+  ativo           Boolean   @default(true)
+  visualizacoes   Int       @default(0)
+  cliques         Int       @default(0)
+  conversoes      Int       @default(0)
+  criadoEm        DateTime  @default(now())
+  atualizadoEm    DateTime  @updatedAt
+
+  pastas          ProdutoPasta[]
+  artigos         ArtigoProduto[]
+
+  @@map("produtos")
+}
+
+model ProdutoPasta {
+  id        String   @id @default(cuid())
+  produtoId String
+  pastaId   String
+  produto   Produto @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+  pasta     Pasta   @relation(fields: [pastaId], references: [id], onDelete: Cascade)
+  ordem     Int     @default(0)
+  criadoEm  DateTime @default(now())
+
+  @@unique([produtoId, pastaId])
+  @@map("produtos_pastas")
+}
+
+model Artigo {
+  id              String    @id @default(cuid())
+  titulo          String
+  slug            String    @unique
+  descricao       String?
+  conteudo        String
+  imagemCapa      String?
+  imagens         String[]
+  categoriaId     String
+  categoria       Categoria @relation(fields: [categoriaId], references: [id])
+  destaque        Boolean   @default(false)
+  visualizacoes   Int       @default(0)
+  tempoLeitura    Int?
+  tags            String[]
+  ativo           Boolean   @default(true)
+  publicadoEm     DateTime  @default(now())
+  criadoEm        DateTime  @default(now())
+  atualizadoEm    DateTime  @updatedAt
+
+  pastas          ArtigoPasta[]
+  produtos        ArtigoProduto[]
+
+  @@map("artigos")
+}
+
+model ArtigoPasta {
+  id       String   @id @default(cuid())
+  artigoId String
+  pastaId  String
+  artigo   Artigo  @relation(fields: [artigoId], references: [id], onDelete: Cascade)
+  pasta    Pasta   @relation(fields: [pastaId], references: [id], onDelete: Cascade)
+  criadoEm DateTime @default(now())
+
+  @@unique([artigoId, pastaId])
+  @@map("artigos_pastas")
+}
+
+model ArtigoProduto {
+  id        String   @id @default(cuid())
+  artigoId  String
+  produtoId String
+  artigo    Artigo   @relation(fields: [artigoId], references: [id], onDelete: Cascade)
+  produto   Produto  @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+  ordem     Int     @default(0)
+  criadoEm  DateTime @default(now())
+
+  @@unique([artigoId, produtoId])
+  @@map("artigos_produtos")
+}
+
+model Analytics {
+  id         String   @id @default(cuid())
+  tipo       String
+  entidade   String
+  entidadeId String
+  ip         String?
+  userAgent  String?
+  referrer   String?
+  criadoEm   DateTime @default(now())
+
+  @@map("analytics")
+}

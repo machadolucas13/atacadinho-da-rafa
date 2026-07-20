@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 98%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --border: 240 5.9% 90%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .masonry-grid {
+    column-count: 1;
+    column-gap: 1rem;
+  }
+
+  @screen sm {
+    .masonry-grid {
+      column-count: 2;
+    }
+  }
+
+  @screen md {
+    .masonry-grid {
+      column-count: 3;
+    }
+  }
+
+  @screen lg {
+    .masonry-grid {
+      column-count: 4;
+    }
+  }
+
+  @screen xl {
+    .masonry-grid {
+      column-count: 5;
+    }
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
