@@ -1,14 +1,23 @@
 {
   "name": "Atacadinho da Rafa",
   "short_name": "Atacadinho",
-  "description": "Achados, ofertas e recomendações de quem entende de estilo e economia.",
+  "description": "Descubra os melhores achados, ofertas e recomendações de produtos.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff7f8",
-  "theme_color": "#f43f5e",
-  "orientation": "portrait-primary",
-  "categories": ["shopping", "lifestyle", "productivity"],
-  "lang": "pt-BR",
-  "dir": "ltr",
-  "prefer_related_applications": false
+  "background_color": "#0a0a14",
+  "theme_color": "#E11D48",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

@@ -48,6 +48,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${plusJakartaSans.variable} ${manrope.variable} font-body antialiased`}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#E11D48" />
+      </head>
       <body
         className="relative min-h-screen bg-[#0a0a14] text-[hsl(var(--foreground))]"
         style={{

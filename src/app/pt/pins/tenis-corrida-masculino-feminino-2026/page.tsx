@@ -48,9 +48,9 @@ export default function PinClient() {
               <Image
                 src="/images/pin2.png"
                 alt="Tênis de Corrida Masculino e Feminino"
-                width={1200}
-                height={675}
-                className="w-full h-auto object-contain"
+                width={800}
+                height={450}
+                className="w-full max-w-2xl mx-auto h-auto object-contain"
                 priority
               />
             </div>

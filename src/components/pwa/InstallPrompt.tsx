@@ -56,31 +56,22 @@ export default function InstallPrompt() {
     }
   };
 
-  useEffect(() => {
-    try {
-      if (localStorage.getItem("installPromptDismissed") === "true") {
-        setIsVisible(false);
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
-
   if (!isVisible) return null;
+
+  const title = isMobile ? "Instale o Atacadinho da Rafa" : "Instale o app";
+  const description = isIos
+    ? "Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'."
+    : isMobile
+      ? "Instale o app para acessar os achados mais rápido."
+      : "Instale o app para acessar os achados mais rápido.";
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md sm:left-auto sm:right-4">
       <div className="rounded-2xl border border-white/10 bg-[#0a0a14]/95 p-4 shadow-2xl backdrop-blur-xl">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm font-bold text-white">Instale o Atacadinho da Rafa</p>
-            <p className="mt-1 text-xs text-gray-400">
-              {isIos
-                ? "Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'."
-                : isMobile
-                  ? "Instale o app para acessar os achados mais rápido."
-                  : "Instale o app para acessar os achados mais rápido."}
-            </p>
+            <p className="text-sm font-bold text-white">{title}</p>
+            <p className="mt-1 text-xs text-gray-400">{description}</p>
           </div>
           <button
             onClick={handleClose}

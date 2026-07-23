@@ -32,13 +32,13 @@ export default async function PinsPage({ params }: { params: { locale: string } 
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
           <Link
             href={`/${locale}/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026`}
             className="group block"
           >
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[4/5] overflow-hidden bg-black/20">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
+              <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
                 <img
                   src="/posts/calcas-jeans-femininas-economicas-2026.png"
                   alt="Calças Jeans Femininas a partir de R$ 24,90"
@@ -64,8 +64,8 @@ export default async function PinsPage({ params }: { params: { locale: string } 
             href={`/${locale}/pins/tenis-corrida-masculino-feminino-2026`}
             className="group block"
           >
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[4/5] overflow-hidden bg-black/20">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
+              <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
                 <img
                   src="/images/pin2.png"
                   alt="Tênis de Corrida Masculino e Feminino"
