@@ -77,14 +77,6 @@ export default function Starfield() {
       time += 0.008;
 
       ctx.clearRect(0, 0, w, h);
-
-      const bgGradient = ctx.createRadialGradient(w * 0.5, h * 0.3, 0, w * 0.5, h * 0.5, Math.max(w, h) * 0.8);
-      bgGradient.addColorStop(0, "#0f0f1a");
-      bgGradient.addColorStop(0.5, "#080816");
-      bgGradient.addColorStop(1, "#000005");
-      ctx.fillStyle = bgGradient;
-      ctx.fillRect(0, 0, w, h);
-
       points.forEach((p) => {
         const offsetX = Math.sin(time * p.speed * 800 + p.phase) * p.amplitude;
         const offsetY = Math.cos(time * p.speed * 600 + p.phase * 1.3) * p.amplitude * 0.8;
