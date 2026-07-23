@@ -17,6 +17,7 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<any[]>([]);
 
   const [form, setForm] = useState({
     nome: "",
