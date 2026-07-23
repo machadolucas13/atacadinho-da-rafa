@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { collection, getDocs, orderBy, query, limit, deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
-import { Pencil, Trash2, Plus, ArrowLeft } from "lucide-react";
+import { getArtigos } from "@/lib/artigos";
+import { getPastas } from "@/lib/pastas";
+import { excluirArtigo, excluirPasta } from "@/app/actions/admin";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
 
 type ItemCard = {
@@ -16,67 +16,55 @@ type ItemCard = {
 };
 
 export default function AdminProtectedPage() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const router = useRouter();
-
   const [posts, setPosts] = useState<ItemCard[]>([]);
-  const [produtos, setProdutos] = useState<ItemCard[]>([]);
   const [pastas, setPastas] = useState<ItemCard[]>([]);
 
   useEffect(() => {
-    const adminAuth = localStorage.getItem("adminAuth");
-    if (adminAuth !== "true") {
-      router.push("/admin/login");
-    } else {
-      setIsAdmin(true);
-    }
-  }, [router]);
-
-  useEffect(() => {
-    if (!isAdmin) return;
     const carregar = async () => {
+      setPosts([]);
+      setPastas([]);
       try {
-        const postsQ = query(collection(db, "artigos"), orderBy("criadoEm", "desc"), limit(5));
-        const produtosQ = query(collection(db, "produtos"), orderBy("criadoEm", "desc"), limit(5));
-        const pastasQ = query(collection(db, "pastas"), orderBy("criadoEm", "desc"), limit(5));
-
-        const [postsSnap, produtosSnap, pastasSnap] = await Promise.all([
-          getDocs(postsQ),
-          getDocs(produtosQ),
-          getDocs(pastasQ),
-        ]);
-
-        setPosts(postsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as ItemCard)));
-        setProdutos(produtosSnap.docs.map((d) => ({ id: d.id, ...d.data() } as ItemCard)));
-        setPastas(pastasSnap.docs.map((d) => ({ id: d.id, ...d.data() } as ItemCard)));
+        const [postsSnap, pastasSnap] = await Promise.all([getArtigos(), getPastas()]);
+        setPosts(
+          postsSnap
+            .slice(0, 5)
+            .map((d) => ({ id: d.id, titulo: (d as any).titulo, nome: (d as any).nome } as ItemCard))
+        );
+        setPastas(
+          pastasSnap
+            .slice(0, 5)
+            .map((d) => ({ id: d.id, titulo: (d as any).titulo, nome: (d as any).nome } as ItemCard))
+        );
       } catch (e) {
         console.error("Erro ao carregar dashboard", e);
       }
     };
     carregar();
-  }, [isAdmin]);
+  }, []);
 
   const handleDelete = async (collectionName: string, id: string) => {
     if (!confirm("Tem certeza que deseja excluir este item? Essa ação não pode ser desfeita.")) return;
-    try {
-      await deleteDoc(doc(db, collectionName, id));
+    let result;
+    if (collectionName === "artigos") result = await excluirArtigo(id);
+    else if (collectionName === "pastas") result = await excluirPasta(id);
+    else result = { ok: false, error: "Tipo não suportado" };
+
+    if ((result as any).ok) {
       if (collectionName === "artigos") setPosts((prev) => prev.filter((item) => item.id !== id));
-      if (collectionName === "produtos") setProdutos((prev) => prev.filter((item) => item.id !== id));
       if (collectionName === "pastas") setPastas((prev) => prev.filter((item) => item.id !== id));
-    } catch (e) {
-      console.error("Erro ao excluir", e);
-      alert("Erro ao excluir.");
+    } else {
+      alert((result as any).error || "Erro ao excluir.");
     }
   };
 
-  const renderList = (titulo: string, items: ItemCard[], tipo: "post" | "produto" | "pasta") => {
+  const renderList = (titulo: string, items: ItemCard[], tipo: "post" | "pasta") => {
     if (!items.length) return null;
     return (
       <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-white">{titulo}</h2>
           <Link
-            href={tipo === "post" ? "/admin/novo-post" : tipo === "produto" ? "/admin/novo-produto" : "/admin/nova-pasta"}
+            href={tipo === "post" ? "/admin/novo-post" : "/admin/nova-pasta"}
             className="inline-flex items-center gap-1 rounded-full bg-[#E11D48] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#be123c] transition-colors"
           >
             <Plus className="h-3 w-3" />
@@ -102,7 +90,7 @@ export default function AdminProtectedPage() {
                   Editar
                 </Link>
                 <button
-                  onClick={() => handleDelete(tipo === "post" ? "artigos" : tipo === "produto" ? "produtos" : "pastas", item.id)}
+                  onClick={() => handleDelete(tipo === "post" ? "artigos" : "pastas", item.id)}
                   className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-red-300 hover:border-red-500 hover:text-red-200 transition-colors"
                 >
                   <Trash2 className="h-3 w-3" />
@@ -115,14 +103,6 @@ export default function AdminProtectedPage() {
       </div>
     );
   };
-
-  if (!isAdmin) {
-    return (
-      <div className="flex min-h-screen items-center justify-center text-white">
-        Carregando...
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#0a0a14]">
@@ -171,7 +151,6 @@ export default function AdminProtectedPage() {
         </div>
 
         {renderList("Posts / Pins recentes", posts, "post")}
-        {renderList("Produtos recentes", produtos, "produto")}
         {renderList("Pastas recentes", pastas, "pasta")}
 
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">

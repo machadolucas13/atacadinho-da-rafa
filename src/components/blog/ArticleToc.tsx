@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface ArticleTocProps {
   htmlContent: string;
@@ -10,8 +11,9 @@ export default function ArticleToc({ htmlContent }: ArticleTocProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   const headings = useMemo(() => {
+    const safe = sanitizeHtml(htmlContent);
     const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, "text/html");
+    const doc = parser.parseFromString(safe, "text/html");
     const items: { id: string; text: string; level: number }[] = [];
     doc.querySelectorAll("h2, h3").forEach((h, index) => {
       const id = `heading-${index}`;
@@ -27,8 +29,9 @@ export default function ArticleToc({ htmlContent }: ArticleTocProps) {
 
   useEffect(() => {
     if (!htmlContent) return;
+    const safe = sanitizeHtml(htmlContent);
     const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, "text/html");
+    const doc = parser.parseFromString(safe, "text/html");
     doc.querySelectorAll("h2, h3").forEach((h, index) => {
       h.id = `heading-${index}`;
     });

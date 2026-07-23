@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
+import { criarPasta } from "@/app/actions/admin";
 
 export default function NovaPasta() {
   const router = useRouter();
@@ -14,8 +14,13 @@ export default function NovaPasta() {
 
   useEffect(() => {
     const carregarCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "categorias"));
-      setCategorias(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      try {
+        const res = await fetch("/api/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
     };
     carregarCategorias();
   }, []);
@@ -45,19 +50,18 @@ export default function NovaPasta() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, "pastas"), {
-        ...form,
-        ordem: 0,
-        ativo: true,
-        criadoEm: serverTimestamp(),
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await criarPasta(payload);
+    if ((result as any).ok) {
       setStatus("Pasta criada com sucesso!");
       setForm({ nome: "", slug: "", descricao: "", imagemCapa: "", categoriaId: "", destaque: false });
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao criar pasta.");
+    } else {
+      setStatus((result as any).error || "Erro ao criar pasta.");
     }
   };
 

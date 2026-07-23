@@ -9,6 +9,7 @@ import ShareButtons from "@/components/social/ShareButtons";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { getArtigos } from "@/lib/artigos";
 import { getProdutos } from "@/lib/produtos";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface ArtigoPageProps {
   params: {
@@ -185,7 +186,7 @@ export default async function ArtigoPage({ params }: ArtigoPageProps) {
           <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10 shadow-card">
             <div
               className="prose prose-lg max-w-none prose-headings:font-[family-name:var(--font-plus-jakarta-sans)] prose-a:text-[#F4A7B9] prose-p:text-gray-300 prose-strong:text-white"
-              dangerouslySetInnerHTML={{ __html: artigo.conteudo }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(artigo.conteudo) }}
             />
           </div>
 

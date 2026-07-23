@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { collection, addDoc, serverTimestamp, getDocs, doc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { parseProductText } from "@/lib/productParser";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import AdminNav from "@/components/admin/AdminNav";
-import { Sparkles, Upload, X, Plus, Wand2 } from "lucide-react";
+import { parseProductText } from "@/lib/productParser";
+import { Sparkles, Plus, Wand2 } from "lucide-react";
+import { criarArtigoCompleto } from "@/app/actions/admin";
 
 export default function NovoPost() {
   const router = useRouter();
@@ -47,8 +47,13 @@ export default function NovoPost() {
 
   useEffect(() => {
     const carregarCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "categorias"));
-      setCategorias(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      try {
+        const res = await fetch("/api/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
     };
     carregarCategorias();
   }, []);
@@ -165,55 +170,34 @@ export default function NovoPost() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const artigoRef = await addDoc(collection(db, "artigos"), {
-        titulo: form.titulo,
-        slug: form.slug,
-        descricao: form.descricao,
-        conteudo: form.conteudo,
-        imagemCapa: form.imagemCapa,
-        categoriaId: form.categoriaId,
-        tags: form.tags.split(",").map((t) => t.trim()),
-        destaque: form.destaque,
-        visualizacoes: 0,
-        tempoLeitura: Math.max(1, Math.ceil(form.conteudo.length / 500)),
-        imagens: produtos.filter((p) => p.imagem).map((p) => p.imagem),
+    setStatus("");
+
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const produtosLimpos = produtos
+      .filter((p) => p.nome || p.linkAfiliado)
+      .map((p) => ({
+        nome: p.nome,
+        preco: p.preco,
+        precoOriginal: p.precoOriginal,
+        linkAfiliado: p.linkAfiliado,
+        loja: p.loja || "Loja",
+        imagem: p.imagem || "",
+        tags: (p.tags || "").toString(),
+        destaque: false,
+        viral: false,
         ativo: true,
-        publicadoEm: serverTimestamp(),
-        criadoEm: serverTimestamp(),
-        atualizadoEm: serverTimestamp(),
-      });
+        visualizacoes: 0,
+        cliques: 0,
+        conversoes: 0,
+      }));
+    payload.append("produtos_json", JSON.stringify(produtosLimpos));
 
-      for (const produto of produtos) {
-        if (!produto.nome || !produto.linkAfiliado) continue;
-        await addDoc(collection(db, "produtos"), {
-          nome: produto.nome,
-          slug: produto.nome.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-          descricaoCurta: produto.nome,
-          descricao: produto.nome,
-          imagemPrincipal: produto.imagem || "/images/produtos/default.jpg",
-          imagens: produto.imagem ? [produto.imagem] : [],
-          preco: parseFloat(produto.preco) || 0,
-          precoOriginal: produto.precoOriginal ? parseFloat(produto.precoOriginal) : undefined,
-          moeda: "BRL",
-          linkAfiliado: produto.linkAfiliado,
-          loja: produto.loja || "Loja",
-          avaliacao: 0,
-          numAvaliacoes: 0,
-          tags: produto.tags ? produto.tags.split(",").map((t) => t.trim()) : [],
-          categoriaId: form.categoriaId,
-          categoria: categorias.find((c) => c.id === form.categoriaId) || null,
-          destaque: false,
-          viral: false,
-          ativo: true,
-          visualizacoes: 0,
-          cliques: 0,
-          conversoes: 0,
-          criadoEm: serverTimestamp(),
-          atualizadoEm: serverTimestamp(),
-        });
-      }
-
+    const result = await criarArtigoCompleto(payload);
+    if ((result as any).ok) {
       setStatus("Post criado com sucesso!");
       clearDraft();
       setForm({
@@ -231,9 +215,8 @@ export default function NovoPost() {
         { nome: "", preco: "", precoOriginal: "", linkAfiliado: "", loja: "", imagem: "", tags: "" },
       ]);
       setProdutoPreview({});
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao criar post.");
+    } else {
+      setStatus((result as any).error || "Erro ao criar post.");
     }
   };
 

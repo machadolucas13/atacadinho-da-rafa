@@ -1,23 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AdminNav from "@/components/admin/AdminNav";
-
-const ADMIN_PASSWORD = "AtacadinhoDaRafa123*";
+import { loginWithSecret } from "@/app/actions/auth";
 
 export default function AdminLogin() {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
+  const [secret, setSecret] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      localStorage.setItem("adminAuth", "true");
-      router.push("/admin/dashboard");
-    } else {
-      setError("Senha incorreta");
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await loginWithSecret(secret) as Response;
+      const data = await result.json();
+      if ((data as any).error) {
+        setError((data as any).error);
+        setLoading(false);
+      } else {
+        router.push("/admin/dashboard");
+      }
+    } catch {
+      setError("Erro inesperado.");
+      setLoading(false);
     }
   };
 
@@ -40,26 +49,27 @@ export default function AdminLogin() {
             <p className="text-xs text-gray-400">Atacadinho da Rafa</p>
           </div>
         </div>
-        <p className="mt-4 text-sm text-gray-300">Digite a senha para acessar o painel</p>
+        <p className="mt-4 text-sm text-gray-300">Digite o segredo para acessar o painel</p>
 
         {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
 
         <div className="mt-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300">Senha</label>
+            <label className="block text-sm font-medium text-gray-300">Segredo</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
               className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full rounded-full bg-gradient-to-r from-[#E11D48] to-[#F67C6F] py-2 text-white shadow-sm transition-all hover:shadow"
+            disabled={loading}
+            className="w-full rounded-full bg-gradient-to-r from-[#E11D48] to-[#F67C6F] py-2 text-white shadow-sm transition-all hover:shadow disabled:opacity-70"
           >
-            Entrar
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </div>
       </form>

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { getArtigos } from "@/lib/artigos";
 import AdminNav from "@/components/admin/AdminNav";
+import { atualizarArtigo } from "@/app/actions/admin";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -17,7 +18,6 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
-  const [categorias, setCategorias] = useState<any[]>([]);
 
   const [form, setForm] = useState({
     titulo: "",
@@ -35,31 +35,32 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
 
   useEffect(() => {
     const carregar = async () => {
-      const snap = await getDoc(doc(db, "artigos", params.id));
-      if (!snap.exists()) {
-        setStatus("Artigo não encontrado.");
+      setLoading(true);
+      try {
+        const artigos = await getArtigos();
+        const artigo = artigos.find((a) => a.id === params.id);
+        if (!artigo) {
+          setStatus("Artigo não encontrado.");
+          setLoading(false);
+          return;
+        }
+        setForm({
+          titulo: artigo.titulo || "",
+          slug: artigo.slug || "",
+          descricao: artigo.descricao || "",
+          conteudo: artigo.conteudo || "",
+          imagemCapa: artigo.imagemCapa || "",
+          categoriaId: artigo.categoriaId || "",
+          tags: Array.isArray(artigo.tags) ? artigo.tags.join(", ") : "",
+          destaque: artigo.destaque || false,
+          ativo: artigo.ativo ?? true,
+        });
+        if (artigo.imagemCapa) setPreview(artigo.imagemCapa);
+      } catch (e) {
+        setStatus("Erro ao carregar artigo.");
+      } finally {
         setLoading(false);
-        return;
       }
-      const data = snap.data();
-      setForm({
-        titulo: data.titulo || "",
-        slug: data.slug || "",
-        descricao: data.descricao || "",
-        conteudo: data.conteudo || "",
-        imagemCapa: data.imagemCapa || "",
-        categoriaId: data.categoriaId || "",
-        tags: Array.isArray(data.tags) ? data.tags.join(", ") : "",
-        destaque: data.destaque || false,
-        ativo: data.ativo ?? true,
-      });
-      if (data.imagemCapa) setPreview(data.imagemCapa);
-
-      const catSnap = await import("firebase/firestore").then(({ collection, getDocs }) =>
-        getDocs(collection(db, "categorias"))
-      );
-      setCategorias(catSnap.docs.map((d: any) => ({ id: d.id, ...d.data() })));
-      setLoading(false);
     };
     carregar();
   }, [params.id]);
@@ -82,24 +83,19 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await updateDoc(doc(db, "artigos", params.id), {
-        titulo: form.titulo,
-        slug: form.slug,
-        descricao: form.descricao,
-        conteudo: form.conteudo,
-        imagemCapa: form.imagemCapa,
-        categoriaId: form.categoriaId,
-        tags: form.tags.split(",").map((t) => t.trim()),
-        destaque: form.destaque,
-        ativo: form.ativo,
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await atualizarArtigo(params.id, payload);
+    if ((result as any).ok) {
       setStatus("Artigo atualizado com sucesso!");
       setTimeout(() => router.push("/admin/dashboard"), 600);
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao atualizar artigo.");
+    } else {
+      setStatus((result as any).error || "Erro ao atualizar artigo.");
     }
   };
 
@@ -185,32 +181,6 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
                 <img src={preview} alt="Preview" className="w-full h-full object-cover" />
               </div>
             )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Categoria</label>
-            <select
-              value={form.categoriaId}
-              onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[#F4A7B9] focus:outline-none"
-            >
-              <option value="">Sem categoria</option>
-              {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id} className="bg-[#0a0a14]">
-                  {cat.nome}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Tags separadas por vírgula</label>
-            <input
-              placeholder="Ex: jeans, barato, moda feminina"
-              value={form.tags}
-              onChange={(e) => setForm({ ...form, tags: e.target.value })}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
-            />
           </div>
 
           <div className="flex items-center gap-6">

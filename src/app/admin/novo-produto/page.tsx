@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
+import { criarProduto } from "@/app/actions/admin";
 
 export default function NovoProduto() {
   const router = useRouter();
@@ -14,8 +14,13 @@ export default function NovoProduto() {
 
   useEffect(() => {
     const carregarCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "categorias"));
-      setCategorias(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      try {
+        const res = await fetch("/api/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
     };
     carregarCategorias();
   }, []);
@@ -39,23 +44,14 @@ export default function NovoProduto() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, "produtos"), {
-        ...form,
-        preco: parseFloat(form.preco) || 0,
-        precoOriginal: parseFloat(form.precoOriginal) || 0,
-        tags: form.tags.split(",").map((t) => t.trim()),
-        numAvaliacoes: 0,
-        avaliacao: 0,
-        moeda: "BRL",
-        imagens: [],
-        visualizacoes: 0,
-        cliques: 0,
-        conversoes: 0,
-        ativo: true,
-        criadoEm: serverTimestamp(),
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await criarProduto(payload);
+    if ((result as any).ok) {
       setStatus("Produto criado com sucesso!");
       setForm({
         nome: "",
@@ -73,9 +69,8 @@ export default function NovoProduto() {
         viral: false,
         ativo: true,
       });
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao criar produto.");
+    } else {
+      setStatus((result as any).error || "Erro ao criar produto.");
     }
   };
 

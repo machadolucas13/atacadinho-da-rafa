@@ -1,32 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
 import { getArtigos } from "@/lib/artigos";
 import { getPastas } from "@/lib/pastas";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { excluirArtigo } from "@/app/actions/admin";
 import { Sparkles, FolderOpen, FileText, Trash2 } from "lucide-react";
 
 export default function AdminDashboard() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const router = useRouter();
   const [artigos, setArtigos] = useState<any[]>([]);
   const [pastas, setPastas] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const adminAuth = localStorage.getItem("adminAuth");
-    if (adminAuth !== "true") {
-      router.push("/admin/login");
-    } else {
-      setIsAdmin(true);
-    }
-  }, [router]);
-
-  useEffect(() => {
-    if (!isAdmin) return;
     const carregar = async () => {
       setLoading(true);
       try {
@@ -40,15 +26,19 @@ export default function AdminDashboard() {
       }
     };
     carregar();
-  }, [isAdmin]);
+  }, []);
 
-  const excluirArtigo = async (id: string) => {
+  const handleExcluirArtigo = async (id: string) => {
     if (!confirm("Excluir este post/pin?")) return;
-    await deleteDoc(doc(db, "artigos", id));
-    setArtigos((prev) => prev.filter((a) => a.id !== id));
+    const result = await excluirArtigo(id);
+    if ((result as any).ok) {
+      setArtigos((prev) => prev.filter((a) => a.id !== id));
+    } else {
+      alert((result as any).error || "Erro ao excluir");
+    }
   };
 
-  if (!isAdmin) {
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0a0a14]">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#F4A7B9] border-t-transparent" />
@@ -109,7 +99,7 @@ export default function AdminDashboard() {
               <p className="mt-4 text-sm text-gray-400">Nenhum post ainda.</p>
             ) : (
               <ul className="mt-4 space-y-3">
-                {artigos.map((artigo) => (
+                {artigos.slice(0, 20).map((artigo) => (
                   <li
                     key={artigo.id}
                     className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3"
@@ -119,7 +109,7 @@ export default function AdminDashboard() {
                       <p className="text-xs text-gray-400">/{artigo.slug}</p>
                     </div>
                     <button
-                      onClick={() => excluirArtigo(artigo.id)}
+                      onClick={() => handleExcluirArtigo(artigo.id)}
                       className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
                     >
                       <Trash2 className="h-3 w-3" />
@@ -138,7 +128,7 @@ export default function AdminDashboard() {
               <p className="mt-4 text-sm text-gray-400">Nenhuma pasta ainda.</p>
             ) : (
               <ul className="mt-4 space-y-3">
-                {pastas.map((pasta) => (
+                {pastas.slice(0, 20).map((pasta) => (
                   <li key={pasta.id} className="rounded-xl border border-white/10 bg-white/5 p-3">
                     <p className="text-sm font-medium text-white">{pasta.nome}</p>
                     <p className="text-xs text-gray-400">/{pasta.slug}</p>
@@ -161,6 +151,7 @@ export default function AdminDashboard() {
             <li>
               <strong className="text-white">Novo Artigo</strong> = texto mais longo para o blog.
             </li>
+            <li>Use os botões <span className="text-[#F4A7B9]">Editar</span> para ajustar qualquer item já publicado.</li>
             <li>Tudo aparece automaticamente no site. Nada de mexer no Firestore.</li>
           </ul>
         </div>

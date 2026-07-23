@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { doc, getDoc, updateDoc, serverTimestamp, collection, getDocs } from "firebase/firestore";
-import { db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { getProdutos } from "@/lib/produtos";
 import AdminNav from "@/components/admin/AdminNav";
+import { atualizarProduto } from "@/app/actions/admin";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -17,7 +18,6 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
-  const [categorias, setCategorias] = useState<any[]>([]);
 
   const [form, setForm] = useState({
     nome: "",
@@ -40,34 +40,37 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
 
   useEffect(() => {
     const carregar = async () => {
-      const snap = await getDoc(doc(db, "produtos", params.id));
-      if (!snap.exists()) {
-        setStatus("Produto não encontrado.");
+      setLoading(true);
+      try {
+        const produtos = await getProdutos();
+        const produto = produtos.find((p) => p.id === params.id);
+        if (!produto) {
+          setStatus("Produto não encontrado.");
+          setLoading(false);
+          return;
+        }
+        setForm({
+          nome: produto.nome || "",
+          slug: produto.slug || "",
+          descricao: produto.descricao || "",
+          descricaoCurta: produto.descricaoCurta || "",
+          imagemPrincipal: produto.imagemPrincipal || "",
+          preco: produto.preco?.toString() || "",
+          precoOriginal: produto.precoOriginal?.toString() || "",
+          linkAfiliado: produto.linkAfiliado || "",
+          loja: produto.loja || "",
+          tags: Array.isArray(produto.tags) ? produto.tags.join(", ") : "",
+          categoriaId: produto.categoriaId || "",
+          destaque: produto.destaque || false,
+          viral: produto.viral || false,
+          ativo: produto.ativo ?? true,
+        });
+        if (produto.imagemPrincipal) setPreview(produto.imagemPrincipal);
+      } catch (e) {
+        setStatus("Erro ao carregar produto.");
+      } finally {
         setLoading(false);
-        return;
       }
-      const data = snap.data();
-      setForm({
-        nome: data.nome || "",
-        slug: data.slug || "",
-        descricao: data.descricao || "",
-        descricaoCurta: data.descricaoCurta || "",
-        imagemPrincipal: data.imagemPrincipal || "",
-        preco: data.preco?.toString() || "",
-        precoOriginal: data.precoOriginal?.toString() || "",
-        linkAfiliado: data.linkAfiliado || "",
-        loja: data.loja || "",
-        tags: Array.isArray(data.tags) ? data.tags.join(", ") : "",
-        categoriaId: data.categoriaId || "",
-        destaque: data.destaque || false,
-        viral: data.viral || false,
-        ativo: data.ativo ?? true,
-      });
-      if (data.imagemPrincipal) setPreview(data.imagemPrincipal);
-
-      const catSnap = await getDocs(collection(db, "categorias"));
-      setCategorias(catSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
-      setLoading(false);
     };
     carregar();
   }, [params.id]);
@@ -90,29 +93,19 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await updateDoc(doc(db, "produtos", params.id), {
-        nome: form.nome,
-        slug: form.slug,
-        descricao: form.descricao,
-        descricaoCurta: form.descricaoCurta,
-        imagemPrincipal: form.imagemPrincipal,
-        preco: parseFloat(form.preco) || 0,
-        precoOriginal: parseFloat(form.precoOriginal) || undefined,
-        linkAfiliado: form.linkAfiliado,
-        loja: form.loja,
-        tags: form.tags.split(",").map((t) => t.trim()),
-        categoriaId: form.categoriaId,
-        destaque: form.destaque,
-        viral: form.viral,
-        ativo: form.ativo,
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await atualizarProduto(params.id, payload);
+    if ((result as any).ok) {
       setStatus("Produto atualizado com sucesso!");
       setTimeout(() => router.push("/admin/dashboard"), 600);
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao atualizar produto.");
+    } else {
+      setStatus((result as any).error || "Erro ao atualizar produto.");
     }
   };
 
@@ -204,29 +197,11 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
             required
           />
           <input
-            placeholder="Loja"
+            placeholder="Loja (Shopee, Mercado Livre, Amazon)"
             value={form.loja}
             onChange={(e) => setForm({ ...form, loja: e.target.value })}
             className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
             required
-          />
-          <select
-            value={form.categoriaId}
-            onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[#F4A7B9] focus:outline-none"
-          >
-            <option value="">Sem categoria</option>
-            {categorias.map((cat) => (
-              <option key={cat.id} value={cat.id} className="bg-[#0a0a14]">
-                {cat.nome}
-              </option>
-            ))}
-          </select>
-          <input
-            placeholder="Tags separadas por vírgula"
-            value={form.tags}
-            onChange={(e) => setForm({ ...form, tags: e.target.value })}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
           />
           <div className="flex items-center gap-6">
             <label className="flex items-center gap-2 text-gray-300">

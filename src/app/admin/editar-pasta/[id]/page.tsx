@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { doc, getDoc, updateDoc, serverTimestamp, collection, getDocs } from "firebase/firestore";
-import { db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
+import { atualizarPasta } from "@/app/actions/admin";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -17,7 +17,6 @@ export default function EditarPasta({ params }: EditarPastaProps) {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
-  const [categorias, setCategorias] = useState<any[]>([]);
 
   const [form, setForm] = useState({
     nome: "",
@@ -33,27 +32,32 @@ export default function EditarPasta({ params }: EditarPastaProps) {
 
   useEffect(() => {
     const carregar = async () => {
-      const snap = await getDoc(doc(db, "pastas", params.id));
-      if (!snap.exists()) {
-        setStatus("Pasta não encontrada.");
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/busca?q=`);
+        const data = await res.json();
+        const pastas = data.pastas || [];
+        const pasta = pastas.find((p: any) => p.id === params.id);
+        if (!pasta) {
+          setStatus("Pasta não encontrada.");
+          setLoading(false);
+          return;
+        }
+        setForm({
+          nome: pasta.nome || "",
+          slug: pasta.slug || "",
+          descricao: pasta.descricao || "",
+          imagemCapa: pasta.imagemCapa || "",
+          categoriaId: pasta.categoriaId || "",
+          destaque: pasta.destaque || false,
+          ativo: pasta.ativo ?? true,
+        });
+        if (pasta.imagemCapa) setPreview(pasta.imagemCapa);
+      } catch (e) {
+        setStatus("Erro ao carregar pasta.");
+      } finally {
         setLoading(false);
-        return;
       }
-      const data = snap.data();
-      setForm({
-        nome: data.nome || "",
-        slug: data.slug || "",
-        descricao: data.descricao || "",
-        imagemCapa: data.imagemCapa || "",
-        categoriaId: data.categoriaId || "",
-        destaque: data.destaque || false,
-        ativo: data.ativo ?? true,
-      });
-      if (data.imagemCapa) setPreview(data.imagemCapa);
-
-      const catSnap = await getDocs(collection(db, "categorias"));
-      setCategorias(catSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
-      setLoading(false);
     };
     carregar();
   }, [params.id]);
@@ -76,22 +80,19 @@ export default function EditarPasta({ params }: EditarPastaProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await updateDoc(doc(db, "pastas", params.id), {
-        nome: form.nome,
-        slug: form.slug,
-        descricao: form.descricao,
-        imagemCapa: form.imagemCapa,
-        categoriaId: form.categoriaId,
-        destaque: form.destaque,
-        ativo: form.ativo,
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await atualizarPasta(params.id, payload);
+    if ((result as any).ok) {
       setStatus("Pasta atualizada com sucesso!");
       setTimeout(() => router.push("/admin/dashboard"), 600);
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao atualizar pasta.");
+    } else {
+      setStatus((result as any).error || "Erro ao atualizar pasta.");
     }
   };
 
@@ -150,18 +151,6 @@ export default function EditarPasta({ params }: EditarPastaProps) {
               </div>
             )}
           </div>
-          <select
-            value={form.categoriaId}
-            onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[#F4A7B9] focus:outline-none"
-          >
-            <option value="">Sem categoria</option>
-            {categorias.map((cat) => (
-              <option key={cat.id} value={cat.id} className="bg-[#0a0a14]">
-                {cat.nome}
-              </option>
-            ))}
-          </select>
           <div className="flex items-center gap-6">
             <label className="flex items-center gap-2 text-gray-300">
               <input

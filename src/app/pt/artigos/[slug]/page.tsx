@@ -2,6 +2,7 @@
 
 import { getArtigoBySlug } from "@/server/artigos";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export async function generateStaticParams() {
   return [
@@ -86,7 +87,7 @@ export default async function ArtigoPage({
 
             <div
               className="prose prose-invert max-w-none text-gray-300 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: artigo.conteudo }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(artigo.conteudo) }}
             />
           </div>
         </div>

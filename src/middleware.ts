@@ -1,8 +1,14 @@
 import {NextResponse} from 'next/server';
 import type {NextRequest} from 'next/server';
+import { verifySession } from "@/server/admin-session";
 
 const LOCALES = ['pt', 'en'];
 const DEFAULT_LOCALE = 'pt';
+const ADMIN_PATHS = ['/admin', '/admin/login', '/admin/dashboard', '/admin/novo-post', '/admin/nova-pasta', '/admin/novo-artigo'];
+
+function isAdminPath(pathname: string) {
+  return ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
 
 function getLocaleFromRequest(request: NextRequest): string {
   const acceptLanguage = request.headers.get('accept-language') || '';
@@ -23,6 +29,25 @@ function getLocaleFromRequest(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
   const {pathname} = request.nextUrl;
+
+  if (isAdminPath(pathname)) {
+    const session = request.cookies.get('admin_session')?.value;
+    const ADMIN_SECRET = process.env.ADMIN_SECRET;
+    if (!ADMIN_SECRET || !verifySession(ADMIN_SECRET, session)) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
+    }
+
+    if (pathname === '/admin' || pathname === '/admin/login') {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/dashboard';
+      return NextResponse.redirect(url);
+    }
+
+    return NextResponse.next();
+  }
+
   const segments = pathname.split('/');
   const maybeLocale = segments[1];
 

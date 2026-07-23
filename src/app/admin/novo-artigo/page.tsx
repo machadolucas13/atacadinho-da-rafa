@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
+import { criarArtigo } from "@/app/actions/admin";
 
 export default function NovoArtigo() {
   const [status, setStatus] = useState("");
@@ -12,8 +12,13 @@ export default function NovoArtigo() {
 
   useEffect(() => {
     const carregarCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "categorias"));
-      setCategorias(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      try {
+        const res = await fetch("/api/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
     };
     carregarCategorias();
   }, []);
@@ -45,23 +50,18 @@ export default function NovoArtigo() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, "artigos"), {
-        ...form,
-        tags: form.tags.split(",").map((t) => t.trim()),
-        imagens: [],
-        visualizacoes: 0,
-        destaque: form.destaque,
-        ativo: true,
-        publicadoEm: serverTimestamp(),
-        criadoEm: serverTimestamp(),
-        atualizadoEm: serverTimestamp(),
-      });
+    setStatus("");
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : value);
+    });
+
+    const result = await criarArtigo(payload);
+    if ((result as any).ok) {
       setStatus("Artigo criado com sucesso!");
       setForm({ titulo: "", slug: "", descricao: "", conteudo: "", imagemCapa: "", categoriaId: "", tags: "", destaque: false });
-    } catch (error) {
-      console.error(error);
-      setStatus("Erro ao criar artigo.");
+    } else {
+      setStatus((result as any).error || "Erro ao criar artigo.");
     }
   };
 
