@@ -2,7 +2,7 @@
 
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { signSession, verifySession } from "@/server/admin-session";
+import { signSession } from "@/server/admin-session";
 
 const SESSION_COOKIE = "admin_session";
 
@@ -35,10 +35,4 @@ export async function logoutAdmin() {
 
 function JsonError(message: string) {
   return NextResponse.json({ error: message }, { status: 400 });
-}
-
-export function isAdminAuthenticated(): boolean {
-  const session = cookies().get(SESSION_COOKIE)?.value;
-  if (!process.env.ADMIN_SECRET) return false;
-  return verifySession(process.env.ADMIN_SECRET, session);
 }

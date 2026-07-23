@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import { getProdutos } from "@/lib/produtos";
 import AdminNav from "@/components/admin/AdminNav";
 import { atualizarProduto } from "@/app/actions/admin";
 import { ArrowLeft } from "lucide-react";
@@ -42,8 +41,15 @@ export default function EditarProduto({ params }: EditarProdutoProps) {
     const carregar = async () => {
       setLoading(true);
       try {
-        const produtos = await getProdutos();
-        const produto = produtos.find((p) => p.id === params.id);
+        const [produtosRes, categoriasRes] = await Promise.all([
+          fetch("/api/admin/produtos"),
+          fetch("/api/admin/categorias"),
+        ]);
+        const produtosData = await produtosRes.json();
+        const categoriasData = await categoriasRes.json();
+        const produtos = produtosData.produtos || [];
+        setCategorias(categoriasData.categorias || []);
+        const produto = produtos.find((p: any) => p.id === params.id);
         if (!produto) {
           setStatus("Produto não encontrado.");
           setLoading(false);

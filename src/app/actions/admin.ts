@@ -1,6 +1,6 @@
 "use server";
 
-import { isAdminAuthenticated } from "@/app/actions/auth";
+import { isAdminAuthenticated } from "@/server/admin-session";
 import { adminDb } from "@/server/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 

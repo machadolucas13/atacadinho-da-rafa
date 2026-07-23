@@ -15,7 +15,7 @@ export default function NovoProduto() {
   useEffect(() => {
     const carregarCategorias = async () => {
       try {
-        const res = await fetch("/api/categorias");
+        const res = await fetch("/api/admin/categorias");
         const data = await res.json();
         setCategorias(data.categorias || []);
       } catch (e) {

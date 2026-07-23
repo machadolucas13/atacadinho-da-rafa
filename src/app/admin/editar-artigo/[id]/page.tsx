@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import { getArtigos } from "@/lib/artigos";
 import AdminNav from "@/components/admin/AdminNav";
 import { atualizarArtigo } from "@/app/actions/admin";
 import { ArrowLeft } from "lucide-react";
@@ -18,6 +17,7 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<any[]>([]);
 
   const [form, setForm] = useState({
     titulo: "",
@@ -37,8 +37,15 @@ export default function EditarArtigo({ params }: EditarArtigoProps) {
     const carregar = async () => {
       setLoading(true);
       try {
-        const artigos = await getArtigos();
-        const artigo = artigos.find((a) => a.id === params.id);
+        const [artigosRes, categoriasRes] = await Promise.all([
+          fetch("/api/admin/artigos"),
+          fetch("/api/admin/categorias"),
+        ]);
+        const artigosData = await artigosRes.json();
+        const categoriasData = await categoriasRes.json();
+        const artigos = artigosData.artigos || [];
+        setCategorias(categoriasData.categorias || []);
+        const artigo = artigos.find((a: any) => a.id === params.id);
         if (!artigo) {
           setStatus("Artigo não encontrado.");
           setLoading(false);

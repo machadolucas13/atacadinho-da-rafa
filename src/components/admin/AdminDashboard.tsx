@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AdminNav from "@/components/admin/AdminNav";
-import { getArtigos } from "@/lib/artigos";
-import { getPastas } from "@/lib/pastas";
-import { excluirArtigo } from "@/app/actions/admin";
+import { excluirArtigo, excluirPasta } from "@/app/actions/admin";
 import { Sparkles, FolderOpen, FileText, Trash2 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -16,9 +14,14 @@ export default function AdminDashboard() {
     const carregar = async () => {
       setLoading(true);
       try {
-        const [a, p] = await Promise.all([getArtigos(), getPastas()]);
-        setArtigos(a);
-        setPastas(p);
+        const [aRes, pRes] = await Promise.all([
+          fetch("/api/admin/artigos"),
+          fetch("/api/admin/pastas"),
+        ]);
+        const aData = await aRes.json();
+        const pData = await pRes.json();
+        setArtigos((aData.artigos || []) as any[]);
+        setPastas((pData.pastas || []) as any[]);
       } catch (e) {
         console.error(e);
       } finally {

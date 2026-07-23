@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import AdminNav from "@/components/admin/AdminNav";
-import { getArtigos } from "@/lib/artigos";
-import { getPastas } from "@/lib/pastas";
 import { excluirArtigo, excluirPasta } from "@/app/actions/admin";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +10,6 @@ type ItemCard = {
   id: string;
   titulo?: string;
   nome?: string;
-  criadoEm?: any;
 };
 
 export default function AdminProtectedPage() {
@@ -24,16 +21,21 @@ export default function AdminProtectedPage() {
       setPosts([]);
       setPastas([]);
       try {
-        const [postsSnap, pastasSnap] = await Promise.all([getArtigos(), getPastas()]);
+        const [artigosRes, pastasRes] = await Promise.all([
+          fetch("/api/admin/artigos"),
+          fetch("/api/admin/pastas"),
+        ]);
+        const artigosData = await artigosRes.json();
+        const pastasData = await pastasRes.json();
         setPosts(
-          postsSnap
+          (artigosData.artigos || [])
             .slice(0, 5)
-            .map((d) => ({ id: d.id, titulo: (d as any).titulo, nome: (d as any).nome } as ItemCard))
+            .map((d: any) => ({ id: d.id, titulo: d.titulo } as ItemCard))
         );
         setPastas(
-          pastasSnap
+          (pastasData.pastas || [])
             .slice(0, 5)
-            .map((d) => ({ id: d.id, titulo: (d as any).titulo, nome: (d as any).nome } as ItemCard))
+            .map((d: any) => ({ id: d.id, nome: d.nome } as ItemCard))
         );
       } catch (e) {
         console.error("Erro ao carregar dashboard", e);
