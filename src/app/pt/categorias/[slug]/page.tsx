@@ -110,7 +110,7 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
             </div>
           </div>
 
-          <ProductGrid produtos={produtosCategoria} titulo={categoria.nome} />
+          <ProductGrid produtos={produtosCategoria} titulo={categoria.nome} limite={5} />
         </div>
       </div>
     </>

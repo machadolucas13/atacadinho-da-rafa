@@ -76,7 +76,8 @@ export default function Starfield() {
       if (!ctx) return;
       time += 0.008;
 
-      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgb(10,10,20)";
+      ctx.fillRect(0, 0, w, h);
       points.forEach((p) => {
         const offsetX = Math.sin(time * p.speed * 800 + p.phase) * p.amplitude;
         const offsetY = Math.cos(time * p.speed * 600 + p.phase * 1.3) * p.amplitude * 0.8;
@@ -90,17 +91,6 @@ export default function Starfield() {
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color.replace(/[\d.]+\)$/, `${alpha})`);
         ctx.fill();
-
-        if (p.radius > 1.6) {
-          const glow = ctx.createRadialGradient(p.x, p.y, p.radius * 0.2, p.x, p.y, p.radius * 6);
-          const glowColor = p.color.replace(/[\d.]+\)$/, `${alpha * 0.35})`);
-          glow.addColorStop(0, glowColor);
-          glow.addColorStop(1, "rgba(0,0,0,0)");
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius * 6, 0, Math.PI * 2);
-          ctx.fillStyle = glow;
-          ctx.fill();
-        }
       });
 
       ctx.strokeStyle = "rgba(255,255,255,0.04)";
