@@ -6,6 +6,7 @@ import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import NewsletterForm from "@/components/ui/NewsletterForm";
 import InstallPrompt from "@/components/pwa/InstallPrompt";
+import CategorySidebar from "@/components/ui/CategorySidebar";
 
 export const metadata: Metadata = {
   title: {
@@ -37,6 +38,7 @@ export default async function HomePage() {
   return (
       <div className="min-h-screen">
       <HeroSection />
+      <CategorySidebar locale="en" />
 
       <div className="relative">
         <CategorySection />
@@ -149,26 +151,6 @@ export default async function HomePage() {
 
         <NewsletterForm locale="en" />
       </div>
-
-      <footer className="relative z-10 border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-white">Atacadinho da Rafa</span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              <LocaleAwareLink href="/en/categories/womens-fashion" className="text-sm text-gray-400 hover:text-white transition-colors">Women's Fashion</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/mens-fashion" className="text-sm text-gray-400 hover:text-white transition-colors">Men's Fashion</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/home-decor" className="text-sm text-gray-400 hover:text-white transition-colors">Home & Decor</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/kitchen" className="text-sm text-gray-400 hover:text-white transition-colors">Kitchen</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/tech" className="text-sm text-gray-400 hover:text-white transition-colors">Tech</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/beauty" className="text-sm text-gray-400 hover:text-white transition-colors">Beauty</LocaleAwareLink>
-              <LocaleAwareLink href="/en/categories/fashion-accessories" className="text-sm text-gray-400 hover:text-white transition-colors">Accessories</LocaleAwareLink>
-            </div>
-            <p className="text-xs text-gray-500">© {new Date().getFullYear()} Atacadinho da Rafa. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
 
       <InstallPrompt />
     </div>
