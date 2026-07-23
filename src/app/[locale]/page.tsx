@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import HeroSection from "@/components/hero/HeroSection";
 import ProductGrid from "@/components/pinterest/ProductGrid";
 import CategorySection from "@/components/pinterest/CategorySection";
@@ -55,41 +57,37 @@ export default async function HomePage({ params }: { params: { locale: string } 
         />
 
         <div className="mx-auto max-w-7xl px-4 py-10">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-[#E11D48]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#F4A7B9] border border-[#E11D48]/20">
-                  📌 Pin em destaque
-                </span>
-                <h2 className="mt-4 text-2xl md:text-3xl font-bold text-white tracking-tight">
-                  Calças Jeans Femininas a partir de R$ 24,90
-                </h2>
-                <p className="mt-2 text-gray-300 text-sm md:text-base">
-                  20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <LocaleAwareLink
-                    href={`/${params.locale}/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026`}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
-                  >
-                    Ver pin
-                  </LocaleAwareLink>
-                  <LocaleAwareLink
-                    href={`/${params.locale}/categorias/moda-feminina`}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
-                  >
-                    👗 Moda Feminina
-                  </LocaleAwareLink>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {produtos.filter((p) => p.destaque || p.viral).slice(0, 4).map((produto) => (
+              <Link
+                key={produto.id}
+                href={`/produtos/${produto.slug}`}
+                className="group block"
+              >
+                <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
+                    <Image
+                      src={produto.imagemPrincipal}
+                      alt={produto.nome}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#E11D48]">
+                      {produto.loja}
+                    </p>
+                    <h3 className="text-sm font-semibold text-white line-clamp-2 leading-snug">
+                      {produto.nome}
+                    </h3>
+                    <span className="mt-1.5 block text-base font-bold text-[#E11D48]">
+                      R$ {produto.preco?.toFixed(2)}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="relative mx-auto w-full max-w-xs md:max-w-sm">
-                <img
-                  src="/posts/calcas-jeans-femininas-economicas-2026.png"
-                  alt="Calças Jeans Femininas a partir de R$ 24,90"
-                  className="w-full h-auto rounded-2xl shadow-2xl"
-                />
-              </div>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
 

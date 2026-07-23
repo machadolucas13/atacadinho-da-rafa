@@ -11,7 +11,7 @@ export default async function TrendingSection() {
 
   return (
     <section className="relative">
-      <div className="mb-5 flex items-center gap-2">
+      <div className="mb-5 flex items-center justify-center gap-2">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
@@ -23,15 +23,15 @@ export default async function TrendingSection() {
       </div>
 
       {trending.length > 0 ? (
-        <div className="masonry-grid">
-          {trending.map((produto) => (
+        <div className="grid grid-cols-2 gap-4">
+          {trending.slice(0, 2).map((produto) => (
             <Link
               key={produto.id}
               href={`/produtos/${produto.slug}`}
-              className="masonry-item group block"
+              className="group block"
             >
-              <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 hover:shadow-card-hover hover:-translate-y-1">
-                <div className="relative aspect-square overflow-hidden bg-white/5">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 hover:shadow-card-hover hover:-translate-y-1">
+                <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
                   <Image
                     src={produto.imagemPrincipal}
                     alt={produto.nome}

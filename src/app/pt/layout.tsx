@@ -64,16 +64,15 @@ export default async function RootLayout({
           overflowX: 'hidden',
         }}
       >
-        <Starfield />
         <JsonLd />
         <Navbar />
         <main
-          className="relative z-10"
+          className="relative z-10 min-h-screen"
           style={{position: 'relative', zIndex: 10}}
         >
           {children}
         </main>
-        <Footer />
+        <Footer className="relative z-20" />
         <ScrollReveal />
       </body>
     </html>

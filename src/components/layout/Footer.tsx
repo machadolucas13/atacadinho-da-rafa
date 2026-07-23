@@ -4,9 +4,9 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import BrandLogo from "./BrandLogo";
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string } = {}) {
   return (
-    <footer className="relative border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
+    <footer className={`relative border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl ${className || ""}`}>
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-10">
           <div className="col-span-2 md:col-span-4">

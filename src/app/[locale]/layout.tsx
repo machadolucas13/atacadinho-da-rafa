@@ -64,7 +64,7 @@ export default async function RootLayout({
         >
           {children}
         </main>
-        <Footer />
+        <Footer className="relative z-20" />
         <ScrollReveal />
       </body>
     </html>

@@ -43,7 +43,7 @@ export default function ProductGrid({
   return (
     <section className="section-reveal">
       {(titulo || subtitle) && (
-        <div className="mb-6">
+        <div className="mb-6 text-center">
           {titulo && (
             <h2 className="text-2xl font-bold text-white tracking-tight">
               {titulo}

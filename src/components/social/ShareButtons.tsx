@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Share2, Facebook, MessageCircle, Link2, Check } from "lucide-react";
 
 export default function ShareButtons({ title, description, image, url }: { title: string; description?: string; image?: string; url: string }) {
@@ -15,27 +15,32 @@ export default function ShareButtons({ title, description, image, url }: { title
     }
   }, [url]);
 
-  const shareFacebook = () => {
+  const shareFacebook = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const target = shareUrl || url;
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(target)}&quote=${encodeURIComponent(description || title)}`, "_blank", "width=600,height=400");
   };
 
-  const sharePinterest = () => {
+  const sharePinterest = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const target = shareUrl || url;
     window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(target)}&description=${encodeURIComponent(description || title)}&media=${encodeURIComponent(image || "")}`, "_blank", "width=600,height=400");
   };
 
-  const shareX = () => {
+  const shareX = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const target = shareUrl || url;
     window.open(`https://x.com/intent/post?text=${encodeURIComponent(description || title)}&url=${encodeURIComponent(target)}`, "_blank", "width=600,height=400");
   };
 
-  const shareWhatsApp = () => {
+  const shareWhatsApp = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const target = shareUrl || url;
     window.open(`https://wa.me/?text=${encodeURIComponent(`${description || title}\n${target}`)}`, "_blank", "width=600,height=400");
   };
 
-  const copyLink = async () => {
+  const copyLink = async (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     const target = shareUrl || url;
     try {
       await navigator.clipboard.writeText(target);
@@ -74,7 +79,7 @@ export default function ShareButtons({ title, description, image, url }: { title
   return (
     <div className="flex items-center gap-1.5">
       <button
-        onClick={shareFacebook}
+        onClick={(e) => shareFacebook(e)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm text-blue-600 transition-all hover:scale-110 hover:bg-white"
         aria-label="Compartilhar no Facebook"
       >
@@ -84,7 +89,7 @@ export default function ShareButtons({ title, description, image, url }: { title
       </button>
 
       <button
-        onClick={sharePinterest}
+        onClick={(e) => sharePinterest(e)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm text-red-600 transition-all hover:scale-110 hover:bg-white"
         aria-label="Compartilhar no Pinterest"
       >
@@ -94,7 +99,7 @@ export default function ShareButtons({ title, description, image, url }: { title
       </button>
 
       <button
-        onClick={shareX}
+        onClick={(e) => shareX(e)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm text-black transition-all hover:scale-110 hover:bg-white"
         aria-label="Compartilhar no X"
       >
@@ -104,7 +109,7 @@ export default function ShareButtons({ title, description, image, url }: { title
       </button>
 
       <button
-        onClick={shareWhatsApp}
+        onClick={(e) => shareWhatsApp(e)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm text-green-600 transition-all hover:scale-110 hover:bg-white"
         aria-label="Compartilhar no WhatsApp"
       >
@@ -114,7 +119,7 @@ export default function ShareButtons({ title, description, image, url }: { title
       </button>
 
       <button
-        onClick={copyLink}
+        onClick={(e) => copyLink(e)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm text-gray-700 transition-all hover:scale-110 hover:bg-white"
         aria-label="Copiar link"
       >

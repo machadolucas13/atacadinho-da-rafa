@@ -89,7 +89,7 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
             </span>
           )}
 
-          <div className="absolute inset-x-3 bottom-3 flex items-center justify-between opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+          <div className="absolute inset-x-3 bottom-3 flex items-center justify-between transition-all duration-300 md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0">
             <SaveButton item={{ id: produto.slug, tipo: "produto", titulo: produto.nome, slug: produto.slug, imagemCapa: produto.imagemPrincipal }} />
             <ShareButtons
               title={produto.nome}

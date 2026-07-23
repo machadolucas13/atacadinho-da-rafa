@@ -34,7 +34,7 @@ export default function PinCard({ pin, locale }: PinCardProps) {
             </div>
           )}
 
-          <div className="absolute inset-x-0 bottom-0 hidden items-center justify-center gap-2 bg-black/60 p-3 opacity-0 transition-all duration-300 group-hover:flex group-hover:opacity-100">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-black/60 p-3 transition-all duration-300 md:opacity-0 md:group-hover:opacity-100">
             <SaveButton item={{ id: pin.id, tipo: "artigo", titulo: pin.titulo, slug: pin.slug, imagemCapa: pin.imagem }} />
             <ShareButtons
               title={pin.titulo}
