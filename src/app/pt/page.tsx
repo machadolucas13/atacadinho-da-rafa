@@ -37,7 +37,7 @@ export default async function HomePage() {
   const trending = artigos.filter((a) => !a.destaque).slice(0, 3);
 
   return (
-    <div className="min-h-screen">
+      <div className="min-h-screen">
       <HeroSection />
 
       <div className="relative">
@@ -119,8 +119,24 @@ export default async function HomePage() {
       </div>
 
       <footer className="relative z-10 border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 py-8 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} Atacadinho da Rafa. Todos os direitos reservados.
+        <div className="mx-auto max-w-7xl px-4 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-white">Atacadinho da Rafa</span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              <LocaleAwareLink href="/pt/categorias/beleza" className="text-sm text-gray-400 hover:text-white transition-colors">Beleza</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/tecnologia" className="text-sm text-gray-400 hover:text-white transition-colors">Tecnologia</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/casa-decoracao" className="text-sm text-gray-400 hover:text-white transition-colors">Casa e Decoração</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/cozinha" className="text-sm text-gray-400 hover:text-white transition-colors">Cozinha</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/moda-feminina" className="text-sm text-gray-400 hover:text-white transition-colors">Moda Feminina</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/moda-masculina" className="text-sm text-gray-400 hover:text-white transition-colors">Moda Masculina</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/acessorios" className="text-sm text-gray-400 hover:text-white transition-colors">Acessórios</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/ofertas" className="text-sm text-gray-400 hover:text-white transition-colors">Ofertas</LocaleAwareLink>
+              <LocaleAwareLink href="/pt/categorias/achados-virais" className="text-sm text-gray-400 hover:text-white transition-colors">Achados Virais</LocaleAwareLink>
+            </div>
+            <p className="text-xs text-gray-500">© {new Date().getFullYear()} Atacadinho da Rafa. Todos os direitos reservados.</p>
+          </div>
         </div>
       </footer>
 

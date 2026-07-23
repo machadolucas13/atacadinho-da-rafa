@@ -20,7 +20,7 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
   return (
     <Link href={href} className="group block">
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-        <div className="relative aspect-[4/5] overflow-hidden bg-black/20">
+        <div className="relative aspect-video overflow-hidden bg-black/20">
           <Image
             src={artigo.imagemCapa || "/images/artigos/default.jpg"}
             alt={artigo.titulo}
