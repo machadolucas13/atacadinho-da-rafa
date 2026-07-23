@@ -32,10 +32,10 @@ export default function ContatoPage() {
               Para dúvidas, sugestões ou parcerias, envie um email para:
             </p>
             <a
-              href="mailto:contato@atacadinhodarafa.com.br"
+              href="mailto:atacadinhodarafa@hotmail.com"
               className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
             >
-              contato@atacadinhodarafa.com.br
+              atacadinhodarafa@hotmail.com
             </a>
             <p className="mt-4 text-sm text-gray-400">
               Respondemos em até 48 horas úteis.

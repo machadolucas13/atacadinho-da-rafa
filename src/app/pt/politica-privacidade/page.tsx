@@ -60,7 +60,7 @@ export default function PoliticaPrivacidadePage() {
 
             <h2 className="text-white">5. Seus direitos</h2>
             <p className="text-gray-300">
-              Você tem o direito de acessar, corrigir ou excluir seus dados pessoais a qualquer momento. Para exercer esses direitos, entre em contato conosco pelo email <a href="mailto:contato@atacadinhodarafa.com.br" className="text-[#F4A7B9] hover:text-white">contato@atacadinhodarafa.com.br</a>.
+              Você tem o direito de acessar, corrigir ou excluir seus dados pessoais a qualquer momento. Para exercer esses direitos, entre em contato conosco pelo email <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a>.
             </p>
 
             <h2 className="text-white">6. Alterações nesta política</h2>
@@ -73,8 +73,8 @@ export default function PoliticaPrivacidadePage() {
               Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco:
             </p>
             <ul className="text-gray-300">
-              <li>Email: <a href="mailto:contato@atacadinhodarafa.com.br" className="text-[#F4A7B9] hover:text-white">contato@atacadinhodarafa.com.br</a></li>
-              <li>Instagram: <a href="https://instagram.com/atacadinhodarafa" target="_blank" rel="noopener noreferrer" className="text-[#F4A7B9] hover:text-white">@atacadinhodarafa</a></li>
+              <li>Email: <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a></li>
+              <li><a href="https://instagram.com/atacadinhodarafa" target="_blank" rel="noopener noreferrer" className="text-[#F4A7B9] hover:text-white">Instagram</a>: @atacadinhodarafa</li>
             </ul>
           </div>
         </div>

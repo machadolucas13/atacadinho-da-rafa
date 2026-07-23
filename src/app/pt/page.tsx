@@ -1,0 +1,125 @@
+import { Metadata } from "next";
+import HeroSection from "@/components/hero/HeroSection";
+import CategorySection from "@/components/pinterest/CategorySection";
+import { getArtigos } from "@/lib/artigos";
+import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
+import LocaleAwareLink from "@/components/common/LocaleAwareLink";
+import NewsletterForm from "@/components/ui/NewsletterForm";
+import InstallPrompt from "@/components/pwa/InstallPrompt";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
+    template: "%s | Atacadinho da Rafa",
+  },
+  description:
+    "Descubra os melhores achados, ofertas e recomendações de produtos. Curadoria visual de moda, decoração, tecnologia e beleza para você economizar e descobrir produtos incríveis.",
+  keywords: [
+    "achados",
+    "ofertas",
+    "descobertas",
+    "produtos",
+    "moda feminina",
+    "decoracao",
+    "tecnologia",
+    "cozinha",
+    "beleza",
+    "acessorios",
+    "shopee",
+    "brechó",
+    "economia",
+  ],
+};
+
+export default async function HomePage() {
+  const artigos = await getArtigos("pt");
+
+  const ultimosPosts = artigos.slice(0, 6);
+  const achadosDestaque = ultimosPosts.slice(0, 3);
+  const bombandoAgora = ultimosPosts.slice(3, 6);
+
+  return (
+    <div className="min-h-screen">
+      <HeroSection />
+
+      <div className="relative">
+        <CategorySection />
+
+        <div className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              ✨ Achados em destaque
+            </h2>
+            <p className="mt-1 text-sm text-gray-400">
+              Os melhores produtos selecionados para você
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {achadosDestaque.map((artigo) => (
+              <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6 flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
+            </span>
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              🔥 Bombando agora
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {bombandoAgora.map((artigo) => (
+              <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 py-10">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full bg-[#E11D48]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#F4A7B9] border border-[#E11D48]/20">
+                  📌 Pin em destaque
+                </span>
+                <h2 className="mt-4 text-2xl md:text-3xl font-bold text-white tracking-tight">
+                  Calças Jeans Femininas a partir de R$ 24,90
+                </h2>
+                <p className="mt-2 text-gray-300 text-sm md:text-base">
+                  20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <LocaleAwareLink
+                    href="/pt/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
+                  >
+                    Ver pin
+                  </LocaleAwareLink>
+                  <LocaleAwareLink
+                    href="/pt/categorias/moda-feminina"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
+                  >
+                    👗 Moda Feminina
+                  </LocaleAwareLink>
+                </div>
+              </div>
+              <div className="relative mx-auto w-full max-w-xs md:max-w-sm">
+                <img
+                  src="/posts/calcas-jeans-femininas-economicas-2026.png"
+                  alt="Calças Jeans Femininas a partir de R$ 24,90"
+                  className="w-full h-auto rounded-2xl shadow-2xl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <NewsletterForm locale="pt" />
+      </div>
+      <InstallPrompt />
+    </div>
+  );
+}

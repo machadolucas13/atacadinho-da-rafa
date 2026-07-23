@@ -37,7 +37,7 @@ export default function PinClient() {
         <div className="relative mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-3xl">
             <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
-              <LocaleAwareLink href="/pins" className="hover:text-[#F4A7B9] transition-colors">
+              <LocaleAwareLink href="/pt/pins" className="hover:text-[#F4A7B9] transition-colors">
                 Pins
               </LocaleAwareLink>
               <span className="text-gray-600">/</span>
@@ -48,9 +48,9 @@ export default function PinClient() {
               <Image
                 src="/images/pin2.png"
                 alt="Tênis de Corrida Masculino e Feminino"
-                width={1080}
-                height={1920}
-                className="w-full max-w-md mx-auto h-auto object-contain"
+                width={1200}
+                height={675}
+                className="w-full h-auto object-contain"
                 priority
               />
             </div>

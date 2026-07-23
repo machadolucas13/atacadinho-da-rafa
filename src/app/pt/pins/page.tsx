@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default async function PinsPage({ params }: { params: { locale: string } }) {
-  const isPt = params.locale === "pt";
+  const locale = params.locale === "en" ? "en" : "pt";
+  const isPt = locale === "pt";
 
   return (
     <div className="min-h-screen">
@@ -33,11 +34,11 @@ export default async function PinsPage({ params }: { params: { locale: string } 
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <Link
-            href={`/${params.locale}/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026`}
+            href={`/${locale}/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026`}
             className="group block"
           >
             <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[9/16] overflow-hidden bg-black/20">
+              <div className="relative aspect-[4/5] overflow-hidden bg-black/20">
                 <img
                   src="/posts/calcas-jeans-femininas-economicas-2026.png"
                   alt="Calças Jeans Femininas a partir de R$ 24,90"
@@ -60,11 +61,11 @@ export default async function PinsPage({ params }: { params: { locale: string } 
           </Link>
 
           <Link
-            href={`/${params.locale}/pins/tenis-corrida-masculino-feminino-2026`}
+            href={`/${locale}/pins/tenis-corrida-masculino-feminino-2026`}
             className="group block"
           >
             <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[9/16] overflow-hidden bg-black/20">
+              <div className="relative aspect-[4/5] overflow-hidden bg-black/20">
                 <img
                   src="/images/pin2.png"
                   alt="Tênis de Corrida Masculino e Feminino"

@@ -1,139 +1,107 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import BrandLogo from "@/components/layout/BrandLogo";
-import { X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function InstallPrompt() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
-  const [isStandalone, setIsStandalone] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isIos, setIsIos] = useState(false);
 
-  const handleInstall = useCallback(async () => {
+  useEffect(() => {
+    const isAppleDevice = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone;
+
+    setIsIos(isAppleDevice && !isStandalone);
+
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsVisible(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    if (isAppleDevice && !isStandalone) {
+      setIsVisible(true);
+    }
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
+
+  const handleInstall = async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === "accepted") {
         setIsVisible(false);
-        sessionStorage.setItem("installPromptDismissed", "true");
       }
       setDeferredPrompt(null);
     }
-  }, [deferredPrompt]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const userAgent = navigator.userAgent || "";
-    const isAppleDevice = /iPad|iPhone|iPod/.test(userAgent);
-    const isAndroid = /android/i.test(userAgent);
-    const standalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      (navigator as any).standalone === true;
-
-    setIsIOS(isAppleDevice);
-    setIsStandalone(standalone);
-
-    if (standalone) return;
-
-    const dismissed = sessionStorage.getItem("installPromptDismissed");
-    if (dismissed === "true") return;
-
-    const isMobile = isAppleDevice || isAndroid;
-    if (!isMobile) return;
-
-    const timer = setTimeout(() => setIsVisible(true), 2500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
+  };
 
   const handleClose = () => {
     setIsVisible(false);
-    sessionStorage.setItem("installPromptDismissed", "true");
+    try {
+      if (!localStorage.getItem("installPromptDismissed")) {
+        localStorage.setItem("installPromptDismissed", "true");
+      }
+    } catch {
+      // ignore
+    }
   };
 
-  if (!isVisible || isStandalone) return null;
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("installPromptDismissed") === "true") {
+        setIsVisible(false);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
-  const canInstall = !!deferredPrompt && !isIOS;
+  if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div
-        className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"
-        onClick={handleClose}
-      />
+    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md sm:left-auto sm:right-4">
+      <div className="rounded-2xl border border-white/10 bg-[#0a0a14]/95 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-bold text-white">Instale o Atacadinho da Rafa</p>
+            <p className="mt-1 text-xs text-gray-400">
+              {isIos
+                ? "Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'."
+                : "Instale o app para acessar os achados mais rápido."}
+            </p>
+          </div>
+          <button
+            onClick={handleClose}
+            className="rounded-full p-1 text-gray-400 transition-colors hover:text-white"
+            aria-label="Fechar"
+          >
+            ✕
+          </button>
+        </div>
 
-      <div className="relative w-full max-w-sm rounded-t-3xl sm:rounded-3xl bg-white/10 p-6 shadow-2xl backdrop-blur-xl animate-[fadeSlideUp_0.5s_ease-out] border border-white/60">
-        <button
-          onClick={handleClose}
-          className="absolute right-3 top-3 rounded-full p-2 text-gray-400 transition-colors hover:text-white hover:bg-white/10"
-          aria-label="Fechar"
-        >
-          <X className="h-5 w-5" />
-        </button>
-
-        <div className="flex flex-col items-center text-center">
-          <BrandLogo size={56} showText className="mb-4" />
-
-          <h3 className="text-lg font-bold text-white">
-            Instale o Atacadinho da Rafa
-          </h3>
-          <p className="mt-1.5 text-sm text-gray-300 leading-relaxed">
-            Salve na sua tela inicial para acessar os achados mais rapidamente.
-          </p>
-
-          <ul className="mt-4 w-full space-y-2 text-left text-sm text-gray-300">
-            <li className="flex items-start gap-2">
-              <span className="mt-0.5 text-[#F4A7B9]">✔</span>
-              <span>Abre mais rápido sem navegador</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-0.5 text-[#F4A7B9]">✔</span>
-              <span>Experiência mais fluida e limpa</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-0.5 text-[#F4A7B9]">✔</span>
-              <span>Receba destaques toda semana</span>
-            </li>
-          </ul>
-
-          <div className="mt-5 w-full space-y-2">
-            {canInstall && (
-              <button
-                onClick={handleInstall}
-                className="btn-primary w-full"
-              >
-                Instalar agora
-              </button>
-            )}
-            {isIOS && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left text-xs text-gray-300">
-                <p className="font-semibold text-white mb-1">
-                  Como instalar no iPhone/iPad:
-                </p>
-                <ol className="list-decimal space-y-1 pl-4">
-                  <li>Toque em <strong>Compartilhar</strong></li>
-                  <li>Toque em <strong>Adicionar à Tela de Início</strong></li>
-                  <li>Confirme o nome e toque em <strong>Adicionar</strong></li>
-                </ol>
-              </div>
-            )}
+        <div className="mt-3 flex gap-2">
+          {!isIos && deferredPrompt && (
+            <button
+              onClick={handleInstall}
+              className="flex-1 rounded-full bg-[#E11D48] py-2 text-xs font-bold text-white transition-all hover:bg-[#be123c]"
+            >
+              Instalar app
+            </button>
+          )}
+          {isIos && (
             <button
               onClick={handleClose}
-              className="w-full rounded-full py-2.5 text-sm font-semibold text-gray-300 transition-colors hover:text-white"
+              className="flex-1 rounded-full bg-white/10 py-2 text-xs font-bold text-white transition-all hover:bg-white/20"
             >
-              Lembrar depois
+              Entendi
             </button>
-          </div>
+          )}
         </div>
       </div>
     </div>

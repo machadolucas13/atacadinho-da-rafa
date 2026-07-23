@@ -30,6 +30,13 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /newsletter/{inscritoId} {
+      allow read: if isAdmin();
+      allow create: if true;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
     match /{document=**} {
       allow read: if false;
       allow write: if false;

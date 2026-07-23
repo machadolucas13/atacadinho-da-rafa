@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
 
             <h2 className="text-white">5. Your rights</h2>
             <p className="text-gray-300">
-              You have the right to access, correct or delete your personal data at any time. To exercise these rights, contact us by email at <a href="mailto:contato@atacadinhodarafa.com.br" className="text-[#F4A7B9] hover:text-white">contato@atacadinhodarafa.com.br</a>.
+              You have the right to access, correct or delete your personal data at any time. To exercise these rights, contact us by email at <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a>.
             </p>
 
             <h2 className="text-white">6. Changes to this policy</h2>
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
               If you have questions about this Privacy Policy, contact us:
             </p>
             <ul className="text-gray-300">
-              <li>Email: <a href="mailto:contato@atacadinhodarafa.com.br" className="text-[#F4A7B9] hover:text-white">contato@atacadinhodarafa.com.br</a></li>
+              <li>Email: <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a></li>
               <li>Instagram: <a href="https://instagram.com/atacadinhodarafa" target="_blank" rel="noopener noreferrer" className="text-[#F4A7B9] hover:text-white">@atacadinhodarafa</a></li>
             </ul>
           </div>

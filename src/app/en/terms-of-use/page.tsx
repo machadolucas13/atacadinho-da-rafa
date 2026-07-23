@@ -100,7 +100,7 @@ export default function TermsOfUsePage() {
               For questions related to these Terms of Use, contact us:
             </p>
             <ul className="text-gray-300">
-              <li>Email: <a href="mailto:contato@atacadinhodarafa.com.br" className="text-[#F4A7B9] hover:text-white">contato@atacadinhodarafa.com.br</a></li>
+              <li>Email: <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a></li>
               <li>Instagram: <a href="https://instagram.com/atacadinhodarafa" target="_blank" rel="noopener noreferrer" className="text-[#F4A7B9] hover:text-white">@atacadinhodarafa</a></li>
             </ul>
           </div>

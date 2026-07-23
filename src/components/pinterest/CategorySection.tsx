@@ -11,15 +11,17 @@ export default async function CategorySection() {
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">
-            Explore por Categoria
+            {isPt ? "Explore por Categoria" : "Explore by Category"}
           </h2>
-          <p className="mt-1 text-sm text-gray-400">Toque para descobrir coleções especiais</p>
+          <p className="mt-1 text-sm text-gray-400">
+            {isPt ? "Toque para descobrir coleções especiais" : "Tap to discover special collections"}
+          </p>
         </div>
         <LocaleAwareLink
           href="/pins"
           className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
         >
-          📌 Ver todos os pins
+          📌 {isPt ? "Ver todos os pins" : "See all pins"}
         </LocaleAwareLink>
       </div>
 

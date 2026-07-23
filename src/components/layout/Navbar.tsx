@@ -131,15 +131,15 @@ export default function Navbar() {
 
           {isMenuOpen && (
             <nav className="border-t border-white/10 pb-5 md:hidden">
-              <div className="flex flex-col space-y-1.5 pt-2">
+              <div className="flex gap-2 overflow-x-auto pt-2 pb-1 scrollbar-hide">
                 {categorias.map((categoria) => (
                   <Link
                     key={categoria.id}
                     href={`/categorias/${categoria.slug}`}
-                    className="rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-300 transition-all hover:bg-white/10 hover:text-white"
+                    className="whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span className="mr-2">{categoria.icone}</span>
+                    <span className="mr-1.5">{categoria.icone}</span>
                     {categoria.nome}
                   </Link>
                 ))}
