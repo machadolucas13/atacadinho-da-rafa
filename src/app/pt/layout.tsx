@@ -3,7 +3,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {JsonLd} from '@/components/seo/JsonLd';
 import {ScrollReveal} from '@/components/layout';
-import './../[locale]/globals.css';
+import './../globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
