@@ -65,7 +65,7 @@ export default async function RootLayout({
         <JsonLd />
         <Navbar />
         <main
-          className="relative z-10 min-h-screen"
+          className="relative z-10"
           style={{position: 'relative', zIndex: 10}}
         >
           {children}

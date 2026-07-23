@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Bookmark, Share2 } from "lucide-react";
 import { Pin } from "@/data/pins";
-import SaveButton from "@/components/ui/SaveButton";
-import ShareButtons from "@/components/social/ShareButtons";
 
 interface PinCardProps {
   pin: Pin;
@@ -15,49 +13,48 @@ interface PinCardProps {
 export default function PinCard({ pin, locale }: PinCardProps) {
   const href = `/${locale}/pins/${pin.slug}`;
 
+  const fallbackImage = "/images/artigos/default.jpg";
+
   return (
-    <Link href={href} className="group block" aria-label={`${pin.titulo} - ${locale === "en" ? "Pin" : "Pin"}`}>
-      <article className="card card-hover">
-        <div className="card-image aspect-[9/16]">
+    <Link href={href} className="group block" aria-label={pin.titulo}>
+      <div className="card card-hover flex h-full flex-col">
+        <div className="relative aspect-[9/16] w-full overflow-hidden bg-black/20">
           <Image
             src={pin.imagem}
             alt={pin.titulo}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== fallbackImage) target.src = fallbackImage;
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-          <div className="absolute inset-x-3 bottom-3 flex items-center justify-between opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-            <SaveButton item={{ id: pin.id, tipo: "artigo", titulo: pin.titulo, slug: pin.slug, imagemCapa: pin.imagem }} />
-            <ShareButtons
-              title={pin.titulo}
-              description={pin.descricao}
-              image={pin.imagem}
-              url={href}
-            />
+          <div className="absolute left-2 top-2">
+            <span className="inline-flex items-center rounded-full bg-[#E11D48]/90 px-2 py-1 text-[10px] font-bold text-white shadow-lg">
+              🔥 {locale === "en" ? "Featured" : "Destaque"}
+            </span>
           </div>
 
-          {pin.destaque && (
-            <div className="absolute left-3 top-3">
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
-                🔥 {locale === "en" ? "Featured" : "Destaque"}
-              </span>
-            </div>
-          )}
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <Bookmark className="h-4 w-4 text-white" />
+            <Share2 className="h-4 w-4 text-white" />
+          </div>
         </div>
 
-        <div className="card-content">
-          <h3 className="font-bold text-white line-clamp-2 text-[15px] leading-snug group-hover:text-[#F4A7B9] transition-colors">
+        <div className="flex flex-1 flex-col p-3">
+          <h3 className="line-clamp-2 text-sm font-bold text-white group-hover:text-[#F4A7B9]">
             {pin.titulo}
           </h3>
           {pin.descricao && (
-            <p className="mt-2 text-sm text-gray-400 line-clamp-2 leading-relaxed">
+            <p className="mt-1 line-clamp-2 text-xs text-gray-400">
               {pin.descricao}
             </p>
           )}
         </div>
-      </article>
+      </div>
     </Link>
   );
 }

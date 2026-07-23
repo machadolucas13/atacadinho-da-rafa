@@ -14,9 +14,6 @@ export default function HeroSection() {
     <section className="relative overflow-hidden pt-28 pb-14 md:pt-32 md:pb-18">
       <Starfield />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-rose-200/20 via-transparent to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[hsl(var(--background))] to-transparent" />
-
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#F4A7B9] shadow-sm backdrop-blur-sm">
