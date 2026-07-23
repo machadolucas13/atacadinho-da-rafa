@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "categories": "Categories",
+    "favorites": "Favorites",
+    "search": "Search...",
+    "menu": "Menu"
+  },
+  "hero": {
+    "title": "Deals you will love",
+    "subtitle": "Fashion, decor, kitchen and tech: we picked the best products for you to discover and buy with confidence.",
+    "cta_explore": "Explore deals",
+    "cta_blog": "Read articles"
+  },
+  "sections": {
+    "inspiration": "Inspiration",
+    "deals": "Deals of the week",
+    "popular": "Most popular"
+  },
+  "article": {
+    "read_time": "min read",
+    "save": "Save",
+    "share": "Share",
+    "back_to_blog": "Back to blog",
+    "in_this_article": "In this article",
+    "you_will_also_like": "You may also like",
+    "published_on": "Published on"
+  },
+  "product": {
+    "save": "Save",
+    "share": "Share",
+    "view_offer": "View offer"
+  },
+  "favorites": {
+    "title": "My favorites",
+    "empty": "No favorites saved yet.",
+    "hint": "Click \"Save\" on posts and products to add them here."
+  },
+  "install": {
+    "title": "Install Atacadinho da Rafa",
+    "subtitle": "Save to your home screen and access the best finds faster.",
+    "benefits": [
+      "Opens faster without a browser",
+      "Cleaner and smoother experience",
+      "Get weekly highlights"
+    ],
+    "install_now": "Install now",
+    "later": "Remind me later"
+  },
+  "seo": {
+    "default_title": "Atacadinho da Rafa - Finds, Deals and Recommendations",
+    "default_description": "Discover the best finds, deals and recommendations. Visual curation of fashion, decor, tech and beauty."
+  }
+}

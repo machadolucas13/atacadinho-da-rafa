@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ShoppingBag, ExternalLink } from "lucide-react";
+import { Star, ShoppingBag, ExternalLink, ChevronLeft, Heart } from "lucide-react";
 import { Produto } from "@/types";
 import ProductCard from "@/components/pinterest/ProductCard";
+import ShareButtons from "@/components/social/ShareButtons";
 
 interface ProdutoPageProps {
   produto: Produto;
@@ -22,108 +23,139 @@ export default function ProdutoPage({
     : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-white">
-            <Image
-              src={produto.imagemPrincipal}
-              alt={produto.nome}
-              fill
-              className="object-cover"
-              priority
-            />
-            {discount > 0 && (
-              <span className="absolute left-4 top-4 rounded-full bg-red-500 px-3 py-1 text-sm font-bold text-white">
-                -{discount}%
-              </span>
-            )}
-          </div>
+    <div className="min-h-screen">
+      <div className="relative">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#E11D48]/10 via-transparent to-[#F4A7B9]/10" />
 
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{produto.nome}</h1>
-            <p className="mt-2 text-gray-600">{produto.descricao}</p>
+        <div className="mx-auto max-w-7xl px-4 pt-28 pb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1 text-sm font-medium text-gray-400 hover:text-[#F4A7B9] transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Voltar
+          </Link>
 
-            <div className="mt-6 flex items-baseline gap-4">
-              <span className="text-4xl font-bold text-pink-600">
-                R$ {produto.preco?.toFixed(2)}
-              </span>
-              {produto.precoOriginal && (
-                <span className="text-xl text-gray-400 line-through">
-                  R$ {produto.precoOriginal.toFixed(2)}
+          <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="relative aspect-square overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-card">
+              <Image
+                src={produto.imagemPrincipal}
+                alt={produto.nome}
+                fill
+                className="object-cover"
+                priority
+              />
+              {discount > 0 && (
+                <span className="badge absolute left-4 top-4 bg-[#F43F5E] text-white shadow-lg">
+                  -{discount}%
                 </span>
               )}
-            </div>
-
-            {produto.avaliacao && (
-              <div className="mt-4 flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-5 w-5 ${
-                        i < Math.floor(produto.avaliacao!)
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-gray-600">
-                  {produto.avaliacao} ({produto.numAvaliacoes} avaliações)
+              <div className="absolute inset-x-4 bottom-4 flex items-center justify-end gap-2">
+                <span className="badge bg-white/90 backdrop-blur-sm text-[#E11D48] shadow-sm cursor-pointer hover:bg-white transition-colors">
+                  <Heart className="h-3 w-3" /> Salvar
                 </span>
+                <ShareButtons
+                  title={produto.nome}
+                  description={produto.descricao || `${produto.nome} por R$ ${produto.preco?.toFixed(2)} na ${produto.loja}`}
+                  image={produto.imagemPrincipal}
+                  url={`/produtos/${produto.slug}`}
+                />
               </div>
-            )}
-
-            <div className="mt-8 space-y-4">
-              <a
-                href={produto.linkAfiliado}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-pink-600 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-pink-700"
-              >
-                <ShoppingBag className="h-5 w-5" />
-                Ver Oferta na {produto.loja}
-                <ExternalLink className="h-4 w-4" />
-              </a>
-              <p className="text-center text-sm text-gray-500">
-                Clique para ver a oferta atualizada na {produto.loja}
-              </p>
             </div>
 
-            <div className="mt-8 rounded-xl border bg-white p-6">
-              <h3 className="font-semibold text-gray-900">Informações</h3>
-              <dl className="mt-4 space-y-2">
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Loja</dt>
-                  <dd className="font-medium">{produto.loja}</dd>
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#F4A7B9]">
+                {produto.loja}
+              </p>
+              <h1 className="text-3xl font-bold text-white tracking-tight">
+                {produto.nome}
+              </h1>
+
+              {produto.avaliacao && (
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${
+                          i < Math.floor(produto.avaliacao!)
+                            ? "fill-[#F4A261] text-[#F4A261]"
+                            : "text-gray-700"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-400">
+                    {produto.avaliacao} ({produto.numAvaliacoes} avaliações)
+                  </span>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Categoria</dt>
-                  <dd className="font-medium">{produto.categoria.nome}</dd>
+              )}
+
+              <div className="mt-6 flex flex-wrap items-baseline gap-3">
+                <span className="text-4xl font-bold text-[#F4A7B9]">
+                  R$ {produto.preco?.toFixed(2)}
+                </span>
+                {produto.precoOriginal && (
+                  <span className="text-xl text-gray-500 line-through font-medium">
+                    R$ {produto.precoOriginal.toFixed(2)}
+                  </span>
+                )}
+                {discount > 0 && (
+                  <span className="badge bg-[#F43F5E]/10 text-[#E11D48] border border-[#F43F5E]/20">
+                    Economia de R$ {(produto.precoOriginal! - produto.preco!).toFixed(2)}
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-8 space-y-3">
+                <a
+                  href={produto.linkAfiliado}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="btn-primary w-full justify-center text-base py-4"
+                >
+                  <ShoppingBag className="h-5 w-5" />
+                  Ver Oferta na {produto.loja}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+                <p className="text-center text-xs text-gray-400">
+                  Clique para ver a oferta atualizada na {produto.loja}
+                </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-soft">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Loja</p>
+                  <p className="mt-1 text-sm font-semibold text-white">{produto.loja}</p>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Disponibilidade</dt>
-                  <dd className="font-medium text-green-600">Em estoque</dd>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-soft">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Categoria</p>
+                  <p className="mt-1 text-sm font-semibold text-white">{produto.categoria.nome}</p>
                 </div>
-              </dl>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-soft">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Disponibilidade</p>
+                  <p className="mt-1 text-sm font-semibold text-green-400">Em estoque</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {relacionados.length > 0 && (
-          <section className="mt-16">
-            <h2 className="mb-6 text-2xl font-bold text-gray-900">
-              Produtos Relacionados
-            </h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {relacionados.map((produto) => (
-                <ProductCard key={produto.id} produto={produto} />
-              ))}
-            </div>
-          </section>
-        )}
       </div>
+
+      {relacionados.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-8">
+          <h2 className="mb-6 text-2xl font-bold text-white tracking-tight">
+            Você também vai gostar
+          </h2>
+          <div className="masonry-grid">
+            {relacionados.map((produto) => (
+              <div key={produto.id} className="masonry-item">
+                <ProductCard produto={produto} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

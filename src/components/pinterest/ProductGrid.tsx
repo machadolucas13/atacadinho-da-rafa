@@ -1,18 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import ProductCard from "./ProductCard";
 import { Produto } from "@/types";
 
 interface ProductGridProps {
   produtos?: Produto[];
   titulo?: string;
+  subtitle?: string;
   limite?: number;
 }
 
 export default function ProductGrid({
   produtos,
   titulo,
+  subtitle,
   limite = 20,
 }: ProductGridProps) {
   const [displayedProdutos, setDisplayedProdutos] = useState<Produto[]>([]);
@@ -32,13 +35,24 @@ export default function ProductGrid({
         ...(produtos || []).slice(prev.length, prev.length + 10),
       ]);
       setLoading(false);
-    }, 1000);
+    }, 800);
   };
 
+  const hasMore = displayedProdutos.length < (produtos?.length || 0);
+
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8">
-      {titulo && (
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">{titulo}</h2>
+    <section className="section-reveal">
+      {(titulo || subtitle) && (
+        <div className="mb-6">
+          {titulo && (
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              {titulo}
+            </h2>
+          )}
+          {subtitle && (
+            <p className="mt-1 text-sm text-gray-400">{subtitle}</p>
+          )}
+        </div>
       )}
       <div className="masonry-grid">
         {displayedProdutos.map((produto) => (
@@ -47,14 +61,24 @@ export default function ProductGrid({
           </div>
         ))}
       </div>
-      {displayedProdutos.length < (produtos?.length || 0) && (
-        <div className="mt-8 text-center">
+      {hasMore && (
+        <div className="mt-10 text-center">
           <button
             onClick={loadMore}
             disabled={loading}
-            className="rounded-full bg-pink-600 px-8 py-3 text-white transition-colors hover:bg-pink-700 disabled:opacity-50"
+            className="btn-ghost"
           >
-            {loading ? "Carregando..." : "Carregar mais"}
+            {loading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Carregando...
+              </>
+            ) : (
+              <>
+                Carregar mais
+                <ChevronDown className="h-4 w-4" />
+              </>
+            )}
           </button>
         </div>
       )}

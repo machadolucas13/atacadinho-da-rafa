@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Início",
+    "blog": "Blog",
+    "categories": "Categorias",
+    "favorites": "Favoritos",
+    "search": "Buscar...",
+    "menu": "Menu"
+  },
+  "hero": {
+    "title": "Achados que você vai amar",
+    "subtitle": "Moda, decoração, cozinha e tecnologia: separamos os melhores produtos para você descobrir e comprar com segurança.",
+    "cta_explore": "Explorar achados",
+    "cta_blog": "Ler artigos"
+  },
+  "sections": {
+    "inspiration": "Inspiração",
+    "deals": "Achados da semana",
+    "popular": "Mais procurados"
+  },
+  "article": {
+    "read_time": "min de leitura",
+    "save": "Salvar",
+    "share": "Compartilhar",
+    "back_to_blog": "Voltar para o blog",
+    "in_this_article": "Neste artigo",
+    "you_will_also_like": "Você também vai gostar",
+    "published_on": "Publicado em"
+  },
+  "product": {
+    "save": "Salvar",
+    "share": "Compartilhar",
+    "view_offer": "Ver oferta"
+  },
+  "favorites": {
+    "title": "Meus favoritos",
+    "empty": "Nenhum favorito salvo ainda.",
+    "hint": "Clique em \"Salvar\" nos posts e produtos para adicionar aqui."
+  },
+  "install": {
+    "title": "Instale o Atacadinho da Rafa",
+    "subtitle": "Salve na sua tela inicial para acessar os achados mais rapidamente.",
+    "benefits": [
+      "Abre mais rápido sem navegador",
+      "Experiência mais fluida e limpa",
+      "Receba destaques toda semana"
+    ],
+    "install_now": "Instalar agora",
+    "later": "Lembrar depois"
+  },
+  "seo": {
+    "default_title": "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
+    "default_description": "Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e beleza."
+  }
+}

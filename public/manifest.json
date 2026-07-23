@@ -1,0 +1,14 @@
+{
+  "name": "Atacadinho da Rafa",
+  "short_name": "Atacadinho",
+  "description": "Achados, ofertas e recomendações de quem entende de estilo e economia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff7f8",
+  "theme_color": "#f43f5e",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle", "productivity"],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}

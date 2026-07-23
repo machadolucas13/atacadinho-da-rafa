@@ -1,0 +1,267 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { doc, getDoc, updateDoc, serverTimestamp, collection, getDocs } from "firebase/firestore";
+import { db, storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import AdminNav from "@/components/admin/AdminNav";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+
+interface EditarProdutoProps {
+  params: { id: string };
+}
+
+export default function EditarProduto({ params }: EditarProdutoProps) {
+  const router = useRouter();
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<any[]>([]);
+
+  const [form, setForm] = useState({
+    nome: "",
+    slug: "",
+    descricao: "",
+    descricaoCurta: "",
+    imagemPrincipal: "",
+    preco: "",
+    precoOriginal: "",
+    linkAfiliado: "",
+    loja: "",
+    tags: "",
+    categoriaId: "",
+    destaque: false,
+    viral: false,
+    ativo: true,
+  });
+
+  const [preview, setPreview] = useState("");
+
+  useEffect(() => {
+    const carregar = async () => {
+      const snap = await getDoc(doc(db, "produtos", params.id));
+      if (!snap.exists()) {
+        setStatus("Produto não encontrado.");
+        setLoading(false);
+        return;
+      }
+      const data = snap.data();
+      setForm({
+        nome: data.nome || "",
+        slug: data.slug || "",
+        descricao: data.descricao || "",
+        descricaoCurta: data.descricaoCurta || "",
+        imagemPrincipal: data.imagemPrincipal || "",
+        preco: data.preco?.toString() || "",
+        precoOriginal: data.precoOriginal?.toString() || "",
+        linkAfiliado: data.linkAfiliado || "",
+        loja: data.loja || "",
+        tags: Array.isArray(data.tags) ? data.tags.join(", ") : "",
+        categoriaId: data.categoriaId || "",
+        destaque: data.destaque || false,
+        viral: data.viral || false,
+        ativo: data.ativo ?? true,
+      });
+      if (data.imagemPrincipal) setPreview(data.imagemPrincipal);
+
+      const catSnap = await getDocs(collection(db, "categorias"));
+      setCategorias(catSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      setLoading(false);
+    };
+    carregar();
+  }, [params.id]);
+
+  const handleImagemChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const path = `produtos/${Date.now()}-${file.name}`;
+      const storageRef = ref(storage, path);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      setForm({ ...form, imagemPrincipal: url });
+      setPreview(url);
+    } catch (error) {
+      console.error("Erro no upload:", error);
+      setStatus("Erro no upload da imagem.");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateDoc(doc(db, "produtos", params.id), {
+        nome: form.nome,
+        slug: form.slug,
+        descricao: form.descricao,
+        descricaoCurta: form.descricaoCurta,
+        imagemPrincipal: form.imagemPrincipal,
+        preco: parseFloat(form.preco) || 0,
+        precoOriginal: parseFloat(form.precoOriginal) || undefined,
+        linkAfiliado: form.linkAfiliado,
+        loja: form.loja,
+        tags: form.tags.split(",").map((t) => t.trim()),
+        categoriaId: form.categoriaId,
+        destaque: form.destaque,
+        viral: form.viral,
+        ativo: form.ativo,
+        atualizadoEm: serverTimestamp(),
+      });
+      setStatus("Produto atualizado com sucesso!");
+      setTimeout(() => router.push("/admin/dashboard"), 600);
+    } catch (error) {
+      console.error(error);
+      setStatus("Erro ao atualizar produto.");
+    }
+  };
+
+  if (loading) return <div className="flex min-h-screen items-center justify-center text-white">Carregando...</div>;
+
+  return (
+    <div className="min-h-screen bg-[#0a0a14]">
+      <AdminNav />
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <div className="mb-6">
+          <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+            <ArrowLeft className="h-4 w-4" />
+            Voltar para o dashboard
+          </Link>
+          <h1 className="mt-3 text-2xl font-bold text-white">Editar Produto</h1>
+        </div>
+
+        {status && (
+          <div className={`mt-4 rounded-lg p-4 text-sm border ${status.includes("sucesso") ? "bg-green-900/30 text-green-400 border-green-800" : "bg-red-900/30 text-red-400 border-red-800"}`}>
+            {status}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6">
+          <input
+            placeholder="Nome do produto"
+            value={form.nome}
+            onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+            required
+          />
+          <input
+            placeholder="Slug (ex: body-de-renda-preto)"
+            value={form.slug}
+            onChange={(e) => setForm({ ...form, slug: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+            required
+          />
+          <textarea
+            placeholder="Descrição"
+            value={form.descricao}
+            onChange={(e) => setForm({ ...form, descricao: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+          />
+          <input
+            placeholder="Descrição curta"
+            value={form.descricaoCurta}
+            onChange={(e) => setForm({ ...form, descricaoCurta: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+          />
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Imagem principal</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImagemChange}
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#E11D48] file:text-white hover:file:bg-[#be123c]"
+            />
+            {preview && (
+              <div className="mt-3 relative w-full max-w-sm aspect-video rounded-xl overflow-hidden border border-white/10">
+                <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+              </div>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              placeholder="Preço"
+              type="number"
+              step="0.01"
+              value={form.preco}
+              onChange={(e) => setForm({ ...form, preco: e.target.value })}
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+              required
+            />
+            <input
+              placeholder="Preço original (opcional)"
+              type="number"
+              step="0.01"
+              value={form.precoOriginal}
+              onChange={(e) => setForm({ ...form, precoOriginal: e.target.value })}
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+            />
+          </div>
+          <input
+            placeholder="Link afiliado"
+            value={form.linkAfiliado}
+            onChange={(e) => setForm({ ...form, linkAfiliado: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+            required
+          />
+          <input
+            placeholder="Loja"
+            value={form.loja}
+            onChange={(e) => setForm({ ...form, loja: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+            required
+          />
+          <select
+            value={form.categoriaId}
+            onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[#F4A7B9] focus:outline-none"
+          >
+            <option value="">Sem categoria</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id} className="bg-[#0a0a14]">
+                {cat.nome}
+              </option>
+            ))}
+          </select>
+          <input
+            placeholder="Tags separadas por vírgula"
+            value={form.tags}
+            onChange={(e) => setForm({ ...form, tags: e.target.value })}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-[#F4A7B9] focus:outline-none"
+          />
+          <div className="flex items-center gap-6">
+            <label className="flex items-center gap-2 text-gray-300">
+              <input
+                type="checkbox"
+                checked={form.destaque}
+                onChange={(e) => setForm({ ...form, destaque: e.target.checked })}
+              />
+              Destaque
+            </label>
+            <label className="flex items-center gap-2 text-gray-300">
+              <input
+                type="checkbox"
+                checked={form.viral}
+                onChange={(e) => setForm({ ...form, viral: e.target.checked })}
+              />
+              Viral
+            </label>
+            <label className="flex items-center gap-2 text-gray-300">
+              <input
+                type="checkbox"
+                checked={form.ativo}
+                onChange={(e) => setForm({ ...form, ativo: e.target.checked })}
+              />
+              Ativo
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-full bg-gradient-to-r from-[#E11D48] to-[#F67C6F] py-3 text-white font-semibold shadow-lg transition-all hover:shadow-xl hover:scale-[1.01]"
+          >
+            Salvar alterações
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

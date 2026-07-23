@@ -1,6 +1,11 @@
+export const revalidate = 60;
+
 import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import ProductGrid from "@/components/pinterest/ProductGrid";
-import { mockPastas } from "@/data/mock-data";
+import { getPastas } from "@/lib/pastas";
+import { getProdutos } from "@/lib/produtos";
 
 interface PastaPageProps {
   params: {
@@ -9,7 +14,8 @@ interface PastaPageProps {
 }
 
 export async function generateStaticParams() {
-  return mockPastas.map((pasta) => ({
+  const pastas = await getPastas();
+  return pastas.map((pasta) => ({
     slug: pasta.slug,
   }));
 }
@@ -17,31 +23,113 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PastaPageProps): Promise<Metadata> {
-  const pasta = mockPastas.find((p) => p.slug === params.slug);
+  const pastas = await getPastas();
+  const pasta = pastas.find((p) => p.slug === params.slug);
   if (!pasta) return {};
 
   return {
     title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
-    description: pasta.descricao,
+    description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
+    keywords: [pasta.nome.toLowerCase(), "colecao", "pasta", "achados", "Atacadinho da Rafa"],
+    openGraph: {
+      type: "website",
+      locale: "pt_BR",
+      url: `https://atacadinhodarafa.com.br/pastas/${params.slug}`,
+      siteName: "Atacadinho da Rafa",
+      title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
+      description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
+      images: [
+        {
+          url: pasta.imagemCapa || "https://atacadinhodarafa.com.br/assets/images/og-default.jpg",
+          width: 1200,
+          height: 630,
+          alt: pasta.nome,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
+      description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
+      images: [pasta.imagemCapa || "https://atacadinhodarafa.com.br/assets/images/og-default.jpg"],
+    },
+    alternates: {
+      canonical: `https://atacadinhodarafa.com.br/pastas/${params.slug}`,
+    },
   };
 }
 
-export default function PastaPage({ params }: PastaPageProps) {
-  const pasta = mockPastas.find((p) => p.slug === params.slug);
+export default async function PastaPage({ params }: PastaPageProps) {
+  const pastas = await getPastas();
+  const pasta = pastas.find((p) => p.slug === params.slug);
 
   if (!pasta) {
     return <div>Pasta não encontrada</div>;
   }
 
+  const produtos = await getProdutos();
+  const produtosPasta = produtos.filter((p) => p.categoriaId === pasta?.categoria?.id);
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
+      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.com.br/categorias/${pasta.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.com.br/pastas/${params.slug}` },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="mx-auto max-w-7xl px-4 py-8">
-          <h1 className="text-3xl font-bold text-gray-900">{pasta.nome}</h1>
-          <p className="mt-2 text-gray-600">{pasta.descricao}</p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+
+      <div className="relative min-h-screen">
+        {pasta.imagemCapa && (
+          <div className="absolute inset-0 -z-10 h-[420px] overflow-hidden">
+            <Image
+              src={pasta.imagemCapa}
+              alt={pasta.nome}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0a0a14]" />
+          </div>
+        )}
+
+        <div className="mx-auto max-w-7xl px-4 pt-28 pb-8">
+          {!pasta.imagemCapa && (
+            <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+              <Link href="/" className="hover:text-[#F4A7B9] transition-colors">Home</Link>
+              <span className="text-gray-600">/</span>
+              <Link href={`/categorias/${pasta.categoria.slug}`} className="hover:text-[#F4A7B9] transition-colors">
+                {pasta.categoria.nome}
+              </Link>
+              <span className="text-gray-600">/</span>
+              <span className="text-white font-medium">{pasta.nome}</span>
+            </nav>
+          )}
+
+          <div className="py-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight drop-shadow-sm">
+              {pasta.nome}
+            </h1>
+            {pasta.descricao && (
+              <p className="mt-3 text-lg text-gray-300 max-w-2xl">
+                {pasta.descricao}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 pb-16">
+          <ProductGrid produtos={produtosPasta} titulo="Achados da coleção" />
         </div>
       </div>
-      <ProductGrid produtos={mockProdutos} />
-    </div>
+    </>
   );
 }

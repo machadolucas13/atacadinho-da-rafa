@@ -8,12 +8,17 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4">
-      <h2 className="text-2xl font-bold text-gray-900">Algo deu errado!</h2>
-      <p className="mt-2 text-gray-600">{error.message}</p>
+    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
+      <div className="text-6xl">😕</div>
+      <h2 className="mt-4 text-2xl font-bold text-white tracking-tight">
+        Algo deu errado!
+      </h2>
+      <p className="mt-2 text-gray-300 max-w-md">
+        Não conseguimos carregar esta página. Tente novamente.
+      </p>
       <button
         onClick={reset}
-        className="mt-4 rounded-full bg-pink-600 px-6 py-3 text-white transition-colors hover:bg-pink-700"
+        className="btn-primary mt-6"
       >
         Tentar novamente
       </button>

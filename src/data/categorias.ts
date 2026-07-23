@@ -12,6 +12,16 @@ const categoriasData: Categoria[] = [
     ativo: true,
   },
   {
+    id: "1b",
+    nome: "Moda Masculina",
+    slug: "moda-masculina",
+    descricao: "Roupas, calçados e acessórios masculinos",
+    icone: "👔",
+    cor: "#3b82f6",
+    ordem: 1.5,
+    ativo: true,
+  },
+  {
     id: "2",
     nome: "Casa e Decoração",
     slug: "casa-decoracao",

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="50%" stop-color="#1a0f1a"/>
+      <stop offset="100%" stop-color="#0f0f15"/>
+    </linearGradient>
+    <linearGradient id="rose" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4A7B9"/>
+      <stop offset="100%" stop-color="#E11D48"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F4A261"/>
+      <stop offset="100%" stop-color="#F67C6F"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <g opacity="0.15">
+    <circle cx="200" cy="150" r="300" fill="none" stroke="#F4A7B9" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="200" cy="150" r="250" fill="none" stroke="#F4A7B9" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="200" cy="150" r="200" fill="none" stroke="#F4A7B9" stroke-width="0.5" opacity="0.2"/>
+    <circle cx="200" cy="150" r="150" fill="none" stroke="#F4A7B9" stroke-width="0.5" opacity="0.15"/>
+    <circle cx="1000" cy="480" r="250" fill="none" stroke="#F4A261" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="1000" cy="480" r="200" fill="none" stroke="#F4A261" stroke-width="0.5" opacity="0.2"/>
+  </g>
+  
+  <g opacity="0.6">
+    <circle cx="180" cy="140" r="3" fill="#F4A7B9" filter="url(#glow)"/>
+    <circle cx="220" cy="130" r="2" fill="#F4A7B9" filter="url(#glow)"/>
+    <circle cx="190" cy="170" r="2.5" fill="#F4A7B9" filter="url(#glow)"/>
+    <circle cx="980" cy="470" r="2" fill="#F4A261" filter="url(#glow)"/>
+    <circle cx="1020" cy="490" r="3" fill="#F4A261" filter="url(#glow)"/>
+  </g>
+  
+  <rect x="80" y="80" width="200" height="200" rx="40" fill="url(#rose)" opacity="0.08" transform="rotate(-12 180 180)"/>
+  <rect x="900" y="350" width="180" height="180" rx="30" fill="url(#accent)" opacity="0.06" transform="rotate(8 990 440)"/>
+  
+  <g transform="translate(600, 240)" text-anchor="middle">
+    <text x="0" y="20" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="400" fill="#F4A7B9" letter-spacing="8" opacity="0.9">
+      ATACADINHO DA RAFA
+    </text>
+    <text x="0" y="70" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#FFFFFF" letter-spacing="2">
+      Como ganhar dinheiro
+    </text>
+    <text x="0" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="url(#rose)" letter-spacing="2">
+      como afiliada
+    </text>
+    <text x="0" y="175" font-family="sans-serif" font-size="16" font-weight="300" fill="#9ca3af" letter-spacing="1">
+      guia completo para iniciantes · 2026
+    </text>
+  </g>
+  
+  <g transform="translate(600, 420)" text-anchor="middle">
+    <rect x="-80" y="-15" width="160" height="30" rx="15" fill="url(#rose)" opacity="0.15"/>
+    <text x="0" y="5" font-family="sans-serif" font-size="12" font-weight="600" fill="#F4A7B9" letter-spacing="3">
+      SEM INVESTIMENTO · SEM ESTOQUE · SEM ENROLAÇÃO
+    </text>
+  </g>
+  
+  <g transform="translate(600, 520)" text-anchor="middle">
+    <circle cx="-180" cy="-8" r="6" fill="url(#rose)" opacity="0.8" filter="url(#glow)"/>
+    <text x="-150" y="-2" font-family="'Inter', sans-serif" font-size="11" fill="#9ca3af" letter-spacing="1">RENDA EXTRA</text>
+    
+    <circle cx="-40" cy="-8" r="6" fill="url(#accent)" opacity="0.8" filter="url(#glow)"/>
+    <text x="-10" y="-2" font-family="'Inter', sans-serif" font-size="11" fill="#9ca3af" letter-spacing="1">HOME OFFICE</text>
+    
+    <circle cx="120" cy="-8" r="6" fill="#F4A7B9" opacity="0.8" filter="url(#glow)"/>
+    <text x="150" y="-2" font-family="'Inter', sans-serif" font-size="11" fill="#9ca3af" letter-spacing="1">INICIANTES</text>
+    
+    <circle cx="260" cy="-8" r="6" fill="url(#accent)" opacity="0.8" filter="url(#glow)"/>
+    <text x="290" y="-2" font-family="'Inter', sans-serif" font-size="11" fill="#9ca3af" letter-spacing="1">BRASIL 2026</text>
+  </g>
+  
+  <g opacity="0.03">
+    <line x1="0" y1="500" x2="1200" y2="500" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="0" y1="520" x2="1200" y2="520" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="0" y1="540" x2="1200" y2="540" stroke="#ffffff" stroke-width="0.5"/>
+  </g>
+</svg>

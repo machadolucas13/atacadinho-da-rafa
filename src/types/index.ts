@@ -62,7 +62,11 @@ export type Artigo = {
   destaque: boolean;
   visualizacoes: number;
   tempoLeitura?: number;
+  cliques: number;
+  conversoes: number;
+  autor?: string;
   tags: string[];
   ativo: boolean;
   publicadoEm: Date;
+  locale?: string;
 };

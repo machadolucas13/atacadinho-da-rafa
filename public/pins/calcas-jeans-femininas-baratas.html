@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1080px; height: 1920px; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .pin-container {
+    width: 1080px; height: 1920px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+    position: relative; overflow: hidden;
+    padding: 80px 70px;
+  }
+  .header {
+    text-align: center; margin-bottom: 50px;
+    position: relative; z-index: 2;
+  }
+  .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  .main-title {
+    font-size: 78px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+  }
+  .main-title span {
+    color: #ffd700;
+    display: block;
+    font-size: 92px;
+    letter-spacing: -3px;
+  }
+  .subtitle {
+    font-size: 28px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+    position: relative; z-index: 2;
+  }
+  .product-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 24px;
+    padding: 25px;
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+  }
+  .product-card.featured {
+    background: rgba(255,215,0,0.15);
+    border: 2px solid rgba(255,215,0,0.4);
+    transform: scale(1.05);
+  }
+  .product-name {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.3;
+    flex-grow: 1;
+  }
+  .product-price {
+    font-size: 32px;
+    color: #ffd700;
+    font-weight: 900;
+    margin-top: 15px;
+    letter-spacing: -1px;
+  }
+  .footer-cta {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 30px;
+    position: relative; z-index: 2;
+    margin-top: 20px;
+  }
+  .cta-text {
+    font-size: 36px;
+    color: #fff;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+  .cta-sub {
+    font-size: 22px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+  .watermark {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    color: rgba(255,255,255,0.4);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="pin-container">
+  <div class="header">
+    <div class="tag">🛒 Brechó | Usada | Nova</div>
+    <h1 class="main-title">
+      CALÇAS JEANS
+      FEMININAS
+      <span>A PARTIR DE R$ 24,90</span>
+    </h1>
+    <p class="subtitle">Wide Leg • Flare • Cargo • Skinny • Levanta Bumbum</p>
+  </div>
+
+  <div class="collage">
+    <div class="product-card">
+      <div class="product-name">Calça Jeans Bazar Brechó Usada</div>
+      <div class="product-price">R$ 24,90</div>
+    </div>
+    <div class="product-card featured">
+      <div class="product-name">Wide Leg Levanta Bumbum</div>
+      <div class="product-price">R$ 29,90</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Cintura Alta com Lycra</div>
+      <div class="product-price">R$ 36,90</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Preta Grafite Empina Bumbum</div>
+      <div class="product-price">R$ 36,90</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Jogger com Elástico</div>
+      <div class="product-price">R$ 39,99</div>
+    </div>
+    <div class="product-card featured">
+      <div class="product-name">Flare Grafite Tendência</div>
+      <div class="product-price">R$ 41,99</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Preta com Lycra Empina Bumbum</div>
+      <div class="product-price">R$ 44,99</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Flare Cintura Alta Modeladora</div>
+      <div class="product-price">R$ 47,90</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Cargo Grafite Super Tendência</div>
+      <div class="product-price">R$ 48,59</div>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    <div class="cta-text">CLICA E CONFERE TODOS OS MODELOS 👇</div>
+    <div class="cta-sub">20 opções de R$ 24,90 a R$ 260 | Shopee | Envio rápido</div>
+  </div>
+
+  <div class="watermark">@ATACADINHODARAFA</div>
+</div>
+</body>
+</html>

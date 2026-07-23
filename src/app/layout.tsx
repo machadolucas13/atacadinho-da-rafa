@@ -1,24 +1,98 @@
-import { Inter, Poppins } from "next/font/google";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import "./globals.css";
+import {Plus_Jakarta_Sans, Manrope} from 'next/font/google';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import {JsonLd} from '@/components/seo/JsonLd';
+import {ScrollReveal, Background} from '@/components/layout';
+import './globals.css';
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta-sans',
+  weight: ['400', '500', '600', '700'],
 });
 
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-poppins",
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
 export const metadata = {
-  title: "Atacadinho da Rafa - Descubra Produtos Incríveis",
+  title: {
+    default: 'Atacadinho da Rafa - Descobertas, Achados e Ofertas',
+    template: '%s | Atacadinho da Rafa',
+  },
   description:
-    "Descubra os melhores produtos, achados e ofertas. Curadoria de moda, decoração, tecnologia e muito mais.",
+    'Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e muito mais.',
+  keywords: [
+    'achados',
+    'ofertas',
+    'descobertas',
+    'produtos',
+    'moda feminina',
+    'decoracao',
+    'tecnologia',
+    'cozinha',
+    'beleza',
+    'acessorios',
+    'Shopee',
+    'Mercado Livre',
+    'Amazon',
+  ],
+  authors: [{name: 'Atacadinho da Rafa'}],
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: 'https://atacadinhodarafa.com.br',
+    siteName: 'Atacadinho da Rafa',
+    title: 'Atacadinho da Rafa - Descobertas, Achados e Ofertas',
+    description:
+      'Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e muito mais.',
+    images: [
+      {
+        url: 'https://atacadinhodarafa.com.br/assets/images/og-home.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Atacadinho da Rafa',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Atacadinho da Rafa',
+    description: 'Descubra os melhores achados e ofertas',
+    images: ['https://atacadinhodarafa.com.br/assets/images/og-home.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://atacadinhodarafa.com.br',
+  },
+  icons: {
+    icon: '/assets/images/favicon.png',
+    apple: '/assets/images/apple-touch-icon.png',
+  },
 };
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export const themeColor = [
+  {media: '(prefers-color-scheme: light)', color: '#fdfbf7'},
+  {media: '(prefers-color-scheme: dark)', color: '#1a1a1a'},
+];
 
 export default function RootLayout({
   children,
@@ -26,11 +100,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+    <html
+      lang="pt-BR"
+      className={`${plusJakartaSans.variable} ${manrope.variable} font-body antialiased`}
+    >
+      <body
+        className="relative min-h-screen bg-[#0a0a14] text-[hsl(var(--foreground))]"
+        style={{
+          color: '#f5f5f7',
+          fontFamily: 'var(--font-manrope), system-ui, sans-serif',
+          lineHeight: '1.7',
+          letterSpacing: '-0.01em',
+          overflowX: 'hidden',
+        }}
+      >
+        <Background />
+        <JsonLd />
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main
+          className="relative z-10 min-h-screen"
+          style={{position: 'relative', zIndex: 10}}
+        >
+          {children}
+        </main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );
