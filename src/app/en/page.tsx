@@ -98,7 +98,7 @@ export default async function HomePage() {
                     href="/en/categories/womens-fashion"
                     className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
                   >
-                    👗 Women's Fashion
+                    👗 Women&apos;s Fashion
                   </LocaleAwareLink>
                 </div>
               </div>
@@ -115,6 +115,12 @@ export default async function HomePage() {
 
         <NewsletterForm locale="en" />
       </div>
+
+      <footer className="relative z-10 border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4 py-8 text-center text-sm text-gray-500">
+          © {new Date().getFullYear()} Atacadinho da Rafa. All rights reserved.
+        </div>
+      </footer>
 
       <InstallPrompt />
     </div>

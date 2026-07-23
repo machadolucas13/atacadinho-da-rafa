@@ -118,6 +118,12 @@ export default async function HomePage() {
         <NewsletterForm locale="pt" />
       </div>
 
+      <footer className="relative z-10 border-t border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4 py-8 text-center text-sm text-gray-500">
+          © {new Date().getFullYear()} Atacadinho da Rafa. Todos os direitos reservados.
+        </div>
+      </footer>
+
       <InstallPrompt />
     </div>
   );
