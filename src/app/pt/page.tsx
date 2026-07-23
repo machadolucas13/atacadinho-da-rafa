@@ -21,7 +21,6 @@ export const metadata: Metadata = {
     "produtos",
     "moda feminina",
     "decoracao",
-    "tecnologia",
     "cozinha",
     "beleza",
     "acessorios",
@@ -34,9 +33,8 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const artigos = await getArtigos("pt");
 
-  const ultimosPosts = artigos.slice(0, 6);
-  const achadosDestaque = ultimosPosts.slice(0, 3);
-  const bombandoAgora = ultimosPosts.slice(3, 6);
+  const featured = artigos.filter((a) => a.destaque).slice(0, 3);
+  const trending = artigos.filter((a) => !a.destaque).slice(0, 3);
 
   return (
     <div className="min-h-screen">
@@ -45,8 +43,8 @@ export default async function HomePage() {
       <div className="relative">
         <CategorySection />
 
-        <div className="mx-auto max-w-7xl px-4 py-10">
-          <div className="mb-6">
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold text-white tracking-tight">
               ✨ Achados em destaque
             </h2>
@@ -55,14 +53,14 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {achadosDestaque.map((artigo) => (
+            {(featured.length ? featured : artigos.slice(0, 3)).map((artigo) => (
               <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="mx-auto max-w-7xl px-4 py-10">
-          <div className="mb-6 flex items-center gap-2">
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
@@ -72,13 +70,13 @@ export default async function HomePage() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {bombandoAgora.map((artigo) => (
+            {(trending.length ? trending : artigos.slice(3, 6)).map((artigo) => (
               <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="mx-auto max-w-7xl px-4 py-10">
+        <section className="mx-auto max-w-7xl px-4 py-10">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div>
@@ -115,10 +113,11 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <NewsletterForm locale="pt" />
       </div>
+
       <InstallPrompt />
     </div>
   );

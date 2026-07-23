@@ -6,11 +6,15 @@ export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isIos, setIsIos] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const isAppleDevice = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    const isAndroid = /android/.test(navigator.userAgent.toLowerCase());
     const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone;
+    const mobile = isAppleDevice || isAndroid;
 
+    setIsMobile(mobile);
     setIsIos(isAppleDevice && !isStandalone);
 
     const handler = (e: Event) => {
@@ -21,7 +25,7 @@ export default function InstallPrompt() {
 
     window.addEventListener("beforeinstallprompt", handler);
 
-    if (isAppleDevice && !isStandalone) {
+    if (!isStandalone && (isAppleDevice || isAndroid)) {
       setIsVisible(true);
     }
 
@@ -73,7 +77,9 @@ export default function InstallPrompt() {
             <p className="mt-1 text-xs text-gray-400">
               {isIos
                 ? "Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'."
-                : "Instale o app para acessar os achados mais rápido."}
+                : isMobile
+                  ? "Instale o app para acessar os achados mais rápido."
+                  : "Instale o app para acessar os achados mais rápido."}
             </p>
           </div>
           <button
