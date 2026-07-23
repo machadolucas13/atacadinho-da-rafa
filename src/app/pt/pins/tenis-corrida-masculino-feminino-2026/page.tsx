@@ -64,6 +64,12 @@ export default function PinClient() {
 
             <div className="flex flex-wrap gap-3 mb-8">
               <LocaleAwareLink
+                href="/pt/artigos/rotina-treino-feminino-perder-peso-dicas-2026"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
+              >
+                💪 Dicas de treino para mulheres
+              </LocaleAwareLink>
+              <LocaleAwareLink
                 href="/pt/categorias/calcados"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
               >

@@ -21,6 +21,7 @@ export async function generateStaticParams() {
     { slug: "como-criar-conteudo-instagram-seguidores" },
     { slug: "guia-marketing-afiliados-iniciantes-2026" },
     { slug: "como-fazer-mudanca-gastando-pouco" },
+    { slug: "rotina-treino-feminino-perder-peso-dicas-2026" },
   ];
 }
 
