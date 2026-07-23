@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import HeroSection from "@/components/hero/HeroSection";
 import CategorySection from "@/components/pinterest/CategorySection";
+import TrendingSection from "@/components/pinterest/TrendingSection";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import PinCard from "@/components/pinterest/PinCard";
@@ -63,11 +64,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const artigos = await getArtigos("pt");
-  const pins = await getPins("pt");
+  const [artigos, pins] = await Promise.all([
+    getArtigos("pt"),
+    getPins("pt"),
+  ]);
 
-  const featuredPins = pins.filter((p) => p.destaque);
-  const morePins = pins;
   const posts = artigos.slice(0, 6);
 
   return (
@@ -83,42 +84,21 @@ export default async function HomePage() {
         <CategorySection />
       </section>
 
-      <section className="py-12 md:py-16" aria-label="Pins em destaque">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
+      <section className="py-12 md:py-16" aria-label="Pins">
+        <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
             </span>
             <h2 className="text-2xl font-bold text-white tracking-tight">
-              Pins em destaque
+              Pins
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" role="list">
-            {featuredPins.map((pin) => (
-              <div key={pin.id} role="listitem">
-                <PinCard key={pin.id} pin={pin} locale="pt" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-12 md:pb-16" aria-label="Mais pins">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
-          <div className="mb-6 flex items-center justify-center gap-2">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
-            </span>
-            <h2 className="text-2xl font-bold text-white tracking-tight">
-              Mais Pins
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" role="list">
-            {morePins.map((pin) => (
-              <div key={pin.id} role="listitem">
-                <PinCard key={pin.id} pin={pin} locale="pt" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {pins.map((pin) => (
+              <div key={pin.id}>
+                <PinCard pin={pin} locale="pt" />
               </div>
             ))}
           </div>
@@ -126,20 +106,20 @@ export default async function HomePage() {
       </section>
 
       <section className="pb-12 md:pb-16" aria-label="Posts">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold text-white tracking-tight">Posts</h2>
             <p className="mt-1 text-sm text-gray-400">Conteúdo educativo e dicas</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((artigo) => (
-              <div key={artigo.id} role="listitem">
-                <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
-              </div>
+              <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
             ))}
           </div>
         </div>
       </section>
+
+      <TrendingSection />
 
       <section aria-label="Newsletter">
         <NewsletterForm locale="pt" />
