@@ -124,13 +124,23 @@
   .masonry-item:nth-child(9) { animation-delay: 400ms; }
   .masonry-item:nth-child(10) { animation-delay: 450ms; }
 
-  .card-hover {
-    transition: transform var(--duration-normal) var(--ease-out),
-                box-shadow var(--duration-normal) var(--ease-out);
+  .card {
+    @apply overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300;
   }
-  .card-hover:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-card-hover);
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-1;
+  }
+  .card-image {
+    @apply relative overflow-hidden bg-black/20;
+  }
+  .card-content {
+    @apply p-5;
+  }
+  .section {
+    @apply py-12 md:py-16;
+  }
+  .container-site {
+    @apply mx-auto max-w-[1600px] px-4 sm:px-6;
   }
 
   .section-reveal {

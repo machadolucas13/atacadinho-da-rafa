@@ -2,7 +2,8 @@ import {Plus_Jakarta_Sans, Manrope} from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {JsonLd} from '@/components/seo/JsonLd';
-import {ScrollReveal, Background} from '@/components/layout';
+import {ScrollReveal} from '@/components/layout';
+import Starfield from '@/components/hero/Starfield';
 import './../[locale]/globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -18,6 +19,7 @@ const manrope = Manrope({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://atacadinhodarafa.com.br"),
   title: {
     default: 'Atacadinho da Rafa - Finds, Deals and Recommendations',
     template: '%s | Atacadinho da Rafa',
@@ -59,7 +61,7 @@ export default async function RootLayout({
           overflowX: 'hidden',
         }}
       >
-        <Background />
+        <Starfield />
         <JsonLd />
         <Navbar />
         <main

@@ -100,7 +100,7 @@ export default async function ArtigoPage({ params }: ArtigoPageProps) {
       name: "Atacadinho da Rafa",
       logo: {
         "@type": "ImageObject",
-        url: "https://atacadinhodarafa.com.br/assets/images/logo.png",
+        url: "https://atacadinhodarafa.com.br/assets/images/logo_rafa.png",
       },
     },
   };

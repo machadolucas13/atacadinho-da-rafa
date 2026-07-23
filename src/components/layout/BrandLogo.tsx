@@ -9,7 +9,7 @@ interface BrandLogoProps {
   className?: string;
 }
 
-const LOGO_PATH = "/assets/images/logo.png";
+const LOGO_PATH = "/assets/images/logo_rafa.png";
 
 export default function BrandLogo({ size = 36, showText = true, className = "" }: BrandLogoProps) {
   return (

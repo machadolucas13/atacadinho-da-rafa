@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 type Point = {
   x: number;
@@ -26,10 +26,6 @@ const STAR_COLORS = [
 
 export default function Starfield() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [dimensions, setDimensions] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 1200,
-    height: typeof window !== "undefined" ? window.innerHeight : 800,
-  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,8 +39,8 @@ export default function Starfield() {
     let time = 0;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = dimensions.width;
-    const h = dimensions.height;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
 
     canvas.width = w * dpr;
     canvas.height = h * dpr;
@@ -138,7 +134,17 @@ export default function Starfield() {
 
     const handleResize = () => {
       if (typeof window === "undefined") return;
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+      const newW = window.innerWidth;
+      const newH = window.innerHeight;
+      const newDpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = newW * newDpr;
+      canvas.height = newH * newDpr;
+      canvas.style.width = `${newW}px`;
+      canvas.style.height = `${newH}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(newDpr, newDpr);
+      points = [];
+      createStars();
     };
 
     window.addEventListener("resize", handleResize);
@@ -147,7 +153,7 @@ export default function Starfield() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
     };
-  }, [dimensions.width, dimensions.height]);
+  }, []);
 
   return (
     <canvas

@@ -19,7 +19,7 @@ export function ArticleJsonLd({ artigo }: { artigo: Artigo }) {
       name: "Atacadinho da Rafa",
       logo: {
         "@type": "ImageObject",
-        url: "https://atacadinhodarafa.com.br/images/logo.png",
+        url: "https://atacadinhodarafa.com.br/assets/images/logo_rafa.png",
       },
     },
   };

@@ -2,7 +2,7 @@ import {Plus_Jakarta_Sans, Manrope} from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {JsonLd} from '@/components/seo/JsonLd';
-import {ScrollReveal, Background} from '@/components/layout';
+import {ScrollReveal} from '@/components/layout';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -78,8 +78,8 @@ export const metadata = {
     canonical: 'https://atacadinhodarafa.com.br',
   },
   icons: {
-    icon: '/assets/images/favicon.png',
-    apple: '/assets/images/apple-touch-icon.png',
+    icon: '/assets/images/logo_rafa.png',
+    apple: '/assets/images/logo_rafa.png',
   },
 };
 
@@ -104,6 +104,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${plusJakartaSans.variable} ${manrope.variable} font-body antialiased`}
     >
+      <link rel="manifest" href="/manifest.json" />
       <body
         className="relative min-h-screen bg-[#0a0a14] text-[hsl(var(--foreground))]"
         style={{
@@ -114,7 +115,6 @@ export default function RootLayout({
           overflowX: 'hidden',
         }}
       >
-        <Background />
         <JsonLd />
         <Navbar />
         <main
