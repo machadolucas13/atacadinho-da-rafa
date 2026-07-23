@@ -131,6 +131,19 @@
     @apply hover:shadow-card-hover hover:-translate-y-1;
   }
 
+  .card-image {
+    @apply relative overflow-hidden bg-black/20;
+  }
+  .card-content {
+    @apply p-5;
+  }
+  .section {
+    @apply py-12 md:py-16;
+  }
+  .container-site {
+    @apply mx-auto max-w-[1600px] px-4 sm:px-6;
+  }
+
   .section-reveal {
     opacity: 0;
     transform: translateY(40px);
