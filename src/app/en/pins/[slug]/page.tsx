@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
+import ShareButtons from "@/components/social/ShareButtons";
 
 interface ShopeeLink {
   nome: string;
@@ -23,6 +24,8 @@ const links: ShopeeLink[] = [
 ];
 
 export default function PinClient() {
+  const shareUrl = "/en/pins/best-womens-jeans-under-50-deals-2026";
+
   return (
     <div className="min-h-screen">
       <div className="pt-28 pb-12">
@@ -69,6 +72,16 @@ export default function PinClient() {
               >
                 🛒 View deals on Shopee
               </a>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
+              <h2 className="text-lg font-bold text-white mb-4">Share</h2>
+              <ShareButtons
+                title="Best Women's Jeans Under R$50"
+                description="20 models that lift and shape: wide leg, flare, cargo, skinny and more."
+                image="/posts/calcas-jeans-femininas-economicas-2026.png"
+                url={shareUrl}
+              />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

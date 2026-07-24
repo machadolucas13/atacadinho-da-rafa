@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
-import ShareButtons from "@/components/social/ShareButtons";
 
 interface PinCardProps {
   pin: Pin;
@@ -26,7 +25,7 @@ export default function PinCard({ pin, locale }: PinCardProps) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
 
-          {pin.destaque && (
+          {(pin.destaque || true) && (
             <div className="absolute left-2 top-2">
               <span className="inline-flex items-center rounded-full bg-[#E11D48]/90 px-2 py-1 text-[10px] font-bold text-white shadow-lg">
                 🔥 {locale === "en" ? "Featured" : "Destaque"}
@@ -34,14 +33,8 @@ export default function PinCard({ pin, locale }: PinCardProps) {
             </div>
           )}
 
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-black/60 p-3 transition-all duration-300 md:opacity-0 md:group-hover:opacity-100">
-            <SaveButton item={{ id: pin.id, tipo: "artigo", titulo: pin.titulo, slug: pin.slug, imagemCapa: pin.imagem }} />
-            <ShareButtons
-              title={pin.titulo}
-              description={pin.descricao}
-              image={pin.imagem}
-              url={href}
-            />
+          <div className="absolute inset-x-0 bottom-0 hidden items-center justify-center gap-2 bg-black/60 p-3 opacity-0 transition-all duration-300 group-hover:flex group-hover:opacity-100 md:flex md:opacity-0 md:group-hover:opacity-100">
+             <SaveButton item={{ id: pin.id, tipo: "artigo", titulo: pin.titulo, slug: pin.slug, imagemCapa: pin.imagem }} />
           </div>
         </div>
 

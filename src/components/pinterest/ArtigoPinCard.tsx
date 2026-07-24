@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Star, Clock } from "lucide-react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
-import ShareButtons from "@/components/social/ShareButtons";
 
 interface ArtigoPinCardProps {
   artigo: Artigo;
@@ -30,14 +29,8 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <div className="absolute inset-x-3 bottom-3 flex items-center justify-between transition-all duration-300 md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0">
-            <SaveButton item={{ id: artigo.slug, tipo: "artigo", titulo: artigo.titulo, slug: artigo.slug, imagemCapa: artigo.imagemCapa || "" }} />
-            <ShareButtons
-              title={artigo.titulo}
-              description={artigo.descricao}
-              image={artigo.imagemCapa || ""}
-              url={href}
-            />
+          <div className="absolute inset-x-3 bottom-3 hidden items-center justify-between translate-y-3 transition-all duration-300 group-hover:flex group-hover:translate-y-0 md:flex md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0">
+             <SaveButton item={{ id: artigo.slug, tipo: "artigo", titulo: artigo.titulo, slug: artigo.slug, imagemCapa: artigo.imagemCapa || "" }} />
           </div>
 
           {artigo.destaque && (
