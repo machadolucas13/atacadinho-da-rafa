@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { X, Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, Dumbbell, BookOpen, Tag, Flame, HeartPulse, Flower2, Footprints, PartyPopper, Plane, Trees, ChevronRight } from "lucide-react";
-import { getCategorias } from "@/lib/categorias";
 import { categorias as categoriasLocais } from "@/data/categorias";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -33,13 +32,7 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: { lo
   const [categorias, setCategorias] = useState<any[]>([]);
 
   useEffect(() => {
-    getCategorias().then((data) => {
-      if (data && data.length > 0) {
-        setCategorias(data);
-      } else {
-        setCategorias(categoriasLocais);
-      }
-    });
+    setCategorias(categoriasLocais);
   }, []);
 
   const IconFor = (nome: string) => iconMap[nome] || Tag;

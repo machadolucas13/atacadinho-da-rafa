@@ -86,7 +86,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-              {links.map((item) => (
+              {links.slice(0, 6).map((item) => (
                 <a
                   key={item.url}
                   href={item.url}

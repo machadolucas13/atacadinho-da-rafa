@@ -3,7 +3,7 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
-import { getPins } from "@/lib/pins";
+import { getPinBySlug, getPins } from "@/lib/pins";
 
 interface ShopeeLink {
   nome: string;
@@ -11,21 +11,14 @@ interface ShopeeLink {
   url: string;
 }
 
-const links: ShopeeLink[] = [
-  { nome: "New Balance 530 Women's Original Casual Retro Comfort Gym Walking Everyday Light", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
-  { nome: "Women's New Balance 530 Sporty Casual Breathable Robust Comfortable Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
-  { nome: "New Balance Fresh Foam Arishi V4 Women's Original with Invoice and Warranty", preco: "R$ 345,21", url: "https://s.shopee.com.br/Llr11YRzl" },
-  { nome: "Mizuno Space 5 Kids Shoes", preco: "R$ 270", url: "https://s.shopee.com.br/6L34A8VJTY" },
-  { nome: "Fila Recovery Women's Beige Light Soft Walking Gym Casual", preco: "R$ 287,96", url: "https://s.shopee.com.br/2qTBzji6XE" },
-  { nome: "Fila Progress Lite Women's Beige Walking Original Woman Comfortable Soft Running", preco: "R$ 306", url: "https://s.shopee.com.br/7KvbM3lce0" },
-];
-
 export default async function PinClient({ params }: { params: { slug: string } }) {
+  const pin = await getPinBySlug(params.slug, "en");
+  const links: ShopeeLink[] = pin?.links || [];
+  const shareUrl = `/en/pins/${params.slug}`;
   const allPins = await getPins("en");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
   const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
-  const shareUrl = `/en/pins/${params.slug}`;
 
   return (
     <div className="min-h-screen">
@@ -72,7 +65,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 👟 Shoes
               </LocaleAwareLink>
               <a
-                href={links[0].url}
+                href={links[0]?.url || "https://s.shopee.com.br/3qLjBG86H9"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
@@ -92,7 +85,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-              {links.slice(0, 6).map((item) => (
+              {links.map((item) => (
                 <a
                   key={item.url}
                   href={item.url}
