@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import HeroSection from "@/components/hero/HeroSection";
-import CategorySection from "@/components/pinterest/CategorySection";
 import TrendingSection from "@/components/pinterest/TrendingSection";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
@@ -78,10 +77,6 @@ export default async function HomePage() {
 
       <section aria-label="Hero">
         <HeroSection />
-      </section>
-
-      <section id="categorias" aria-label="Categorias">
-        <CategorySection />
       </section>
 
       <section className="py-12 md:py-16" aria-label="Pins">
