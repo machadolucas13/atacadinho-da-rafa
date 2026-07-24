@@ -6,6 +6,7 @@ export interface Pin {
   descricao: string;
   imagem: string;
   destaque: boolean;
+  visualizacoes?: number;
 }
 
 export const pins: Pin[] = [
