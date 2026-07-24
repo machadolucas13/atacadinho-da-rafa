@@ -3,10 +3,15 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { getCategorias } from "@/lib/categorias";
 import { getProdutos } from "@/lib/produtos";
+import { categorias as categoriasLocais } from "@/data/categorias";
 
 export default async function CategorySection() {
-  const categorias = await getCategorias();
+  let categorias = await getCategorias();
   const produtos = await getProdutos();
+
+  if (!categorias || categorias.length === 0) {
+    categorias = categoriasLocais;
+  }
 
   const categoriaComContagem = categorias.map((cat) => {
     const count = produtos.filter((p) => p.categoriaId === cat.id).length;

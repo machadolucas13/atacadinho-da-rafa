@@ -3,6 +3,7 @@
 import { getArtigoBySlug } from "@/server/artigos";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { sanitizeHtml } from "@/lib/sanitize";
+import ShareButtons from "@/components/social/ShareButtons";
 
 export async function generateStaticParams() {
   return [
@@ -90,6 +91,18 @@ export default async function ArtigoPage({
               className="prose prose-invert max-w-none text-gray-300 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(artigo.conteudo) }}
             />
+
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+              <p className="text-sm font-semibold text-white mb-2">Share this article</p>
+              <div className="flex justify-center">
+                <ShareButtons
+                  title={artigo.titulo}
+                  description={artigo.descricao}
+                  image={artigo.imagemCapa || ""}
+                  url={`/en/articles/${artigo.slug}`}
+                />
+              </div>
+            </div>
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
               <p className="text-sm font-semibold text-white mb-2">Want to see prices and models on Shopee?</p>
