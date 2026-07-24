@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 import { Search, Menu, X, Bookmark, Globe, Pin as PinIcon } from "lucide-react";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import BrandLogo from "./BrandLogo";
+import CategorySidebar from "@/components/ui/CategorySidebar";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
 
   const currentLocale = pathname.split("/")[1] === "en" ? "en" : "pt";
@@ -26,11 +27,11 @@ export default function Navbar() {
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={() => setIsSidebarOpen(true)}
                 className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="Menu"
               >
-                {isMenuOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
+                <Menu className="h-[18px] w-[18px]" />
               </button>
               <BrandLogo size={34} showText className="hidden sm:flex" />
               <BrandLogo size={34} showText={false} className="sm:hidden" />
@@ -111,16 +112,10 @@ export default function Navbar() {
               </div>
             </div>
           )}
-
-          {isMenuOpen && (
-            <nav className="border-t border-white/10 pb-5 md:hidden">
-              <div className="flex gap-2 overflow-x-auto pt-2 pb-1 scrollbar-hide">
-                {[]}
-              </div>
-            </nav>
-          )}
         </div>
       </div>
+
+      <CategorySidebar locale={currentLocale} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </header>
   );
 }
