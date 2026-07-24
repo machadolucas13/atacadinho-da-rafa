@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { X, Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, Dumbbell, BookOpen, Tag, Flame, HeartPulse, Flower2, Footprints, PartyPopper, Plane, Trees, ChevronRight } from "lucide-react";
 import { categorias as categoriasLocais } from "@/data/categorias";
@@ -36,7 +36,9 @@ type CategorySidebarProps = {
 
 export default function CategorySidebar({ locale = "pt", isOpen, onClose }: CategorySidebarProps) {
   const [categorias, setCategorias] = useState<any[]>([]);
-  const [render, setRender] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [animating, setAnimating] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     setCategorias(categoriasLocais);
@@ -44,29 +46,38 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
 
   useEffect(() => {
     if (isOpen) {
-      setRender(true);
-    } else {
-      const timer = setTimeout(() => setRender(false), 300);
-      return () => clearTimeout(timer);
+      setVisible(true);
+      setAnimating(true);
+      rafRef.current = requestAnimationFrame(() => {
+        setAnimating(false);
+      });
+      return () => {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      };
     }
+
+    const timer = setTimeout(() => setVisible(false), 280);
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   const IconFor = (slug: string) => iconMap[slug] || Tag;
 
-  if (!render) return null;
+  if (!visible) return null;
 
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 opacity-100"
           onClick={onClose}
+          aria-hidden="true"
         />
       )}
       <nav
-        className={`fixed left-0 top-0 z-50 h-full w-72 border-r border-white/10 bg-[#0a0a14]/95 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-50 h-full w-72 border-r border-white/10 bg-[#0a0a14]/90 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-out ${
+          animating ? "translate-x-0" : isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
+        style={{ WebkitFontSmoothing: "antialiased" }}
         aria-label="Navegação lateral"
       >
         <div className="p-6">
@@ -84,7 +95,7 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
             </button>
           </div>
 
-          <div className="space-y-0.5 overflow-y-auto h-[calc(100vh-80px)]">
+          <div className="space-y-0.5 overflow-y-auto h-[calc(100vh-80px)] pr-1 category-scroll">
             {categorias.map((categoria) => {
               const Icon = IconFor(categoria.slug);
               const name = locale === "en" ? (categoria.nomeEn || categoria.nome) : categoria.nome;

@@ -194,6 +194,11 @@
   .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 9999px; }
   .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
+  .category-scroll::-webkit-scrollbar { width: 3px; }
+  .category-scroll::-webkit-scrollbar-track { background: transparent; }
+  .category-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
+  .category-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
   :focus-visible {
     outline: 2px solid rgba(244,167,185,0.8);
     outline-offset: 2px;

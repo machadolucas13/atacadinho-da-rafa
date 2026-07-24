@@ -21,19 +21,23 @@ type Planet = {
   radius: number;
   color: string;
   glow: string;
+  ringColor?: string;
   speed: number;
   orbit: number;
   baseX: number;
   baseY: number;
+  tilt: number;
 };
 
 const STAR_COLORS = [
-  "rgba(255,255,255,0.9)",
-  "rgba(244,167,185,0.8)",
-  "rgba(246,194,170,0.7)",
-  "rgba(255,220,180,0.8)",
-  "rgba(180,210,255,0.7)",
-  "rgba(244,162,97,0.6)",
+  "rgba(255,255,255,0.95)",
+  "rgba(244,167,185,0.85)",
+  "rgba(246,194,170,0.75)",
+  "rgba(255,220,180,0.85)",
+  "rgba(180,210,255,0.75)",
+  "rgba(244,162,97,0.65)",
+  "rgba(167,199,231,0.7)",
+  "rgba(231,167,199,0.65)",
 ];
 
 export default function Starfield() {
@@ -49,6 +53,7 @@ export default function Starfield() {
     let animationFrameId: number;
     let points: Point[] = [];
     let planets: Planet[] = [];
+    let nebulae: { x: number; y: number; r: number; color: string }[] = [];
     let time = 0;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -63,10 +68,10 @@ export default function Starfield() {
     ctx.scale(dpr, dpr);
 
     const createStars = () => {
-      const count = Math.min(Math.floor((w * h) / 9000), 140);
+      const count = Math.min(Math.floor((w * h) / 11000), 120);
       points = Array.from({ length: count }, () => {
         const colorIndex = Math.floor(Math.random() * STAR_COLORS.length);
-        const baseRadius = Math.random() < 0.06 ? Math.random() * 2 + 1.2 : Math.random() * 1.2 + 0.4;
+        const baseRadius = Math.random() < 0.04 ? Math.random() * 1.8 + 1.2 : Math.random() * 1 + 0.3;
         return {
           x: Math.random() * w,
           y: Math.random() * h,
@@ -75,8 +80,8 @@ export default function Starfield() {
           radius: baseRadius,
           baseOpacity: Math.random() * 0.55 + 0.25,
           phase: Math.random() * Math.PI * 2,
-          speed: Math.random() * 0.0018 + 0.0008,
-          amplitude: Math.random() * 55 + 20,
+          speed: Math.random() * 0.0014 + 0.0005,
+          amplitude: Math.random() * 45 + 15,
           color: STAR_COLORS[colorIndex],
         };
       });
@@ -86,66 +91,89 @@ export default function Starfield() {
     const createPlanets = () => {
       planets = [
         {
-          x: w * 0.75,
-          y: h * 0.22,
-          radius: Math.min(w, h) * 0.045,
-          color: "rgba(180,220,255,0.35)",
-          glow: "rgba(180,220,255,0.08)",
+          x: w * 0.72,
+          y: h * 0.24,
+          radius: Math.min(w, h) * 0.032,
+          color: "rgba(210,225,255,0.45)",
+          glow: "rgba(180,220,255,0.1)",
+          ringColor: "rgba(255,255,255,0.05)",
           speed: 0.0004,
-          orbit: 18,
-          baseX: w * 0.75,
-          baseY: h * 0.22,
+          orbit: 14,
+          baseX: w * 0.72,
+          baseY: h * 0.24,
+          tilt: 0.45,
         },
         {
           x: w * 0.18,
-          y: h * 0.72,
-          radius: Math.min(w, h) * 0.025,
-          color: "rgba(244,167,185,0.45)",
+          y: h * 0.70,
+          radius: Math.min(w, h) * 0.018,
+          color: "rgba(244,180,165,0.5)",
           glow: "rgba(244,167,185,0.1)",
           speed: 0.0006,
-          orbit: 24,
+          orbit: 18,
           baseX: w * 0.18,
-          baseY: h * 0.72,
+          baseY: h * 0.70,
+          tilt: 0,
         },
       ];
     };
 
-    const drawGalaxy = () => {
-      const cx = w * 0.5;
-      const cy = h * 0.5;
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.55);
-      grad.addColorStop(0, "rgba(120,140,180,0.06)");
-      grad.addColorStop(0.4, "rgba(100,120,160,0.03)");
-      grad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, w, h);
+    const createNebulae = () => {
+      nebulae = [
+        { x: w * 0.35, y: h * 0.45, r: Math.max(w, h) * 0.32, color: "rgba(120,110,160,0.035)" },
+        { x: w * 0.70, y: h * 0.70, r: Math.max(w, h) * 0.24, color: "rgba(160,120,140,0.03)" },
+      ];
+    };
+
+    const drawNebulae = () => {
+      for (let i = 0; i < nebulae.length; i++) {
+        const n = nebulae[i];
+        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+        grad.addColorStop(0, n.color);
+        grad.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+      }
     };
 
     createStars();
     createPlanets();
+    createNebulae();
 
     const draw = () => {
-      time += 0.006;
+      time += 0.005;
 
       ctx.fillStyle = "rgb(10,10,20)";
       ctx.fillRect(0, 0, w, h);
 
-      drawGalaxy();
+      drawNebulae();
 
       for (let i = 0; i < planets.length; i++) {
         const planet = planets[i];
-        const px = planet.baseX + Math.sin(time * planet.speed * 1000) * planet.orbit;
-        const py = planet.baseY + Math.cos(time * planet.speed * 800) * planet.orbit * 0.6;
+        const px = planet.baseX + Math.sin(time * planet.speed * 900) * planet.orbit;
+        const py = planet.baseY + Math.cos(time * planet.speed * 700) * planet.orbit * 0.6;
         planet.x = px;
         planet.y = py;
 
-        const glowGrad = ctx.createRadialGradient(px, py, planet.radius * 0.2, px, py, planet.radius * 3);
+        const glowGrad = ctx.createRadialGradient(px, py, planet.radius * 0.2, px, py, planet.radius * 3.2);
         glowGrad.addColorStop(0, planet.glow);
         glowGrad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = glowGrad;
         ctx.beginPath();
-        ctx.arc(px, py, planet.radius * 3, 0, Math.PI * 2);
+        ctx.arc(px, py, planet.radius * 3.2, 0, Math.PI * 2);
         ctx.fill();
+
+        if (planet.ringColor) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(planet.tilt);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, planet.radius * 1.7, planet.radius * 0.5, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = planet.ringColor;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
 
         ctx.beginPath();
         ctx.arc(px, py, planet.radius, 0, Math.PI * 2);
@@ -155,13 +183,13 @@ export default function Starfield() {
 
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
-        const offsetX = Math.sin(time * p.speed * 600 + p.phase) * p.amplitude;
-        const offsetY = Math.cos(time * p.speed * 500 + p.phase * 1.3) * p.amplitude * 0.7;
+        const offsetX = Math.sin(time * p.speed * 550 + p.phase) * p.amplitude;
+        const offsetY = Math.cos(time * p.speed * 450 + p.phase * 1.3) * p.amplitude * 0.6;
 
         p.x = p.baseX + offsetX;
         p.y = p.baseY + offsetY;
 
-        const alpha = Math.max(0.12, Math.min(1, p.baseOpacity + Math.sin(time + p.phase) * 0.18));
+        const alpha = Math.max(0.1, Math.min(1, p.baseOpacity + Math.sin(time + p.phase) * 0.16));
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -169,14 +197,14 @@ export default function Starfield() {
         ctx.fill();
       }
 
-      ctx.strokeStyle = "rgba(255,255,255,0.035)";
+      ctx.strokeStyle = "rgba(255,255,255,0.025)";
       ctx.lineWidth = 0.5;
       for (let i = 0; i < points.length; i++) {
         for (let j = i + 1; j < points.length; j++) {
           const dx = points[i].x - points[j].x;
           const dy = points[i].y - points[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const threshold = Math.min(90, Math.max(50, w * 0.04));
+          const threshold = Math.min(75, Math.max(38, w * 0.028));
           if (dist < threshold && points[i].radius > 1 && points[j].radius > 1) {
             ctx.beginPath();
             ctx.moveTo(points[i].x, points[i].y);
@@ -203,14 +231,16 @@ export default function Starfield() {
       ctx.scale(newDpr, newDpr);
       points = [];
       planets = [];
+      nebulae = [];
       createStars();
       createPlanets();
+      createNebulae();
     };
 
     let resizeTimeout: number;
     const debouncedResize = () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = window.setTimeout(handleResize, 200);
+      resizeTimeout = window.setTimeout(handleResize, 220);
     };
 
     window.addEventListener("resize", debouncedResize);
