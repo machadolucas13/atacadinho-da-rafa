@@ -3,6 +3,7 @@ titulo: "Guia completo de marketing de afiliados para iniciantes 2026"
 descricao: "Guia completo de marketing de afiliados para iniciantes 2026: por onde começar, como escolher nicho, plataformas, estratégias de conteúdo e como fazer a primeira venda sem gastar dinheiro."
 imagemCapa: "/posts/guia-marketing-afiliados-iniciantes-2026.png"
 publicadoEm: "2026-07-22"
+categoriaId: "tecnologia"
 tags: ["marketing de afiliados 2026", "afiliados iniciantes", "ganhar dinheiro como afiliado", "renda extra 2026", "afiliados no Instagram", "primeira venda afiliado"]
 tempoLeitura: 12
 destaque: false

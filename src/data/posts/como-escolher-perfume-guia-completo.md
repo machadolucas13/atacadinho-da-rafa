@@ -3,6 +3,7 @@ titulo: "Como escolher perfume: guia completo para não errar"
 descricao: "Guia completo de como escolher perfume: entenda famílias olfativas, notas de perfume, fixação, dicas de aplicação e como encontrar o perfume ideal para cada ocasião."
 imagemCapa: "/posts/como-escolher-perfume-guia-completo.png"
 publicadoEm: "2026-07-22"
+categoriaId: "perfumes"
 tags: ["como escolher perfume", "perfumes femininos", "famílias olfativas", "dicas de perfume", "perfumes baratos", "perfume ideal"]
 tempoLeitura: 11
 destaque: true

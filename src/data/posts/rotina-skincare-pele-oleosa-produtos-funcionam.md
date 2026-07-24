@@ -3,6 +3,7 @@ titulo: "Rotina de skincare para pele oleosa: produtos que realmente funcionam"
 descricao: "Rotina de skincare para pele oleosa: passo a passo completo, produtos que realmente funcionam, ingredientes certos e erros que você precisa evitar para pele sem brilho."
 imagemCapa: "/posts/rotina-skincare-pele-oleosa-produtos-funcionam.png"
 publicadoEm: "2026-07-22"
+categoriaId: "beleza"
 tags: ["skincare para pele oleosa", "rotina skincare", "pele oleosa", "produtos skincare", "skincare Brasil", "cuidados com a pele"]
 tempoLeitura: 10
 destaque: true

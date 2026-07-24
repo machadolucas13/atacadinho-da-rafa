@@ -1,8 +1,12 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductGrid from "@/components/pinterest/ProductGrid";
+import PinCard from "@/components/pinterest/PinCard";
+import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
 import { getCategorias } from "@/lib/categorias";
 import { getProdutos } from "@/lib/produtos";
+import { getPins } from "@/lib/pins";
+import { getArtigos } from "@/server/artigos";
 
 interface CategoriaPageProps {
   params: { slug: string };
@@ -53,8 +57,15 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
 export default async function CategoriaPage({ params }: CategoriaPageProps) {
   const categorias = await getCategorias();
   const categoria = categorias.find((c) => c.slug === params.slug);
-  const produtos = await getProdutos();
+  const [produtos, pins, artigos] = await Promise.all([
+    getProdutos(),
+    getPins("pt"),
+    getArtigos("pt"),
+  ]);
+
   const produtosCategoria = produtos.filter((p) => p.categoriaId === categoria?.id);
+  const pinsCategoria = pins.filter((p) => p.categoriaId === categoria?.id);
+  const artigosCategoria = artigos.filter((a) => a.categoriaId === categoria?.id);
 
   if (!categoria) {
     return <div>Categoria não encontrada</div>;
@@ -105,12 +116,45 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
             </div>
             <div className="md:ml-auto">
               <span className="badge bg-white/10 border border-white/10 text-gray-300 shadow-sm">
-                {produtosCategoria.length} {produtosCategoria.length === 1 ? "achado" : "achados"}
+                {produtosCategoria.length + pinsCategoria.length + artigosCategoria.length} {produtosCategoria.length + pinsCategoria.length + artigosCategoria.length === 1 ? "achado" : "achados"}
               </span>
             </div>
           </div>
 
-          <ProductGrid produtos={produtosCategoria} titulo={categoria.nome} limite={5} />
+          {produtosCategoria.length > 0 && (
+            <ProductGrid produtos={produtosCategoria} titulo={`Produtos em ${categoria.nome}`} limite={5} />
+          )}
+
+          {pinsCategoria.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Pins</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {pinsCategoria.map((pin) => (
+                  <div key={pin.id}>
+                    <PinCard pin={pin} locale="pt" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {artigosCategoria.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Posts</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {artigosCategoria.map((artigo) => (
+                  <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {produtosCategoria.length === 0 && pinsCategoria.length === 0 && artigosCategoria.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-lg">Nenhum achado encontrado nesta categoria ainda.</p>
+              <p className="text-gray-500 text-sm mt-2">Volte em breve, novidades chegando!</p>
+            </div>
+          )}
         </div>
       </div>
     </>

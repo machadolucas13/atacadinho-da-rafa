@@ -3,6 +3,7 @@ titulo: "Tendências de moda primavera verão 2026: o que vai pegar"
 descricao: "Descubra as tendências de moda primavera verão 2026: cores, cortes, tecidos e looks que vão pegar. Guia completo para ficar estilosa sem gastar muito."
 imagemCapa: "/posts/tendencias-moda-primavera-verao-2026.png"
 publicadoEm: "2026-07-22"
+categoriaId: "moda-feminina"
 tags: ["tendências moda 2026", "primavera verão 2026", "moda feminina", "cores tendência", "cortes que vão pegar", "estilo", "looks 2026"]
 tempoLeitura: 10
 destaque: true

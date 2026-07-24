@@ -3,6 +3,7 @@ titulo: "Maquiagem para iniciantes: guia completo passo a passo 2026"
 descricao: "Guia completo de maquiagem para iniciantes: passo a passo, produtos essenciais, dicas de aplicação e como fazer maquiagem simples e bonita todos os dias."
 imagemCapa: "/posts/maquiagem-para-iniciantes-guia-passo-a-passo.png"
 publicadoEm: "2026-07-22"
+categoriaId: "beleza"
 tags: ["maquiagem para iniciantes", "maquiagem simples", "passo a passo maquiagem", "maquiagem básica", "dicas de maquiagem", "beleza", "make up"]
 tempoLeitura: 12
 destaque: true

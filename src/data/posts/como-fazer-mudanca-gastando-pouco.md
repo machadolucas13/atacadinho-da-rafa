@@ -3,6 +3,7 @@ titulo: "Como fazer mudança gastando pouco: passo a passo"
 descricao: "Passo a passo completo de como fazer mudança gastando pouco: dicas de embalagem, como economizar com caixas, transporte barato, checklist e como evitar surpresas no orçamento."
 imagemCapa: "/posts/como-fazer-mudanca-gastando-pouco.png"
 publicadoEm: "2026-07-22"
+categoriaId: "casa-decoracao"
 tags: ["como fazer mudança", "mudança barata", "dicas de mudança", "economizar na mudança", "mudança passo a passo", "transporte de móveis"]
 tempoLeitura: 9
 destaque: false

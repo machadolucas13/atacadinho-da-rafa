@@ -3,6 +3,7 @@ titulo: "Como montar guarda-roupa cápsula gastando pouco em 2026"
 descricao: "Aprenda a montar um guarda-roupa cápsula económico e estiloso em 2026. Dicas práticas de como escolher peças versáteis, economizar e ter looks infinitos sem gastar muito."
 imagemCapa: "/posts/como-montar-guarda-roupa-capsula-gastando-poco-2026.png"
 publicadoEm: "2026-07-22"
+categoriaId: "moda-feminina"
 tags: ["guarda-roupa cápsula", "guarda-roupa econômico", "moda sustentável", "economizar", "estilo", "looks versáteis", "2026"]
 tempoLeitura: 11
 destaque: true

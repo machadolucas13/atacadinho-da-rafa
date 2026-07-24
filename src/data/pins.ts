@@ -6,6 +6,7 @@ export interface Pin {
   descricao: string;
   imagem: string;
   destaque: boolean;
+  categoriaId: string;
   visualizacoes?: number;
   links?: { nome: string; preco: string; url: string }[];
 }
@@ -19,6 +20,8 @@ export const pins: Pin[] = [
     descricao: "20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais.",
     imagem: "/posts/calcas-jeans-femininas-economicas-2026.png",
     destaque: true,
+    categoriaId: "moda-feminina",
+    visualizacoes: 12400,
     links: [
       { nome: "Calça Jeans Feminina | Bazar Brechó Desapego usada", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
       { nome: "calça wide leg jeans feminina levanta bumbum", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
@@ -50,6 +53,8 @@ export const pins: Pin[] = [
     descricao: "Selecionamos tênis de corrida masculinos e femininos que combinam conforto, performance e estilo.",
     imagem: "/images/pin2.png",
     destaque: true,
+    categoriaId: "calcados",
+    visualizacoes: 9800,
     links: [
       { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
       { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
@@ -78,6 +83,8 @@ export const pins: Pin[] = [
     descricao: "20 models that lift and shape: wide leg, flare, cargo, skinny and more.",
     imagem: "/posts/calcas-jeans-femininas-economicas-2026.png",
     destaque: true,
+    categoriaId: "moda-feminina",
+    visualizacoes: 8200,
     links: [
       { nome: "Used Women's Jeans from Thrift Store", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
       { nome: "Wide Leg Women's Jeans Butt Lifter", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
@@ -109,6 +116,8 @@ export const pins: Pin[] = [
     descricao: "Selected running shoes for men and women that combine comfort, performance and style.",
     imagem: "/images/pin2.png",
     destaque: true,
+    categoriaId: "calcados",
+    visualizacoes: 7600,
     links: [
       { nome: "New Balance 530 Women's Original Casual Retro Comfort Gym Walking Everyday Light", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
       { nome: "Women's New Balance 530 Sporty Casual Breathable Robust Comfortable Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },

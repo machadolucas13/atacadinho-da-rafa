@@ -31,7 +31,7 @@ export default function Starfield() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -50,20 +50,20 @@ export default function Starfield() {
     ctx.scale(dpr, dpr);
 
     const createStars = () => {
-      const count = Math.min(Math.floor((w * h) / 4000), 220);
+      const count = Math.min(Math.floor((w * h) / 8000), 100);
       points = Array.from({ length: count }, () => {
         const colorIndex = Math.floor(Math.random() * STAR_COLORS.length);
-        const baseRadius = Math.random() < 0.08 ? Math.random() * 2.8 + 1.8 : Math.random() * 1.6 + 0.4;
+        const baseRadius = Math.random() * 1.4 + 0.4;
         return {
           x: Math.random() * w,
           y: Math.random() * h,
           baseX: Math.random() * w,
           baseY: Math.random() * h,
           radius: baseRadius,
-          baseOpacity: Math.random() * 0.7 + 0.3,
+          baseOpacity: Math.random() * 0.6 + 0.3,
           phase: Math.random() * Math.PI * 2,
-          speed: Math.random() * 0.003 + 0.001,
-          amplitude: Math.random() * 100 + 40,
+          speed: Math.random() * 0.002 + 0.001,
+          amplitude: Math.random() * 60 + 20,
           color: STAR_COLORS[colorIndex],
         };
       });
@@ -73,40 +73,25 @@ export default function Starfield() {
     createStars();
 
     const draw = () => {
-      if (!ctx) return;
-      time += 0.008;
+      time += 0.006;
 
       ctx.fillStyle = "rgb(10,10,20)";
       ctx.fillRect(0, 0, w, h);
-      points.forEach((p) => {
-        const offsetX = Math.sin(time * p.speed * 800 + p.phase) * p.amplitude;
-        const offsetY = Math.cos(time * p.speed * 600 + p.phase * 1.3) * p.amplitude * 0.8;
+
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        const offsetX = Math.sin(time * p.speed * 600 + p.phase) * p.amplitude;
+        const offsetY = Math.cos(time * p.speed * 500 + p.phase * 1.3) * p.amplitude * 0.7;
 
         p.x = p.baseX + offsetX;
         p.y = p.baseY + offsetY;
 
-        const alpha = Math.max(0.1, Math.min(1, p.baseOpacity + Math.sin(time * 1.2 + p.phase) * 0.25));
+        const alpha = Math.max(0.15, Math.min(1, p.baseOpacity + Math.sin(time + p.phase) * 0.2));
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color.replace(/[\d.]+\)$/, `${alpha})`);
         ctx.fill();
-      });
-
-      ctx.strokeStyle = "rgba(255,255,255,0.04)";
-      ctx.lineWidth = 0.5;
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const dx = points[i].x - points[j].x;
-          const dy = points[i].y - points[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(points[i].x, points[i].y);
-            ctx.lineTo(points[j].x, points[j].y);
-            ctx.stroke();
-          }
-        }
       }
 
       animationFrameId = requestAnimationFrame(draw);
@@ -115,7 +100,6 @@ export default function Starfield() {
     draw();
 
     const handleResize = () => {
-      if (typeof window === "undefined") return;
       const newW = window.innerWidth;
       const newH = window.innerHeight;
       const newDpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -129,19 +113,26 @@ export default function Starfield() {
       createStars();
     };
 
-    window.addEventListener("resize", handleResize);
+    let resizeTimeout: number;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(handleResize, 200);
+    };
+
+    window.addEventListener("resize", debouncedResize);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", debouncedResize);
     };
   }, []);
 
-    return (
+  return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 h-full w-full"
-      style={{ pointerEvents: "none", zIndex: -1 }}
+      style={{ pointerEvents: "none", willChange: "transform", zIndex: -1 }}
     />
   );
 }

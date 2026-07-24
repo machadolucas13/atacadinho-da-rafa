@@ -3,6 +3,7 @@ titulo: "Como criar conteúdo para Instagram e ganhar seguidores"
 descricao: "Aprenda como criar conteúdo para Instagram e ganhar seguidores de verdade: dicas de posts, reels, stories, estratégias de crescimento e erros que você precisa evitar."
 imagemCapa: "/posts/como-criar-conteudo-instagram-seguidores.png"
 publicadoEm: "2026-07-22"
+categoriaId: "tecnologia"
 tags: ["criar conteúdo Instagram", "ganhar seguidores", "crescimento Instagram", "dicas Instagram", "marketing digital", "conteúdo redes sociais"]
 tempoLeitura: 12
 destaque: true
