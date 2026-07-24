@@ -79,7 +79,7 @@ export default async function HomePage() {
         <HeroSection />
       </section>
 
-      <section className="pt-28 md:pt-32" aria-label="Pins">
+      <section className="pt-2 pb-4" aria-label="Pins">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2" aria-hidden="true">

@@ -54,7 +54,6 @@ export default async function RootLayout({
       >
         {children}
       </main>
-      <Footer className="relative z-20" />
       <ScrollReveal />
       <PWAProvider />
     </>

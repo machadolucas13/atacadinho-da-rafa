@@ -126,7 +126,7 @@ export default function RootLayout({
         >
           {children}
         </main>
-        <Footer />
+        <Footer className="relative z-20" />
         <ScrollReveal />
         <PWAProvider />
       </body>

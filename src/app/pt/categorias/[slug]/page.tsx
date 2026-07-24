@@ -63,9 +63,9 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
     getArtigos("pt"),
   ]);
 
-  const produtosCategoria = produtos.filter((p) => p.categoriaId === categoria?.id);
-  const pinsCategoria = pins.filter((p) => p.categoriaId === categoria?.id);
-  const artigosCategoria = artigos.filter((a) => a.categoriaId === categoria?.id);
+  const produtosCategoria = produtos.filter((p) => p.categoriaId === categoria?.id || p.categoriaId === categoria?.slug);
+  const pinsCategoria = pins.filter((p) => p.categoriaId === categoria?.slug || p.categoriaId === categoria?.id);
+  const artigosCategoria = artigos.filter((a) => a.categoriaId === categoria?.slug || a.categoriaId === categoria?.id);
 
   if (!categoria) {
     return <div>Categoria não encontrada</div>;

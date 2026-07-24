@@ -10,7 +10,7 @@ export default function HeroSection() {
   const isPt = locale === "pt";
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-14 md:pt-32 md:pb-18">
+    <section className="relative overflow-hidden pt-28 pb-6 md:pt-32 md:pb-10">
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#F4A7B9] shadow-sm backdrop-blur-sm">
