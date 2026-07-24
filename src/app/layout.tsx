@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import {JsonLd} from '@/components/seo/JsonLd';
 import {ScrollReveal} from '@/components/layout';
 import PWAProvider from '@/components/seo/PWAProvider';
+import CategorySidebar from '@/components/ui/CategorySidebar';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -118,6 +119,7 @@ export default function RootLayout({
       >
         <JsonLd />
         <Navbar />
+        <CategorySidebar />
         <main
           className="relative z-10"
           style={{position: 'relative', zIndex: 10}}
