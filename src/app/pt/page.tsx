@@ -87,7 +87,7 @@ export default async function HomePage() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
             </span>
             <h2 className="text-2xl font-bold text-white tracking-tight">
-              Pins Centralizado
+              Pins
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

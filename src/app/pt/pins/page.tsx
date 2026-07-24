@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
+import TrendingSection from "@/components/pinterest/TrendingSection";
 
 export const metadata: Metadata = {
   title: "Pins - Atacadinho da Rafa",
@@ -20,7 +21,7 @@ export default async function PinsPage({ params }: { params: { locale: string } 
               📌 {isPt ? "Pins" : "Pins"}
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-              {isPt ? "Pins de achados" : "Deal pins"}
+              Pins
             </h1>
             <p className="mt-3 text-gray-400 max-w-lg mx-auto">
               {isPt
@@ -88,6 +89,12 @@ export default async function PinsPage({ params }: { params: { locale: string } 
           </Link>
         </div>
       </div>
+
+      <section className="py-12">
+        <div className="mx-auto max-w-7xl px-4">
+          <TrendingSection />
+        </div>
+      </section>
     </div>
   );
 }
