@@ -76,7 +76,7 @@ export default async function HomePage() {
         <HeroSection />
       </section>
 
-      <section className="py-12 md:py-16" aria-label="Pins">
+      <section className="pt-20 md:pt-24" aria-label="Pins">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -97,7 +97,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="pb-12 md:pb-16" aria-label="Articles">
+      <section className="pb-12 md:pb-16 pt-4" aria-label="Articles">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold text-white tracking-tight">Articles</h2>

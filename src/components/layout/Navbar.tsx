@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, Bookmark, Globe } from "lucide-react";
+import { Search, Menu, X, Bookmark, Globe, Pin as PinIcon } from "lucide-react";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { categorias } from "@/data/categorias";
 import BrandLogo from "./BrandLogo";
@@ -86,7 +86,7 @@ export default function Navbar() {
                 className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-[#F4A7B9]"
                 aria-label="Pins"
               >
-                <span className="text-sm font-bold">📌</span>
+                <PinIcon className="h-[18px] w-[18px]" />
               </LocaleAwareLink>
 
               <LocaleAwareLink

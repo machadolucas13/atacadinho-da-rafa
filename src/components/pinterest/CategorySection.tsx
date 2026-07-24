@@ -4,6 +4,30 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { getCategorias } from "@/lib/categorias";
 import { getProdutos } from "@/lib/produtos";
 import { categorias as categoriasLocais } from "@/data/categorias";
+import { Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, Dumbbell, BookOpen, Tag, Flame, HeartPulse, Flower2, Footprints, PartyPopper, Plane, Trees } from "lucide-react";
+
+const iconMap: Record<string, React.ElementType> = {
+  "Moda Feminina": Shirt,
+  "Moda Masculina": Shirt,
+  "Casa e Decoração": Home,
+  "Cozinha": UtensilsCrossed,
+  "Tecnologia": Cpu,
+  "Beleza": Sparkles,
+  "Acessórios": Watch,
+  "Moda Infantil": Baby,
+  "Bebês": Baby,
+  "Pets": PawPrint,
+  "Esportes": Dumbbell,
+  "Livros": BookOpen,
+  "Ofertas": Tag,
+  "Achados Virais": Flame,
+  "Saúde e Bem-estar": HeartPulse,
+  "Perfumes": Flower2,
+  "Calçados": Footprints,
+  "Festas e Eventos": PartyPopper,
+  "Viagens": Plane,
+  "Jardim": Trees,
+};
 
 export default async function CategorySection() {
   let categorias = await getCategorias();
@@ -31,7 +55,9 @@ export default async function CategorySection() {
 
       {categoriaComContagem.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {categoriaComContagem.map((categoria) => (
+          {categoriaComContagem.map((categoria) => {
+            const Icon = iconMap[categoria.nome] || Tag;
+            return (
             <Link
               key={categoria.id}
               href={`/categorias/${categoria.slug}`}
@@ -48,7 +74,9 @@ export default async function CategorySection() {
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
               <div className="relative z-10 flex h-full flex-col justify-end p-4">
-                <span className="mb-2 text-3xl">{categoria.icone}</span>
+                <span className="mb-2 text-3xl flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white">
+                  <Icon className="h-5 w-5" />
+                </span>
                 <span className="text-sm font-bold text-white line-clamp-1">{categoria.nome}</span>
                 <span className="mt-0.5 text-[11px] font-medium text-gray-300">
                   {categoria.count} {categoria.count === 1 ? "produto" : "produtos"}
@@ -60,7 +88,8 @@ export default async function CategorySection() {
                 </span>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 py-12 text-center">
