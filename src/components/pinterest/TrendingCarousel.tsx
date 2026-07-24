@@ -4,13 +4,13 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { TrendingUp, Flame, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { getItemViews } from "@/lib/views";
 
 interface TrendingItem {
   id: string;
   titulo: string;
   imagem?: string;
   slug?: string;
-  visualizacoes?: number;
   href: string;
   tipo: "produto" | "pin" | "post";
 }
@@ -25,7 +25,7 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
   const [canScrollNext, setCanScrollNext] = useState(false);
 
   const sorted = useRef(
-    [...items].sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    [...items].sort((a, b) => getItemViews(b.slug || b.id) - getItemViews(a.slug || a.id))
   ).current;
 
   const updateScrollState = useCallback(() => {
@@ -122,7 +122,7 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
                     <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/50 p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold text-white">
                         <Eye className="h-3 w-3" />
-                        {(item.visualizacoes || Math.floor(Math.random() * 5000) + 1200).toLocaleString("pt-BR")}
+                        {getItemViews(item.slug || item.id).toLocaleString("pt-BR")}
                       </span>
                     </div>
                   </div>

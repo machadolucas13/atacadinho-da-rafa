@@ -4,6 +4,7 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight, ShoppingBag } from "lucide-react";
 import { getPinBySlug, getPins } from "@/lib/pins";
+import { getItemViews } from "@/lib/views";
 
 interface ShopeeLink {
   nome: string;
@@ -13,7 +14,7 @@ interface ShopeeLink {
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
-  const visualizacoes = pin?.visualizacoes ?? Math.floor(Math.random() * 8000) + 1500;
+  const visualizacoes = getItemViews(pin?.slug || params.slug);
   const links: ShopeeLink[] = [
     { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
     { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
@@ -33,9 +34,10 @@ export default async function PinClient({ params }: { params: { slug: string } }
   ];
   const shareUrl = `/pt/pins/${params.slug}`;
   const allPins = await getPins("pt");
-  const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
-  const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
-  const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
+  const safeAllPins = Array.isArray(allPins) ? allPins : [];
+  const currentIndex = safeAllPins.findIndex((p) => p.slug === params.slug);
+  const prevPin = currentIndex > 0 ? safeAllPins[currentIndex - 1] : null;
+  const nextPin = currentIndex < safeAllPins.length - 1 ? safeAllPins[currentIndex + 1] : null;
 
   return (
     <div className="relative min-h-screen">

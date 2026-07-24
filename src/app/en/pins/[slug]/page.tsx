@@ -4,7 +4,7 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
 import { getPins } from "@/lib/pins";
-import { getItemViews, incrementItemViews } from "@/lib/views";
+import { getItemViews } from "@/lib/views";
 
 interface ShopeeLink {
   nome: string;
@@ -28,10 +28,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
   const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
   const shareUrl = `/en/pins/${params.slug}`;
-  const visualizacoes = getItemViews(params.slug, pin?.visualizacoes);
-  if (typeof window !== "undefined") {
-    incrementItemViews(params.slug);
-  }
+  const visualizacoes = getItemViews(params.slug);
 
   return (
     <div className="min-h-screen">

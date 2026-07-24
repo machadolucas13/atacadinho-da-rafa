@@ -18,7 +18,7 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
 
-  const visualizacoes = getItemViews(artigo.slug, artigo.visualizacoes);
+  const visualizacoes = getItemViews(artigo.slug);
 
   return (
     <article

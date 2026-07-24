@@ -16,7 +16,7 @@ interface PinCardProps {
 export default function PinCard({ pin, locale }: PinCardProps) {
   const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
-  const visualizacoes = getItemViews(pin.slug, pin.visualizacoes);
+  const visualizacoes = getItemViews(pin.slug);
   const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
 
   return (

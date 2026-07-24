@@ -4,6 +4,7 @@ import TrendingCarousel from "./TrendingCarousel";
 import { getProdutos } from "@/lib/produtos";
 import { getPins } from "@/lib/pins";
 import { getArtigos } from "@/lib/artigos";
+import { getItemViews } from "@/lib/views";
 
 export default async function TrendingSection() {
   const [produtos, pins, artigos] = await Promise.all([
@@ -14,17 +15,17 @@ export default async function TrendingSection() {
 
   const produtosTrending = produtos
     .filter((p) => p.viral || p.destaque)
-    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
     .slice(0, 4);
 
   const pinsTrending = pins
     .slice()
-    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
     .slice(0, 4);
 
   const postsTrending = artigos
     .slice()
-    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
     .slice(0, 4);
 
   const allTrending = [
