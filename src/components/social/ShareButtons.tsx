@@ -35,7 +35,7 @@ function toAbsoluteUrl(input: string | undefined | null): string {
   return input;
 }
 
-export default function ShareButtons({ title, description, image, url }: { title: string; description?: string; image?: string; url: string }) {
+export default function ShareButtons({ title, description, image, url }: { title: string; description?: string; image?: string; url?: string }) {
   const [copied, setCopied] = useState(false);
   const [absoluteUrl, setAbsoluteUrl] = useState<string>("");
   const [absoluteImage, setAbsoluteImage] = useState<string>("");
@@ -51,7 +51,7 @@ export default function ShareButtons({ title, description, image, url }: { title
     }
   }, [url, image]);
 
-  const target = absoluteUrl || toAbsoluteUrl(url);
+  const target = absoluteUrl || toAbsoluteUrl(url || "");
   const media = absoluteImage || toAbsoluteUrl(image || "");
   const message = description || title;
 
@@ -73,7 +73,7 @@ export default function ShareButtons({ title, description, image, url }: { title
     e.stopPropagation();
     e.preventDefault();
     try {
-      await navigator.clipboard.writeText(target || toAbsoluteUrl(url));
+      await navigator.clipboard.writeText(target || toAbsoluteUrl(url || ""));
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {

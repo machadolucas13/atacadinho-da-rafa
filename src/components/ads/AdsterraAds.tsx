@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type AdBannerProps = {
   scriptContent: string;
@@ -26,12 +26,31 @@ export function AdBannerClient({
   const containerRef = useRef<HTMLDivElement>(null);
   const safeWidth = assertNumber(width, fallbackWidth);
   const safeHeight = assertNumber(height, fallbackHeight);
+  const [status, setStatus] = useState<"loading" | "loaded" | "error">("loading");
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
 
     const container = containerRef.current;
-    if (container.querySelector(`script[data-adsterra-invoked="${invokeSrc}"]`)) return;
+    if (container.querySelector(`script[data-adsterra-invoked="${invokeSrc}"]`)) {
+      setStatus("loaded");
+      return;
+    }
+
+    let timeout: number;
+    const successHandler = () => {
+      setStatus("loaded");
+      clearTimeout(timeout);
+    };
+
+    const errorHandler = () => {
+      setStatus("error");
+      clearTimeout(timeout);
+    };
+
+    timeout = window.setTimeout(() => {
+      setStatus("error");
+    }, 4000);
 
     const script = document.createElement("script");
     script.setAttribute("data-adsterra-invoked", invokeSrc);
@@ -41,7 +60,15 @@ export function AdBannerClient({
     const invokeScript = document.createElement("script");
     invokeScript.src = invokeSrc;
     invokeScript.async = true;
+    invokeScript.onload = successHandler;
+    invokeScript.onerror = errorHandler;
     container.appendChild(invokeScript);
+
+    return () => {
+      clearTimeout(timeout);
+      invokeScript.onload = null;
+      invokeScript.onerror = null;
+    };
   }, [scriptContent, invokeSrc]);
 
   return (
@@ -57,7 +84,18 @@ export function AdBannerClient({
         border: "1px dashed rgba(255,255,255,0.08)",
         borderRadius: 8,
       }}
-    />
+    >
+      {status === "error" && (
+        <div className="text-center text-xs text-red-400">
+          Anúncio indisponível
+        </div>
+      )}
+      {status === "loading" && (
+        <div className="text-center text-xs text-gray-500">
+          Carregando anúncio...
+        </div>
+      )}
+    </div>
   );
 }
 
