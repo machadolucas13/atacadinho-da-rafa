@@ -6,26 +6,26 @@ import { X, Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, 
 import { categorias as categoriasLocais } from "@/data/categorias";
 
 const iconMap: Record<string, React.ElementType> = {
-  "Moda Feminina": Shirt,
-  "Moda Masculina": Shirt,
-  "Casa e Decoração": Home,
-  "Cozinha": UtensilsCrossed,
-  "Tecnologia": Cpu,
-  "Beleza": Sparkles,
-  "Acessórios": Watch,
-  "Moda Infantil": Baby,
-  "Bebês": Baby,
-  "Pets": PawPrint,
-  "Esportes": Dumbbell,
-  "Livros": BookOpen,
-  "Ofertas": Tag,
-  "Achados Virais": Flame,
-  "Saúde e Bem-estar": HeartPulse,
-  "Perfumes": Flower2,
-  "Calçados": Footprints,
-  "Festas e Eventos": PartyPopper,
-  "Viagens": Plane,
-  "Jardim": Trees,
+  "moda-feminina": Shirt,
+  "moda-masculina": Shirt,
+  "casa-decoracao": Home,
+  "cozinha": UtensilsCrossed,
+  "tecnologia": Cpu,
+  "beleza": Sparkles,
+  "acessorios": Watch,
+  "moda-infantil": Baby,
+  "bebes": Baby,
+  "pets": PawPrint,
+  "esportes": Dumbbell,
+  "livros": BookOpen,
+  "ofertas": Tag,
+  "achados-virais": Flame,
+  "saude": HeartPulse,
+  "perfumes": Flower2,
+  "calcados": Footprints,
+  "festas": PartyPopper,
+  "viagens": Plane,
+  "jardim": Trees,
 };
 
 type CategorySidebarProps = {
@@ -51,7 +51,7 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
     }
   }, [isOpen]);
 
-  const IconFor = (nome: string) => iconMap[nome] || Tag;
+  const IconFor = (slug: string) => iconMap[slug] || Tag;
 
   if (!render) return null;
 
@@ -72,7 +72,7 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
         <div className="p-6">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-sm font-bold uppercase tracking-widest text-gray-400">
-              Navegação
+              {locale === "en" ? "Navigation" : "Navegação"}
             </h2>
             <button
               type="button"
@@ -86,7 +86,8 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
 
           <div className="space-y-0.5 overflow-y-auto h-[calc(100vh-80px)]">
             {categorias.map((categoria) => {
-              const Icon = IconFor(categoria.nome);
+              const Icon = IconFor(categoria.slug);
+              const name = locale === "en" ? (categoria.nomeEn || categoria.nome) : categoria.nome;
               return (
                 <Link
                   key={categoria.id}
@@ -97,7 +98,7 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white group-hover:bg-white/10 transition-colors">
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="flex-1 text-white">{categoria.nome}</span>
+                  <span className="flex-1 text-white">{name}</span>
                   <ChevronRight className="h-3.5 w-3.5 text-gray-600 group-hover:text-white transition-colors" />
                 </Link>
               );

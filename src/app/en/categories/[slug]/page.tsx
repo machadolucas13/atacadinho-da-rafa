@@ -1,8 +1,12 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductGrid from "@/components/pinterest/ProductGrid";
+import PinCard from "@/components/pinterest/PinCard";
+import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
 import { getCategorias } from "@/lib/categorias";
 import { getProdutos } from "@/lib/produtos";
+import { getPins } from "@/lib/pins";
+import { getArtigos } from "@/server/artigos";
 
 interface CategoriaPageProps {
   params: { slug: string };
@@ -18,34 +22,37 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
   const categoria = categorias.find((c) => c.slug === params.slug);
   if (!categoria) return {};
 
+  const nome = categoria.nomeEn || categoria.nome;
+  const descricao = categoria.descricaoEn || categoria.descricao || `Discover the best ${nome.toLowerCase()} in our curation.`;
+
   return {
-    title: `${categoria.nome} - Atacadinho da Rafa`,
-    description: categoria.descricao || `Discover the best ${categoria.nome.toLowerCase()} in our curation.`,
-    keywords: [categoria.nome.toLowerCase(), "finds", "deals", "products", "Atacadinho da Rafa"],
+    title: `${nome} - Atacadinho da Rafa`,
+    description: descricao,
+    keywords: [nome.toLowerCase(), "finds", "deals", "products", "Atacadinho da Rafa"],
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: `https://atacadinhodarafa.com.br/categorias/${params.slug}`,
+      url: `https://atacadinhodarafa.com.br/categories/${params.slug}`,
       siteName: "Atacadinho da Rafa",
-      title: `${categoria.nome} - Atacadinho da Rafa`,
-      description: categoria.descricao || `Discover the best ${categoria.nome.toLowerCase()} in our curation.`,
+      title: `${nome} - Atacadinho da Rafa`,
+      description: descricao,
       images: [
         {
           url: "https://atacadinhodarafa.com.br/assets/images/og-home.jpg",
           width: 1200,
           height: 630,
-          alt: categoria.nome,
+          alt: nome,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${categoria.nome} - Atacadinho da Rafa`,
-      description: categoria.descricao || `Discover the best ${categoria.nome.toLowerCase()} in our curation.`,
+      title: `${nome} - Atacadinho da Rafa`,
+      description: descricao,
       images: ["https://atacadinhodarafa.com.br/assets/images/og-home.jpg"],
     },
     alternates: {
-      canonical: `https://atacadinhodarafa.com.br/categorias/${params.slug}`,
+      canonical: `https://atacadinhodarafa.com.br/categories/${params.slug}`,
     },
   };
 }
@@ -53,19 +60,29 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
 export default async function CategoriaPage({ params }: CategoriaPageProps) {
   const categorias = await getCategorias();
   const categoria = categorias.find((c) => c.slug === params.slug);
-  const produtos = await getProdutos();
-  const produtosCategoria = produtos.filter((p) => p.categoriaId === categoria?.id);
+  const [produtos, pins, artigos] = await Promise.all([
+    getProdutos(),
+    getPins("en"),
+    getArtigos("en"),
+  ]);
+
+  const produtosCategoria = produtos.filter((p) => p.categoriaId === categoria?.id || p.categoriaId === categoria?.slug);
+  const pinsCategoria = pins.filter((p) => p.categoriaId === categoria?.slug || p.categoriaId === categoria?.id);
+  const artigosCategoria = artigos.filter((a) => a.categoriaId === categoria?.slug || a.categoriaId === categoria?.id);
 
   if (!categoria) {
     return <div>Category not found</div>;
   }
+
+  const nome = categoria.nomeEn || categoria.nome;
+  const descricao = categoria.descricaoEn || categoria.descricao || "";
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-      { "@type": "ListItem", position: 2, name: categoria.nome, item: `https://atacadinhodarafa.com.br/categorias/${params.slug}` },
+      { "@type": "ListItem", position: 2, name: nome, item: `https://atacadinhodarafa.com.br/categories/${params.slug}` },
     ],
   };
 
@@ -88,7 +105,7 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
             <Link href="/" className="hover:text-[#F4A7B9] transition-colors">Home</Link>
             <span className="text-gray-600">/</span>
-            <span className="text-white font-medium">{categoria.nome}</span>
+            <span className="text-white font-medium">{nome}</span>
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-end gap-4 mb-8">
@@ -96,21 +113,54 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
               <span className="text-4xl">{categoria.icone}</span>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-                  {categoria.nome}
+                  {nome}
                 </h1>
-                {categoria.descricao && (
-                  <p className="mt-1 text-gray-400">{categoria.descricao}</p>
+                {descricao && (
+                  <p className="mt-1 text-gray-400">{descricao}</p>
                 )}
               </div>
             </div>
             <div className="md:ml-auto">
               <span className="badge bg-white/10 border border-white/10 text-gray-300 shadow-sm">
-                {produtosCategoria.length} {produtosCategoria.length === 1 ? "find" : "finds"}
+                {produtosCategoria.length + pinsCategoria.length + artigosCategoria.length} {produtosCategoria.length + pinsCategoria.length + artigosCategoria.length === 1 ? "find" : "finds"}
               </span>
             </div>
           </div>
 
-          <ProductGrid produtos={produtosCategoria} titulo={categoria.nome} />
+          {produtosCategoria.length > 0 && (
+            <ProductGrid produtos={produtosCategoria} titulo={`Products in ${nome}`} />
+          )}
+
+          {pinsCategoria.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Pins</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {pinsCategoria.map((pin) => (
+                  <div key={pin.id}>
+                    <PinCard pin={pin} locale="en" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {artigosCategoria.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Posts</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {artigosCategoria.map((artigo) => (
+                  <ArtigoPinCard key={artigo.id} artigo={artigo} locale="en" />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {produtosCategoria.length === 0 && pinsCategoria.length === 0 && artigosCategoria.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-lg">No finds in this category yet.</p>
+              <p className="text-gray-500 text-sm mt-2">Check back soon for fresh picks!</p>
+            </div>
+          )}
         </div>
       </div>
     </>

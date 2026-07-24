@@ -1,8 +1,10 @@
 export type Categoria = {
   id: string;
   nome: string;
+  nomeEn?: string;
   slug: string;
   descricao?: string;
+  descricaoEn?: string;
   icone?: string;
   cor?: string;
   imagem?: string;

@@ -22,30 +22,33 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
   const categoria = categorias.find((c) => c.slug === params.slug);
   if (!categoria) return {};
 
+  const nome = categoria.nome;
+  const descricao = categoria.descricao || `Descubra os melhores ${nome.toLowerCase()} na nossa curadoria.`;
+
   return {
-    title: `${categoria.nome} - Atacadinho da Rafa`,
-    description: categoria.descricao || `Descubra os melhores ${categoria.nome.toLowerCase()} na nossa curadoria.`,
-    keywords: [categoria.nome.toLowerCase(), "achados", "ofertas", "produtos", "Atacadinho da Rafa"],
+    title: `${nome} - Atacadinho da Rafa`,
+    description: descricao,
+    keywords: [nome.toLowerCase(), "achados", "ofertas", "produtos", "Atacadinho da Rafa"],
     openGraph: {
       type: "website",
       locale: "pt_BR",
       url: `https://atacadinhodarafa.com.br/categorias/${params.slug}`,
       siteName: "Atacadinho da Rafa",
-      title: `${categoria.nome} - Atacadinho da Rafa`,
-      description: categoria.descricao || `Descubra os melhores ${categoria.nome.toLowerCase()} na nossa curadoria.`,
+      title: `${nome} - Atacadinho da Rafa`,
+      description: descricao,
       images: [
         {
           url: "https://atacadinhodarafa.com.br/assets/images/og-home.jpg",
           width: 1200,
           height: 630,
-          alt: categoria.nome,
+          alt: nome,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${categoria.nome} - Atacadinho da Rafa`,
-      description: categoria.descricao || `Descubra os melhores ${categoria.nome.toLowerCase()} na nossa curadoria.`,
+      title: `${nome} - Atacadinho da Rafa`,
+      description: descricao,
       images: ["https://atacadinhodarafa.com.br/assets/images/og-home.jpg"],
     },
     alternates: {
@@ -71,12 +74,15 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
     return <div>Categoria não encontrada</div>;
   }
 
+  const nome = categoria.nome;
+  const descricao = categoria.descricao || "";
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-      { "@type": "ListItem", position: 2, name: categoria.nome, item: `https://atacadinhodarafa.com.br/categorias/${params.slug}` },
+      { "@type": "ListItem", position: 2, name: nome, item: `https://atacadinhodarafa.com.br/categorias/${params.slug}` },
     ],
   };
 
@@ -99,7 +105,7 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
             <Link href="/" className="hover:text-[#F4A7B9] transition-colors">Home</Link>
             <span className="text-gray-600">/</span>
-            <span className="text-white font-medium">{categoria.nome}</span>
+            <span className="text-white font-medium">{nome}</span>
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-end gap-4 mb-8">
@@ -107,10 +113,10 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
               <span className="text-4xl">{categoria.icone}</span>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-                  {categoria.nome}
+                  {nome}
                 </h1>
-                {categoria.descricao && (
-                  <p className="mt-1 text-gray-400">{categoria.descricao}</p>
+                {descricao && (
+                  <p className="mt-1 text-gray-400">{descricao}</p>
                 )}
               </div>
             </div>
@@ -122,7 +128,7 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
           </div>
 
           {produtosCategoria.length > 0 && (
-            <ProductGrid produtos={produtosCategoria} titulo={`Produtos em ${categoria.nome}`} limite={5} />
+            <ProductGrid produtos={produtosCategoria} titulo={`Produtos em ${nome}`} limite={5} />
           )}
 
           {pinsCategoria.length > 0 && (

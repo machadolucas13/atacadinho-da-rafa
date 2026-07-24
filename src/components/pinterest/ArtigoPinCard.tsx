@@ -11,13 +11,22 @@ interface ArtigoPinCardProps {
   locale?: string;
 }
 
+function slugToViews(slug: string): number {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = ((hash << 5) - hash) + slug.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash % 4200) + 800;
+}
+
 export default function ArtigoPinCard({ artigo, locale = artigo.locale }: ArtigoPinCardProps) {
   const router = useRouter();
   const href = locale === "en"
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
 
-  const visualizacoes = artigo.visualizacoes || Math.floor(Math.random() * 6000) + 800;
+  const visualizacoes = artigo.visualizacoes || slugToViews(artigo.slug);
 
   return (
     <article

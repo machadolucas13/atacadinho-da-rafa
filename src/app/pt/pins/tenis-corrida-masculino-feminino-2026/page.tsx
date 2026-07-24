@@ -13,11 +13,10 @@ interface ShopeeLink {
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
+  const visualizacoes = pin?.visualizacoes ?? Math.floor(Math.random() * 8000) + 1500;
   const links: ShopeeLink[] = [
     { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
     { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
-    { nome: "Tênis New Balance Fresh Foam Arishi V4 Feminino Original com Nota Fiscal e Garantia", preco: "345,21", url: "https://s.shopee.com.br/Llr11YRzl" },
-    { nome: "Tenis Mizuno Space 5 Menina", preco: "270", url: "https://s.shopee.com.br/6L34A8VJTY" },
     { nome: "Tênis Fila Recovery Feminino Bege Leve Macio Caminhada Academia Casual", preco: "287,96", url: "https://s.shopee.com.br/2qTBzji6XE" },
     { nome: "Tênis Fila Progress Lite Feminino Bege Caminhada Original Mulher Confortável Macio Corrida", preco: "306", url: "https://s.shopee.com.br/7KvbM3lce0" },
     { nome: "Tenis Fila Runner 2K Feminino Lifestyle Casual Confortavel", preco: "368,90", url: "https://s.shopee.com.br/30mcCAubGI" },
@@ -33,7 +32,6 @@ export default async function PinClient({ params }: { params: { slug: string } }
     { nome: "Tênis Feminino Esportivo Academia Caminhada Leve Confortável Dia a Dia Treino", preco: "106", url: "https://s.shopee.com.br/3g2Izz0TrF" },
   ];
   const shareUrl = `/pt/pins/${params.slug}`;
-  const visualizacoes = Math.floor(Math.random() * 8000) + 1500;
   const allPins = await getPins("pt");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;

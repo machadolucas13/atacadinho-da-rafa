@@ -15,7 +15,8 @@ interface PinCardProps {
 export default function PinCard({ pin, locale }: PinCardProps) {
   const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
-  const visualizacoes = pin.visualizacoes || Math.floor(Math.random() * 8000) + 1500;
+  const visualizacoes = pin.visualizacoes ?? Math.floor(Math.random() * 8000) + 1500;
+  const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
 
   return (
     <article
@@ -52,7 +53,7 @@ export default function PinCard({ pin, locale }: PinCardProps) {
           <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100 md:group-hover:opacity-100">
             <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
               <Eye className="h-3 w-3" />
-              {visualizacoes.toLocaleString("pt-BR")}
+              {visualizacoes.toLocaleString(localeForNumber)}
             </span>
           </div>
         </div>
