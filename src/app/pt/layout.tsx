@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://atacadinhodarafa.com.br/pt"),
@@ -28,13 +26,5 @@ export const metadata: Metadata = {
 };
 
 export default function PtLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 relative z-10">
-        {children}
-      </main>
-      <Footer className="relative z-20" />
-    </div>
-  );
+  return <>{children}</>;
 }
