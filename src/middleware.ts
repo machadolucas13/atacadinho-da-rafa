@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const host = request.headers.get("host") || "";
 
   if (pathname === "/" || pathname === "") {
     const acceptLanguage = request.headers.get("accept-language") || "";
@@ -18,5 +17,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: [
+    "/",
+    "/(en|pt)/",
+  ],
 };
