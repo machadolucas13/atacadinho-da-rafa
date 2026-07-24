@@ -3,6 +3,7 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye } from "lucide-react";
+import { pins } from "@/data/pins";
 
 interface ShopeeLink {
   nome: string;
@@ -10,25 +11,15 @@ interface ShopeeLink {
   url: string;
 }
 
-const links: ShopeeLink[] = [
-  { nome: "Calça Jeans Bazar Brechó Usada", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
-  { nome: "Wide Leg Levanta Bumbum", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
-  { nome: "Cintura Alta com Lycra", preco: "R$ 36,90", url: "https://s.shopee.com.br/1Vxo9SwHGb" },
-  { nome: "Preta Grafite Empina Bumbum", preco: "R$ 36,90", url: "https://s.shopee.com.br/4AyZKPbq6n" },
-  { nome: "Jogger com Elástico", preco: "R$ 39,99", url: "https://s.shopee.com.br/8AUi5ohfoR" },
-  { nome: "Flare Grafite Tendência", preco: "R$ 41,99", url: "https://s.shopee.com.br/LlqlV9Kxg" },
-  { nome: "Preta com Lycra Empina Bumbum", preco: "R$ 44,99", url: "https://s.shopee.com.br/6VMU6mioLv" },
-  { nome: "Flare Modeladora Levanta Bumbum", preco: "R$ 47,90", url: "https://s.shopee.com.br/9pcw59yz77" },
-  { nome: "Cargo Grafite Super Tendência", preco: "R$ 48,59", url: "https://s.shopee.com.br/50XgKK36x0" },
-];
-
 export default function PinClient() {
+  const pin = pins.find((p) => p.slug === "calcaspromocaocalcas-jeans-femininas-economicas-2026");
+  const links: ShopeeLink[] = pin?.links || [];
   const shareUrl = "/pt/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026";
   const visualizacoes = Math.floor(Math.random() * 8000) + 1500;
 
   return (
     <div className="min-h-screen">
-      <div className="pt-28 pb-12">
+      <div className="pt-20 md:pt-28 pb-12">
         <div className="relative mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-3xl">
             <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
@@ -71,7 +62,7 @@ export default function PinClient() {
                 👗 Moda Feminina
               </LocaleAwareLink>
               <a
-                href="https://s.shopee.com.br/4qEG7HYQVJ"
+                href={links[0]?.url || "https://s.shopee.com.br/4qEG7HYQVJ"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"

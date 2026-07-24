@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, Menu, X, Bookmark, Globe, Pin as PinIcon } from "lucide-react";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
-import { categorias } from "@/data/categorias";
 import BrandLogo from "./BrandLogo";
 
 export default function Navbar() {
@@ -26,26 +24,43 @@ export default function Navbar() {
       <div className="border-b border-white/10 bg-[#0a0a14]/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between gap-4">
-            <Link href="/" className="flex items-center">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label="Menu"
+              >
+                {isMenuOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
+              </button>
               <BrandLogo size={34} showText className="hidden sm:flex" />
               <BrandLogo size={34} showText={false} className="sm:hidden" />
-            </Link>
-
-            <div className="hidden md:flex flex-1 items-center justify-center px-4">
-              <div className="flex flex-wrap items-center justify-center gap-1.5">
-                {categorias.slice(0, 6).map((categoria) => (
-                  <Link
-                    key={categoria.id}
-                    href={`/categorias/${categoria.slug}`}
-                    className="rounded-full px-3.5 py-1.5 text-xs font-semibold text-gray-300 transition-all duration-200 hover:bg-white/10 hover:text-white"
-                  >
-                    {categoria.nome}
-                  </Link>
-                ))}
-              </div>
             </div>
 
             <div className="flex items-center gap-1">
+              <LocaleAwareLink
+                href="/favoritos"
+                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-[#F4A7B9]"
+                aria-label="Favoritos"
+              >
+                <Bookmark className="h-[18px] w-[18px]" />
+              </LocaleAwareLink>
+
+              <LocaleAwareLink
+                href="/pins"
+                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-[#F4A7B9]"
+                aria-label="Pins"
+              >
+                <PinIcon className="h-[18px] w-[18px]" />
+              </LocaleAwareLink>
+
+              <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label="Buscar"
+              >
+                <Search className="h-[18px] w-[18px]" />
+              </button>
+
               <div className="relative">
                 <button
                   onClick={() => setShowLangMenu(!showLangMenu)}
@@ -80,38 +95,6 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
-
-              <LocaleAwareLink
-                href="/pins"
-                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-[#F4A7B9]"
-                aria-label="Pins"
-              >
-                <PinIcon className="h-[18px] w-[18px]" />
-              </LocaleAwareLink>
-
-              <LocaleAwareLink
-                href="/favoritos"
-                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-[#F4A7B9]"
-                aria-label="Favoritos"
-              >
-                <Bookmark className="h-[18px] w-[18px]" />
-              </LocaleAwareLink>
-
-              <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Buscar"
-              >
-                <Search className="h-[18px] w-[18px]" />
-              </button>
-
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden rounded-full p-2.5 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Menu"
-              >
-                {isMenuOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
-              </button>
             </div>
           </div>
 
@@ -132,17 +115,7 @@ export default function Navbar() {
           {isMenuOpen && (
             <nav className="border-t border-white/10 pb-5 md:hidden">
               <div className="flex gap-2 overflow-x-auto pt-2 pb-1 scrollbar-hide">
-                {categorias.map((categoria) => (
-                  <Link
-                    key={categoria.id}
-                    href={`/categorias/${categoria.slug}`}
-                    className="whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-white"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <span className="mr-1.5">{categoria.icone}</span>
-                    {categoria.nome}
-                  </Link>
-                ))}
+                {[]}
               </div>
             </nav>
           )}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { X, Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, Dumbbell, BookOpen, Tag, Flame, HeartPulse, Flower2, Footprints, PartyPopper, Plane, Trees, ChevronRight } from "lucide-react";
+import { X, Menu, Shirt, Home, UtensilsCrossed, Cpu, Sparkles, Watch, Baby, PawPrint, Dumbbell, BookOpen, Tag, Flame, HeartPulse, Flower2, Footprints, PartyPopper, Plane, Trees, ChevronRight } from "lucide-react";
 import { getCategorias } from "@/lib/categorias";
 import { categorias as categoriasLocais } from "@/data/categorias";
 
@@ -32,10 +32,8 @@ const iconMap: Record<string, React.ElementType> = {
 export default function CategorySidebar({ locale = "pt" }: { locale?: "pt" | "en" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [categorias, setCategorias] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     getCategorias().then((data) => {
       if (data && data.length > 0) {
         setCategorias(data);
@@ -46,8 +44,8 @@ export default function CategorySidebar({ locale = "pt" }: { locale?: "pt" | "en
   }, []);
 
   const texts = {
-    pt: { title: "Categorias", close: "Fechar", open: "Categorias" },
-    en: { title: "Categories", close: "Close", open: "Categories" },
+    pt: { title: "Categorias", close: "Fechar" },
+    en: { title: "Categories", close: "Close" },
   }[locale];
 
   const IconFor = (nome: string) => iconMap[nome] || Tag;
@@ -56,11 +54,11 @@ export default function CategorySidebar({ locale = "pt" }: { locale?: "pt" | "en
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-20 left-4 z-40 hidden md:flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-white backdrop-blur-sm"
-        aria-label={texts.open}
+        className="md:hidden fixed top-16 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 rounded-b-2xl border-x border-b border-white/10 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-white backdrop-blur-sm"
+        aria-label={texts.title}
       >
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[10px] font-black text-white">☰</span>
-        {texts.open}
+        <Menu className="h-4 w-4" />
+        {texts.title}
       </button>
 
       {isOpen && (
@@ -69,52 +67,39 @@ export default function CategorySidebar({ locale = "pt" }: { locale?: "pt" | "en
             className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity"
             onClick={() => setIsOpen(false)}
           />
-          <div className="fixed left-0 md:left-0 top-0 z-50 h-full w-80 border-r border-white/10 bg-[#0a0a14]/95 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-gray-400">
-                {texts.title}
-              </h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="rounded-full p-1.5 text-gray-400 transition-colors hover:text-white hover:bg-white/10"
-                aria-label={texts.close}
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
+          <div className="fixed left-0 top-0 z-50 h-full w-72 border-r border-white/10 bg-[#0a0a14]/95 shadow-2xl backdrop-blur-xl transition-transform duration-300">
+            <div className="p-6">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-gray-400">
+                  Navegação
+                </h2>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-full p-1.5 text-gray-400 transition-colors hover:text-white hover:bg-white/10"
+                  aria-label={texts.close}
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
 
-            <div className="space-y-0.5 overflow-y-auto h-[calc(100vh-80px)]">
-              {categorias.map((categoria) => {
-                const Icon = IconFor(categoria.nome);
-                return (
-                  <Link
-                    key={categoria.id}
-                    href={`/${locale}/categorias/${categoria.slug}`}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white group-hover:bg-white/10 transition-colors">
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span className="flex-1 text-white">{categoria.nome}</span>
-                    <ChevronRight className="h-3.5 w-3.5 text-gray-600 group-hover:text-white transition-colors" />
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-white/10">
-              <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">{locale === "en" ? "Navigation" : "Navegação"}</p>
-              <div className="space-y-0.5">
-                <Link href="/favoritos" onClick={() => setIsOpen(false)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-gray-400 transition-all hover:bg-white/10 hover:text-white">
-                  <HeartPulse className="h-3.5 w-3.5" /> {locale === "en" ? "Favorites" : "Favoritos"}
-                </Link>
-                <Link href="/pins" onClick={() => setIsOpen(false)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-gray-400 transition-all hover:bg-white/10 hover:text-white">
-                  <Flame className="h-3.5 w-3.5" /> Pins
-                </Link>
-                <Link href="/artigos" onClick={() => setIsOpen(false)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-gray-400 transition-all hover:bg-white/10 hover:text-white">
-                  <BookOpen className="h-3.5 w-3.5" /> {locale === "en" ? "Articles" : "Artigos"}
-                </Link>
+              <div className="space-y-0.5 overflow-y-auto h-[calc(100vh-80px)]">
+                {categorias.map((categoria) => {
+                  const Icon = IconFor(categoria.nome);
+                  return (
+                    <Link
+                      key={categoria.id}
+                      href={`/${locale}/categorias/${categoria.slug}`}
+                      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white group"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white group-hover:bg-white/10 transition-colors">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="flex-1 text-white">{categoria.nome}</span>
+                      <ChevronRight className="h-3.5 w-3.5 text-gray-600 group-hover:text-white transition-colors" />
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
