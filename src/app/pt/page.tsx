@@ -79,7 +79,7 @@ export default async function HomePage() {
         <HeroSection />
       </section>
 
-      <section className="pt-20 md:pt-24" aria-label="Pins">
+      <section className="pt-28 md:pt-32" aria-label="Pins">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -101,10 +101,12 @@ export default async function HomePage() {
       </section>
 
       <section className="pb-12 md:pb-16 pt-4" aria-label="Posts">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-6 text-center">
+        <div className="relative mx-auto max-w-7xl px-4">
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <h2 className="text-2xl font-bold text-white tracking-tight">Posts</h2>
             <p className="mt-1 text-sm text-gray-400">Conteúdo educativo e dicas</p>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((artigo) => (
