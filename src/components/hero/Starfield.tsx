@@ -137,11 +137,11 @@ export default function Starfield() {
     };
   }, []);
 
-  return (
+    return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 h-full w-full"
-      style={{ pointerEvents: "none", zIndex: 0 }}
+      style={{ pointerEvents: "none", zIndex: -1 }}
     />
   );
 }

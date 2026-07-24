@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { Star, Heart, Share2, ShoppingBag } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Star, Heart, ShoppingBag } from "lucide-react";
 import { Produto } from "@/types";
 import { cn } from "@/lib/utils";
 import ShareButtons from "@/components/social/ShareButtons";
@@ -14,13 +14,22 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ produto, variant = "default" }: ProductCardProps) {
+  const router = useRouter();
   const discount = produto.precoOriginal
     ? Math.round(((produto.precoOriginal - produto.preco!) / produto.precoOriginal) * 100)
     : 0;
 
   if (variant === "horizontal") {
     return (
-      <Link href={`/produtos/${produto.slug}`} className="group block">
+      <article
+        onClick={() => router.push(`/produtos/${produto.slug}`)}
+        className="group block cursor-pointer"
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") router.push(`/produtos/${produto.slug}`);
+        }}
+      >
         <div className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:border-[#F4A7B9]/40">
           <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl">
             <Image
@@ -57,12 +66,20 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
             </span>
           </div>
         </div>
-      </Link>
+      </article>
     );
   }
 
   return (
-    <Link href={`/produtos/${produto.slug}`} className="group block">
+    <article
+      onClick={() => router.push(`/produtos/${produto.slug}`)}
+      className="group block cursor-pointer"
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push(`/produtos/${produto.slug}`);
+      }}
+    >
       <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
         <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
           <Image
@@ -100,7 +117,9 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
           </div>
 
           <button
+            type="button"
             onClick={(e) => {
+              e.stopPropagation();
               e.preventDefault();
             }}
             className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm opacity-0 transition-all duration-300 hover:bg-white hover:scale-110 group-hover:opacity-100"
@@ -139,6 +158,6 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
           </div>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

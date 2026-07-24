@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
@@ -12,12 +13,21 @@ interface PinCardProps {
 }
 
 export default function PinCard({ pin, locale }: PinCardProps) {
+  const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
   const visualizacoes = pin.visualizacoes || Math.floor(Math.random() * 8000) + 1500;
 
   return (
-    <Link href={href} className="group block" aria-label={`${pin.titulo} - ${locale === "en" ? "Pin" : "Pin"}`}>
-      <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
+    <article
+      onClick={() => router.push(href)}
+      className="group block cursor-pointer"
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push(href);
+      }}
+    >
+      <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
         <div className="card-image relative aspect-[9/16] w-full">
           <Image
             src={pin.imagem}
@@ -55,7 +65,7 @@ export default function PinCard({ pin, locale }: PinCardProps) {
             <p className="mt-1 line-clamp-2 text-xs text-gray-400">{pin.descricao}</p>
           )}
         </div>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
 }

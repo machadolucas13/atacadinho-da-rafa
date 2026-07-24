@@ -137,7 +137,7 @@ export default function BackgroundStarfield() {
     };
   }, []);
 
-  return (
+    return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 h-full w-full"

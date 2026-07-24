@@ -71,7 +71,7 @@ export default async function HomePage() {
   const posts = artigos.slice(0, 6);
 
   return (
-    <main className="min-h-screen">
+    <main className="relative z-10 min-h-screen">
       <HomeJsonLd locale="pt" pins={pins} />
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/pt" }]} />
 
@@ -87,7 +87,7 @@ export default async function HomePage() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
             </span>
             <h2 className="text-2xl font-bold text-white tracking-tight">
-              Pins
+              Pins Centralizado
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

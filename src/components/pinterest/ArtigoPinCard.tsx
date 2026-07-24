@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Star, Clock, Eye } from "lucide-react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
@@ -12,6 +12,7 @@ interface ArtigoPinCardProps {
 }
 
 export default function ArtigoPinCard({ artigo, locale = artigo.locale }: ArtigoPinCardProps) {
+  const router = useRouter();
   const href = locale === "en"
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
@@ -19,8 +20,16 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
   const visualizacoes = artigo.visualizacoes || Math.floor(Math.random() * 6000) + 800;
 
   return (
-    <Link href={href} className="group block" aria-label={`${artigo.titulo} - ${locale === "en" ? "Article" : "Artigo"}`}>
-      <article className="card card-hover">
+    <article
+      onClick={() => router.push(href)}
+      className="group block cursor-pointer"
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push(href);
+      }}
+    >
+      <div className="card card-hover">
         <div className="card-image aspect-video">
           <Image
             src={artigo.imagemCapa || "/images/artigos/default.jpg"}
@@ -95,7 +104,7 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
             <SaveButton item={{ id: artigo.slug, tipo: "artigo", titulo: artigo.titulo, slug: artigo.slug, imagemCapa: artigo.imagemCapa || "" }} />
           </div>
         </div>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
 }

@@ -50,6 +50,7 @@ export default function SaveButton({ item }: { item: Omit<Item, "adicionadoEm"> 
 
   return (
     <button
+      type="button"
       onClick={(e) => toggleSave(e)}
       className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-xs font-semibold text-gray-300 shadow-sm transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
     >
