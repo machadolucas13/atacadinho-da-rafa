@@ -1,9 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
+import { Eye } from "lucide-react";
 
 interface ShopeeLink {
   nome: string;
@@ -25,6 +24,7 @@ const links: ShopeeLink[] = [
 
 export default function PinClient() {
   const shareUrl = "/pt/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026";
+  const visualizacoes = Math.floor(Math.random() * 8000) + 1500;
 
   return (
     <div className="min-h-screen">
@@ -50,9 +50,15 @@ export default function PinClient() {
               />
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Calças Jeans Femininas a partir de R$ 24,90
-            </h1>
+            <div className="flex items-center gap-3 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                Calças Jeans Femininas a partir de R$ 24,90
+              </h1>
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
+                <Eye className="h-3 w-3" />
+                {visualizacoes.toLocaleString("pt-BR")}
+              </span>
+            </div>
             <p className="text-gray-300 mb-6">
               20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais. Clica abaixo e confere os preços na Shopee!
             </p>

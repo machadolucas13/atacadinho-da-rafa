@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {JsonLd} from '@/components/seo/JsonLd';
 import {ScrollReveal} from '@/components/layout';
+import PWAProvider from '@/components/seo/PWAProvider';
 import './../globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -70,6 +71,7 @@ export default async function RootLayout({
         </main>
         <Footer className="relative z-20" />
         <ScrollReveal />
+        <PWAProvider />
       </body>
     </html>
   );

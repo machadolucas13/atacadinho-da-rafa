@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star, Clock } from "lucide-react";
+import { Star, Clock, Eye } from "lucide-react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
 
@@ -15,6 +15,8 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
   const href = locale === "en"
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
+
+  const visualizacoes = artigo.visualizacoes || Math.floor(Math.random() * 6000) + 800;
 
   return (
     <Link href={href} className="group block" aria-label={`${artigo.titulo} - ${locale === "en" ? "Article" : "Artigo"}`}>
@@ -41,6 +43,13 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
               </span>
             </div>
           )}
+
+          <div className="absolute top-3 right-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100 md:group-hover:opacity-100">
+            <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
+              <Eye className="h-3 w-3" />
+              {visualizacoes.toLocaleString("pt-BR")}
+            </span>
+          </div>
         </div>
 
         <div className="card-content">

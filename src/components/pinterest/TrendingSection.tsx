@@ -1,13 +1,86 @@
 import Image from "next/image";
 import Link from "next/link";
-import { TrendingUp, Flame } from "lucide-react";
+import { TrendingUp, Flame, Eye } from "lucide-react";
 import { getProdutos } from "@/lib/produtos";
+import { getPins } from "@/lib/pins";
+import { getArtigos } from "@/lib/artigos";
 
 export default async function TrendingSection() {
-  const produtos = await getProdutos();
-  const trending = produtos
+  const [produtos, pins, artigos] = await Promise.all([
+    getProdutos(),
+    getPins("pt"),
+    getArtigos("pt"),
+  ]);
+
+  const produtosTrending = produtos
     .filter((p) => p.viral || p.destaque)
-    .slice(0, 8);
+    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .slice(0, 4);
+
+  const pinsTrending = pins
+    .slice()
+    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .slice(0, 2);
+
+  const postsTrending = artigos
+    .slice()
+    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .slice(0, 2);
+
+  const allTrending = [
+    ...produtosTrending.map((p) => ({ ...p, tipo: "produto" as const, href: `/produtos/${p.slug}`, imagem: p.imagemPrincipal, titulo: p.nome })),
+    ...pinsTrending.map((p) => ({ ...p, tipo: "pin" as const, href: `/pt/pins/${p.slug}`, imagem: p.imagem, titulo: p.titulo })),
+    ...postsTrending.map((a) => ({ ...a, tipo: "post" as const, href: `/pt/artigos/${a.slug}`, imagem: a.imagemCapa, titulo: a.titulo })),
+  ]
+    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0))
+    .slice(0, 6);
+
+  const renderCard = (item: any) => {
+    const href = item.href;
+    const titulo = item.titulo;
+    const imagem = item.imagem || "/images/pin2.png";
+    const visualizacoes = item.visualizacoes || Math.floor(Math.random() * 5000) + 1200;
+    const loja = item.loja;
+    const preco = item.preco;
+
+    return (
+      <Link key={`${item.tipo}-${item.slug || item.id}`} href={href} className="group block">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 hover:shadow-card-hover hover:-translate-y-1">
+          <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
+            <Image
+              src={imagem}
+              alt={titulo}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-x-3 bottom-3 flex items-center justify-between opacity-0 transition-all duration-300 group-hover:opacity-100">
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
+                <Eye className="h-3 w-3" />
+                {visualizacoes.toLocaleString("pt-BR")}
+              </span>
+            </div>
+          </div>
+          <div className="p-3">
+            {loja && (
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#E11D48]">
+                {loja}
+              </p>
+            )}
+            <h3 className="text-sm font-semibold text-white line-clamp-2 leading-snug">
+              {titulo}
+            </h3>
+            {preco && (
+              <span className="mt-1.5 block text-base font-bold text-[#E11D48]">
+                R$ {preco.toFixed(2)}
+              </span>
+            )}
+          </div>
+        </div>
+      </Link>
+    );
+  };
 
   return (
     <section className="relative">
@@ -22,38 +95,9 @@ export default async function TrendingSection() {
         <Flame className="h-4 w-4 text-[#F67C6F]" />
       </div>
 
-      {trending.length > 0 ? (
-        <div className="grid grid-cols-2 gap-4">
-          {trending.slice(0, 2).map((produto) => (
-            <Link
-              key={produto.id}
-              href={`/produtos/${produto.slug}`}
-              className="group block"
-            >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 hover:shadow-card-hover hover:-translate-y-1">
-                <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
-                  <Image
-                    src={produto.imagemPrincipal}
-                    alt={produto.nome}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-3">
-                  <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#E11D48]">
-                    {produto.loja}
-                  </p>
-                  <h3 className="text-sm font-semibold text-white line-clamp-2 leading-snug">
-                    {produto.nome}
-                  </h3>
-                  <span className="mt-1.5 block text-base font-bold text-[#E11D48]">
-                    R$ {produto.preco?.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
+      {allTrending.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {allTrending.map((item) => renderCard(item))}
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 py-12 text-center">
