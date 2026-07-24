@@ -1,11 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
-import { Eye } from "lucide-react";
-import { pins } from "@/data/pins";
+import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
+import { getPinBySlug, getPins } from "@/lib/pins";
 
 interface ShopeeLink {
   nome: string;
@@ -13,15 +11,19 @@ interface ShopeeLink {
   url: string;
 }
 
-export default function PinClient() {
-  const pin = pins.find((p) => p.slug === "tenis-corrida-masculino-feminino-2026");
+export default async function PinClient({ params }: { params: { slug: string } }) {
+  const pin = await getPinBySlug(params.slug, "pt");
   const links: ShopeeLink[] = pin?.links || [];
-  const shareUrl = "/pt/pins/tenis-corrida-masculino-feminino-2026";
+  const shareUrl = `/pt/pins/${params.slug}`;
   const visualizacoes = Math.floor(Math.random() * 8000) + 1500;
+  const allPins = await getPins("pt");
+  const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
+  const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
+  const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen">
-      <div className="pt-20 md:pt-28 pb-12">
+    <div className="relative min-h-screen">
+      <div className="relative z-10 pt-20 md:pt-28 pb-12">
         <div className="relative mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-3xl">
             <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
@@ -52,8 +54,9 @@ export default function PinClient() {
                 {visualizacoes.toLocaleString("pt-BR")}
               </span>
             </div>
-            <p className="text-gray-300 mb-6">
-              Selecionamos tênis de corrida masculinos e femininos que combinam conforto, Performance e estilo. Tem opções para iniciantes e também para quem já corre há anos. Clica abaixo e confere os preços na Shopee!
+            <p className="text-gray-300 mb-6 text-lg leading-relaxed">
+              Selecionamos tênis de corrida masculinos e femininos que unem conforto, performance e estilo. 
+              Tem opções para iniciantes e para quem já treina há anos. Clique abaixo e confira os preços na Shopee!
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -89,8 +92,8 @@ export default function PinClient() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {links.map((item) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              {links.slice(0, 6).map((item) => (
                 <a
                   key={item.url}
                   href={item.url}
@@ -102,6 +105,50 @@ export default function PinClient() {
                   <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">{item.preco}</span>
                 </a>
               ))}
+            </div>
+
+            <div className="mt-12 mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="h-4 w-4 text-[#F4A7B9]" />
+                <h3 className="text-lg font-bold text-white">Posts que combinam</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Link href="/pt/artigos/rotina-treino-feminino-perder-peso-dicas-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Treino feminino para perder peso</h4>
+                  <p className="mt-1 text-xs text-gray-400">Dicas de exercícios, alimentação e motivação para chegar ao shape dos sonhos.</p>
+                </Link>
+                <Link href="/pt/artigos/melhores-calcas-jeans-feminino-guia-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Guia de calças jeans femininas 2026</h4>
+                  <p className="mt-1 text-xs text-gray-400">Os cortes e modelos que vão bombar este ano, do wide leg ao flare.</p>
+                </Link>
+                <Link href="/pt/categorias/calcados" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Os melhores tênis de corrida 2026</h4>
+                  <p className="mt-1 text-xs text-gray-400">Comparativo completo dos modelos mais confortáveis e com melhor custo-benefício.</p>
+                </Link>
+                <Link href="/pt/artigos/como-economizar-supermercado-dicas" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Economize e corra mais</h4>
+                  <p className="mt-1 text-xs text-gray-400">Dicas práticas para equilibrar orçamento e qualidade nos seus treinos.</p>
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 mb-8">
+              {prevPin ? (
+                <LocaleAwareLink href={`/pt/pins/${prevPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  <ArrowLeft className="h-4 w-4" />
+                  {prevPin.titulo}
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
+              {nextPin ? (
+                <LocaleAwareLink href={`/pt/pins/${nextPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  {nextPin.titulo}
+                  <ArrowRight className="h-4 w-4" />
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
             </div>
           </div>
         </div>

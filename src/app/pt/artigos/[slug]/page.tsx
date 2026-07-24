@@ -1,10 +1,10 @@
 "use server";
 
-import { getArtigoBySlug } from "@/server/artigos";
+import { getArtigoBySlug, getArtigos } from "@/server/artigos";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { sanitizeHtml } from "@/lib/sanitize";
 import ShareButtons from "@/components/social/ShareButtons";
-import { Eye } from "lucide-react";
+import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
 
 export async function generateStaticParams() {
   return [
@@ -52,6 +52,14 @@ export default async function ArtigoPage({
       </div>
     );
   }
+
+  const allArtigos = await getArtigos("pt");
+  const sorted = allArtigos
+    .filter((a) => a.ativo)
+    .sort((a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0));
+  const currentIndex = sorted.findIndex((a) => a.slug === params.slug);
+  const prevArtigo = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+  const nextArtigo = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
   const visualizacoes = artigo.visualizacoes || Math.floor(Math.random() * 6000) + 800;
 
@@ -109,6 +117,21 @@ export default async function ArtigoPage({
                 image={artigo.imagemCapa || ""}
                 url={`/pt/artigos/${artigo.slug}`}
               />
+            </div>
+
+            <div className="flex items-center justify-between gap-4 mb-12">
+              {prevArtigo && (
+                <LocaleAwareLink href={`/pt/artigos/${prevArtigo.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  <ArrowLeft className="h-4 w-4" />
+                  {prevArtigo.titulo}
+                </LocaleAwareLink>
+              )}
+              {nextArtigo && (
+                <LocaleAwareLink href={`/pt/artigos/${nextArtigo.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  {nextArtigo.titulo}
+                  <ArrowRight className="h-4 w-4" />
+                </LocaleAwareLink>
+              )}
             </div>
           </div>
         </div>

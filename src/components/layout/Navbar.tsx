@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, Bookmark, Globe, Pin as PinIcon } from "lucide-react";
+import { Search, Menu, X, Bookmark, Globe, Pin as PinIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import BrandLogo from "./BrandLogo";
 import CategorySidebar from "@/components/ui/CategorySidebar";
@@ -33,8 +34,10 @@ export default function Navbar() {
               >
                 <Menu className="h-[18px] w-[18px]" />
               </button>
-              <BrandLogo size={34} showText className="hidden sm:flex" />
-              <BrandLogo size={34} showText={false} className="sm:hidden" />
+              <LocaleAwareLink href="/" className="flex items-center">
+                <BrandLogo size={34} showText className="hidden sm:flex" />
+                <BrandLogo size={34} showText={false} className="sm:hidden" />
+              </LocaleAwareLink>
             </div>
 
             <div className="flex items-center gap-1">

@@ -1,8 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
+import ShareButtons from "@/components/social/ShareButtons";
+import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
+import { getPins } from "@/lib/pins";
 
 interface ShopeeLink {
   nome: string;
@@ -17,27 +18,22 @@ const links: ShopeeLink[] = [
   { nome: "Mizuno Space 5 Kids Shoes", preco: "R$ 270", url: "https://s.shopee.com.br/6L34A8VJTY" },
   { nome: "Fila Recovery Women's Beige Light Soft Walking Gym Casual", preco: "R$ 287,96", url: "https://s.shopee.com.br/2qTBzji6XE" },
   { nome: "Fila Progress Lite Women's Beige Walking Original Woman Comfortable Soft Running", preco: "R$ 306", url: "https://s.shopee.com.br/7KvbM3lce0" },
-  { nome: "Fila Runner 2K Women's Lifestyle Casual Comfortable", preco: "R$ 368,90", url: "https://s.shopee.com.br/30mcCAubGI" },
-  { nome: "Adidas Supernova Comfortglide Women's Running", preco: "R$ 619", url: "https://s.shopee.com.br/8fQywf3JEO" },
-  { nome: "New Balance Women's Fresh Foam X 1080v14", preco: "R$ 736", url: "https://s.shopee.com.br/30mcCHSKuu" },
-  { nome: "New Balance Fuelcell Rebel V5 Women's - Pink Neo/Pink", preco: "R$ 894", url: "https://s.shopee.com.br/50Xga2wIew" },
-  { nome: "Mizuno Wave Creation 26 Women's Original with Invoice and Warranty", preco: "R$ 511,71", url: "https://s.shopee.com.br/9Kgfk4a3y9" },
-  { nome: "Olympikus Swift 5 Women's Grey and Pink", preco: "R$ 315", url: "https://s.shopee.com.br/1qaeoLRWiJ" },
-  { nome: "Fila Maxxi Lite Women's Walking Running Gym Training Academy Comfortable and Soft", preco: "R$ 277", url: "https://s.shopee.com.br/190d12lth" },
-  { nome: "Adidas Latin Run 3.0 Women's", preco: "R$ 374", url: "https://s.shopee.com.br/1qaeoQK91n" },
-  { nome: "Women's Gym Shoes for Bodybuilding Functional Training Walking Running Daily Use", preco: "R$ 49", url: "https://s.shopee.com.br/2BDVD8Z0sq" },
-  { nome: "Women's Sporty Gym Shoes Walking Light Comfortable Everyday Training", preco: "R$ 69,99", url: "https://s.shopee.com.br/9zwMXZza4G" },
-  { nome: "Women's Sporty Academy Walking Light Comfortable Everyday Training", preco: "R$ 106", url: "https://s.shopee.com.br/3g2Izz0TrF" },
 ];
 
-export default function PinClient() {
+export default async function PinClient({ params }: { params: { slug: string } }) {
+  const allPins = await getPins("en");
+  const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
+  const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
+  const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
+  const shareUrl = `/en/pins/${params.slug}`;
+
   return (
     <div className="min-h-screen">
       <div className="pt-28 pb-12">
         <div className="relative mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-3xl">
             <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
-              <LocaleAwareLink href="/en/pins" className="hover:text-[#F4A7B9] transition-colors">
+              <LocaleAwareLink href="/pins" className="hover:text-[#F4A7B9] transition-colors">
                 Pins
               </LocaleAwareLink>
               <span className="text-gray-600">/</span>
@@ -58,7 +54,7 @@ export default function PinClient() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
               Men's and Women's Running Shoes: best models to train in style
             </h1>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               Selected running shoes for men and women that combine comfort, performance and style. There are options for beginners and also for those who have been running for years. Click below and check the prices on Shopee!
             </p>
 
@@ -85,8 +81,18 @@ export default function PinClient() {
               </a>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {links.map((item) => (
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
+              <h2 className="text-lg font-bold text-white mb-4">Share</h2>
+              <ShareButtons
+                title="Men's and Women's Running Shoes: best models to train in style"
+                description="Selected running shoes for men and women that combine comfort, performance and style."
+                image="/images/pin2.png"
+                url={shareUrl}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              {links.slice(0, 6).map((item) => (
                 <a
                   key={item.url}
                   href={item.url}
@@ -98,6 +104,42 @@ export default function PinClient() {
                   <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">{item.preco}</span>
                 </a>
               ))}
+            </div>
+
+            <div className="mt-12 mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="h-4 w-4 text-[#F4A7B9]" />
+                <h3 className="text-lg font-bold text-white">Posts that combine</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Link href="/en/articles/best-womens-jeans-under-50-deals-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Best women's jeans under R$50</h4>
+                  <p className="mt-1 text-xs text-gray-400">Curated styles that lift and shape, from wide leg to flare.</p>
+                </Link>
+                <Link href="/en/categories/calcados" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Best running shoes 2026</h4>
+                  <p className="mt-1 text-xs text-gray-400">Full comparison of the most comfortable models with the best cost-benefit.</p>
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 mb-8">
+              {prevPin ? (
+                <LocaleAwareLink href={`/en/pins/${prevPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  <ArrowLeft className="h-4 w-4" />
+                  {prevPin.titulo}
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
+              {nextPin ? (
+                <LocaleAwareLink href={`/en/pins/${nextPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  {nextPin.titulo}
+                  <ArrowRight className="h-4 w-4" />
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
             </div>
           </div>
         </div>

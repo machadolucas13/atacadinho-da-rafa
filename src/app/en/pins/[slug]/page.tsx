@@ -1,9 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
+import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
+import { getPins } from "@/lib/pins";
 
 interface ShopeeLink {
   nome: string;
@@ -18,13 +18,14 @@ const links: ShopeeLink[] = [
   { nome: "Women's Black Graphite Jeans High Waist", preco: "R$ 36,90", url: "https://s.shopee.com.br/4AyZKPbq6n" },
   { nome: "Women's Jogger Jeans with Elastic", preco: "R$ 39,99", url: "https://s.shopee.com.br/8AUi5ohfoR" },
   { nome: "Flare Graphite Women's Jeans Butt Lifter", preco: "R$ 41,99", url: "https://s.shopee.com.br/LlqlV9Kxg" },
-  { nome: "Women's Black Jeans with Lycra Butt Lifter", preco: "R$ 44,99", url: "https://s.shopee.com.br/6VMU6mioLv" },
-  { nome: "Flare Women's Jeans High Waist Modeling", preco: "R$ 47,90", url: "https://s.shopee.com.br/9pcw59yz77" },
-  { nome: "Cargo Graphite Women's Jeans Butt Lifter", preco: "R$ 48,59", url: "https://s.shopee.com.br/50XgKK36x0" },
 ];
 
-export default function PinClient() {
-  const shareUrl = "/en/pins/best-womens-jeans-under-50-deals-2026";
+export default async function PinClient({ params }: { params: { slug: string } }) {
+  const allPins = await getPins("en");
+  const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
+  const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
+  const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
+  const shareUrl = `/en/pins/${params.slug}`;
 
   return (
     <div className="min-h-screen">
@@ -53,7 +54,7 @@ export default function PinClient() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
               Best Women's Jeans Under R$50
             </h1>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               20 models that lift and shape: wide leg, flare, cargo, skinny and more. Click below and check the prices on Shopee!
             </p>
 
@@ -62,7 +63,7 @@ export default function PinClient() {
                 href="/en/categories/moda-feminina"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
               >
-                👗Women's Fashion
+                👗 Women's Fashion
               </LocaleAwareLink>
               <a
                 href="https://s.shopee.com.br/4qEG7HYQVJ"
@@ -84,7 +85,7 @@ export default function PinClient() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {links.map((item) => (
                 <a
                   key={item.url}
@@ -97,6 +98,42 @@ export default function PinClient() {
                   <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">{item.preco}</span>
                 </a>
               ))}
+            </div>
+
+            <div className="mt-12 mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="h-4 w-4 text-[#F4A7B9]" />
+                <h3 className="text-lg font-bold text-white">Posts that combine</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Link href="/en/articles/best-womens-jeans-guide-cuts-styles-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Jeans guide for women 2026</h4>
+                  <p className="mt-1 text-xs text-gray-400">Discover the cuts that are trending and how to choose the ideal model for your body.</p>
+                </Link>
+                <Link href="/en/articles/how-to-build-capsule-wardrobe-budget-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Budget capsule wardrobe</h4>
+                  <p className="mt-1 text-xs text-gray-400">Build a complete closet spending little, with timeless key pieces.</p>
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 mb-8">
+              {prevPin ? (
+                <LocaleAwareLink href={`/en/pins/${prevPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  <ArrowLeft className="h-4 w-4" />
+                  {prevPin.titulo}
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
+              {nextPin ? (
+                <LocaleAwareLink href={`/en/pins/${nextPin.slug}`} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#F4A7B9] hover:text-[#F4A7B9]">
+                  {nextPin.titulo}
+                  <ArrowRight className="h-4 w-4" />
+                </LocaleAwareLink>
+              ) : (
+                <div />
+              )}
             </div>
           </div>
         </div>
