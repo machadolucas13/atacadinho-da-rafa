@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
+import { getItemViews } from "@/lib/views";
 
 interface PinCardProps {
   pin: Pin;
@@ -15,7 +16,7 @@ interface PinCardProps {
 export default function PinCard({ pin, locale }: PinCardProps) {
   const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
-  const visualizacoes = pin.visualizacoes ?? Math.floor(Math.random() * 8000) + 1500;
+  const visualizacoes = getItemViews(pin.slug, pin.visualizacoes);
   const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
 
   return (

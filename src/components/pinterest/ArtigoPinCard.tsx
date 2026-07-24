@@ -5,19 +5,11 @@ import { useRouter } from "next/navigation";
 import { Star, Clock, Eye } from "lucide-react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
+import { getItemViews } from "@/lib/views";
 
 interface ArtigoPinCardProps {
   artigo: Artigo;
   locale?: string;
-}
-
-function slugToViews(slug: string): number {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) {
-    hash = ((hash << 5) - hash) + slug.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash % 4200) + 800;
 }
 
 export default function ArtigoPinCard({ artigo, locale = artigo.locale }: ArtigoPinCardProps) {
@@ -26,7 +18,7 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
 
-  const visualizacoes = artigo.visualizacoes || slugToViews(artigo.slug);
+  const visualizacoes = getItemViews(artigo.slug, artigo.visualizacoes);
 
   return (
     <article

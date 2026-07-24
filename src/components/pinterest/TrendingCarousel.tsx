@@ -31,37 +31,36 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    setCanScrollPrev(el.scrollLeft > 4);
-    setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    const tolerance = 8;
+    setCanScrollPrev(el.scrollLeft > tolerance);
+    setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
   }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-
     updateScrollState();
-
     const handleScroll = () => updateScrollState();
     const handleResize = () => updateScrollState();
-
     el.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-
     return () => {
       el.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, [updateScrollState]);
 
-  const scroll = (direction: "prev" | "next") => {
+  const scroll = useCallback((direction: "prev" | "next") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = el.clientWidth * 0.75;
+    const cardWidth = el.querySelector("a")?.getBoundingClientRect().width || el.clientWidth / 4;
+    const gap = 16;
+    const amount = cardWidth + gap;
     el.scrollBy({
       left: direction === "next" ? amount : -amount,
       behavior: "smooth",
     });
-  };
+  }, []);
 
   return (
     <section className="relative">
@@ -78,29 +77,40 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
 
       {sorted.length > 0 ? (
         <div className="relative">
-          {canScrollPrev && (
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2">
             <button
               type="button"
               onClick={() => scroll("prev")}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-all hover:bg-black/80"
+              disabled={!canScrollPrev}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition-all hover:bg-black/90 disabled:opacity-25 border border-white/10 shadow-lg"
               aria-label="Anterior"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
-          )}
+            <button
+              type="button"
+              onClick={() => scroll("next")}
+              disabled={!canScrollNext}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition-all hover:bg-black/90 disabled:opacity-25 border border-white/10 shadow-lg"
+              aria-label="Próximo"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
 
           <div
             ref={scrollRef}
-            className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-thin"
+            className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-thin py-2"
+            style={{ scrollbarGutter: "stable" }}
           >
             {sorted.map((item) => (
               <Link
                 key={`${item.tipo}-${item.slug || item.id}`}
                 href={item.href}
                 className="snap-start flex-shrink-0"
-                style={{ width: "calc(100% / 6 - 0.4rem)" }}
+                style={{ width: "calc(25% - 12px)" }}
               >
-                <div className="overflow-hidden rounded-lg border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
                   <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
                     <Image
                       src={item.imagem || "/images/pin2.png"}
@@ -125,17 +135,6 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
               </Link>
             ))}
           </div>
-
-          {canScrollNext && (
-            <button
-              type="button"
-              onClick={() => scroll("next")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-all hover:bg-black/80"
-              aria-label="Próximo"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          )}
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-white/10 bg-white/5 py-10 text-center">

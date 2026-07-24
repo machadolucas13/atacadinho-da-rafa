@@ -5,6 +5,7 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { sanitizeHtml } from "@/lib/sanitize";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
+import { incrementItemViews, getItemViews } from "@/lib/views";
 
 export async function generateStaticParams() {
   return [
@@ -61,7 +62,10 @@ export default async function ArtigoPage({
   const prevArtigo = currentIndex > 0 ? sorted[currentIndex - 1] : null;
   const nextArtigo = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
-  const visualizacoes = artigo.visualizacoes || Math.floor(Math.random() * 6000) + 800;
+  const visualizacoes = getItemViews(artigo.slug, artigo.visualizacoes);
+if (typeof window !== "undefined") {
+  incrementItemViews(artigo.slug);
+}
 
   return (
     <div className="min-h-screen">
