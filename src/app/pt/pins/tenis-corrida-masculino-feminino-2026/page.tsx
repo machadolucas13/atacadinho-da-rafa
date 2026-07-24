@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
-import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
+import { Eye, Sparkles, ArrowLeft, ArrowRight, ShoppingBag } from "lucide-react";
 import { getPinBySlug, getPins } from "@/lib/pins";
 
 interface ShopeeLink {
@@ -13,7 +13,25 @@ interface ShopeeLink {
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
-  const links: ShopeeLink[] = pin?.links || [];
+  const links: ShopeeLink[] = [
+    { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
+    { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
+    { nome: "Tênis New Balance Fresh Foam Arishi V4 Feminino Original com Nota Fiscal e Garantia", preco: "345,21", url: "https://s.shopee.com.br/Llr11YRzl" },
+    { nome: "Tenis Mizuno Space 5 Menina", preco: "270", url: "https://s.shopee.com.br/6L34A8VJTY" },
+    { nome: "Tênis Fila Recovery Feminino Bege Leve Macio Caminhada Academia Casual", preco: "287,96", url: "https://s.shopee.com.br/2qTBzji6XE" },
+    { nome: "Tênis Fila Progress Lite Feminino Bege Caminhada Original Mulher Confortável Macio Corrida", preco: "306", url: "https://s.shopee.com.br/7KvbM3lce0" },
+    { nome: "Tenis Fila Runner 2K Feminino Lifestyle Casual Confortavel", preco: "368,90", url: "https://s.shopee.com.br/30mcCAubGI" },
+    { nome: "Tênis Adidas Supernova Comfortglide Feminino Corrida", preco: "619", url: "https://s.shopee.com.br/8fQywf3JEO" },
+    { nome: "Tênis New Balance Feminino Fresh Foam X 1080v14", preco: "736", url: "https://s.shopee.com.br/30mcCHSKuu" },
+    { nome: "Tênis New Balance Fuelcell Rebel V5 Feminino - Rosa Neo/Rosa", preco: "894", url: "https://s.shopee.com.br/50Xga2wIew" },
+    { nome: "Tênis Mizuno Wave Creation 26 Feminino Original com Nota Fiscal e Garantia", preco: "511,71", url: "https://s.shopee.com.br/9Kgfk4a3y9" },
+    { nome: "Tênis Olympikus Swift 5 Feminino Cinza e Rosa", preco: "315", url: "https://s.shopee.com.br/1qaeoLRWiJ" },
+    { nome: "Tenis Fila Maxxi Lite Feminino Caminhada Corrida Treinos Academia Confortável e Macio", preco: "277", url: "https://s.shopee.com.br/190d12lth" },
+    { nome: "Tênis Adidas Latin Run 3.0 Feminino", preco: "374", url: "https://s.shopee.com.br/1qaeoQK91n" },
+    { nome: "Tênis Feminino de Academia para Musculação Treino Funcional Caminhada Corrida e Uso Diário", preco: "49", url: "https://s.shopee.com.br/2BDVD8Z0sq" },
+    { nome: "Tênis Feminino Esportivo Axion Estiloso Moderno Treino Academia Corrida Caminhada", preco: "69,99", url: "https://s.shopee.com.br/9zwMXZza4G" },
+    { nome: "Tênis Feminino Esportivo Academia Caminhada Leve Confortável Dia a Dia Treino", preco: "106", url: "https://s.shopee.com.br/3g2Izz0TrF" },
+  ];
   const shareUrl = `/pt/pins/${params.slug}`;
   const visualizacoes = Math.floor(Math.random() * 8000) + 1500;
   const allPins = await getPins("pt");
@@ -56,7 +74,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
             </div>
             <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               Selecionamos tênis de corrida masculinos e femininos que unem conforto, performance e estilo. 
-              Tem opções para iniciantes e para quem já treina há anos. Clique abaixo e confira os preços na Shopee!
+              Tem opção para iniciantes e para quem já treina há anos. Clique e confira os preços na Shopee!
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -92,19 +110,25 @@ export default async function PinClient({ params }: { params: { slug: string } }
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-              {links.map((item) => (
-                <a
-                  key={item.url}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-[#F4A7B9] hover:bg-white/10"
-                >
-                  <span className="text-sm font-semibold text-white line-clamp-1">{item.nome}</span>
-                  <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">{item.preco}</span>
-                </a>
-              ))}
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <ShoppingBag className="h-5 w-5 text-[#F4A7B9]" />
+                <h2 className="text-lg font-bold text-white">Ofertas selecionadas</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {links.map((item, idx) => (
+                  <a
+                    key={idx}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-[#F4A7B9] hover:bg-white/10"
+                  >
+                    <span className="text-sm font-semibold text-white line-clamp-1">{item.nome}</span>
+                    <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">R$ {item.preco}</span>
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="mt-12 mb-8">

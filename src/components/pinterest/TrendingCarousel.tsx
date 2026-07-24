@@ -91,7 +91,7 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
 
           <div
             ref={scrollRef}
-            className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory"
+            className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-thin"
           >
             {sorted.map((item) => (
               <Link
