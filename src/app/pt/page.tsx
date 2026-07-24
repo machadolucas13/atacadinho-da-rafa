@@ -108,7 +108,7 @@ export default async function HomePage() {
             <p className="mt-1 text-sm text-gray-400">Conteúdo educativo e dicas</p>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {posts.map((artigo) => (
               <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
             ))}
