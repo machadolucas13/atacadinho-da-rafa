@@ -17,8 +17,7 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const result = await loginWithSecret(secret) as Response;
-      const data = await result.json();
+      const data = await loginWithSecret(secret) as { ok?: boolean; error?: string };
       if ((data as any).error) {
         setError((data as any).error + " | Verifique ADMIN_SECRET no .env.local e no Vercel");
         setLoading(false);
