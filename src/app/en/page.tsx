@@ -3,6 +3,7 @@ import HeroSection from "@/components/hero/HeroSection";
 import TrendingSection from "@/components/pinterest/TrendingSection";
 import CarouselSection from "@/components/pinterest/CarouselSection";
 import ProductCarouselSection from "@/components/pinterest/ProductCarouselSection";
+import CuponsSection from "@/components/layout/CuponsSection";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import { getProdutos } from "@/lib/produtos";
@@ -129,6 +130,8 @@ export default async function HomePage() {
       />
 
       <TrendingSection />
+
+      <CuponsSection />
 
       <section aria-label="Newsletter">
         <div className="mx-auto max-w-7xl px-4 py-8">
