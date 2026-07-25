@@ -72,6 +72,36 @@ export default function ImportarProduto() {
     return null;
   }
 
+  async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
+    try {
+      const response = await fetch("/api/produtos/extrair", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      return {
+        nome: data.titulo || "",
+        imagemPrincipal: data.imagem || "",
+        preco: data.preco ? data.preco.toString() : "",
+        precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
+        descricao: data.titulo || "",
+        descricaoCurta: data.titulo || "",
+      };
+    } catch (error) {
+      console.error("Erro ao extrair dados públicos:", error);
+      return {};
+    }
+  }
+
   async function importarProduto() {
     setLoading(true);
     setStatus("");
@@ -85,18 +115,16 @@ export default function ImportarProduto() {
         return;
       }
 
-      // Simulação de importação automática
-      // Em produção, aqui seriam chamadas reais às APIs dos marketplaces
-      const dadosImportados = await simularImportacao(marketplace, form.linkAfiliado);
+      const dadosImportados = await extrairDadosPublicos(form.linkAfiliado);
 
       setForm((prev) => ({
         ...prev,
         nome: dadosImportados.nome || prev.nome,
-        imagemPrincipal: dadosImportados.imagem || prev.imagemPrincipal,
-        preco: dadosImportados.preco?.toString() || prev.preco,
-        precoOriginal: dadosImportados.precoOriginal?.toString() || prev.precoOriginal,
-        descricao: dadosImportados.descricao || prev.descricao,
-        descricaoCurta: dadosImportados.descricaoCurta || prev.descricaoCurta,
+        imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal,
+        preco: dadosImportados.preco || prev.preco,
+        precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal,
+        descricao: dadosImportados.nome || prev.descricao,
+        descricaoCurta: dadosImportados.nome || prev.descricaoCurta,
         loja: marketplace,
         marketplace,
         tags: prev.tags || marketplace,
@@ -108,48 +136,6 @@ export default function ImportarProduto() {
     } finally {
       setLoading(false);
     }
-  }
-
-  async function simularImportacao(marketplace: Marketplace, url: string): Promise<any> {
-    // Simula atraso de rede
-    await new Promise((r) => setTimeout(r, 1500));
-
-    const base = {
-      shopee: {
-        nome: "Produto Shopee Importado",
-        descricao: "Produto importado automaticamente da Shopee.",
-        descricaoCurta: "Produto Shopee",
-        imagem: "https://cf.shopee.com.br/file/example.jpg",
-        preco: 49.9,
-        precoOriginal: 79.9,
-      },
-      amazon: {
-        nome: "Produto Amazon Importado",
-        descricao: "Produto importado automaticamente da Amazon.",
-        descricaoCurta: "Produto Amazon",
-        imagem: "https://m.media-amazon.com/images/example.jpg",
-        preco: 99.9,
-        precoOriginal: 149.9,
-      },
-      mercadolivre: {
-        nome: "Produto Mercado Livre Importado",
-        descricao: "Produto importado automaticamente do Mercado Livre.",
-        descricaoCurta: "Produto ML",
-        imagem: "https://http2.mlstatic.com/example.jpg",
-        preco: 59.9,
-        precoOriginal: 89.9,
-      },
-      shein: {
-        nome: "Produto SHEIN Importado",
-        descricao: "Produto importado automaticamente da SHEIN.",
-        descricaoCurta: "Produto SHEIN",
-        imagem: "https://img.ltwebstatic.com/example.jpg",
-        preco: 29.9,
-        precoOriginal: 49.9,
-      },
-    };
-
-    return base[marketplace || "shopee"];
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -173,7 +159,7 @@ export default function ImportarProduto() {
       <AdminNav />
       <div className="mx-auto max-w-2xl px-4 py-8">
         <h1 className="text-2xl font-bold text-white">Importar Produto</h1>
-        <p className="mt-2 text-sm text-gray-400">Cole o link de afiliado e o sistema importa automaticamente.</p>
+        <p className="mt-2 text-sm text-gray-400">Cole o link do produto e o sistema importa automaticamente.</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
