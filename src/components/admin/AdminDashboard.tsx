@@ -3,12 +3,36 @@
 import { useEffect, useState } from "react";
 import AdminNav from "@/components/admin/AdminNav";
 import { excluirArtigo, excluirPasta } from "@/app/actions/admin";
-import { Sparkles, FolderOpen, FileText, Trash2 } from "lucide-react";
+import { Sparkles, FolderOpen, FileText, Trash2, RefreshCw } from "lucide-react";
 
 export default function AdminDashboard() {
   const [artigos, setArtigos] = useState<any[]>([]);
   const [pastas, setPastas] = useState<any[]>([]);
+  const [syncStatus, setSyncStatus] = useState<string>("");
+  const [syncing, setSyncing] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const syncCoupons = async () => {
+    setSyncing(true);
+    setSyncStatus("");
+    try {
+      const res = await fetch("/api/admin/cupons/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secret: process.env.NEXT_PUBLIC_ADMIN_SECRET }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setSyncStatus(`Sincronizado! ${data.summary.inserted} inseridos, ${data.summary.updated} atualizados.`);
+      } else {
+        setSyncStatus(data.error || "Erro na sincronização.");
+      }
+    } catch (e) {
+      setSyncStatus("Erro ao sincronizar cupons.");
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   useEffect(() => {
     const carregar = async () => {
@@ -101,6 +125,61 @@ export default function AdminDashboard() {
             <h3 className="mt-4 font-semibold text-white">Importar Produto</h3>
             <p className="mt-2 text-sm text-gray-400">Colar link e publicar</p>
           </a>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-4">
+          <div className="md:col-span-4 rounded-2xl border border-white/10 bg-white/5 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-white">Coletor de Cupons</h2>
+                <p className="mt-1 text-sm text-gray-400">
+                  Sincronize cupons automaticamente das plataformas de afiliados.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={syncCoupons}
+                disabled={syncing}
+                className="btn-primary inline-flex items-center gap-2 px-4 py-2 text-sm font-bold disabled:opacity-70"
+              >
+                {syncing ? (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+                ) : (
+                  <RefreshCw className="h-4 w-4" />
+                )}
+                {syncing ? "Sincronizando..." : "Sincronizar Agora"}
+              </button>
+            </div>
+
+            {syncStatus && (
+              <p className="mt-3 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-gray-300">
+                {syncStatus}
+              </p>
+            )}
+
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 text-xs text-gray-400">
+              <div>
+                <strong className="text-white">Shopee</strong>
+                <p>API GraphQL oficial</p>
+                <p>Credenciais: App ID + Secret</p>
+              </div>
+              <div>
+                <strong className="text-white">Amazon</strong>
+                <p>Creators API / PA-API</p>
+                <p>Credenciais: Associate Tag + Keys</p>
+              </div>
+              <div>
+                <strong className="text-white">Mercado Livre</strong>
+                <p>API de Afiliados</p>
+                <p>Credenciais: App ID + Token</p>
+              </div>
+              <div>
+                <strong className="text-white">SHEIN</strong>
+                <p>Sem API pública</p>
+                <p>Usar entradas manuais/alternativas</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
