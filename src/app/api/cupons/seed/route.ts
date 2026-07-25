@@ -137,29 +137,3 @@ export async function GET() {
     count: INITIAL_COUPONS.length,
   });
 }
-
-    for (const item of batch) {
-      await setDoc(item.ref, item.payload);
-    }
-
-    return NextResponse.json({
-      ok: true,
-      inserted: INITIAL_COUPONS.length,
-      message: "Cupons iniciais criados com sucesso",
-    });
-  } catch (error) {
-    console.error("Erro ao popular cupons:", error);
-    return NextResponse.json(
-      { ok: false, error: "Erro ao popular cupons" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    ok: true,
-    message: "Use POST para popular cupons iniciais",
-    count: INITIAL_COUPONS.length,
-  });
-}
