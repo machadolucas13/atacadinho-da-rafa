@@ -65,8 +65,8 @@ export default function CuponsSection() {
 
   const copiar = async (codigo: string) => {
     await navigator.clipboard.writeText(codigo);
-    setCopiado(codigo);
-    setTimeout(() => setCopiado(null), 2000);
+    setCopied(codigo);
+    setTimeout(() => setCopied(null), 2000);
   };
 
   return (
