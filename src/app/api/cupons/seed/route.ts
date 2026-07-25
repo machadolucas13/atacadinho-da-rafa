@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/server/firebase-admin";
-import { doc, setDoc, serverTimestamp } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 
 const INITIAL_COUPONS = [
   {
@@ -97,23 +97,17 @@ const INITIAL_COUPONS = [
 
 export async function POST() {
   try {
-    const batch = [];
     const collectionRef = adminDb.collection("cupons");
 
     for (const coupon of INITIAL_COUPONS) {
-      const ref = doc(collectionRef);
-      const payload = {
+      const ref = collectionRef.doc();
+      await ref.set({
         ...coupon,
         id: ref.id,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        createdAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
         ultimaAtualizacao: new Date().toISOString(),
-      };
-      batch.push({ ref, payload });
-    }
-
-    for (const item of batch) {
-      await setDoc(item.ref, item.payload);
+      });
     }
 
     return NextResponse.json({
