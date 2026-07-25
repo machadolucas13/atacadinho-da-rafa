@@ -6,25 +6,66 @@ import AdminNav from "@/components/admin/AdminNav";
 import { criarProduto } from "@/app/actions/admin";
 import { Sparkles, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
 
-type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
+  type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
 
-interface ProdutoForm {
-  nome: string;
-  slug: string;
-  descricao: string;
-  descricaoCurta: string;
-  imagemPrincipal: string;
-  preco: string;
-  precoOriginal: string;
-  linkAfiliado: string;
-  loja: string;
-  marketplace: Marketplace;
-  tags: string;
-  categoriaId: string;
-  destaque: boolean;
-  viral: boolean;
-  ativo: true;
-}
+  interface ProdutoForm {
+    nome: string;
+    slug: string;
+    descricao: string;
+    descricaoCurta: string;
+    imagemPrincipal: string;
+    preco: string;
+    precoOriginal: string;
+    linkAfiliado: string;
+    loja: string;
+    marketplace: Marketplace;
+    tags: string;
+    categoriaId: string;
+    destaque: boolean;
+    viral: boolean;
+    ativo: true;
+  }
+
+  const marketDefaults: Record<string, { loja: string; tags: string; categoriaSugerida: string }> = {
+    shopee: { loja: "Shopee", tags: "shopee, oferta", categoriaSugerida: "moda-feminina" },
+    amazon: { loja: "Amazon", tags: "amazon, oferta", categoriaSugerida: "tecnologia" },
+    mercadolivre: { loja: "Mercado Livre", tags: "mercadolivre, oferta", categoriaSugerida: "eletronicos" },
+    shein: { loja: "SHEIN", tags: "shein, moda", categoriaSugerida: "moda-feminina" },
+  };
+
+  const slugify = (value: string) =>
+    value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
+    try {
+      const response = await fetch("/api/produtos/extrair", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      return {
+        nome: data.titulo || "",
+        imagemPrincipal: data.imagem || "",
+        preco: data.preco ? data.preco.toString() : "",
+        precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
+        descricao: data.titulo || "",
+        descricaoCurta: data.titulo || "",
+      };
+    } catch {
+      return {};
+    }
+  }
 
 export default function ImportarProduto() {
   const router = useRouter();
@@ -115,22 +156,29 @@ export default function ImportarProduto() {
         return;
       }
 
+      const defaults = marketDefaults[marketplace];
       const dadosImportados = await extrairDadosPublicos(form.linkAfiliado);
 
-      setForm((prev) => ({
-        ...prev,
-        nome: dadosImportados.nome || prev.nome,
-        imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal,
-        preco: dadosImportados.preco || prev.preco,
-        precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal,
-        descricao: dadosImportados.nome || prev.descricao,
-        descricaoCurta: dadosImportados.nome || prev.descricaoCurta,
-        loja: marketplace,
-        marketplace,
-        tags: prev.tags || marketplace,
-      }));
+      setForm((prev) => {
+        const nome = dadosImportados.nome || prev.nome || `Produto ${marketplace}`;
+        const categoriaId = prev.categoriaId || defaults.categoriaSugerida;
+        return {
+          ...prev,
+          nome: dadosImportados.nome || prev.nome,
+          slug: !prev.slug && nome ? slugify(nome) : prev.slug,
+          imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal,
+          preco: dadosImportados.preco || prev.preco,
+          precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal,
+          descricao: dadosImportados.nome || prev.descricao,
+          descricaoCurta: dadosImportados.nome || prev.descricaoCurta,
+          loja: defaults.loja,
+          marketplace,
+          categoriaId,
+          tags: prev.tags || defaults.tags,
+        };
+      });
 
-      setStatus(`Produto importado com sucesso de ${marketplace}! Revise os dados e salve.`);
+      setStatus(`Produto pré-preenchido! Verifique o link, o nome e o preço, e depois salve.`);
     } catch (e) {
       setStatus("Erro ao importar produto. Tente novamente.");
     } finally {
