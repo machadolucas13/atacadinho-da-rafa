@@ -108,46 +108,6 @@ export function AdBannerClient({
     />
   );
 }
-    invokeScript.src = invokeSrc;
-    invokeScript.async = true;
-    invokeScript.onload = successHandler;
-    invokeScript.onerror = errorHandler;
-    container.appendChild(invokeScript);
-
-    return () => {
-      clearTimeout(timeout);
-      invokeScript.onload = null;
-      invokeScript.onerror = null;
-    };
-  }, [scriptContent, invokeSrc]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="ad-slot flex items-center justify-center overflow-hidden"
-      style={{
-        width: safeWidth,
-        height: safeHeight,
-        maxWidth: "100%",
-        margin: "0 auto",
-        background: "rgba(255,255,255,0.02)",
-        border: "1px dashed rgba(255,255,255,0.08)",
-        borderRadius: 8,
-      }}
-    >
-      {status === "error" && (
-        <div className="text-center text-xs text-red-400">
-          Anúncio indisponível
-        </div>
-      )}
-      {status === "loading" && (
-        <div className="text-center text-xs text-gray-500">
-          Carregando anúncio...
-        </div>
-      )}
-    </div>
-  );
-}
 
 export const SMARTLINK_SCRIPT = `atOptions = {
   'key' : 'f243d170cc0bf2fcd1df74001886740a',
