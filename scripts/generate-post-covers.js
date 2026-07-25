@@ -1,14 +1,14 @@
 const sharp = require('sharp');
 const path = require('path');
+const { Buffer } = require('buffer');
 
-const FONT = path.join(__dirname, '..', 'canvas-fonts', 'BricolageGrotesque-Bold.ttf');
 const OUT = path.join(__dirname, '..', 'public', 'posts');
 
 async function generateCover(filename, title, subtitle) {
-  const W = 1200;
-  const H = 630;
+  const W = 1080;
+  const H = 1920;
 
-  const starCount = 220;
+  const starCount = 300;
   let stars = '';
   const rng = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
   for (let i = 0; i < starCount; i++) {
@@ -23,15 +23,15 @@ async function generateCover(filename, title, subtitle) {
   <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
     <rect width="${W}" height="${H}" fill="#000000"/>
     ${stars}
-    <text x="${W/2}" y="${H/2 - 20}" font-family="sans-serif" font-size="52" font-weight="bold" fill="#ffffff" text-anchor="middle">${title}</text>
-    <text x="${W/2}" y="${H/2 + 40}" font-family="sans-serif" font-size="28" fill="rgba(255,255,255,0.85)" text-anchor="middle">${subtitle}</text>
+    <text x="${W/2}" y="${H/2 - 30}" font-family="sans-serif" font-size="56" font-weight="bold" fill="#ffffff" text-anchor="middle">${title}</text>
+    <text x="${W/2}" y="${H/2 + 50}" font-family="sans-serif" font-size="28" fill="rgba(255,255,255,0.85)" text-anchor="middle">${subtitle}</text>
   </svg>`;
 
   await sharp(Buffer.from(svg))
     .png()
     .toFile(path.join(OUT, filename));
 
-  console.log('Cover gerada:', filename);
+  console.log('Cover 9:16 gerada:', filename);
 }
 
 (async () => {
