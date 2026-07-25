@@ -5,6 +5,7 @@ import CarouselSection from "@/components/pinterest/CarouselSection";
 import ProductCarouselSection from "@/components/pinterest/ProductCarouselSection";
 import CuponsSection from "@/components/layout/CuponsSection";
 import NewsletterForm from "@/components/ui/NewsletterForm";
+import AutoSeedCoupons from "@/components/layout/AutoSeedCoupons";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import { getProdutos } from "@/lib/produtos";
@@ -134,6 +135,8 @@ export default async function HomePage() {
       <TrendingSection />
 
       <CuponsSection />
+
+      <AutoSeedCoupons />
 
       <section aria-label="Newsletter">
         <NewsletterForm locale="pt" />
