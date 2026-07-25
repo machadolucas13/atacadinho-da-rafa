@@ -25,7 +25,7 @@ export default async function BlogPage({ params }: { params: { locale: string } 
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {artigos.map((artigo) => (
             <ArtigoPinCard key={artigo.id} artigo={artigo} locale="pt" />
           ))}

@@ -31,12 +31,12 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
       }}
     >
       <div className="card card-hover">
-        <div className="card-image aspect-[9/16]">
+        <div className="card-image aspect-[3/4]">
           <Image
             src={artigo.imagemCapa || "/images/artigos/default.jpg"}
             alt={artigo.titulo}
             fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+            sizes="(max-width: 640px) 60vw, (max-width: 1024px) 25vw, 20vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

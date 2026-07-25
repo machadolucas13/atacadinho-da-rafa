@@ -19,8 +19,8 @@ export async function loginWithSecret(secret: string) {
     name: SESSION_COOKIE,
     value: session,
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "lax" : "strict",
+    secure: false,
+    sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24,
   });

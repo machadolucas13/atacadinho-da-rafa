@@ -8,6 +8,7 @@ export default function AdminLogin() {
   const router = useRouter();
   const [secret, setSecret] = useState("");
   const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -22,6 +23,7 @@ export default function AdminLogin() {
         setError((data as any).error + " | Verifique ADMIN_SECRET no .env.local e no Vercel");
         setLoading(false);
       } else {
+        setStatus("Login ok! Redirecionando...");
         router.push("/admin/dashboard");
       }
     } catch {
