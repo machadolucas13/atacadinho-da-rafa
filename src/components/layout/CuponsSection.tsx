@@ -404,11 +404,10 @@ export default function CuponsSection() {
             const isMercadoLivre = cupom.marketplace === "Mercado Livre";
             const isAmazon = cupom.marketplace === "Amazon";
             const isLightMarketplace = isAmazon || isMercadoLivre;
-
-            const cardBg = isMercadoLivre ? "bg-[#fff159] text-black" : isLightMarketplace ? "bg-white/90 text-black" : "bg-white/5 text-white";
-            const codeBg = isMercadoLivre ? "bg-black/10" : isLightMarketplace ? "bg-black/10" : "bg-black/20";
-            const codeTextColor = isMercadoLivre ? "text-black" : isLightMarketplace ? "text-black" : "text-white";
-            const borderClass = isMercadoLivre ? "border-yellow-500/60" : isLightMarketplace ? "border-black/10" : "border-white/10";
+            const cardBg = isLightMarketplace ? "bg-white/90 text-black" : "bg-white/5 text-white";
+            const codeBg = isLightMarketplace ? "bg-black/10" : "bg-black/20";
+            const codeTextColor = isLightMarketplace ? "text-black" : "text-white";
+            const borderClass = isLightMarketplace ? "border-black/10" : "border-white/10";
 
             return (
               <div
@@ -417,8 +416,8 @@ export default function CuponsSection() {
               >
                 <div className="flex items-center justify-between">
                   <span
-                    className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold"
-                    style={{ backgroundColor: cupom.marketplaceColor, color: isMercadoLivre ? "#000000" : "#ffffff" }}
+                    className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold ${isMercadoLivre ? "text-black" : "text-white"}`}
+                    style={{ backgroundColor: cupom.marketplaceColor }}
                   >
                     <Tag className="h-3 w-3" />
                     {cupom.marketplace}
@@ -430,13 +429,13 @@ export default function CuponsSection() {
                 </div>
 
                 <div className="mt-3">
-                  <p className={`text-xs leading-relaxed ${isMercadoLivre ? "text-black/80 font-medium" : isLightMarketplace ? "text-gray-800" : "text-gray-300"}`}>
+                  <p className={`text-xs leading-relaxed ${isLightMarketplace ? "text-gray-800" : "text-gray-300"}`}>
                     {cupom.descricao}
                   </p>
                 </div>
 
-                <div className={`mt-3 rounded-xl border p-2 text-center ${isMercadoLivre ? "border-yellow-700/30 bg-yellow-700/10" : `border-black/10 ${codeBg}`}`}>
-                  <p className={`text-[11px] ${isMercadoLivre ? "text-black/70" : isLightMarketplace ? "text-gray-600" : "text-gray-400"}`}>Código</p>
+                <div className={`mt-3 rounded-xl border p-2 text-center ${isLightMarketplace ? "border-black/10" : "border-white/10"} ${codeBg}`}>
+                  <p className={`text-[11px] ${isLightMarketplace ? "text-gray-600" : "text-gray-400"}`}>Código</p>
                   <p className={`mt-1 text-sm font-bold tracking-wide ${codeTextColor}`}>
                     {cupom.codigo}
                   </p>
@@ -447,7 +446,6 @@ export default function CuponsSection() {
                     type="button"
                     onClick={() => copiar(cupom)}
                     className={`flex-1 inline-flex items-center justify-center gap-1 rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
-                      isMercadoLivre ? "border-yellow-700/30 bg-yellow-700/10 hover:bg-yellow-700/20 text-black" :
                       isLightMarketplace ? "border-black/10 bg-black/5 hover:bg-black/10 text-black" :
                       "border-white/10 bg-white/5 hover:bg-white/10 text-white"
                     }`}
@@ -473,7 +471,7 @@ export default function CuponsSection() {
                 )}
 
                 {cupom.validade && (
-                  <p className={`mt-2 text-center text-[10px] ${isMercadoLivre ? "text-black/70" : isLightMarketplace ? "text-gray-600" : "text-gray-500"}`}>
+                  <p className={`mt-2 text-center text-[10px] ${isLightMarketplace ? "text-gray-600" : "text-gray-500"}`}>
                     Válido até {new Date(cupom.validade).toLocaleDateString("pt-BR")}
                   </p>
                 )}
