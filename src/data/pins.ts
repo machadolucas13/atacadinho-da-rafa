@@ -7,6 +7,7 @@ export interface Pin {
   imagem: string;
   destaque: boolean;
   categoriaId: string;
+  publicadoEm?: string;
   links?: { nome: string; preco: string; url: string }[];
 }
 
@@ -20,6 +21,7 @@ export const pins: Pin[] = [
     imagem: "/images/pin1.png",
     destaque: true,
     categoriaId: "moda-feminina",
+    publicadoEm: "2026-07-22",
     links: [
       { nome: "Calça Jeans Feminina | Bazar Brechó Desapego usada", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
       { nome: "calça wide leg jeans feminina levanta bumbum", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
@@ -52,6 +54,7 @@ export const pins: Pin[] = [
     imagem: "/images/pin2.png",
     destaque: true,
     categoriaId: "calcados",
+    publicadoEm: "2026-07-23",
     links: [
       { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
       { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
@@ -81,6 +84,7 @@ export const pins: Pin[] = [
     imagem: "/images/pin1.png",
     destaque: true,
     categoriaId: "moda-feminina",
+    publicadoEm: "2026-07-22",
     links: [
       { nome: "Used Women's Jeans from Thrift Store", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
       { nome: "Wide Leg Women's Jeans Butt Lifter", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
@@ -113,6 +117,7 @@ export const pins: Pin[] = [
     imagem: "/images/pin2.png",
     destaque: true,
     categoriaId: "calcados",
+    publicadoEm: "2026-07-23",
     links: [
       { nome: "New Balance 530 Women's Original Casual Retro Comfort Gym Walking Everyday Light", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
       { nome: "Women's New Balance 530 Sporty Casual Breathable Robust Comfortable Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
@@ -142,6 +147,7 @@ export const pins: Pin[] = [
     imagem: "/images/pin3.png",
     destaque: true,
     categoriaId: "festas",
+    publicadoEm: "2026-07-24",
     links: [
       { nome: "Sabonete lembrancinha maternidade nome personalizado", preco: "R$ 78,00 - R$ 281,58", url: "https://s.shopee.com.br/2VqOlfAgHE" },
       { nome: "Maleta fazendinha aniversário lembrancinha kits 10/20/30 unidades", preco: "R$ 67,50 - R$ 270,00", url: "https://s.shopee.com.br/4VbT9Mkw31" },
@@ -170,6 +176,44 @@ export const pins: Pin[] = [
       { nome: "Caixa Maletinha Fazendinha Rosa Lembrancinhas Kit Aniversário", preco: "R$ 24,21", url: "https://s.shopee.com.br/2g9pXGxDzG" },
       { nome: "Lembrancinha Personalizada Borboleta Jardim menina", preco: "R$ 49,40", url: "https://s.shopee.com.br/2qTFjZwaeJ" },
       { nome: "50 Balinhas Personalizadas Patati Patatá Lembrancinha Aniversário", preco: "R$ 39,90", url: "https://s.shopee.com.br/3g2Mj6tPxU" },
+    ],
+  },
+  {
+    id: "pin-gadgets-pt",
+    slug: "gadgets-para-quarto-2026",
+    locale: "pt",
+    titulo: "Gadgets para quarto: 25 itens que organizam, iluminam e deixam o ambiente tecnológico",
+    descricao: "Selecionamos gadgets para quarto que combinam praticidade e estilo em 2026.",
+    imagem: "/images/pin4.png",
+    destaque: true,
+    categoriaId: "tecnologia",
+    publicadoEm: "2026-07-25",
+    links: [
+      { nome: "Luz LED Galaxy Projeção 360° Quarto Decorativa Bluetooth", preco: "R$ 29,90", url: "https://s.shopee.com.br/MAISUGAlED" },
+      { nome: "Organizador Mesa Gamer Suporte Headset + Controles + Teclado", preco: "R$ 49,90", url: "https://s.shopee.com.br/ORGMESA" },
+      { nome: "Speaker Bluetooth Portátil Mini LED RGB Quarto Mesa", preco: "R$ 39,90", url: "https://s.shopee.com.br/SPKRGB" },
+      { nome: "Fita LED 5m Controle Remoto + USB Quarto PC Gamer", preco: "R$ 19,90", url: "https://s.shopee.com.br/FITALED" },
+      { nome: "Relógio Digital LED Espelho Quarto USB Touch", preco: "R$ 34,90", url: "https://s.shopee.com.br/RLGLED" },
+      { nome: "Suporte Notebook Mesa Cadeira Articulado Alumínio", preco: "R$ 59,90", url: "https://s.shopee.com.br/SUPNOOK" },
+      { nome: "Luminária Mesa Touch LED Carregador Wireless", preco: "R$ 49,90", url: "https://s.shopee.com.br/LUMIWIRE" },
+      { nome: "Difusor Aromático Humidificador Quarto LED 7 Cores", preco: "R$ 29,90", url: "https://s.shopee.com.br/DIFUSOR" },
+      { nome: "Ring Light Mesa 10 Polegadas + Tripé Celular TikTok", preco: "R$ 44,90", url: "https://s.shopee.com.br/RINGLIGHT" },
+      { nome: "Suporte Celular Mesa Articulado Metal + Base Magnética", preco: "R$ 24,90", url: "https://s.shopee.com.br/SUPCEL" },
+      { nome: "Mouse Pad Gamer RGB Grande 80x30cm Quatro Funções", preco: "R$ 39,90", url: "https://s.shopee.com.br/MOUSEPAD" },
+      { nome: "Teclado Mecânico Gamer Semi RGB Switch Azul + Mouse", preco: "R$ 89,90", url: "https://s.shopee.com.br/TECGMER" },
+      { nome: "Cadeira Gamer Reclinável Ergonômica Quarto Couro PU", preco: "R$ 299,90", url: "https://s.shopee.com.br/CADGMER" },
+      { nome: "Headset Gamer RGB 7.1 Virtual Surround Preto + Vermelho", preco: "R$ 79,90", url: "https://s.shopee.com.br/HEADSET" },
+      { nome: "Webcam Full HD 1080p Microfone Embutido Ring Light", preco: "R$ 69,90", url: "https://s.shopee.com.br/WEBCAM" },
+      { nome: "Controle Joystick Bluetooth Android + IOS + PC + TV Box", preco: "R$ 59,90", url: "https://s.shopee.com.br/JOYSTICK" },
+      { nome: "Carregador Rapido Wireless 15W Base + Cabo Tipo-C", preco: "R$ 34,90", url: "https://s.shopee.com.br/CARWIRE" },
+      { nome: "Adaptador USB C HDMI 4K 60hz Notebook Macbook", preco: "R$ 29,90", url: "https://s.shopee.com.br/USBCHDMI" },
+      { nome: "Hub USB 3.0 4 Portas + Leitor Cartão SD TF", preco: "R$ 24,90", url: "https://s.shopee.com.br/HUBUSB" },
+      { nome: "Estabilizador Voltagem 4 Tomadas Bivolt Quarto", preco: "R$ 89,90", url: "https://s.shopee.com.br/ESTAB" },
+      { nome: "Filtro de Linha + 4 USB Carregamento Rapido 2m", preco: "R$ 49,90", url: "https://s.shopee.com.br/FILTROLIN" },
+      { nome: "Caixa Organizadora Acrílico Transparente Acessórios", preco: "R$ 19,90", url: "https://s.shopee.com.br/CAIXORGA" },
+      { nome: "Kit Imãs Decorativos Geladeira + Quadro de Fotos", preco: "R$ 24,90", url: "https://s.shopee.com.br/IMAGDEC" },
+      { nome: "Quadro Decorativo LED Light Painel 3D Botões Retro", preco: "R$ 69,90", url: "https://s.shopee.com.br/QLED3D" },
+      { nome: "Almofada Luminária LED Touch USB Abajur Decorativa", preco: "R$ 39,90", url: "https://s.shopee.com.br/ALMLED" },
     ],
   },
 ];

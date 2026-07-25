@@ -25,6 +25,8 @@ export async function generateStaticParams() {
     { slug: "guia-marketing-afiliados-iniciantes-2026" },
     { slug: "como-fazer-mudanca-gastando-pouco" },
     { slug: "rotina-treino-feminino-perder-peso-dicas-2026" },
+    { slug: "gadgets-para-quarto-2026" },
+    { slug: "organizar-quarto-tecnologia-guia" },
   ];
 }
 

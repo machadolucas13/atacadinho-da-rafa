@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { getPins } from "@/lib/pins";
 
 export const metadata: Metadata = {
   title: "Pins - Atacadinho da Rafa",
@@ -7,6 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default async function PinsPage({ params }: { params: { locale: string } }) {
+  const locale = params.locale === "en" ? "en" : "pt";
+  const pins = await getPins(locale);
+
   return (
     <div className="min-h-screen">
       <div className="pt-28 pb-12">
@@ -16,7 +20,7 @@ export default async function PinsPage({ params }: { params: { locale: string } 
               📌 Pins
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-              Deal pins
+              Deal Pins
             </h1>
             <p className="mt-3 text-gray-400 max-w-lg mx-auto">
               Click and check the best curated finds directly on Shopee.
@@ -26,61 +30,39 @@ export default async function PinsPage({ params }: { params: { locale: string } 
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
-          <Link
-            href={`/${params.locale}/pins/best-womens-jeans-under-50-deals-2026`}
-            className="group block"
-          >
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
-                <img
-                  src="/posts/calcas-jeans-femininas-economicas-2026.png"
-                  alt="Best Women's Jeans Under R$50"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
-                    🔥 Featured
-                  </span>
-                  <h3 className="mt-3 text-lg font-bold text-white line-clamp-2">
-                    Best Women's Jeans Under R$50
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-300 line-clamp-2">
-                    20 models that lift and shape: wide leg, flare, cargo, skinny and more.
-                  </p>
+        {pins.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-white/10 bg-white/5 py-10 text-center">
+            <p className="mt-2 text-xs text-gray-400">Coming soon: more pins here.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
+            {pins.map((pin) => (
+              <Link key={pin.id} href={`/${locale}/pins/${pin.slug}`} className="group block">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
+                    <img
+                      src={pin.imagem}
+                      alt={pin.titulo}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                        🔥 Featured
+                      </span>
+                      <h3 className="mt-3 text-lg font-bold text-white line-clamp-2">
+                        {pin.titulo}
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-300 line-clamp-2">
+                        {pin.descricao}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Link>
-
-          <Link
-            href={`/${params.locale}/pins/tenis-corrida-masculino-feminino-2026`}
-            className="group block"
-          >
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-              <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
-                <img
-                  src="/images/pin2.png"
-                  alt="Men's and Women's Running Shoes"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
-                    🔥 Featured
-                  </span>
-                  <h3 className="mt-3 text-lg font-bold text-white line-clamp-2">
-                    Men's and Women's Running Shoes: best models to train in style
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-300 line-clamp-2">
-                    Selected running shoes for men and women that combine comfort, performance and style.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

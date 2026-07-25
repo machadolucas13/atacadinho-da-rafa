@@ -77,12 +77,16 @@ export default async function HomePage() {
 
   const featuredPins = pins
     .slice()
-    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
+    .sort((a, b) => (b.publicadoEm || "").localeCompare(a.publicadoEm || ""))
     .slice(0, 4);
 
   const featuredPosts = artigos
     .slice()
-    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
+    .sort((a, b) => {
+      const da = typeof a.publicadoEm === "string" ? a.publicadoEm : a.publicadoEm.toISOString();
+      const db = typeof b.publicadoEm === "string" ? b.publicadoEm : b.publicadoEm.toISOString();
+      return db.localeCompare(da);
+    })
     .slice(0, 4);
 
   const pinItems = featuredPins.map((pin) => ({
