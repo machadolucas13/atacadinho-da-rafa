@@ -14,12 +14,13 @@ export async function loginWithSecret(secret: string) {
 
   const session = signSession(ADMIN_SECRET);
   const response = NextResponse.json({ ok: true });
+  const isProduction = process.env.NODE_ENV === "production";
   (response as any).cookies?.set?.({
     name: SESSION_COOKIE,
     value: session,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: isProduction,
+    sameSite: isProduction ? "lax" : "strict",
     path: "/",
     maxAge: 60 * 60 * 24,
   });
