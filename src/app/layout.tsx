@@ -6,7 +6,7 @@ import {ScrollReveal} from '@/components/layout';
 import PWAProvider from '@/components/seo/PWAProvider';
 import BackgroundStarfield from '@/components/hero/BackgroundStarfield';
 import AdSenseScript from '@/components/seo/AdSenseScript';
-import { TopAd, InContentAd, FooterAd } from '@/components/ads/ResponsiveAds';
+import { TopAd, InContentAd, FooterAd, SmartlinkAd } from '@/components/ads/ResponsiveAds';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -131,6 +131,7 @@ export default function RootLayout({
           {children}
           <InContentAd />
         </main>
+        <SmartlinkAd />
         <FooterAd />
         <Footer className="relative z-20" />
         <ScrollReveal />

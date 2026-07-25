@@ -29,5 +29,11 @@
       "destination": "/pt",
       "permanent": false
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cupons/auto-sync",
+      "schedule": "0 * * * *"
+    }
   ]
 }

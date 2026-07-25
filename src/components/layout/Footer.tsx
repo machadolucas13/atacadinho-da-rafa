@@ -16,9 +16,6 @@ export default function Footer({ className }: { className?: string } = {}) {
               Moda, decoração, tecnologia e muito mais — só o que vale a pena.
             </p>
             <div className="mt-5 flex items-center gap-3">
-              <LocaleAwareLink href="/instagram" className="text-gray-400 hover:text-[#F4A7B9] transition-colors">
-                Instagram
-              </LocaleAwareLink>
               <LocaleAwareLink href="/pinterest" className="text-gray-400 hover:text-[#F4A7B9] transition-colors">
                 Pinterest
               </LocaleAwareLink>

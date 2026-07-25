@@ -43,20 +43,18 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-white">Social media</h2>
+            <h2 className="text-xl font-bold text-white">Direct contact</h2>
             <p className="mt-2 text-gray-300">
-              Follow our daily finds on Instagram:
+              Send us an email for questions, suggestions or partnerships:
             </p>
             <a
-              href="https://instagram.com/atacadinhodarafa"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:atacadinhodarafa@hotmail.com"
               className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
             >
-              @atacadinhodarafa
+              atacadinhodarafa@hotmail.com
             </a>
             <p className="mt-4 text-sm text-gray-400">
-              Stories, reels and exclusive promotions every day.
+              We respond within 48 business hours.
             </p>
           </div>
         </div>

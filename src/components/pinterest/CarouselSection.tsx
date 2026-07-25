@@ -103,14 +103,13 @@ export default function CarouselSection({
 
               <div
                 ref={scrollRef}
-                className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-8 md:px-12"
+                className="flex gap-3 sm:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-4 sm:px-8 md:px-12"
               >
                 {items.map((item) => (
                   <Link
                     key={item.id}
                     href={item.href}
-                    className="snap-start flex-shrink-0 group block"
-                    style={{ width: "calc(25% - 12px)", minWidth: "220px" }}
+                    className="snap-start flex-shrink-0 group block w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[23vw] min-w-[200px]"
                   >
                     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
                       <div className="relative aspect-[3/4] overflow-hidden bg-white/5">

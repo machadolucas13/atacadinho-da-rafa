@@ -101,7 +101,6 @@ export default function TermsOfUsePage() {
             </p>
             <ul className="text-gray-300">
               <li>Email: <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white">atacadinhodarafa@hotmail.com</a></li>
-              <li>Instagram: <a href="https://instagram.com/atacadinhodarafa" target="_blank" rel="noopener noreferrer" className="text-[#F4A7B9] hover:text-white">@atacadinhodarafa</a></li>
             </ul>
           </div>
         </div>
