@@ -17,7 +17,7 @@ export const pins: Pin[] = [
     locale: "pt",
     titulo: "Calças Jeans Femininas a partir de R$ 24,90",
     descricao: "20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais.",
-    imagem: "/posts/calcas-jeans-femininas-economicas-2026.png",
+    imagem: "/images/pin1.png",
     destaque: true,
     categoriaId: "moda-feminina",
     links: [
@@ -78,7 +78,7 @@ export const pins: Pin[] = [
     locale: "en",
     titulo: "Best Women's Jeans Under R$50",
     descricao: "20 models that lift and shape: wide leg, flare, cargo, skinny and more.",
-    imagem: "/posts/calcas-jeans-femininas-economicas-2026.png",
+    imagem: "/images/pin1.png",
     destaque: true,
     categoriaId: "moda-feminina",
     links: [

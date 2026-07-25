@@ -4,6 +4,9 @@ import { unstable_cache } from "next/cache";
 import { Cupom } from "@/types";
 
 export async function getCupons(): Promise<Cupom[]> {
+  if (typeof window === "undefined" && process.env.NEXT_PHASE === "phase-production-build") {
+    return [];
+  }
   return unstable_cache(
     async () => {
       try {

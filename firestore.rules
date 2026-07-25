@@ -31,7 +31,7 @@ service cloud.firestore {
     }
 
     match /cupons/{cupomId} {
-      allow read: if resource.data.ativo == true;
+      allow read: if true;
       allow write: if isAdmin();
     }
 
@@ -40,6 +40,11 @@ service cloud.firestore {
       allow create: if true;
       allow update: if isAdmin();
       allow delete: if isAdmin();
+    }
+
+    match /visualizacoes/{slug} {
+      allow read: if true;
+      allow write: if true;
     }
 
     match /{document=**} {

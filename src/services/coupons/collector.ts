@@ -242,6 +242,9 @@ export class CouponCollector {
   }
 
   static async collectShein(): Promise<CouponRecord[]> {
+    if (typeof window === "undefined" && process.env.NEXT_PHASE === "phase-production-build") {
+      return [];
+    }
     try {
       const sources = [
         "https://www.shein.com.br/promotion/super_deal",
