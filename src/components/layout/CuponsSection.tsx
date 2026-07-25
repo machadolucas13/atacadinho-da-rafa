@@ -36,9 +36,14 @@ export default function CuponsSection() {
       try {
         const res = await fetch("/api/cupons");
         const data = await res.json();
-        setCupons(data.cupons || []);
+        if (data.cupons && data.cupons.length > 0) {
+          setCupons(data.cupons);
+        } else {
+          setCupons(getFallbackCoupons());
+        }
       } catch (e) {
         console.error("Erro ao carregar cupons", e);
+        setCupons(getFallbackCoupons());
       }
     };
     carregar();
@@ -128,4 +133,49 @@ export default function CuponsSection() {
       </div>
     </section>
   );
+}
+
+function getFallbackCoupons(): Cupom[] {
+  return [
+    {
+      id: "shopee-fallback-1",
+      marketplace: "Shopee",
+      marketplaceColor: "#ee4d2d",
+      codigo: "FREEGRÁTIS",
+      descricao: "Frete grátis em pedidos acima de R$ 29",
+      url: "https://shopee.com.br",
+      validade: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      atualizadoEm: new Date().toISOString(),
+    },
+    {
+      id: "amazon-fallback-1",
+      marketplace: "Amazon",
+      marketplaceColor: "#232f3e",
+      codigo: "ECONOMIZE20",
+      descricao: "20% OFF em produtos selecionados",
+      url: "https://www.amazon.com.br",
+      validade: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      atualizadoEm: new Date().toISOString(),
+    },
+    {
+      id: "ml-fallback-1",
+      marketplace: "Mercado Livre",
+      marketplaceColor: "#fff159",
+      codigo: "OFERTAML10",
+      descricao: "R$ 10 OFF em compras acima de R$ 50",
+      url: "https://www.mercadolivre.com.br",
+      validade: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      atualizadoEm: new Date().toISOString(),
+    },
+    {
+      id: "shein-fallback-1",
+      marketplace: "SHEIN",
+      marketplaceColor: "#000000",
+      codigo: "SHEIN15",
+      descricao: "15% OFF na primeira compra",
+      url: "https://www.shein.com.br",
+      validade: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      atualizadoEm: new Date().toISOString(),
+    },
+  ];
 }

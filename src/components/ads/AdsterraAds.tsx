@@ -62,6 +62,56 @@ export function AdBannerClient({
     invokeScript.async = true;
     invokeScript.onload = successHandler;
     invokeScript.onerror = errorHandler;
+    document.head.appendChild(invokeScript);
+
+    return () => {
+      clearTimeout(timeout);
+      if (invokeScript.parentNode) {
+        invokeScript.parentNode.removeChild(invokeScript);
+      }
+    };
+  }, [scriptContent, invokeSrc, safeWidth, safeHeight]);
+
+  if (status === "error") {
+    return (
+      <div
+        style={{
+          width: safeWidth,
+          height: safeHeight,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "rgba(255,255,255,0.05)",
+          border: "1px dashed rgba(255,255,255,0.1)",
+          borderRadius: "0.75rem",
+          color: "#9ca3af",
+          fontSize: "10px",
+        }}
+      >
+        Publicidade
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        width: safeWidth,
+        height: safeHeight,
+        minWidth: safeWidth,
+        minHeight: safeHeight,
+        maxWidth: "100%",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    />
+  );
+}
+    invokeScript.src = invokeSrc;
+    invokeScript.async = true;
+    invokeScript.onload = successHandler;
+    invokeScript.onerror = errorHandler;
     container.appendChild(invokeScript);
 
     return () => {

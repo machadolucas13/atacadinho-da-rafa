@@ -19,7 +19,7 @@ export default function AdminLogin() {
       const result = await loginWithSecret(secret) as Response;
       const data = await result.json();
       if ((data as any).error) {
-        setError((data as any).error);
+        setError((data as any).error + " | Verifique ADMIN_SECRET no .env.local e no Vercel");
         setLoading(false);
       } else {
         router.push("/admin/dashboard");
