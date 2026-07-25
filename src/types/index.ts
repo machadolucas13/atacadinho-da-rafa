@@ -72,3 +72,18 @@ export type Artigo = {
   publicadoEm: Date;
   locale?: string;
 };
+
+export type Cupom = {
+  id: string;
+  marketplace: string;
+  marketplaceColor: string;
+  codigo: string;
+  descricao: string;
+  url: string;
+  validade?: string;
+  ativo: boolean;
+  atualizadoEm?: string;
+  origem?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};

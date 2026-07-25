@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Copy, ExternalLink, Clock, Tag, Flame } from "lucide-react";
 
@@ -11,62 +11,9 @@ interface Cupom {
   codigo: string;
   descricao: string;
   validade?: string;
-  link: string;
+  url: string;
   atualizadoEm?: string;
 }
-
-const cuponsDemo: Cupom[] = [
-  {
-    id: "shopee-1",
-    marketplace: "Shopee",
-    marketplaceColor: "#ee4d2d",
-    codigo: "FREEGRÁTIS10",
-    descricao: "Frete grátis em pedidos acima de R$ 29",
-    validade: "2026-08-31",
-    link: "https://shopee.com.br",
-    atualizadoEm: "2026-07-24T21:30:00-03:00",
-  },
-  {
-    id: "amazon-1",
-    marketplace: "Amazon",
-    marketplaceColor: "#232f3e",
-    codigo: "ECONOMIZE20",
-    descricao: "20% OFF em smartphones selecionados",
-    validade: "2026-08-15",
-    link: "https://amazon.com.br",
-    atualizadoEm: "2026-07-24T20:15:00-03:00",
-  },
-  {
-    id: "ml-1",
-    marketplace: "Mercado Livre",
-    marketplaceColor: "#fff159",
-    codigo: "OFERTAML10",
-    descricao: "R$ 10 OFF em compras acima de R$ 50",
-    validade: "2026-08-20",
-    link: "https://mercadolivre.com.br",
-    atualizadoEm: "2026-07-24T19:45:00-03:00",
-  },
-  {
-    id: "shein-1",
-    marketplace: "SHEIN",
-    marketplaceColor: "#000000",
-    codigo: "MODA15",
-    descricao: "15% OFF na primeira compra",
-    validade: "2026-12-31",
-    link: "https://shein.com.br",
-    atualizadoEm: "2026-07-24T18:00:00-03:00",
-  },
-  {
-    id: "shopee-2",
-    marketplace: "Shopee",
-    marketplaceColor: "#ee4d2d",
-    codigo: "ELETRO25",
-    descricao: "25% OFF em eletrodomésticos",
-    validade: "2026-08-10",
-    link: "https://shopee.com.br",
-    atualizadoEm: "2026-07-24T17:20:00-03:00",
-  },
-];
 
 function tempoRelativo(iso?: string) {
   if (!iso) return "";
@@ -81,7 +28,21 @@ function tempoRelativo(iso?: string) {
 }
 
 export default function CuponsSection() {
+  const [cupons, setCupons] = useState<Cupom[]>([]);
   const [copiado, setCopiado] = useState<string | null>(null);
+
+  useEffect(() => {
+    const carregar = async () => {
+      try {
+        const res = await fetch("/api/cupons");
+        const data = await res.json();
+        setCupons(data.cupons || []);
+      } catch (e) {
+        console.error("Erro ao carregar cupons", e);
+      }
+    };
+    carregar();
+  }, []);
 
   const copiar = async (codigo: string) => {
     await navigator.clipboard.writeText(codigo);
@@ -104,7 +65,7 @@ export default function CuponsSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {cuponsDemo.map((cupom) => (
+          {cupons.map((cupom) => (
             <div
               key={cupom.id}
               className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-4 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1"
@@ -146,7 +107,7 @@ export default function CuponsSection() {
                   {copiado === cupom.codigo ? "Copiado!" : "Copiar"}
                 </button>
                 <Link
-                  href={cupom.link}
+                  href={cupom.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1 rounded-xl bg-[#E11D48] px-3 py-2 text-xs font-bold text-white transition-all hover:bg-[#be123c]"

@@ -226,3 +226,51 @@ export async function criarArtigoCompleto(formData: FormData) {
     return { error: "Erro ao criar post" };
   }
 }
+
+export async function criarCupom(formData: FormData) {
+  if (!isAdminAuthenticated()) {
+    return { error: "Não autorizado" };
+  }
+
+  try {
+    const data: any = Object.fromEntries(formData.entries());
+    data.ativo = data.ativo === "true";
+    data.criadoEm = FieldValue.serverTimestamp();
+    data.atualizadoEm = FieldValue.serverTimestamp();
+
+    const ref = await adminDb.collection("cupons").add(data);
+    return { ok: true, id: ref.id };
+  } catch (error) {
+    return { error: "Erro ao criar cupom" };
+  }
+}
+
+export async function atualizarCupom(id: string, formData: FormData) {
+  if (!isAdminAuthenticated()) {
+    return { error: "Não autorizado" };
+  }
+
+  try {
+    const data: any = Object.fromEntries(formData.entries());
+    data.ativo = data.ativo === "true";
+    data.atualizadoEm = FieldValue.serverTimestamp();
+
+    await adminDb.collection("cupons").doc(id).update(data);
+    return { ok: true };
+  } catch (error) {
+    return { error: "Erro ao atualizar cupom" };
+  }
+}
+
+export async function excluirCupom(id: string) {
+  if (!isAdminAuthenticated()) {
+    return { error: "Não autorizado" };
+  }
+
+  try {
+    await adminDb.collection("cupons").doc(id).delete();
+    return { ok: true };
+  } catch (error) {
+    return { error: "Erro ao excluir cupom" };
+  }
+}
