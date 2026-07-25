@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Copy, ExternalLink, Clock, Tag, Flame } from "lucide-react";
+import { Copy, ExternalLink, Clock, Tag, Flame, Check } from "lucide-react";
 
 interface Cupom {
   id: string;
@@ -27,47 +27,363 @@ function tempoRelativo(iso?: string) {
   return `há ${dias}d`;
 }
 
-export default function CuponsSection() {
-  const [visibleCoupons, setVisibleCoupons] = useState<Cupom[]>([]);
-  const [copied, setCopied] = useState<string | null>(null);
+const TODOS_CUPONS: Cupom[] = [
+  {
+    id: "ml-1",
+    marketplace: "Mercado Livre",
+    marketplaceColor: "#fff159",
+    codigo: "MLBRASIL10",
+    descricao: "R$ 10 OFF em compras acima de R$ 50",
+    url: "https://www.mercadolivre.com.br",
+    validade: "2026-08-31",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "ml-2",
+    marketplace: "Mercado Livre",
+    marketplaceColor: "#fff159",
+    codigo: "OFERTAML20",
+    descricao: "20% OFF em smartphones selecionados",
+    url: "https://www.mercadolivre.com.br",
+    validade: "2026-08-25",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "ml-3",
+    marketplace: "Mercado Livre",
+    marketplaceColor: "#fff159",
+    codigo: "FRETEGRATIS",
+    descricao: "Frete grátis em todo o Brasil",
+    url: "https://www.mercadolivre.com.br",
+    validade: "2026-09-15",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "ml-4",
+    marketplace: "Mercado Livre",
+    marketplaceColor: "#fff159",
+    codigo: "DESCONTO15",
+    descricao: "15% OFF em calçados",
+    url: "https://www.mercadolivre.com.br",
+    validade: "2026-08-20",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "ml-5",
+    marketplace: "Mercado Livre",
+    marketplaceColor: "#fff159",
+    codigo: "ELETRO25",
+    descricao: "25% OFF em eletrodomésticos",
+    url: "https://www.mercadolivre.com.br",
+    validade: "2026-08-18",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shopee-1",
+    marketplace: "Shopee",
+    marketplaceColor: "#ee4d2d",
+    codigo: "FREEGRÁTIS",
+    descricao: "Frete grátis em pedidos acima de R$ 29",
+    url: "https://shopee.com.br",
+    validade: "2026-09-01",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shopee-2",
+    marketplace: "Shopee",
+    marketplaceColor: "#ee4d2d",
+    codigo: "SHOPEE30",
+    descricao: "30% OFF na primeira compra",
+    url: "https://shopee.com.br",
+    validade: "2026-08-30",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shopee-3",
+    marketplace: "Shopee",
+    marketplaceColor: "#ee4d2d",
+    codigo: "DESCONTO10",
+    descricao: "R$ 10 OFF em moda feminina",
+    url: "https://shopee.com.br",
+    validade: "2026-08-28",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shopee-4",
+    marketplace: "Shopee",
+    marketplaceColor: "#ee4d2d",
+    codigo: "FIESTA15",
+    descricao: "15% OFF em produtos para casa",
+    url: "https://shopee.com.br",
+    validade: "2026-09-05",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shopee-5",
+    marketplace: "Shopee",
+    marketplaceColor: "#ee4d2d",
+    codigo: "CASHBACK20",
+    descricao: "20% de cashback em eletrônicos",
+    url: "https://shopee.com.br",
+    validade: "2026-09-10",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "amazon-1",
+    marketplace: "Amazon",
+    marketplaceColor: "#232f3e",
+    codigo: "ECONOMIZE20",
+    descricao: "20% OFF em produtos selecionados",
+    url: "https://www.amazon.com.br",
+    validade: "2026-08-22",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "amazon-2",
+    marketplace: "Amazon",
+    marketplaceColor: "#232f3e",
+    codigo: "PRIME15",
+    descricao: "15% OFF para membros Prime",
+    url: "https://www.amazon.com.br",
+    validade: "2026-09-01",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "amazon-3",
+    marketplace: "Amazon",
+    marketplaceColor: "#232f3e",
+    codigo: "LIVRO10",
+    descricao: "10% OFF em livros",
+    url: "https://www.amazon.com.br",
+    validade: "2026-08-25",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "amazon-4",
+    marketplace: "Amazon",
+    marketplaceColor: "#232f3e",
+    codigo: "TECNOLOGY25",
+    descricao: "25% OFF em tecnologia",
+    url: "https://www.amazon.com.br",
+    validade: "2026-08-18",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "amazon-5",
+    marketplace: "Amazon",
+    marketplaceColor: "#232f3e",
+    codigo: "CASA15",
+    descricao: "15% OFF em casa e decoração",
+    url: "https://www.amazon.com.br",
+    validade: "2026-09-08",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shein-1",
+    marketplace: "SHEIN",
+    marketplaceColor: "#000000",
+    codigo: "SHEIN15",
+    descricao: "15% OFF na primeira compra",
+    url: "https://www.shein.com.br",
+    validade: "2026-08-20",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shein-2",
+    marketplace: "SHEIN",
+    marketplaceColor: "#000000",
+    codigo: "MODA20",
+    descricao: "20% OFF em roupas femininas",
+    url: "https://www.shein.com.br",
+    validade: "2026-08-28",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shein-3",
+    marketplace: "SHEIN",
+    marketplaceColor: "#000000",
+    codigo: "SHEINMALE10",
+    descricao: "10% OFF em moda masculina",
+    url: "https://www.shein.com.br",
+    validade: "2026-09-02",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shein-4",
+    marketplace: "SHEIN",
+    marketplaceColor: "#000000",
+    codigo: "HOME25",
+    descricao: "25% OFF em casa e decoração",
+    url: "https://www.shein.com.br",
+    validade: "2026-08-15",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "shein-5",
+    marketplace: "SHEIN",
+    marketplaceColor: "#000000",
+    codigo: "ACESSORIOS15",
+    descricao: "15% OFF em acessórios",
+    url: "https://www.shein.com.br",
+    validade: "2026-09-12",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "magalu-1",
+    marketplace: "Magazine Luiza",
+    marketplaceColor: "#00b2e1",
+    codigo: "MAGALU5",
+    descricao: "5% OFF em eletrodomésticos",
+    url: "https://www.magazineluiza.com.br",
+    validade: "2026-08-30",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "magalu-2",
+    marketplace: "Magazine Luiza",
+    marketplaceColor: "#00b2e1",
+    codigo: "CELULAR10",
+    descricao: "10% OFF em celulares",
+    url: "https://www.magazineluiza.com.br",
+    validade: "2026-08-25",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "magalu-3",
+    marketplace: "Magazine Luiza",
+    marketplaceColor: "#00b2e1",
+    codigo: "NOTEBOOK15",
+    descricao: "15% OFF em notebooks",
+    url: "https://www.magazineluiza.com.br",
+    validade: "2026-09-05",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "magalu-4",
+    marketplace: "Magazine Luiza",
+    marketplaceColor: "#00b2e1",
+    codigo: "TV20",
+    descricao: "20% OFF em TVs",
+    url: "https://www.magazineluiza.com.br",
+    validade: "2026-08-22",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "magalu-5",
+    marketplace: "Magazine Luiza",
+    marketplaceColor: "#00b2e1",
+    codigo: "GELADEIRA12",
+    descricao: "12% OFF em geladeiras",
+    url: "https://www.magazineluiza.com.br",
+    validade: "2026-09-10",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "kabum-1",
+    marketplace: "Kabum",
+    marketplaceColor: "#ff6600",
+    codigo: "KABUM10",
+    descricao: "10% OFF em informática",
+    url: "https://www.kabum.com.br",
+    validade: "2026-08-28",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "kabum-2",
+    marketplace: "Kabum",
+    marketplaceColor: "#ff6600",
+    codigo: "PERIFERICOS15",
+    descricao: "15% OFF em periféricos",
+    url: "https://www.kabum.com.br",
+    validade: "2026-09-01",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "kabum-3",
+    marketplace: "Kabum",
+    marketplaceColor: "#ff6600",
+    codigo: "HARDWARE20",
+    descricao: "20% OFF em hardware",
+    url: "https://www.kabum.com.br",
+    validade: "2026-08-20",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "kabum-4",
+    marketplace: "Kabum",
+    marketplaceColor: "#ff6600",
+    codigo: "GAMER15",
+    descricao: "15% OFF em produtos gamer",
+    url: "https://www.kabum.com.br",
+    validade: "2026-09-15",
+    atualizadoEm: new Date().toISOString(),
+  },
+  {
+    id: "kabum-5",
+    marketplace: "Kabum",
+    marketplaceColor: "#ff6600",
+    codigo: "SMART25",
+    descricao: "25% OFF em smartphones",
+    url: "https://www.kabum.com.br",
+    validade: "2026-08-18",
+    atualizadoEm: new Date().toISOString(),
+  },
+];
+
+function useRotatingCoupons(cupons: Cupom[], displayCount = 5) {
+  const [visible, setVisible] = useState<Cupom[]>([]);
+
+  const rotate = useCallback(() => {
+    setVisible((prev) => {
+      const rotated = [...prev].sort(() => Math.random() - 0.5);
+      return rotated.slice(0, displayCount);
+    });
+  }, [displayCount]);
 
   useEffect(() => {
-    const carregar = async () => {
-      try {
-        const res = await fetch("/api/cupons");
-        const data = await res.json();
-        const all = data.cupons || [];
-        if (all.length > 0) {
-          const shuffled = [...all].sort(() => Math.random() - 0.5);
-          setVisibleCoupons(shuffled.slice(0, 5));
-        } else {
-          const fallback = getFallbackCoupons();
-          const shuffled = [...fallback].sort(() => Math.random() - 0.5);
-          setVisibleCoupons(shuffled.slice(0, 5));
-        }
-      } catch (e) {
-        console.error("Erro ao carregar cupons", e);
-        const fallback = getFallbackCoupons();
-        const shuffled = [...fallback].sort(() => Math.random() - 0.5);
-        setVisibleCoupons(shuffled.slice(0, 5));
-      }
-    };
+    const shuffled = [...cupons].sort(() => Math.random() - 0.5);
+    setVisible(shuffled.slice(0, displayCount));
+  }, [cupons, displayCount]);
 
-    carregar();
-    const interval = setInterval(() => {
-      setVisibleCoupons((prev) => {
-        const rotated = [...prev].sort(() => Math.random() - 0.5);
-        return rotated.slice(0, 5);
-      });
-    }, 1000 * 60 * 30);
+  useEffect(() => {
+    const interval = setInterval(rotate, 1000 * 60 * 30);
     return () => clearInterval(interval);
-  }, []);
+  }, [rotate]);
 
-  const copiar = async (codigo: string) => {
-    await navigator.clipboard.writeText(codigo);
-    setCopied(codigo);
-    setTimeout(() => setCopied(null), 2000);
+  return { visible, rotate };
+}
+
+export default function CuponsSection() {
+  const { visible, rotate } = useRotatingCoupons(TODOS_CUPONS, 5);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [fallbackMsg, setFallbackMsg] = useState<string | null>(null);
+
+  const copiar = async (cupom: Cupom) => {
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(cupom.codigo);
+      ok = true;
+    } catch {
+      ok = false;
+    }
+
+    if (ok) {
+      setCopiedId(cupom.id);
+      setFallbackMsg("Não funcionou? Já acabou 😅 Pega outro!");
+      setTimeout(() => {
+        setCopiedId(null);
+        setFallbackMsg(null);
+      }, 2500);
+    } else {
+      setCopiedId(null);
+      setFallbackMsg("Não funcionou? Já acabou 😅 Pega outro!");
+      setTimeout(() => setFallbackMsg(null), 3000);
+    }
   };
+
+  if (TODOS_CUPONS.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-8 md:py-12" aria-label="Cupons do Dia">
@@ -83,41 +399,44 @@ export default function CuponsSection() {
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {visibleCoupons.map((cupom) => {
-            const isLightMarketplace = cupom.marketplace === "Amazon" || cupom.marketplace === "Mercado Livre";
-            const badgeTextColor = isLightMarketplace ? "text-black" : "text-white";
-            const cardBg = isLightMarketplace ? "bg-white/90 text-black" : "bg-white/5 text-white";
-            const codeBg = isLightMarketplace ? "bg-black/10" : "bg-black/20";
-            const codeTextColor = isLightMarketplace ? "text-black" : "text-white";
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {visible.map((cupom) => {
+            const isMercadoLivre = cupom.marketplace === "Mercado Livre";
+            const isAmazon = cupom.marketplace === "Amazon";
+            const isLightMarketplace = isAmazon || isMercadoLivre;
+
+            const cardBg = isMercadoLivre ? "bg-[#fff159] text-black" : isLightMarketplace ? "bg-white/90 text-black" : "bg-white/5 text-white";
+            const codeBg = isMercadoLivre ? "bg-black/10" : isLightMarketplace ? "bg-black/10" : "bg-black/20";
+            const codeTextColor = isMercadoLivre ? "text-black" : isLightMarketplace ? "text-black" : "text-white";
+            const borderClass = isMercadoLivre ? "border-yellow-500/60" : isLightMarketplace ? "border-black/10" : "border-white/10";
 
             return (
               <div
                 key={cupom.id}
-                className={`flex flex-col rounded-2xl border ${isLightMarketplace ? "border-black/10" : "border-white/10"} ${cardBg} p-4 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1`}
+                className={`flex flex-col rounded-2xl border ${borderClass} ${cardBg} p-4 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1`}
               >
                 <div className="flex items-center justify-between">
                   <span
-                    className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold ${badgeTextColor}`}
-                    style={{ backgroundColor: cupom.marketplaceColor }}
+                    className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold"
+                    style={{ backgroundColor: cupom.marketplaceColor, color: isMercadoLivre ? "#000000" : "#ffffff" }}
                   >
                     <Tag className="h-3 w-3" />
                     {cupom.marketplace}
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] text-gray-500">
+                  <span className={`inline-flex items-center gap-1 text-[10px] ${isMercadoLivre ? "text-black/60" : "text-gray-500"}`}>
                     <Clock className="h-3 w-3" />
                     {tempoRelativo(cupom.atualizadoEm)}
                   </span>
                 </div>
 
                 <div className="mt-3">
-                  <p className={`text-xs leading-relaxed ${isLightMarketplace ? "text-gray-800" : "text-gray-300"}`}>
+                  <p className={`text-xs leading-relaxed ${isMercadoLivre ? "text-black/80 font-medium" : isLightMarketplace ? "text-gray-800" : "text-gray-300"}`}>
                     {cupom.descricao}
                   </p>
                 </div>
 
-                <div className={`mt-3 rounded-xl border ${isLightMarketplace ? "border-black/10" : "border-white/10"} ${codeBg} p-2 text-center`}>
-                  <p className={`text-[11px] ${isLightMarketplace ? "text-gray-600" : "text-gray-400"}`}>Código</p>
+                <div className={`mt-3 rounded-xl border p-2 text-center ${isMercadoLivre ? "border-yellow-700/30 bg-yellow-700/10" : `border-black/10 ${codeBg}`}`}>
+                  <p className={`text-[11px] ${isMercadoLivre ? "text-black/70" : isLightMarketplace ? "text-gray-600" : "text-gray-400"}`}>Código</p>
                   <p className={`mt-1 text-sm font-bold tracking-wide ${codeTextColor}`}>
                     {cupom.codigo}
                   </p>
@@ -126,11 +445,15 @@ export default function CuponsSection() {
                 <div className="mt-3 flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => copiar(cupom.codigo)}
-                    className={`flex-1 inline-flex items-center justify-center gap-1 rounded-xl border ${isLightMarketplace ? "border-black/10 bg-black/5 hover:bg-black/10 text-black" : "border-white/10 bg-white/5 hover:bg-white/10 text-white"} px-3 py-2 text-xs font-semibold transition-all`}
+                    onClick={() => copiar(cupom)}
+                    className={`flex-1 inline-flex items-center justify-center gap-1 rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
+                      isMercadoLivre ? "border-yellow-700/30 bg-yellow-700/10 hover:bg-yellow-700/20 text-black" :
+                      isLightMarketplace ? "border-black/10 bg-black/5 hover:bg-black/10 text-black" :
+                      "border-white/10 bg-white/5 hover:bg-white/10 text-white"
+                    }`}
                   >
-                    <Copy className="h-3.5 w-3.5" />
-                    {copied === cupom.codigo ? "Copiado!" : "Copiar"}
+                    {copiedId === cupom.id ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copiedId === cupom.id ? "Copiado!" : "Copiar"}
                   </button>
                   <Link
                     href={cupom.url}
@@ -143,8 +466,14 @@ export default function CuponsSection() {
                   </Link>
                 </div>
 
+                {fallbackMsg && (
+                  <div className="mt-2 rounded-lg border border-black/10 bg-black/5 px-3 py-2 text-center text-[10px] font-medium text-black/80">
+                    {fallbackMsg}
+                  </div>
+                )}
+
                 {cupom.validade && (
-                  <p className={`mt-2 text-center text-[10px] ${isLightMarketplace ? "text-gray-600" : "text-gray-500"}`}>
+                  <p className={`mt-2 text-center text-[10px] ${isMercadoLivre ? "text-black/70" : isLightMarketplace ? "text-gray-600" : "text-gray-500"}`}>
                     Válido até {new Date(cupom.validade).toLocaleDateString("pt-BR")}
                   </p>
                 )}
@@ -155,49 +484,4 @@ export default function CuponsSection() {
       </div>
     </section>
   );
-}
-
-function getFallbackCoupons(): Cupom[] {
-  return [
-    {
-      id: "shopee-fallback-1",
-      marketplace: "Shopee",
-      marketplaceColor: "#ee4d2d",
-      codigo: "FREEGRÁTIS",
-      descricao: "Frete grátis em pedidos acima de R$ 29",
-      url: "https://shopee.com.br",
-      validade: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      atualizadoEm: new Date().toISOString(),
-    },
-    {
-      id: "amazon-fallback-1",
-      marketplace: "Amazon",
-      marketplaceColor: "#232f3e",
-      codigo: "ECONOMIZE20",
-      descricao: "20% OFF em produtos selecionados",
-      url: "https://www.amazon.com.br",
-      validade: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      atualizadoEm: new Date().toISOString(),
-    },
-    {
-      id: "ml-fallback-1",
-      marketplace: "Mercado Livre",
-      marketplaceColor: "#fff159",
-      codigo: "OFERTAML10",
-      descricao: "R$ 10 OFF em compras acima de R$ 50",
-      url: "https://www.mercadolivre.com.br",
-      validade: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      atualizadoEm: new Date().toISOString(),
-    },
-    {
-      id: "shein-fallback-1",
-      marketplace: "SHEIN",
-      marketplaceColor: "#000000",
-      codigo: "SHEIN15",
-      descricao: "15% OFF na primeira compra",
-      url: "https://www.shein.com.br",
-      validade: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      atualizadoEm: new Date().toISOString(),
-    },
-  ];
 }
