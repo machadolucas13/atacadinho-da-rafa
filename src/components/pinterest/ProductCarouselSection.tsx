@@ -117,7 +117,7 @@ export default function ProductCarouselSection({
                   type="button"
                   onClick={() => scroll("prev")}
                   disabled={!canScrollPrev}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition-all hover:bg-black/90 disabled:opacity-25 border border-white/10 shadow-lg"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20 disabled:opacity-25 border border-white/10 shadow-lg"
                   aria-label="Anterior"
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -126,7 +126,7 @@ export default function ProductCarouselSection({
                   type="button"
                   onClick={() => scroll("next")}
                   disabled={!canScrollNext}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md transition-all hover:bg-black/90 disabled:opacity-25 border border-white/10 shadow-lg"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20 disabled:opacity-25 border border-white/10 shadow-lg"
                   aria-label="Próximo"
                 >
                   <ChevronRight className="h-4 w-4" />
