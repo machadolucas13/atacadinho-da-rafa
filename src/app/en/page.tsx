@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 import HeroSection from "@/components/hero/HeroSection";
 import TrendingSection from "@/components/pinterest/TrendingSection";
+import CarouselSection from "@/components/pinterest/CarouselSection";
+import ProductCarouselSection from "@/components/pinterest/ProductCarouselSection";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
-import PinCard from "@/components/pinterest/PinCard";
-import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
-import NewsletterForm from "@/components/ui/NewsletterForm";
-import HomeJsonLd from "@/components/seo/HomeJsonLd";
-import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { getProdutos } from "@/lib/produtos";
+import { getItemViews } from "@/lib/views";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -60,63 +59,83 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [artigos, pins] = await Promise.all([
+  const [artigos, pins, produtos] = await Promise.all([
     getArtigos("en"),
     getPins("en"),
+    getProdutos(),
   ]);
 
-  const posts = artigos.slice(0, 6);
+  const featuredProdutos = produtos
+    .filter((p) => p.ativo && p.destaque)
+    .slice(0, 4);
+
+  const featuredPins = pins
+    .slice()
+    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
+    .slice(0, 4);
+
+  const featuredPosts = artigos
+    .slice()
+    .sort((a, b) => getItemViews(b.slug) - getItemViews(a.slug))
+    .slice(0, 4);
+
+  const pinItems = featuredPins.map((pin) => ({
+    id: pin.id,
+    href: `/en/pins/${pin.slug}`,
+    imagem: pin.imagem,
+    titulo: pin.titulo,
+    badge: (
+      <span className="inline-flex items-center rounded-full bg-[#E11D48]/90 px-2 py-1 text-[10px] font-bold text-white shadow-lg">
+        🔥 Featured
+      </span>
+    ),
+  }));
+
+  const postItems = featuredPosts.map((post) => ({
+    id: post.slug,
+    href: `/en/articles/${post.slug}`,
+    imagem: post.imagemCapa || "/images/artigos/default.jpg",
+    titulo: post.titulo,
+    badge: post.categoria?.nome ? (
+      <span className="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white shadow-lg backdrop-blur-sm">
+        {post.categoria.nome}
+      </span>
+    ) : undefined,
+    meta: post.tempoLeitura ? (
+      <span className="text-xs text-gray-400">{post.tempoLeitura} min read</span>
+    ) : undefined,
+  }));
 
   return (
-    <main className="min-h-screen">
-      <HomeJsonLd locale="en" pins={pins} />
-      <BreadcrumbJsonLd items={[{ name: "Home", href: "/en" }]} />
-
+    <main className="relative z-10 min-h-screen">
       <section aria-label="Hero">
         <HeroSection />
       </section>
 
-      <section className="pt-28 md:pt-32" aria-label="Pins">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-6 flex items-center justify-center gap-2">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4A261]" />
-            </span>
-            <h2 className="text-2xl font-bold text-white tracking-tight">
-              Pins
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {pins.map((pin) => (
-              <div key={pin.id}>
-                <PinCard pin={pin} locale="en" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProductCarouselSection produtos={featuredProdutos} viewAllHref="/en/produtos" />
 
-      <section className="pb-12 md:pb-16 pt-4" aria-label="Articles">
-        <div className="relative mx-auto max-w-7xl px-4">
-          <div className="mb-6 flex items-center justify-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-            <h2 className="text-2xl font-bold text-white tracking-tight">Articles</h2>
-            <p className="mt-1 text-sm text-gray-400">Educational content and tips</p>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((artigo) => (
-              <ArtigoPinCard key={artigo.id} artigo={artigo} locale="en" />
-            ))}
-          </div>
-        </div>
-      </section>
+      <CarouselSection
+        title="Pins"
+        items={pinItems}
+        viewAllHref="/en/pins"
+        locale="en"
+      />
+
+      <CarouselSection
+        title="Articles"
+        items={postItems}
+        viewAllHref="/en/articles"
+        locale="en"
+      />
 
       <TrendingSection />
 
       <section aria-label="Newsletter">
-        <NewsletterForm locale="en" />
+        <div className="mx-auto max-w-7xl px-4 py-8">
+          <div className="text-center">
+            <p className="text-sm text-gray-400">Newsletter coming soon.</p>
+          </div>
+        </div>
       </section>
     </main>
   );

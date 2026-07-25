@@ -62,6 +62,20 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
     });
   }, []);
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const interval = setInterval(() => {
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scroll("next");
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [scroll]);
+
   return (
     <section className="relative">
       <div className="mb-4 flex items-center justify-center gap-2">
@@ -107,8 +121,8 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
               <Link
                 key={`${item.tipo}-${item.slug || item.id}`}
                 href={item.href}
-                className="snap-start flex-shrink-0"
-                style={{ width: "calc(25% - 12px)" }}
+                className="snap-start flex-shrink-0 group block"
+                style={{ width: "calc(20% - 13px)", minWidth: "160px" }}
               >
                 <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
                   <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
@@ -116,7 +130,7 @@ export default function TrendingCarousel({ items }: TrendingCarouselProps) {
                       src={item.imagem || "/images/pin2.png"}
                       alt={item.titulo}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 20vw, 16vw"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
                     <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/50 p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
