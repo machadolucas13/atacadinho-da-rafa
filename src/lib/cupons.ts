@@ -7,20 +7,14 @@ export async function getCupons(): Promise<Cupom[]> {
   if (typeof window === "undefined" && process.env.NEXT_PHASE === "phase-production-build") {
     return [];
   }
-  return unstable_cache(
-    async () => {
-      try {
-        const q = query(collection(db, "cupons"), where("ativo", "==", true), orderBy("ultimaAtualizacao", "desc"));
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Cupom));
-      } catch (error) {
-        console.error("Erro ao buscar cupons:", error);
-        return [];
-      }
-    },
-    ["cupons"],
-    { revalidate: 60, tags: ["cupons"] }
-  )();
+  try {
+    const q = query(collection(db, "cupons"), where("ativo", "==", true), orderBy("ultimaAtualizacao", "desc"));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Cupom));
+  } catch (error) {
+    console.error("Erro ao buscar cupons:", error);
+    return [];
+  }
 }
 
 export async function getCupomById(id: string): Promise<Cupom | undefined> {

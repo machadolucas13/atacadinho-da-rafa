@@ -109,7 +109,7 @@ export default function CarouselSection({
                   <Link
                     key={item.id}
                     href={item.href}
-                    className="snap-start flex-shrink-0 group block w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[23vw] min-w-[200px]"
+                    className="snap-start flex-shrink-0 group block w-[60vw] sm:w-[40vw] md:w-[28vw] lg:w-[22vw] xl:w-[18vw] min-w-[180px]"
                   >
                     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
                       <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
