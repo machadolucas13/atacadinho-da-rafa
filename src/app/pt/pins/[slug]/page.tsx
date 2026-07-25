@@ -37,6 +37,8 @@ export default async function PinClient({ params }: { params: { slug: string } }
     );
   }
 
+  const breadcrumbTitle = pin.titulo.length > 30 ? pin.titulo.slice(0, 28) + '…' : pin.titulo;
+
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 pt-20 md:pt-28 pb-12">
@@ -47,13 +49,13 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 Pins
               </LocaleAwareLink>
               <span className="text-gray-600">/</span>
-              <span className="text-gray-500">Calças Jeans Femininas</span>
+              <span className="text-gray-500">{breadcrumbTitle}</span>
             </div>
 
             <div className="mb-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5">
               <Image
-                src="/posts/calcas-jeans-femininas-economicas-2026.png"
-                alt="Calças Jeans Femininas a partir de R$ 24,90"
+                src={pin.imagem}
+                alt={pin.titulo}
                 width={1080}
                 height={1920}
                 className="w-full max-w-md mx-auto h-auto object-contain"
@@ -63,7 +65,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
 
             <div className="flex items-center gap-3 mb-4">
               <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Calças Jeans Femininas a partir de R$ 24,90
+                {pin.titulo}
               </h1>
               <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
                 <Eye className="h-3 w-3" />
@@ -71,34 +73,35 @@ export default async function PinClient({ params }: { params: { slug: string } }
               </span>
             </div>
             <p className="text-gray-300 mb-6 text-lg leading-relaxed">
-              Selecionamos 20 modelos de calças jeans femininas que realmente fazem diferença no dia a dia. 
-              Tem opções para todo estilo: do casual ao sofisticado, com preços que cabem no bolso e qualidade 
-              que você vai sentir no primeiro uso. Aqui você encontra desde brechós até lançamentos da Shopee.
+              {pin.descricao}
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
               <LocaleAwareLink
-                href="/pt/categorias/moda-feminina"
+                href={`/pt/categorias/${pin.categoriaId}`}
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-gray-300 transition-all hover:border-[#F4A7B9] hover:text-[#F4A7B9]"
               >
-                👗 Moda Feminina
+                <Tag className="h-4 w-4" />
+                {pin.categoriaId.replace(/-/g, ' ')}
               </LocaleAwareLink>
-              <a
-                href={links[0]?.url || "https://s.shopee.com.br/4qEG7HYQVJ"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
-              >
-                🛒 Ver ofertas na Shopee
-              </a>
+              {links[0] && (
+                <a
+                  href={links[0].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
+                >
+                  🛒 Ver ofertas na Shopee
+                </a>
+              )}
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
               <h2 className="text-lg font-bold text-white mb-4">Compartilhar</h2>
               <ShareButtons
-                title="Calças Jeans Femininas a partir de R$ 24,90"
-                description="20 modelos que empinam o bumbum: wide leg, flare, cargo, skinny e mais."
-                image="/posts/calcas-jeans-femininas-economicas-2026.png"
+                title={pin.titulo}
+                description={pin.descricao}
+                image={pin.imagem}
                 url={shareUrl}
               />
             </div>
@@ -124,21 +127,13 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 <h3 className="text-lg font-bold text-white">Posts que combinam</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Link href="/pt/artigos/melhores-calcas-jeans-feminino-guia-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Guia de calças jeans femininas 2026</h4>
-                  <p className="mt-1 text-xs text-gray-400">Descubra os cortes que estão em alta e como escolher o modelo ideal para seu corpo.</p>
+                <Link href="/pt/artigos/como-organizar-festinha-aniversario-sozinha" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Como organizar uma festinha sozinha</h4>
+                  <p className="mt-1 text-xs text-gray-400">Guia completo para mães: do orçamento à decoração, sem stress.</p>
                 </Link>
-                <Link href="/pt/artigos/como-montar-guarda-roupa-capsula-gastando-poco-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Guarda-roupa cápsula econômico</h4>
-                  <p className="mt-1 text-xs text-gray-400">Monte um closet completo gastando pouco, com peças-chave que não saem de moda.</p>
-                </Link>
-                <Link href="/pt/artigos/tendencias-moda-primavera-verao-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Tendências primavera/verão 2026</h4>
-                  <p className="mt-1 text-xs text-gray-400">As cores, cortes e tecidos que vão dominar a estação mais quente do ano.</p>
-                </Link>
-                <Link href="/pt/artigos/rotina-treino-feminino-perder-peso-dicas-2026" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">Treino feminino para emagrecer</h4>
-                  <p className="mt-1 text-xs text-gray-400">Dicas de exercícios, alimentação e motivação para chegar ao shape dos sonhos.</p>
+                <Link href="/pt/artigos/diy-lembrancinhas-aniversario-faca-voce-mesmo" className="group block rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#F4A7B9] hover:bg-white/10">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-[#F4A7B9]">DIY lembrancinhas para aniversário</h4>
+                  <p className="mt-1 text-xs text-gray-400">Ideias criativas e baratas para fazer em casa e surpreender.</p>
                 </Link>
               </div>
             </div>

@@ -33,7 +33,7 @@ export default async function PinsPage({ params }: { params: { locale: string } 
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
           <Link
             href={`/${locale}/pins/calcaspromocaocalcas-jeans-femininas-economicas-2026`}
             className="group block"
@@ -82,6 +82,33 @@ export default async function PinsPage({ params }: { params: { locale: string } 
                   </h3>
                   <p className="mt-1 text-sm text-gray-300 line-clamp-2">
                     Selecionamos tênis de corrida masculinos e femininos que combinam conforto, Performance e estilo. Tem opções para iniciantes e também para quem já corre há anos.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href={`/${locale}/pins/lembrancinhas-para-festas`}
+            className="group block"
+          >
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
+              <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
+                <img
+                  src="/images/pin3.png"
+                  alt="Lembrancinhas para festas"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                    🔥 Destaque
+                  </span>
+                  <h3 className="mt-3 text-lg font-bold text-white line-clamp-2">
+                    Lembrancinhas para festas
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-300 line-clamp-2">
+                    Ideias criativas e baratas para lembrancinhas de aniversário, maternidade e eventos.
                   </p>
                 </div>
               </div>
