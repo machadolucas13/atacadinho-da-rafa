@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/firebase";
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { adminDb } from "@/server/firebase-admin";
+import { doc, setDoc, serverTimestamp } from "firebase-admin/firestore";
 
 const INITIAL_COUPONS = [
   {
@@ -98,7 +98,7 @@ const INITIAL_COUPONS = [
 export async function POST() {
   try {
     const batch = [];
-    const collectionRef = collection(db, "cupons");
+    const collectionRef = adminDb.collection("cupons");
 
     for (const coupon of INITIAL_COUPONS) {
       const ref = doc(collectionRef);
@@ -111,6 +111,32 @@ export async function POST() {
       };
       batch.push({ ref, payload });
     }
+
+    for (const item of batch) {
+      await setDoc(item.ref, item.payload);
+    }
+
+    return NextResponse.json({
+      ok: true,
+      inserted: INITIAL_COUPONS.length,
+      message: "Cupons iniciais criados com sucesso",
+    });
+  } catch (error) {
+    console.error("Erro ao popular cupons:", error);
+    return NextResponse.json(
+      { ok: false, error: "Erro ao popular cupons" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    message: "Use POST para popular cupons iniciais",
+    count: INITIAL_COUPONS.length,
+  });
+}
 
     for (const item of batch) {
       await setDoc(item.ref, item.payload);
