@@ -4,6 +4,7 @@ import TrendingSection from "@/components/pinterest/TrendingSection";
 import CarouselSection from "@/components/pinterest/CarouselSection";
 import ProductCarouselSection from "@/components/pinterest/ProductCarouselSection";
 import CuponsSection from "@/components/layout/CuponsSection";
+import NewsletterForm from "@/components/ui/NewsletterForm";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import { getProdutos } from "@/lib/produtos";
@@ -135,11 +136,7 @@ export default async function HomePage() {
       <CuponsSection />
 
       <section aria-label="Newsletter">
-        <div className="mx-auto max-w-7xl px-4 py-8">
-          <div className="text-center">
-            <p className="text-sm text-gray-400">Newsletter em breve.</p>
-          </div>
-        </div>
+        <NewsletterForm locale="pt" />
       </section>
     </main>
   );

@@ -30,6 +30,11 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /cupons/{cupomId} {
+      allow read: if resource.data.ativo == true;
+      allow write: if isAdmin();
+    }
+
     match /newsletter/{inscritoId} {
       allow read: if isAdmin();
       allow create: if true;
