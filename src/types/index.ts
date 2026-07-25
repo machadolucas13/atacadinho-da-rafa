@@ -38,6 +38,7 @@ export type Produto = {
   moeda: string;
   linkAfiliado: string;
   loja: string;
+  marketplace: string;
   avaliacao?: number;
   numAvaliacoes: number;
   tags: string[];

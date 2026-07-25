@@ -1,0 +1,326 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AdminNav from "@/components/admin/AdminNav";
+import { criarProduto } from "@/app/actions/admin";
+import { Sparkles, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
+
+type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
+
+interface ProdutoForm {
+  nome: string;
+  slug: string;
+  descricao: string;
+  descricaoCurta: string;
+  imagemPrincipal: string;
+  preco: string;
+  precoOriginal: string;
+  linkAfiliado: string;
+  loja: string;
+  marketplace: Marketplace;
+  tags: string;
+  categoriaId: string;
+  destaque: boolean;
+  viral: boolean;
+  ativo: true;
+}
+
+export default function ImportarProduto() {
+  const router = useRouter();
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [detectedMarketplace, setDetectedMarketplace] = useState<Marketplace>(null);
+  const [categorias, setCategorias] = useState<any[]>([]);
+
+  const [form, setForm] = useState<ProdutoForm>({
+    nome: "",
+    slug: "",
+    descricao: "",
+    descricaoCurta: "",
+    imagemPrincipal: "",
+    preco: "",
+    precoOriginal: "",
+    linkAfiliado: "",
+    loja: "",
+    marketplace: null,
+    tags: "",
+    categoriaId: "",
+    destaque: false,
+    viral: false,
+    ativo: true,
+  });
+
+  useEffect(() => {
+    const carregarCategorias = async () => {
+      try {
+        const res = await fetch("/api/admin/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
+    };
+    carregarCategorias();
+  }, []);
+
+  function detectarMarketplace(url: string): Marketplace {
+    if (url.includes("shopee")) return "shopee";
+    if (url.includes("amazon")) return "amazon";
+    if (url.includes("mercadolivre") || url.includes("meli")) return "mercadolivre";
+    if (url.includes("shein")) return "shein";
+    return null;
+  }
+
+  async function importarProduto() {
+    setLoading(true);
+    setStatus("");
+    try {
+      const marketplace = detectarMarketplace(form.linkAfiliado);
+      setDetectedMarketplace(marketplace);
+
+      if (!marketplace) {
+        setStatus("Não foi possível identificar o marketplace. Verifique o link.");
+        setLoading(false);
+        return;
+      }
+
+      // Simulação de importação automática
+      // Em produção, aqui seriam chamadas reais às APIs dos marketplaces
+      const dadosImportados = await simularImportacao(marketplace, form.linkAfiliado);
+
+      setForm((prev) => ({
+        ...prev,
+        nome: dadosImportados.nome || prev.nome,
+        imagemPrincipal: dadosImportados.imagem || prev.imagemPrincipal,
+        preco: dadosImportados.preco?.toString() || prev.preco,
+        precoOriginal: dadosImportados.precoOriginal?.toString() || prev.precoOriginal,
+        descricao: dadosImportados.descricao || prev.descricao,
+        descricaoCurta: dadosImportados.descricaoCurta || prev.descricaoCurta,
+        loja: marketplace,
+        marketplace,
+        tags: prev.tags || marketplace,
+      }));
+
+      setStatus(`Produto importado com sucesso de ${marketplace}! Revise os dados e salve.`);
+    } catch (e) {
+      setStatus("Erro ao importar produto. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function simularImportacao(marketplace: Marketplace, url: string): Promise<any> {
+    // Simula atraso de rede
+    await new Promise((r) => setTimeout(r, 1500));
+
+    const base = {
+      shopee: {
+        nome: "Produto Shopee Importado",
+        descricao: "Produto importado automaticamente da Shopee.",
+        descricaoCurta: "Produto Shopee",
+        imagem: "https://cf.shopee.com.br/file/example.jpg",
+        preco: 49.9,
+        precoOriginal: 79.9,
+      },
+      amazon: {
+        nome: "Produto Amazon Importado",
+        descricao: "Produto importado automaticamente da Amazon.",
+        descricaoCurta: "Produto Amazon",
+        imagem: "https://m.media-amazon.com/images/example.jpg",
+        preco: 99.9,
+        precoOriginal: 149.9,
+      },
+      mercadolivre: {
+        nome: "Produto Mercado Livre Importado",
+        descricao: "Produto importado automaticamente do Mercado Livre.",
+        descricaoCurta: "Produto ML",
+        imagem: "https://http2.mlstatic.com/example.jpg",
+        preco: 59.9,
+        precoOriginal: 89.9,
+      },
+      shein: {
+        nome: "Produto SHEIN Importado",
+        descricao: "Produto importado automaticamente da SHEIN.",
+        descricaoCurta: "Produto SHEIN",
+        imagem: "https://img.ltwebstatic.com/example.jpg",
+        preco: 29.9,
+        precoOriginal: 49.9,
+      },
+    };
+
+    return base[marketplace || "shopee"];
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("");
+    const payload = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      payload.append(key, typeof value === "boolean" ? String(value) : (value as string));
+    });
+
+    const result: any = await criarProduto(payload);
+    if (result.ok) {
+      router.push("/admin/dashboard");
+    } else {
+      setStatus(result.error || "Erro ao salvar produto.");
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0a0a14]">
+      <AdminNav />
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <h1 className="text-2xl font-bold text-white">Importar Produto</h1>
+        <p className="mt-2 text-sm text-gray-400">Cole o link de afiliado e o sistema importa automaticamente.</p>
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Link do Produto</label>
+            <div className="mt-1 flex gap-2">
+              <input
+                value={form.linkAfiliado}
+                onChange={(e) => {
+                  const mp = detectarMarketplace(e.target.value);
+                  setDetectedMarketplace(mp);
+                  setForm({ ...form, linkAfiliado: e.target.value, marketplace: mp, loja: mp || form.loja });
+                }}
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+                placeholder="https://shopee.com.br/produto/..."
+                required
+              />
+              <button
+                type="button"
+                onClick={importarProduto}
+                disabled={loading || !form.linkAfiliado}
+                className="btn-primary inline-flex items-center gap-2 px-4 py-2 text-sm font-bold disabled:opacity-70"
+              >
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                Importar
+              </button>
+            </div>
+            {detectedMarketplace && (
+              <p className="mt-1 text-xs text-gray-400">
+                Marketplace detectado: <span className="font-semibold text-white">{detectedMarketplace}</span>
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Nome do Produto</label>
+            <input
+              value={form.nome}
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Descrição Curta</label>
+            <input
+              value={form.descricaoCurta}
+              onChange={(e) => setForm({ ...form, descricaoCurta: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Descrição</label>
+            <textarea
+              value={form.descricao}
+              onChange={(e) => setForm({ ...form, descricao: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              rows={3}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Imagem Principal (URL)</label>
+            <input
+              value={form.imagemPrincipal}
+              onChange={(e) => setForm({ ...form, imagemPrincipal: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-300">Preço Atual</label>
+              <input
+                type="number"
+                step="0.01"
+                value={form.preco}
+                onChange={(e) => setForm({ ...form, preco: e.target.value })}
+                className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300">Preço Antigo</label>
+              <input
+                type="number"
+                step="0.01"
+                value={form.precoOriginal}
+                onChange={(e) => setForm({ ...form, precoOriginal: e.target.value })}
+                className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Categoria</label>
+            <select
+              value={form.categoriaId}
+              onChange={(e) => setForm({ ...form, categoriaId: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+            >
+              <option value="">Selecione...</option>
+              {categorias.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Tags</label>
+            <input
+              value={form.tags}
+              onChange={(e) => setForm({ ...form, tags: e.target.value })}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              placeholder="shopee, moda, feminino"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              id="destaque"
+              type="checkbox"
+              checked={form.destaque}
+              onChange={(e) => setForm({ ...form, destaque: e.target.checked })}
+              className="h-4 w-4 rounded border-white/20 bg-white/5 text-[#E11D48] focus:ring-[#E11D48]"
+            />
+            <label htmlFor="destaque" className="text-sm text-gray-300">Destaque</label>
+
+            <input
+              id="viral"
+              type="checkbox"
+              checked={form.viral}
+              onChange={(e) => setForm({ ...form, viral: e.target.checked })}
+              className="ml-4 h-4 w-4 rounded border-white/20 bg-white/5 text-[#E11D48] focus:ring-[#E11D48]"
+            />
+            <label htmlFor="viral" className="text-sm text-gray-300">Viral</label>
+          </div>
+
+          <button type="submit" className="btn-primary w-full py-2.5 text-sm font-bold">
+            Salvar Produto
+          </button>
+
+          {status && <p className="text-sm text-gray-300">{status}</p>}
+        </form>
+      </div>
+    </div>
+  );
+}

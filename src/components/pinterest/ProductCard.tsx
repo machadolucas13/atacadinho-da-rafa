@@ -2,11 +2,53 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Star, Heart, ShoppingBag } from "lucide-react";
+import { Star, Heart, ShoppingBag, Tag } from "lucide-react";
 import { Produto } from "@/types";
 import { cn } from "@/lib/utils";
 import ShareButtons from "@/components/social/ShareButtons";
 import SaveButton from "@/components/ui/SaveButton";
+
+function MarketplaceBadge({ marketplace }: { marketplace: string }) {
+  const lower = marketplace.toLowerCase();
+  if (lower.includes("shopee")) {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-lg bg-[#ee4d2d] px-2 py-1 text-[10px] font-bold text-white shadow-lg">
+        <Tag className="h-3 w-3" />
+        Shopee
+      </span>
+    );
+  }
+  if (lower.includes("amazon")) {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-lg bg-[#232f3e] px-2 py-1 text-[10px] font-bold text-white shadow-lg">
+        <Tag className="h-3 w-3" />
+        Amazon
+      </span>
+    );
+  }
+  if (lower.includes("mercadolivre") || lower.includes("meli")) {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-lg bg-[#fff159] px-2 py-1 text-[10px] font-bold text-gray-900 shadow-lg">
+        <Tag className="h-3 w-3" />
+        Mercado Livre
+      </span>
+    );
+  }
+  if (lower.includes("shein")) {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-lg bg-black px-2 py-1 text-[10px] font-bold text-white shadow-lg">
+        <Tag className="h-3 w-3" />
+        SHEIN
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 rounded-lg bg-white/90 px-2 py-1 text-[10px] font-bold text-gray-900 shadow-lg">
+      <Tag className="h-3 w-3" />
+      {marketplace}
+    </span>
+  );
+}
 
 interface ProductCardProps {
   produto: Produto;
@@ -38,6 +80,9 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
+            <div className="absolute left-1 top-1">
+              <MarketplaceBadge marketplace={produto.marketplace || produto.loja} />
+            </div>
           </div>
           <div className="flex flex-1 flex-col justify-center">
             <h3 className="font-semibold text-white line-clamp-2 text-[15px]">
@@ -114,6 +159,10 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
               image={produto.imagemPrincipal}
               url={`/produtos/${produto.slug}`}
             />
+          </div>
+
+          <div className="absolute left-3 top-3">
+            <MarketplaceBadge marketplace={produto.marketplace || produto.loja} />
           </div>
 
           <button

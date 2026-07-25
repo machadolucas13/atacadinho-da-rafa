@@ -58,7 +58,7 @@ export default function AdminDashboard() {
           Crie posts, pastas e artigos. Tudo que você publicar aqui aparece no site automaticamente.
         </p>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-4">
           <a
             href="/admin/novo-post"
             className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition-all hover:border-[#F4A7B9] hover:bg-white/10"
@@ -90,6 +90,16 @@ export default function AdminDashboard() {
             </div>
             <h3 className="mt-4 font-semibold text-white">Novo Artigo</h3>
             <p className="mt-2 text-sm text-gray-400">Texto para o blog</p>
+          </a>
+          <a
+            href="/admin/importar-produto"
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition-all hover:border-[#F4A7B9] hover:bg-white/10"
+          >
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#E11D48]/10 text-2xl">
+              🛒
+            </div>
+            <h3 className="mt-4 font-semibold text-white">Importar Produto</h3>
+            <p className="mt-2 text-sm text-gray-400">Colar link e publicar</p>
           </a>
         </div>
 
