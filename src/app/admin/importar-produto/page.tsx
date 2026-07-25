@@ -1,71 +1,98 @@
-"use client";
+{"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
 import { criarProduto } from "@/app/actions/admin";
-import { Sparkles, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
+import { Sparkles, ShoppingBag, ExternalLink, Loader2, Wand2, Info } from "lucide-react";
 
-  type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
+type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
 
-  interface ProdutoForm {
-    nome: string;
-    slug: string;
-    descricao: string;
-    descricaoCurta: string;
-    imagemPrincipal: string;
-    preco: string;
-    precoOriginal: string;
-    linkAfiliado: string;
-    loja: string;
-    marketplace: Marketplace;
-    tags: string;
-    categoriaId: string;
-    destaque: boolean;
-    viral: boolean;
-    ativo: true;
-  }
+interface ProdutoForm {
+  nome: string;
+  slug: string;
+  descricao: string;
+  descricaoCurta: string;
+  imagemPrincipal: string;
+  preco: string;
+  precoOriginal: string;
+  linkAfiliado: string;
+  loja: string;
+  marketplace: Marketplace;
+  tags: string;
+  categoriaId: string;
+  destaque: boolean;
+  viral: boolean;
+  ativo: true;
+}
 
-  const marketDefaults: Record<string, { loja: string; tags: string; categoriaSugerida: string }> = {
-    shopee: { loja: "Shopee", tags: "shopee, oferta", categoriaSugerida: "moda-feminina" },
-    amazon: { loja: "Amazon", tags: "amazon, oferta", categoriaSugerida: "tecnologia" },
-    mercadolivre: { loja: "Mercado Livre", tags: "mercadolivre, oferta", categoriaSugerida: "eletronicos" },
-    shein: { loja: "SHEIN", tags: "shein, moda", categoriaSugerida: "moda-feminina" },
-  };
+const marketDefaults: Record<string, { loja: string; tags: string; categoriaSugerida: string }> = {
+  shopee: { loja: "Shopee", tags: "shopee, oferta", categoriaSugerida: "moda-feminina" },
+  amazon: { loja: "Amazon", tags: "amazon, oferta", categoriaSugerida: "tecnologia" },
+  mercadolivre: { loja: "Mercado Livre", tags: "mercadolivre, oferta", categoriaSugerida: "eletronicos" },
+  shein: { loja: "SHEIN", tags: "shein, moda", categoriaSugerida: "moda-feminina" },
+};
 
-  const slugify = (value: string) =>
-    value
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
-  async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
-    try {
-      const response = await fetch("/api/produtos/extrair", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
+async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
+  try {
+    const response = await fetch("/api/produtos/extrair", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url }),
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      return {
-        nome: data.titulo || "",
-        imagemPrincipal: data.imagem || "",
-        preco: data.preco ? data.preco.toString() : "",
-        precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
-        descricao: data.titulo || "",
-        descricaoCurta: data.titulo || "",
-      };
-    } catch {
-      return {};
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
+
+    const data = await response.json();
+    return {
+      nome: data.titulo || "",
+      imagemPrincipal: data.imagem || "",
+      preco: data.preco ? data.preco.toString() : "",
+      precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
+      descricao: data.titulo || "",
+      descricaoCurta: data.titulo || "",
+    };
+  } catch {
+    return {};
   }
+}
+
+function copiarMetadadosDaUrl(url: string): Partial<ProdutoForm> {
+  try {
+    const u = new URL(url);
+    const path = u.pathname + u.search;
+    const possibleName = decodeURIComponent(path)
+      .replace(/[-_/]+/g, " ")
+      .replace(/\.html?$/i, "")
+      .trim();
+
+    if (possibleName.length > 6) {
+      const titulo = possibleName
+        .split(" ")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+
+      return {
+        nome: titulo,
+        descricao: titulo,
+        descricaoCurta: titulo,
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return {};
+}
 
 export default function ImportarProduto() {
   const router = useRouter();
@@ -113,37 +140,7 @@ export default function ImportarProduto() {
     return null;
   }
 
-  async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
-    try {
-      const response = await fetch("/api/produtos/extrair", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      return {
-        nome: data.titulo || "",
-        imagemPrincipal: data.imagem || "",
-        preco: data.preco ? data.preco.toString() : "",
-        precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
-        descricao: data.titulo || "",
-        descricaoCurta: data.titulo || "",
-      };
-    } catch (error) {
-      console.error("Erro ao extrair dados públicos:", error);
-      return {};
-    }
-  }
-
-  async function importarProduto() {
+  async function handleImportar() {
     setLoading(true);
     setStatus("");
     try {
@@ -157,28 +154,34 @@ export default function ImportarProduto() {
       }
 
       const defaults = marketDefaults[marketplace];
-      const dadosImportados = await extrairDadosPublicos(form.linkAfiliado);
+      const [dadosImportados, metadadosUrl] = await Promise.all([
+        extrairDadosPublicos(form.linkAfiliado),
+        Promise.resolve(copiarMetadadosDaUrl(form.linkAfiliado)),
+      ]);
+
+      const nome = dadosImportados.nome || metadadosUrl.nome || form.nome || `Produto ${marketplace}`;
+      const categoriaId = form.categoriaId || defaults.categoriaSugerida;
 
       setForm((prev) => {
-        const nome = dadosImportados.nome || prev.nome || `Produto ${marketplace}`;
-        const categoriaId = prev.categoriaId || defaults.categoriaSugerida;
+        const slug = !prev.slug && nome ? slugify(nome) : prev.slug;
+        const loja = dadosImportados.preco ? prev.loja || defaults.loja : defaults.loja;
         return {
           ...prev,
-          nome: dadosImportados.nome || prev.nome,
-          slug: !prev.slug && nome ? slugify(nome) : prev.slug,
-          imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal,
-          preco: dadosImportados.preco || prev.preco,
-          precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal,
-          descricao: dadosImportados.nome || prev.descricao,
-          descricaoCurta: dadosImportados.nome || prev.descricaoCurta,
-          loja: defaults.loja,
+          nome: nome || prev.nome,
+          slug: slug || prev.slug,
+          imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal || "",
+          preco: dadosImportados.preco || prev.preco || "",
+          precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal || "",
+          descricao: nome || prev.descricao,
+          descricaoCurta: nome || prev.descricaoCurta,
+          loja,
           marketplace,
-          categoriaId,
+          categoriaId: categoriaId || prev.categoriaId,
           tags: prev.tags || defaults.tags,
         };
       });
 
-      setStatus(`Produto pré-preenchido! Verifique o link, o nome e o preço, e depois salve.`);
+      setStatus("Produto pré-preenchido! Revise os dados e salve.");
     } catch (e) {
       setStatus("Erro ao importar produto. Tente novamente.");
     } finally {
@@ -189,6 +192,12 @@ export default function ImportarProduto() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("");
+
+    if (!form.nome || !form.linkAfiliado || !form.imagemPrincipal || !form.preco) {
+      setStatus("Preencha pelo menos: nome, link, imagem e preço.");
+      return;
+    }
+
     const payload = new FormData();
     Object.entries(form).forEach(([key, value]) => {
       payload.append(key, typeof value === "boolean" ? String(value) : (value as string));
@@ -207,7 +216,9 @@ export default function ImportarProduto() {
       <AdminNav />
       <div className="mx-auto max-w-2xl px-4 py-8">
         <h1 className="text-2xl font-bold text-white">Importar Produto</h1>
-        <p className="mt-2 text-sm text-gray-400">Cole o link do produto e o sistema importa automaticamente.</p>
+        <p className="mt-2 text-sm text-gray-400">
+          Cole o link abaixo. Se a loja bloquear a extração automática, o formulário já vem com os campos prontos para edição manual.
+        </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
@@ -226,12 +237,12 @@ export default function ImportarProduto() {
               />
               <button
                 type="button"
-                onClick={importarProduto}
+                onClick={handleImportar}
                 disabled={loading || !form.linkAfiliado}
                 className="btn-primary inline-flex items-center gap-2 px-4 py-2 text-sm font-bold disabled:opacity-70"
               >
-                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                Importar
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />}
+                {loading ? "Importando..." : "Importar"}
               </button>
             </div>
             {detectedMarketplace && (
@@ -241,12 +252,18 @@ export default function ImportarProduto() {
             )}
           </div>
 
+          <div className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center gap-2 text-xs text-gray-300">
+            <Info className="h-4 w-4 text-[#F4A7B9]" />
+            Os campos abaixo serão preenchidos automaticamente quando possível. Se ficarem vazios, é só completar manualmente.
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-300">Nome do Produto</label>
             <input
               value={form.nome}
               onChange={(e) => setForm({ ...form, nome: e.target.value })}
               className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              placeholder="Ex: Tênis New Balance 530 Feminino"
               required
             />
           </div>
@@ -257,6 +274,7 @@ export default function ImportarProduto() {
               value={form.descricaoCurta}
               onChange={(e) => setForm({ ...form, descricaoCurta: e.target.value })}
               className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              placeholder="Resumo do produto em uma linha"
             />
           </div>
 
@@ -267,6 +285,7 @@ export default function ImportarProduto() {
               onChange={(e) => setForm({ ...form, descricao: e.target.value })}
               className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
               rows={3}
+              placeholder="Detalhes do produto"
             />
           </div>
 
@@ -276,6 +295,7 @@ export default function ImportarProduto() {
               value={form.imagemPrincipal}
               onChange={(e) => setForm({ ...form, imagemPrincipal: e.target.value })}
               className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+              placeholder="https://..."
               required
             />
           </div>
@@ -289,6 +309,7 @@ export default function ImportarProduto() {
                 value={form.preco}
                 onChange={(e) => setForm({ ...form, preco: e.target.value })}
                 className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+                placeholder="0.00"
                 required
               />
             </div>
@@ -300,6 +321,7 @@ export default function ImportarProduto() {
                 value={form.precoOriginal}
                 onChange={(e) => setForm({ ...form, precoOriginal: e.target.value })}
                 className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+                placeholder="0.00"
               />
             </div>
           </div>
