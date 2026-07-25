@@ -5,7 +5,7 @@ import { inscreverNewsletter } from "@/app/actions/newsletter";
 
 export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en" }) {
   const [email, setEmail] = useState("");
-  const [prefs, setPrefs] = useState("tudo");
+  const [mensagem, setMensagem] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,18 +17,20 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
       setError((result as any).error);
     } else {
       setSent(true);
+      setEmail("");
+      setMensagem("");
     }
   };
 
   const text = {
     pt: {
       title: "Não perca nenhum achado",
-      subtitle: "Receba semanalmente os melhores produtos, dicas e ofertas diretamente no seu e-mail.",
+      subtitle: "Quer receber mais achados? Deixe seu e-mail e diga o que você está procurando.",
       placeholder: "Seu melhor e-mail",
       button: "Quero receber",
-      success: "Inscrição confirmada! Quando tiver novidades, você recebe no seu email.",
+      success: "Enviado! Quando tiver achados, você recebe no seu e-mail.",
       error: "Erro ao se inscrever. Tente novamente.",
-      labelPrefs: "Quero receber:",
+      labelPrefs: "O que você quer receber?",
       optionTudo: "Todos os achados",
       optionFeminino: "Moda feminina",
       optionInfantil: "Moda infantil e bebês",
@@ -77,24 +79,15 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
 
       <div className="max-w-md mx-auto text-left">
         <p className="text-xs font-semibold text-gray-300 mb-2">{text.labelPrefs}</p>
-        <div className="grid grid-cols-2 gap-2 text-xs text-gray-400">
-          <label className="inline-flex items-center gap-2">
-            <input type="radio" name="prefs" value="tudo" checked={prefs === "tudo"} onChange={() => setPrefs("tudo")} />
-            {text.optionTudo}
-          </label>
-          <label className="inline-flex items-center gap-2">
-            <input type="radio" name="prefs" value="feminino" checked={prefs === "feminino"} onChange={() => setPrefs("feminino")} />
-            {text.optionFeminino}
-          </label>
-          <label className="inline-flex items-center gap-2">
-            <input type="radio" name="prefs" value="infantil" checked={prefs === "infantil"} onChange={() => setPrefs("infantil")} />
-            {text.optionInfantil}
-          </label>
-          <label className="inline-flex items-center gap-2">
-            <input type="radio" name="prefs" value="casa" checked={prefs === "casa"} onChange={() => setPrefs("casa")} />
-            {text.optionCasa}
-          </label>
-        </div>
+        <input
+          type="text"
+          name="prefs"
+          value={mensagem}
+          onChange={(e) => setMensagem(e.target.value)}
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 placeholder-gray-500 focus:border-[#F4A7B9] focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#F4A7B9]/30"
+          placeholder="Ex: moda feminina, casa, eletrônicos..."
+          required
+        />
       </div>
 
       {error && <p className="mt-3 text-xs text-red-400">{text.error}</p>}

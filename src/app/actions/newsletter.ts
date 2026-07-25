@@ -7,7 +7,7 @@ import { FieldValue } from "firebase-admin/firestore";
 
 export async function inscreverNewsletter(formData: FormData) {
   const email = formData.get("email")?.toString().trim() || "";
-  const prefs = formData.get("prefs")?.toString() || " Todos os achados";
+  const prefs = formData.get("prefs")?.toString().trim() || "Todos os achados";
   if (!email || !email.includes("@")) {
     return { error: "Email inválido" };
   }
