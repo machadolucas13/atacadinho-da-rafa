@@ -15,12 +15,27 @@ interface ShopeeLink {
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
   const links: ShopeeLink[] = pin?.links || [];
-  const shareUrl = `/pt/pins/${params.slug}`;
+  const shareUrl = pin?.slug ? `/pt/pins/${pin.slug}` : "/pt/pins";
   const visualizacoes = getItemViews(pin?.slug || params.slug);
   const allPins = await getPins("pt");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
   const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
+
+  if (!pin) {
+    return (
+      <div className="relative min-h-screen">
+        <div className="relative z-10 pt-28 pb-12">
+          <div className="relative mx-auto max-w-7xl px-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <h1 className="text-3xl font-bold text-white">Pin não encontrado</h1>
+              <p className="mt-3 text-gray-400">Este pin não existe ou foi removido.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen">

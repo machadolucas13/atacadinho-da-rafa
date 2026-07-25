@@ -53,7 +53,7 @@ export default function ShareButtons({ title, description, image, url }: { title
 
   const target = absoluteUrl || toAbsoluteUrl(url || "");
   const media = absoluteImage || toAbsoluteUrl(image || "");
-  const message = description || title;
+  const message = description || title || "";
 
   const openShare = useCallback((e: React.MouseEvent, href: string) => {
     e.stopPropagation();
@@ -93,10 +93,14 @@ export default function ShareButtons({ title, description, image, url }: { title
     );
   }
 
-  const pinterestHref = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(target)}&description=${encodeURIComponent(message)}&media=${encodeURIComponent(media)}`;
-  const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(target)}`;
-  const xHref = `https://x.com/intent/post?text=${encodeURIComponent(message)}&url=${encodeURIComponent(target)}`;
-  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`${message}\n${target}`)}`;
+  const safeTarget = target || (typeof window !== "undefined" ? window.location.origin : "");
+  const safeMedia = media || "";
+  const safeMessage = message || "";
+
+  const pinterestHref = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(safeTarget)}&description=${encodeURIComponent(safeMessage)}&media=${encodeURIComponent(safeMedia)}`;
+  const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(safeTarget)}`;
+  const xHref = `https://x.com/intent/post?text=${encodeURIComponent(safeMessage)}&url=${encodeURIComponent(safeTarget)}`;
+  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`${safeMessage}\n${safeTarget}`)}`;
 
   return (
     <div className="flex items-center gap-1.5">

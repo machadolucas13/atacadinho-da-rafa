@@ -27,8 +27,23 @@ export default async function PinClient({ params }: { params: { slug: string } }
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
   const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
-  const shareUrl = `/en/pins/${params.slug}`;
+  const shareUrl = pin?.slug ? `/en/pins/${pin.slug}` : "/en/pins";
   const visualizacoes = getItemViews(params.slug);
+
+  if (!pin) {
+    return (
+      <div className="relative min-h-screen">
+        <div className="pt-28 pb-12">
+          <div className="relative mx-auto max-w-7xl px-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <h1 className="text-3xl font-bold text-white">Pin not found</h1>
+              <p className="mt-3 text-gray-400">This pin does not exist or was removed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

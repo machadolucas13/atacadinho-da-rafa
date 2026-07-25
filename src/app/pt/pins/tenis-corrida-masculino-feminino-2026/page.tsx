@@ -15,6 +15,7 @@ interface ShopeeLink {
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
   const visualizacoes = getItemViews(pin?.slug || params.slug);
+  const shareUrl = pin?.slug ? `/pt/pins/${pin.slug}` : "/pt/pins";
   const links: ShopeeLink[] = [
     { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
     { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
@@ -32,7 +33,6 @@ export default async function PinClient({ params }: { params: { slug: string } }
     { nome: "Tênis Feminino Esportivo Axion Estiloso Moderno Treino Academia Corrida Caminhada", preco: "69,99", url: "https://s.shopee.com.br/9zwMXZza4G" },
     { nome: "Tênis Feminino Esportivo Academia Caminhada Leve Confortável Dia a Dia Treino", preco: "106", url: "https://s.shopee.com.br/3g2Izz0TrF" },
   ];
-  const shareUrl = `/pt/pins/${params.slug}`;
   const allPins = await getPins("pt");
   const safeAllPins = Array.isArray(allPins) ? allPins : [];
   const currentIndex = safeAllPins.findIndex((p) => p.slug === params.slug);
