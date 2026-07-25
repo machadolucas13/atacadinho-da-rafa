@@ -402,12 +402,10 @@ export default function CuponsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {visible.map((cupom) => {
             const isMercadoLivre = cupom.marketplace === "Mercado Livre";
-            const isAmazon = cupom.marketplace === "Amazon";
-            const isLightMarketplace = isAmazon || isMercadoLivre;
-            const cardBg = isLightMarketplace ? "bg-white/90 text-black" : "bg-white/5 text-white";
-            const codeBg = isLightMarketplace ? "bg-black/10" : "bg-black/20";
-            const codeTextColor = isLightMarketplace ? "text-black" : "text-white";
-            const borderClass = isLightMarketplace ? "border-black/10" : "border-white/10";
+            const cardBg = "bg-white/5 text-white";
+            const codeBg = "bg-black/20";
+            const codeTextColor = "text-white";
+            const borderClass = "border-white/10";
 
             return (
               <div
@@ -422,20 +420,20 @@ export default function CuponsSection() {
                     <Tag className="h-3 w-3" />
                     {cupom.marketplace}
                   </span>
-                  <span className={`inline-flex items-center gap-1 text-[10px] ${isMercadoLivre ? "text-black/60" : "text-gray-500"}`}>
+                  <span className="inline-flex items-center gap-1 text-[10px] text-gray-500">
                     <Clock className="h-3 w-3" />
                     {tempoRelativo(cupom.atualizadoEm)}
                   </span>
                 </div>
 
                 <div className="mt-3">
-                  <p className={`text-xs leading-relaxed ${isLightMarketplace ? "text-gray-800" : "text-gray-300"}`}>
+                  <p className="text-xs leading-relaxed text-gray-300">
                     {cupom.descricao}
                   </p>
                 </div>
 
-                <div className={`mt-3 rounded-xl border p-2 text-center ${isLightMarketplace ? "border-black/10" : "border-white/10"} ${codeBg}`}>
-                  <p className={`text-[11px] ${isLightMarketplace ? "text-gray-600" : "text-gray-400"}`}>Código</p>
+                <div className={`mt-3 rounded-xl border p-2 text-center border-white/10 ${codeBg}`}>
+                  <p className="text-[11px] text-gray-400">Código</p>
                   <p className={`mt-1 text-sm font-bold tracking-wide ${codeTextColor}`}>
                     {cupom.codigo}
                   </p>
@@ -445,10 +443,7 @@ export default function CuponsSection() {
                   <button
                     type="button"
                     onClick={() => copiar(cupom)}
-                    className={`flex-1 inline-flex items-center justify-center gap-1 rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
-                      isLightMarketplace ? "border-black/10 bg-black/5 hover:bg-black/10 text-black" :
-                      "border-white/10 bg-white/5 hover:bg-white/10 text-white"
-                    }`}
+                    className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white px-3 py-2 text-xs font-semibold transition-all"
                   >
                     {copiedId === cupom.id ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copiedId === cupom.id ? "Copiado!" : "Copiar"}
@@ -465,13 +460,13 @@ export default function CuponsSection() {
                 </div>
 
                 {fallbackMsg && (
-                  <div className="mt-2 rounded-lg border border-black/10 bg-black/5 px-3 py-2 text-center text-[10px] font-medium text-black/80">
+                  <div className="mt-2 rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center text-[10px] font-medium text-gray-300">
                     {fallbackMsg}
                   </div>
                 )}
 
                 {cupom.validade && (
-                  <p className={`mt-2 text-center text-[10px] ${isLightMarketplace ? "text-gray-600" : "text-gray-500"}`}>
+                  <p className="mt-2 text-center text-[10px] text-gray-500">
                     Válido até {new Date(cupom.validade).toLocaleDateString("pt-BR")}
                   </p>
                 )}
