@@ -33,7 +33,7 @@ export const postsExemplo = [
     destaque: true,
     visualizacoes: 12000,
     tempoLeitura: 8,
-    tags: ["jeans", "calça jeans", "moda feminina", "barato", "achados"],
+    tags: ["jeans", "calça jeans", "moda feminina", "barato", "achados", "Destaque", "Tendência"],
     ativo: true,
     publicadoEm: new Date("2024-01-15"),
     produtos: [
@@ -97,7 +97,7 @@ export const postsExemplo = [
     destaque: true,
     visualizacoes: 8500,
     tempoLeitura: 7,
-    tags: ["cozinha", "organizadores", "achados", "barato"],
+    tags: ["cozinha", "organizadores", "achados", "barato", "Destaque", "Organização"],
     ativo: true,
     publicadoEm: new Date("2024-01-20"),
     produtos: [
@@ -152,7 +152,7 @@ export const postsExemplo = [
     destaque: true,
     visualizacoes: 15000,
     tempoLeitura: 10,
-    tags: ["shopee", "decoração", "achados", "casa"],
+    tags: ["shopee", "decoração", "achados", "casa", "Destaque", "Criativo"],
     ativo: true,
     publicadoEm: new Date("2024-01-25"),
     produtos: [

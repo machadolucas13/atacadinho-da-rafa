@@ -79,15 +79,13 @@ export default function Footer({ className }: { className?: string } = {}) {
             <h4 className="text-xs font-bold uppercase tracking-widest text-gray-300 mb-4">
               Institucional
             </h4>
-            <ul className="space-y-2.5">
-              {[
-                { nome: "Sobre", href: "/sobre" },
-                { nome: "Contato", href: "/contato" },
-                { nome: "Afiliados", href: "/afiliados" },
-                { nome: "Política de Privacidade", href: "/politica-privacidade" },
-                { nome: "Termos de Uso", href: "/termos-de-uso" },
-                { nome: "Cookies", href: "/cookies" },
-              ].map((item) => (
+             <ul className="space-y-2.5">
+               {[
+                 { nome: "Sobre", href: "/sobre" },
+                 { nome: "Contato", href: "/contato" },
+                 { nome: "Política de Privacidade", href: "/politica-privacidade" },
+                 { nome: "Termos de Uso", href: "/termos-de-uso" },
+               ].map((item) => (
                 <li key={item.href}>
                   <LocaleAwareLink
                     href={item.href}

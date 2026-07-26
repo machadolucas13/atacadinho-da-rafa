@@ -7,6 +7,7 @@ import { Produto } from "@/types";
 import { cn } from "@/lib/utils";
 import ShareButtons from "@/components/social/ShareButtons";
 import SaveButton from "@/components/ui/SaveButton";
+import TagBadge from "@/components/ui/TagBadge";
 
 function MarketplaceBadge({ marketplace }: { marketplace: string }) {
   const lower = marketplace.toLowerCase();
@@ -141,15 +142,10 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
               -{discount}%
             </span>
           )}
-          {produto.viral && (
-            <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[#1A1A1A] px-3 py-1 text-[11px] font-bold text-white shadow-lg tracking-wide">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F4A261] opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#F4A261]" />
-              </span>
-              Viral
-            </span>
-          )}
+          <div className="absolute left-3 top-3 flex flex-col gap-1">
+            {produto.destaque && <TagBadge label="HOT" variant="hot" />}
+            {produto.viral && <TagBadge label="Viral" variant="fire" />}
+          </div>
 
           <div className="absolute inset-x-3 bottom-3 flex items-center justify-between transition-all duration-300 md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0">
             <SaveButton item={{ id: produto.slug, tipo: "produto", titulo: produto.nome, slug: produto.slug, imagemCapa: produto.imagemPrincipal }} />

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 
 export const metadata: Metadata = {
   title: "Política de Privacidade - Atacadinho da Rafa",

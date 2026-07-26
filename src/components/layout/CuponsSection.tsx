@@ -413,13 +413,13 @@ export default function CuponsSection() {
                 className={`flex flex-col rounded-2xl border ${borderClass} ${cardBg} p-4 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1`}
               >
                 <div className="flex items-center justify-between">
-                  <span
-                    className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold ${isMercadoLivre ? "text-black" : "text-white"}`}
-                    style={{ backgroundColor: cupom.marketplaceColor }}
+                  <div
+                     className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold ${isMercadoLivre ? "text-black" : "text-white"}`}
+                     style={{ backgroundColor: cupom.marketplaceColor }}
                   >
-                    <Tag className="h-3 w-3" />
-                    {cupom.marketplace}
-                  </span>
+                     <Tag className="h-3 w-3" />
+                     {cupom.marketplace}
+                  </div>
                   <span className="inline-flex items-center gap-1 text-[10px] text-gray-500">
                     <Clock className="h-3 w-3" />
                     {tempoRelativo(cupom.atualizadoEm)}

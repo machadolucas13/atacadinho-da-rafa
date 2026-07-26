@@ -1,8 +1,9 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Sobre - Atacadinho da Rafa",
-  description: "Conheça a história por trás do Atacadinho da Rafa e nossa missão de encontrar os melhores achados.",
+  description: "Conheça a história por trás do Atacadinho da Rafa e nossa missão de encontrar os melhores achados com curadoria real e transparente.",
 };
 
 export default function SobrePage() {
@@ -32,7 +33,7 @@ export default function SobrePage() {
               Tudo começou em 2024, quando a Rafa — cansada de ver gente pagando caro por coisas que ela encontrava por uma fração do preço — decidiu reunir os melhores achados em um só lugar.
             </p>
             <p className="text-gray-300 leading-relaxed">
-              O que era um hobby virou um projeto de vida. Hoje, o Atacadinho da Rafa é uma curadoria semanal dos melhores produtos em moda, decoração, tecnologia, beleza e muito mais.
+              O que era um hobby virou um projeto de vida. Hoje, o Atacadinho da Rafa é uma curadoria semanal dos melhores produtos em moda, casa, tecnologia, beleza e muito mais.
             </p>
 
             <h2 className="text-2xl font-bold text-white mt-8 mb-4">Nossa missão</h2>
@@ -59,6 +60,16 @@ export default function SobrePage() {
               <li>Transparência total sobre links de afiliados</li>
               <li>Respeito à sua privacidade e experiência</li>
             </ul>
+
+            <h2 className="text-2xl font-bold text-white mt-8 mb-4">Nossa equipe</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Somos uma equipe pequena, mas dedicada. Cada membro traz uma expertise diferente: moda, tecnologia, decoração, finanças. Juntas, formamos uma curadoria completa — mas sempre com o olho de quem usa o produto de verdade.
+            </p>
+
+            <h2 className="text-2xl font-bold text-white mt-8 mb-4">Contato</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Quer propor uma parceria, enviar um feedback ou simplesmente dizer oi? Estamos por aqui. Envie um email para <a href="mailto:atacadinhodarafa@hotmail.com" className="text-[#F4A7B9] hover:text-white transition-colors">atacadinhodarafa@hotmail.com</a> e vamos conversar.
+            </p>
           </div>
         </div>
       </div>

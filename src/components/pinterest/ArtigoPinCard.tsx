@@ -5,11 +5,26 @@ import { useRouter } from "next/navigation";
 import { Clock, Eye } from "lucide-react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
+import TagBadge from "@/components/ui/TagBadge";
 import { getItemViews } from "@/lib/views";
 
 interface ArtigoPinCardProps {
   artigo: Artigo;
   locale?: string;
+}
+
+const tagVariant: Record<string, "hot" | "fire" | "new" | "vip" | "sale"> = {
+  HOT: "hot",
+  NOVO: "new",
+  DESTAQUE: "hot",
+  TENDA: "fire",
+};
+
+function isRecent(date: Date | string | undefined): boolean {
+  if (!date) return false;
+  const d = typeof date === "string" ? new Date(date) : date;
+  const diff = Date.now() - d.getTime();
+  return diff < 7 * 24 * 60 * 60 * 1000;
 }
 
 export default function ArtigoPinCard({ artigo, locale = artigo.locale }: ArtigoPinCardProps) {
@@ -19,6 +34,9 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
     : `/pt/artigos/${artigo.slug}`;
 
   const visualizacoes = getItemViews(artigo.slug);
+  const statusTags = [];
+  if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
+  if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
 
   return (
     <article
@@ -40,6 +58,12 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {statusTags.map((tag) => (
+              <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
+            ))}
+          </div>
 
           <div className="absolute inset-x-3 bottom-3 hidden items-center justify-between translate-y-3 transition-all duration-300 group-hover:flex group-hover:translate-y-0 md:flex md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0">
              <SaveButton item={{ id: artigo.slug, tipo: "artigo", titulo: artigo.titulo, slug: artigo.slug, imagemCapa: artigo.imagemCapa || "" }} />

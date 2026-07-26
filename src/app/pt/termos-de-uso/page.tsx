@@ -68,7 +68,7 @@ export default function TermosDeUsoPage() {
 
             <h2 className="text-white">6. Isenção de responsabilidade</h2>
             <p className="text-gray-300">
-              O conteúdo do site é fornecido "como está". Não garantimos a precisão, completude ou atualidade das informações. Preços, disponibilidades e características dos produtos podem ser alterados pelas plataformas de venda a qualquer momento, sem aviso prévio.
+              O conteúdo do site é fornecido &quot;como está&quot;. Não garantimos a precisão, completude ou atualidade das informações. Preços, disponibilidades e características dos produtos podem ser alterados pelas plataformas de venda a qualquer momento, sem aviso prévio.
             </p>
             <p className="text-gray-300">
               Não nos responsabilizamos por:

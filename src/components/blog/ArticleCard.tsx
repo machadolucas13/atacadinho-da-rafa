@@ -4,13 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Heart } from "lucide-react";
 import { Artigo } from "@/types";
+import TagBadge from "@/components/ui/TagBadge";
 
 interface ArticleCardProps {
   artigo: Artigo;
   featured?: boolean;
 }
 
+function isRecent(date: Date | string | undefined): boolean {
+  if (!date) return false;
+  const d = typeof date === "string" ? new Date(date) : date;
+  const diff = Date.now() - d.getTime();
+  return diff < 7 * 24 * 60 * 60 * 1000;
+}
+
 export default function ArticleCard({ artigo, featured = false }: ArticleCardProps) {
+  const statusTags = [];
+  if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
+  if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
+
   return (
     <Link href={`/artigos/${artigo.slug}`} className="group block">
       <div
@@ -33,9 +45,14 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
           <div className="absolute inset-x-4 bottom-4 flex items-center justify-between opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-          <span className="badge bg-white/90 backdrop-blur-sm text-[#F4A7B9] shadow-sm">
-               Artigo
-            </span>
+           <div className="flex items-center gap-2">
+             <span className="badge bg-white/90 backdrop-blur-sm text-[#F4A7B9] shadow-sm">
+                  Artigo
+             </span>
+             {statusTags.map((tag) => (
+               <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
+             ))}
+           </div>
             <span className="badge bg-white/90 backdrop-blur-sm text-white shadow-sm">
               <Heart className="h-3 w-3" />
             </span>

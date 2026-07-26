@@ -19,7 +19,7 @@ export default function ContatoPage() {
             Contato
           </h1>
           <p className="mt-4 text-lg text-gray-300 md:text-xl max-w-2xl">
-            Dúvidas, sugestões, parcerias ou feedback? Estamos aqui para ouvir você.
+            Tem alguma dúvida, sugestão de produto ou proposta de parceria? Adoramos ouvir você. Use os canais abaixo e a gente responde o mais rápido possível.
           </p>
         </div>
       </div>
@@ -27,50 +27,72 @@ export default function ContatoPage() {
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-white">Email</h2>
-            <p className="mt-2 text-gray-300">
-              Para dúvidas, sugestões ou parcerias, envie um email para:
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-2xl">📧</span> Email
+            </h2>
+            <p className="mt-3 text-gray-300 text-sm leading-relaxed">
+              Para dúvidas, sugestões ou parcerias, envie um email diretamente para a Rafa e equipe. Respondemos em até 48 horas úteis.
             </p>
             <a
               href="mailto:atacadinhodarafa@hotmail.com"
-              className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#E11D48]/30 bg-[#E11D48]/10 px-4 py-2.5 text-sm font-bold text-[#F4A7B9] transition-all hover:bg-[#E11D48]/20 hover:text-white"
             >
               atacadinhodarafa@hotmail.com
             </a>
-            <p className="mt-4 text-sm text-gray-400">
-              Respondemos em até 48 horas úteis.
+            <p className="mt-3 text-xs text-gray-500">
+              Horário de atendimento: segunda a sexta, 9h às 18h.
             </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-white">Contato direto</h2>
-            <p className="mt-2 text-gray-300">
-              Envie um email para dúvidas, sugestões ou parcerias:
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-2xl">🤝</span> Parcerias
+            </h2>
+            <p className="mt-3 text-gray-300 text-sm leading-relaxed">
+              Se você representa uma marca, loja ou plataforma e quer propor uma parceria, entre em contato com o assunto &quot;Parceria&quot; no email. Adoramos conhecer novas marcas e trazer os melhores produtos para nossa comunidade.
             </p>
             <a
-              href="mailto:atacadinhodarafa@hotmail.com"
-              className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
+              href="mailto:atacadinhodarafa@hotmail.com?subject=Parceria%20-%20Atacadinho%20da%20Rafa"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-white/10"
             >
-              atacadinhodarafa@hotmail.com
+              Propor parceria
             </a>
-            <p className="mt-4 text-sm text-gray-400">
-              Respondemos em até 48 horas úteis.
-            </p>
           </div>
         </div>
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <h2 className="text-xl font-bold text-white">Parcerias</h2>
-          <p className="mt-2 text-gray-300">
-            Se você representa uma marca, loja ou plataforma e quer propor uma parceria, entre em contato pelo email acima com o assunto "Parceria". Adoramos conhecer novas marcas e trazer os melhores produtos para nossa comunidade.
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-2xl">💡</span> Sugestões de produtos
+          </h2>
+          <p className="mt-3 text-gray-300 text-sm leading-relaxed">
+            Tem um produto que você ama e quer que a gente teste? Manda para a gente! Adoramos receber indicações da comunidade. Se o produto for aprovado na nossa curadoria, ele aparece aqui no site para todo mundo ver.
           </p>
+          <a
+            href="mailto:atacadinhodarafa@hotmail.com?subject=Sugestão%20de%20Produto"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-white/10"
+          >
+            Enviar sugestão
+          </a>
         </div>
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <h2 className="text-xl font-bold text-white">Sugestões de produtos</h2>
-          <p className="mt-2 text-gray-300">
-            Tem um produto que você ama e quer que a gente teste? Manda para a gente! Adoramos receber indicações da comunidade. Se o produto for aprovado na nossa curadoria, ele aparece aqui no site.
-          </p>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-2xl">❓</span> Perguntas frequentes
+          </h2>
+          <div className="mt-4 space-y-4">
+            <div>
+              <h3 className="text-sm font-bold text-white">Vocês vendem os produtos?</h3>
+              <p className="mt-1 text-xs text-gray-400">Não. Somos uma curadoria. Quando você compra através dos nossos links, podemos receber uma comissão sem nenhum custo extra para você.</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white">Os preços são atualizados?</h3>
+              <p className="mt-1 text-xs text-gray-400">Sim, verificamos os links e preços semanalmente. Mas os valores podem mudar a qualquer momento nas plataformas parceiras.</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white">Como faço para aparecer no site?</h3>
+              <p className="mt-1 text-xs text-gray-400">Envie sua sugestão pelo email acima. Se o produto tiver qualidade, preço justo e combinar com nossa curadoria, publicamos ele com carinho.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -60,6 +60,9 @@
     color: #f5f5f7 !important;
   }
 
+  .text-white { color: #fff !important; }
+  .text-black { color: #000 !important; }
+
   .text-gray-300 { color: #f5f5f7 !important; }
   .text-gray-400 { color: #cbd5e1 !important; }
   .text-gray-500 { color: #94a3b8 !important; }
@@ -308,5 +311,51 @@
 
   .prose img {
     @apply rounded-2xl my-6 shadow-lg;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .scrollbar-thin-vertical::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin-vertical::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin-vertical::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .scrollbar-thin-vertical::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
   }
 }

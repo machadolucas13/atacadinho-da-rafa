@@ -12,13 +12,19 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = await inscreverNewsletter(new FormData(e.target as HTMLFormElement));
-    if ((result as any).error) {
-      setError((result as any).error);
-    } else {
-      setSent(true);
-      setEmail("");
-      setMensagem("");
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    try {
+      const result = await inscreverNewsletter(formData);
+      if ((result as any).error) {
+        setError((result as any).error);
+      } else {
+        setSent(true);
+        setEmail("");
+        setMensagem("");
+      }
+    } catch (err) {
+      setError("Erro ao se inscrever. Tente novamente.");
     }
   };
 
@@ -91,7 +97,11 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
       </div>
 
       {error && <p className="mt-3 text-xs text-red-400">{text.error}</p>}
-      {sent && <p className="mt-3 text-xs text-[#F4A7B9]">{text.success}</p>}
+      {sent && (
+        <p className="mt-3 text-xs font-semibold text-green-400">
+          {text.success}
+        </p>
+      )}
     </div>
   );
 }

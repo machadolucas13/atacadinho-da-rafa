@@ -5,6 +5,7 @@ import CarouselSection from "@/components/pinterest/CarouselSection";
 import ProductCarouselSection from "@/components/pinterest/ProductCarouselSection";
 import CuponsSection from "@/components/layout/CuponsSection";
 import NewsletterForm from "@/components/ui/NewsletterForm";
+import TagBadge from "@/components/ui/TagBadge";
 import AutoSeedCoupons from "@/components/layout/AutoSeedCoupons";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
@@ -101,20 +102,37 @@ export default async function HomePage() {
     ),
   }));
 
-  const postItems = featuredPosts.map((post) => ({
-    id: post.slug,
-    href: `/pt/artigos/${post.slug}`,
-    imagem: post.imagemCapa || "/images/artigos/default.jpg",
-    titulo: post.titulo,
-    badge: post.categoria?.nome ? (
-      <span className="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white shadow-lg backdrop-blur-sm">
-        {post.categoria.nome}
-      </span>
-    ) : undefined,
-    meta: post.tempoLeitura ? (
-      <span className="text-xs text-gray-400">{post.tempoLeitura} min de leitura</span>
-    ) : undefined,
-  }));
+  function isRecent(date: Date | string | undefined): boolean {
+    if (!date) return false;
+    const d = typeof date === "string" ? new Date(date) : date;
+    const diff = Date.now() - d.getTime();
+    return diff < 7 * 24 * 60 * 60 * 1000;
+  }
+
+  const postItems = featuredPosts.map((post) => {
+    const statusTags = [];
+    if (post.destaque) statusTags.push(<TagBadge key="hot" label="HOT" variant="hot" />);
+    if (isRecent(post.publicadoEm)) statusTags.push(<TagBadge key="novo" label="NOVO" variant="new" />);
+
+    return {
+      id: post.slug,
+      href: `/pt/artigos/${post.slug}`,
+      imagem: post.imagemCapa || "/images/artigos/default.jpg",
+      titulo: post.titulo,
+      badge: statusTags.length > 0 ? (
+        <div className="flex flex-col gap-1">
+          {statusTags}
+        </div>
+      ) : post.categoria?.nome ? (
+        <span className="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white shadow-lg backdrop-blur-sm">
+          {post.categoria.nome}
+        </span>
+      ) : undefined,
+      meta: post.tempoLeitura ? (
+        <span className="text-xs text-gray-400">{post.tempoLeitura} min de leitura</span>
+      ) : undefined,
+    };
+  });
 
   return (
     <main className="relative z-10 min-h-screen">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
+import TagBadge from "@/components/ui/TagBadge";
 import { getItemViews } from "@/lib/views";
 
 interface PinCardProps {
@@ -13,11 +14,22 @@ interface PinCardProps {
   locale: string;
 }
 
+function isRecent(date: string | undefined): boolean {
+  if (!date) return false;
+  const d = new Date(date);
+  const diff = Date.now() - d.getTime();
+  return diff < 7 * 24 * 60 * 60 * 1000;
+}
+
 export default function PinCard({ pin, locale }: PinCardProps) {
   const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
   const visualizacoes = getItemViews(pin.slug);
   const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
+
+  const statusTags = [];
+  if (pin.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
+  if (isRecent(pin.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
 
   return (
     <article
@@ -39,13 +51,11 @@ export default function PinCard({ pin, locale }: PinCardProps) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
 
-          {(pin.destaque || true) && (
-            <div className="absolute left-2 top-2">
-              <span className="inline-flex items-center rounded-full bg-[#E11D48]/90 px-2 py-1 text-[10px] font-bold text-white shadow-lg">
-                🔥 {locale === "en" ? "Featured" : "Destaque"}
-              </span>
-            </div>
-          )}
+          <div className="absolute left-2 top-2 flex flex-col gap-1.5">
+            {statusTags.map((tag) => (
+              <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
+            ))}
+          </div>
 
           <div className="absolute inset-x-0 bottom-0 hidden items-center justify-center gap-2 bg-black/60 p-3 opacity-0 transition-all duration-300 group-hover:flex group-hover:opacity-100 md:flex md:opacity-0 md:group-hover:opacity-100">
              <SaveButton item={{ id: pin.id, tipo: "artigo", titulo: pin.titulo, slug: pin.slug, imagemCapa: pin.imagem }} />

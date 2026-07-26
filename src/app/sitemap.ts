@@ -47,6 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.2,
     },
+    {
+      url: `${baseUrl}/termos-de-uso`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.2,
+    },
   ];
 
   categorias.forEach((cat) => {
