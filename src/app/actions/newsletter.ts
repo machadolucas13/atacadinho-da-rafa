@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { signSession, verifySession } from "@/server/admin-session";
+import { signSession, verifySession, isAdminAuthenticated } from "@/server/admin-session";
 import { adminDb } from "@/server/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 
@@ -21,14 +21,13 @@ export async function inscreverNewsletter(formData: FormData) {
     });
     return { ok: true };
   } catch (error) {
+    console.error("newsletter signup error", error);
     return { error: "Erro ao se inscrever. Tente novamente." };
   }
 }
 
 export async function buscarInscritosNewsletter() {
-  const session = cookies().get("admin_session")?.value;
-  const ADMIN_SECRET = process.env.ADMIN_SECRET;
-  if (!ADMIN_SECRET || !verifySession(ADMIN_SECRET, session)) {
+  if (!(await isAdminAuthenticated())) {
     return { error: "Não autorizado" };
   }
 
@@ -37,14 +36,13 @@ export async function buscarInscritosNewsletter() {
     const inscritos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     return { ok: true, inscritos };
   } catch (error) {
+    console.error("newsletter list error", error);
     return { error: "Erro ao buscar inscritos" };
   }
 }
 
 export async function excluirInscritoNewsletter(id: string) {
-  const session = cookies().get("admin_session")?.value;
-  const ADMIN_SECRET = process.env.ADMIN_SECRET;
-  if (!ADMIN_SECRET || !verifySession(ADMIN_SECRET, session)) {
+  if (!(await isAdminAuthenticated())) {
     return { error: "Não autorizado" };
   }
 
@@ -52,6 +50,7 @@ export async function excluirInscritoNewsletter(id: string) {
     await adminDb.collection("newsletter").doc(id).delete();
     return { ok: true };
   } catch (error) {
+    console.error("newsletter delete error", error);
     return { error: "Erro ao excluir inscrito" };
   }
 }

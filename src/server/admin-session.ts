@@ -20,8 +20,9 @@ export function verifySession(secret: string, session: string | undefined): bool
   return age < 24 * 60 * 60 * 1000;
 }
 
-export function isAdminAuthenticated(): boolean {
-  const session = cookies().get(SESSION_COOKIE)?.value;
+export async function isAdminAuthenticated(): Promise<boolean> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get(SESSION_COOKIE)?.value;
   const ADMIN_SECRET = process.env.ADMIN_SECRET;
   if (!ADMIN_SECRET) return false;
   return verifySession(ADMIN_SECRET, session);

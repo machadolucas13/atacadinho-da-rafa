@@ -104,10 +104,10 @@
     column-count: 1;
     column-gap: 1rem;
   }
-  @screen sm { .masonry-grid { column-count: 2; } }
-  @screen md { .masonry-grid { column-count: 3; column-gap: 1.25rem; } }
-  @screen lg { .masonry-grid { column-count: 4; column-gap: 1.5rem; } }
-  @screen xl { .masonry-grid { column-count: 5; column-gap: 1.5rem; } }
+  @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+  @media (min-width: 768px) { .masonry-grid { column-count: 3; column-gap: 1.25rem; } }
+  @media (min-width: 1024px) { .masonry-grid { column-count: 4; column-gap: 1.5rem; } }
+  @media (min-width: 1280px) { .masonry-grid { column-count: 5; column-gap: 1.5rem; } }
 
   .masonry-item {
     break-inside: avoid;

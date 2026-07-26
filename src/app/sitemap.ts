@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { getArtigos } from "@/lib/artigos";
 import { getCategorias } from "@/lib/categorias";
 import { getPastas } from "@/lib/pastas";
+import { getPins } from "@/lib/pins";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://atacadinhodarafa.com.br";
@@ -9,50 +10,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const artigos = await getArtigos();
   const categorias = await getCategorias();
   const pastas = await getPastas();
+  const pins = await getPins("pt");
 
   const urls: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/artigos`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/busca`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/sobre`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/contato`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/politica-privacidade`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/termos-de-uso`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.2,
-    },
+    { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
+    { url: `${baseUrl}/artigos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/busca`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
+    { url: `${baseUrl}/sobre`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/contato`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/politica-privacidade`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
+    { url: `${baseUrl}/termos-de-uso`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
+    { url: `${baseUrl}/pinterest`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.4 },
+    { url: `${baseUrl}/pins`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${baseUrl}/produtos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
   ];
 
   categorias.forEach((cat) => {
@@ -70,6 +40,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.6,
+    });
+  });
+
+  pins.forEach((pin) => {
+    urls.push({
+      url: `${baseUrl}/pins/${pin.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.4,
     });
   });
 

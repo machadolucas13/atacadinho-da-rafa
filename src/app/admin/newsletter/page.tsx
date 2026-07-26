@@ -14,17 +14,23 @@ type Inscrito = {
 export default function AdminNewsletterPage() {
   const [inscritos, setInscritos] = useState<Inscrito[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const carregar = async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/admin/newsletter");
       const data = await res.json();
-      if ((data as any).ok) {
+      if ((data as any).error) {
+        setError((data as any).error || "Não autorizado");
+        setInscritos([]);
+      } else {
         setInscritos((data as any).inscritos || []);
       }
     } catch (e) {
       console.error(e);
+      setError("Erro ao carregar newsletter");
     } finally {
       setLoading(false);
     }
@@ -52,6 +58,12 @@ export default function AdminNewsletterPage() {
         <p className="mt-2 text-gray-400">
           Lista de emails inscritos. Use estes emails para enviar campanhas manualmente pelo seu Gmail.
         </p>
+
+        {error && (
+          <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+            {error}
+          </div>
+        )}
 
         {loading ? (
           <div className="mt-8 flex justify-center">
