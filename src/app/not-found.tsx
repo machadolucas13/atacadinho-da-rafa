@@ -12,9 +12,9 @@ export default function NotFound() {
         A página que você está procurando foi removida ou nunca existiu.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Link href="/" className="btn-primary">
+        <LocaleAwareLink href="/" className="btn-primary">
           Voltar para Home
-        </Link>
+        </LocaleAwareLink>
         <LocaleAwareLink href="/busca" className="btn-ghost">
           Buscar produtos
         </LocaleAwareLink>
