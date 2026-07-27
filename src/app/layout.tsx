@@ -109,6 +109,7 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${manrope.variable} font-body antialiased`}
     >
       <link rel="manifest" href="/manifest.json" />
+      <meta name="google-site-verification" content="pSS___bG_1nZa89MbmiwuAI9PsENM5qMFCE8rTud4X0" />
       <body
         className="relative min-h-screen bg-[#0a0a14] text-[hsl(var(--foreground))]"
         style={{
