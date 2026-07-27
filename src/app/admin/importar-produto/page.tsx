@@ -61,8 +61,12 @@ async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> 
       imagemPrincipal: data.imagem || "",
       preco: data.preco ? data.preco.toString() : "",
       precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
-      descricao: data.titulo || "",
-      descricaoCurta: data.titulo || "",
+      descricao: data.descricao || data.titulo || "",
+      descricaoCurta: data.descricao || data.titulo || "",
+      marketplace: data.marketplace || "outro",
+      loja: data.marketplace ? marketDefaults[data.marketplace]?.loja || "Loja" : "Loja",
+      tags: data.marketplace ? marketDefaults[data.marketplace]?.tags || "oferta" : "oferta",
+      categoriaId: data.marketplace ? marketDefaults[data.marketplace]?.categoriaSugerida || "" : "",
     };
   } catch {
     return {};
