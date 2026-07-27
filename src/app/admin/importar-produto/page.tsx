@@ -100,7 +100,7 @@ export default function ImportarProduto() {
   const router = useRouter();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
-  const [detectedMarketplace, setDetectedMarketplace] = useState<Marketplace>(null);
+  const [detectedMarketplace, setDetectedMarketplace] = useState<Marketplace>("outro");
   const [categorias, setCategorias] = useState<any[]>([]);
   const [erroImportacao, setErroImportacao] = useState("");
 
