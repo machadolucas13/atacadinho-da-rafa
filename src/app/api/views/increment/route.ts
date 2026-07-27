@@ -10,10 +10,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Slug inválido" }, { status: 400 });
     }
 
+    console.log(`[views] increment request for slug: ${slug}`);
     const views = await incrementItemViews(slug);
+    console.log(`[views] incremented ${slug} => ${views}`);
     return NextResponse.json({ ok: true, views });
   } catch (error) {
-    console.error("Erro ao registrar visualização:", error);
+    console.error("[views] Erro ao registrar visualização:", error);
     return NextResponse.json({ error: "Erro ao registrar visualização" }, { status: 500 });
   }
 }

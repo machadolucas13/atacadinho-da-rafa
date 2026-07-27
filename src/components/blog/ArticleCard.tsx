@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Heart } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import TagBadge from "@/components/ui/TagBadge";
 
@@ -19,6 +20,38 @@ function isRecent(date: Date | string | undefined): boolean {
 }
 
 export default function ArticleCard({ artigo, featured = false }: ArticleCardProps) {
+  const [tracked, setTracked] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const statusTags = [];
+  if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
+  if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
+
+  useEffect(() => {
+    if (tracked || typeof window === "undefined") return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fetch("/api/views/increment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ slug: artigo.slug }),
+            }).catch(() => {});
+            setTracked(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { root: null, threshold: 0.6 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [artigo.slug, tracked]);
   const statusTags = [];
   if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
   if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
@@ -26,6 +59,7 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
   return (
     <Link href={`/artigos/${artigo.slug}`} className="group block">
       <div
+        ref={ref}
         className={`overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover ${
           featured ? "md:col-span-2 md:row-span-2" : ""
         }`}

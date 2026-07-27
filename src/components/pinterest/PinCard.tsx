@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
 import TagBadge from "@/components/ui/TagBadge";
@@ -26,13 +27,42 @@ export default function PinCard({ pin, locale }: PinCardProps) {
   const href = `/${locale}/pins/${pin.slug}`;
   const visualizacoes = getItemViews(pin.slug);
   const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
+  const [tracked, setTracked] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const statusTags = [];
+
+  useEffect(() => {
+    if (tracked || typeof window === "undefined") return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fetch("/api/views/increment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ slug: pin.slug }),
+            }).catch(() => {});
+            setTracked(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { root: null, threshold: 0.6 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [pin.slug, tracked]);
   if (pin.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
   if (isRecent(pin.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
 
   return (
     <article
+      ref={ref}
       onClick={() => router.push(href)}
       className="group block cursor-pointer"
       role="link"

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Star, Heart, ShoppingBag, Tag } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Produto } from "@/types";
 import { cn } from "@/lib/utils";
 import ShareButtons from "@/components/social/ShareButtons";
@@ -17,13 +18,42 @@ interface ProductCardProps {
 
 export default function ProductCard({ produto, variant = "default" }: ProductCardProps) {
   const router = useRouter();
+  const [tracked, setTracked] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const discount = produto.precoOriginal
     ? Math.round(((produto.precoOriginal - produto.preco!) / produto.precoOriginal) * 100)
     : 0;
 
+  useEffect(() => {
+    if (tracked || typeof window === "undefined") return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fetch("/api/views/increment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ slug: produto.slug }),
+            }).catch(() => {});
+            setTracked(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { root: null, threshold: 0.6 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [produto.slug, tracked]);
+
   if (variant === "horizontal") {
     return (
       <article
+        ref={ref}
         onClick={() => router.push(`/produtos/${produto.slug}`)}
         className="group block cursor-pointer"
         role="link"
@@ -77,6 +107,7 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
 
   return (
     <article
+      ref={ref}
       onClick={() => router.push(`/produtos/${produto.slug}`)}
       className="group block cursor-pointer"
       role="link"

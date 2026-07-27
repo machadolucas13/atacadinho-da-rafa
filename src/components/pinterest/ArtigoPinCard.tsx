@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Clock, Eye } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
 import TagBadge from "@/components/ui/TagBadge";
-import { getItemViews } from "@/lib/views";
 
 interface ArtigoPinCardProps {
   artigo: Artigo;
@@ -29,17 +29,46 @@ function isRecent(date: Date | string | undefined): boolean {
 
 export default function ArtigoPinCard({ artigo, locale = artigo.locale }: ArtigoPinCardProps) {
   const router = useRouter();
+  const [tracked, setTracked] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   const href = locale === "en"
     ? `/en/articles/${artigo.slug}`
     : `/pt/artigos/${artigo.slug}`;
 
-  const visualizacoes = getItemViews(artigo.slug);
   const statusTags = [];
   if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
   if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
 
+  useEffect(() => {
+    if (tracked || typeof window === "undefined") return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fetch("/api/views/increment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ slug: artigo.slug }),
+            }).catch(() => {});
+            setTracked(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { root: null, threshold: 0.6 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [artigo.slug, tracked]);
+
   return (
     <article
+      ref={ref}
       onClick={() => router.push(href)}
       className="group block cursor-pointer"
       role="link"
