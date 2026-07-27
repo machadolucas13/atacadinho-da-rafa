@@ -33,9 +33,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const artigo = await getArtigoBySlug(params.slug, "pt");
   if (!artigo) return {};
+  const baseUrl = "https://atacadinhodarafa.com.br";
+  const url = `${baseUrl}/pt/artigos/${artigo.slug}`;
+  const image = artigo.imagemCapa ? `${baseUrl}${artigo.imagemCapa}` : `${baseUrl}/assets/images/og-default.jpg`;
   return {
-    title: artigo.titulo,
+    title: `${artigo.titulo} - Atacadinho da Rafa`,
     description: artigo.descricao,
+    keywords: [...(artigo.tags || []), "artigo", "dicas", "achados", "Atacadinho da Rafa"],
+    openGraph: {
+      type: "article",
+      locale: "pt_BR",
+      url,
+      siteName: "Atacadinho da Rafa",
+      title: artigo.titulo,
+      description: artigo.descricao,
+      images: [{ url: image, width: 1200, height: 630, alt: artigo.titulo }],
+    },
+    twitter: { card: "summary_large_image", title: artigo.titulo, description: artigo.descricao, images: [image] },
+    alternates: { canonical: url },
   };
 }
 

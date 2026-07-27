@@ -3,6 +3,7 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight, Tag, TrendingUp } from "lucide-react";
+import { Metadata } from "next";
 import { getPinBySlug, getPins } from "@/lib/pins";
 import { getItemViews } from "@/lib/views";
 
@@ -10,6 +11,29 @@ interface ShopeeLink {
   nome: string;
   preco: string;
   url: string;
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const pin = await getPinBySlug(params.slug, "pt");
+  if (!pin) return {};
+  const baseUrl = "https://atacadinhodarafa.com.br";
+  const url = `${baseUrl}/pt/pins/${pin.slug}`;
+  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/og-default.jpg`;
+  return {
+    title: `${pin.titulo} - Atacadinho da Rafa`,
+    description: pin.descricao,
+    openGraph: {
+      type: "website",
+      locale: "pt_BR",
+      url,
+      siteName: "Atacadinho da Rafa",
+      title: pin.titulo,
+      description: pin.descricao,
+      images: [{ url: image, width: 1200, height: 630, alt: pin.titulo }],
+    },
+    twitter: { card: "summary_large_image", title: pin.titulo, description: pin.descricao, images: [image] },
+    alternates: { canonical: url },
+  };
 }
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
