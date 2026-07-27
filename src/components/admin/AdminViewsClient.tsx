@@ -18,18 +18,21 @@ export default function AdminViewsClient() {
   const [items, setItems] = useState<ViewItem[]>([]);
   const [totalViews, setTotalViews] = useState(0);
   const [ready, setReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     const interval = setInterval(async () => {
       try {
+        setError(null);
         const [allRes, viewsRes] = await Promise.all([
           fetch("/api/admin/all-content"),
           fetch("/api/admin/views"),
         ]);
-        if (!allRes.ok || !viewsRes.ok) return;
-        const allData = await allRes.json();
-        const viewsData: AdminViewsResponse = await viewsRes.json();
+
+        const allData = allRes.ok ? await allRes.json() : { items: [] };
+        const viewsData: AdminViewsResponse = viewsRes.ok ? await viewsRes.json() : { views: {} };
+
         if (cancelled) return;
         const map = new Map(
           Object.entries(viewsData.views || {}).map(([k, v]) => [k, typeof v === "number" ? v : 0])
@@ -45,8 +48,11 @@ export default function AdminViewsClient() {
         setItems(next);
         setTotalViews(next.reduce((acc: number, item: ViewItem) => acc + item.views, 0));
         setReady(true);
-      } catch {
-        // ignore
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Erro ao carregar visualizações");
+          console.error("[admin/views] polling error:", err);
+        }
       }
     }, 2000);
 
@@ -84,6 +90,11 @@ export default function AdminViewsClient() {
       </div>
 
       <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        {error && (
+          <div className="px-4 py-3 text-sm text-red-400 border-b border-white/10">
+            {error}
+          </div>
+        )}
         <table className="w-full text-left text-sm">
           <thead className="bg-white/5 text-xs uppercase tracking-widest text-gray-400">
             <tr>
