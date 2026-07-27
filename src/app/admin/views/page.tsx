@@ -1,5 +1,4 @@
 import AdminNav from "@/components/admin/AdminNav";
-import { adminDb } from "@/server/firebase-admin";
 import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import { getProdutos } from "@/lib/produtos";
@@ -18,12 +17,17 @@ export default async function AdminViewsPage() {
     getProdutos(),
   ]);
 
-  let viewsSnapshot: any[] = [];
+  let viewsMap = new Map<string, number>();
   try {
-    const snap = await adminDb.collection("visualizacoes").get();
-    viewsSnapshot = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/admin/views`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.views && typeof data.views === "object") {
+        viewsMap = new Map(Object.entries(data.views).map(([k, v]) => [k, typeof v === "number" ? v : 0]));
+      }
+    }
   } catch (error) {
-    console.error("Erro ao buscar visualizações:", error);
+    console.error("Erro ao buscar visualizações no admin:", error);
   }
 
   const items: ViewItem[] = [
@@ -31,8 +35,6 @@ export default async function AdminViewsPage() {
     ...pins.map((p) => ({ slug: p.slug, tipo: "pin" as const, titulo: p.titulo, views: 0 })),
     ...produtos.map((p) => ({ slug: p.slug, tipo: "produto" as const, titulo: p.nome, views: 0 })),
   ];
-
-  const viewsMap = new Map(viewsSnapshot.map((v) => [v.slug, typeof v.views === "number" ? v.views : 0]));
 
   const merged: ViewItem[] = items
     .map((item) => ({
@@ -64,7 +66,7 @@ export default async function AdminViewsPage() {
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight">Visualizações</h1>
             <p className="mt-2 text-sm text-gray-400">
-              Contagem real de acessos por artigo, pin e produto. Atualizada a cada 60 segundos.
+              Contagem real de acessos por artigo, pin e produto. Atualizada em tempo real.
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-right">
