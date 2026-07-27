@@ -24,6 +24,10 @@ export async function generateMetadata({
   const produto = produtos.find((p) => p.slug === params.slug);
   if (!produto) return {};
 
+  const baseUrl = "https://atacadinhodarafa.com.br";
+  const url = `${baseUrl}/produtos/${produto.slug}`;
+  const image = produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/og-default.jpg`;
+
   return {
     title: `${produto.nome} - Atacadinho da Rafa`,
     description: produto.descricaoCurta || produto.descricao || `Confira ${produto.nome} na nossa curadoria.`,
@@ -31,13 +35,13 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: "pt_BR",
-      url: `https://atacadinhodarafa.com.br/produtos/${params.slug}`,
+      url,
       siteName: "Atacadinho da Rafa",
       title: `${produto.nome} - Atacadinho da Rafa`,
       description: produto.descricaoCurta || produto.descricao || `Confira ${produto.nome} na nossa curadoria.`,
       images: [
         {
-          url: produto.imagemPrincipal,
+          url: image,
           width: 1200,
           height: 630,
           alt: produto.nome,
@@ -48,11 +52,9 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${produto.nome} - Atacadinho da Rafa`,
       description: produto.descricaoCurta || produto.descricao || `Confira ${produto.nome} na nossa curadoria.`,
-      images: [produto.imagemPrincipal],
+      images: [image],
     },
-    alternates: {
-      canonical: `https://atacadinhodarafa.com.br/produtos/${params.slug}`,
-    },
+    alternates: { canonical: url },
   };
 }
 
@@ -83,12 +85,21 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     name: produto.nome,
     description: produto.descricaoCurta || produto.descricao,
     image: produto.imagemPrincipal,
+    brand: {
+      "@type": "Brand",
+      name: produto.loja,
+    },
     offers: {
       "@type": "Offer",
       price: produto.preco,
       priceCurrency: "BRL",
       availability: "https://schema.org/InStock",
       url: produto.linkAfiliado,
+      ...(produto.precoOriginal && produto.precoOriginal > produto.preco
+        ? {
+            priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+          }
+        : {}),
     },
     ...(produto.avaliacao
       ? {

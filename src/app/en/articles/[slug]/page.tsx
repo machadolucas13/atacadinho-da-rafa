@@ -131,10 +131,50 @@ export default async function ArtigoPage({
                   title={artigo.titulo}
                   description={artigo.descricao}
                   image={artigo.imagemCapa || ""}
-                  url={`/en/articles/${artigo.slug}`}
+                  url={`https://atacadinhodarafa.com.br/en/articles/${artigo.slug}`}
                 />
               </div>
             </div>
+
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  headline: artigo.titulo,
+                  description: artigo.descricao,
+                  image: artigo.imagemCapa ? `https://atacadinhodarafa.com.br${artigo.imagemCapa}` : undefined,
+                  datePublished: artigo.publicadoEm,
+                  author: {
+                    "@type": "Organization",
+                    name: "Atacadinho da Rafa",
+                  },
+                  publisher: {
+                    "@type": "Organization",
+                    name: "Atacadinho da Rafa",
+                    logo: {
+                      "@type": "ImageObject",
+                      url: "https://atacadinhodarafa.com.br/assets/images/logo_rafa.png",
+                    },
+                  },
+                }),
+              }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
+                    { "@type": "ListItem", position: 2, name: "Articles", item: "https://atacadinhodarafa.com.br/en/articles" },
+                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `https://atacadinhodarafa.com.br/en/articles/${artigo.slug}` },
+                  ],
+                }),
+              }}
+            />
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
               <p className="text-sm font-semibold text-white mb-2">Want to see prices and models on Shopee?</p>

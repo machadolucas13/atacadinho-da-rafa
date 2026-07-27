@@ -126,9 +126,36 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 title={pin.titulo}
                 description={pin.descricao}
                 image={pin.imagem}
-                url={shareUrl}
+                url={`https://atacadinhodarafa.com.br/pt/pins/${pin.slug}`}
               />
             </div>
+
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "ImageObject",
+                  contentUrl: `https://atacadinhodarafa.com.br${pin.imagem}`,
+                  description: pin.descricao,
+                  name: pin.titulo,
+                }),
+              }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
+                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.com.br/pt/pins" },
+                    { "@type": "ListItem", position: 3, name: pin.titulo, item: `https://atacadinhodarafa.com.br/pt/pins/${pin.slug}` },
+                  ],
+                }),
+              }}
+            />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {links.map((item) => (

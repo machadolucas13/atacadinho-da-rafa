@@ -124,9 +124,36 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 title="Best Women's Jeans Under R$50"
                 description="20 models that lift and shape: wide leg, flare, cargo, skinny and more."
                 image="/posts/calcas-jeans-femininas-economicas-2026.png"
-                url={shareUrl}
+                url={`https://atacadinhodarafa.com.br/en/pins/${params.slug}`}
               />
             </div>
+
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "ImageObject",
+                  contentUrl: "https://atacadinhodarafa.com.br/posts/calcas-jeans-femininas-economicas-2026.png",
+                  description: "20 models that lift and shape: wide leg, flare, cargo, skinny and more.",
+                  name: "Best Women's Jeans Under R$50",
+                }),
+              }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
+                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.com.br/en/pins" },
+                    { "@type": "ListItem", position: 3, name: "Best Women's Jeans", item: `https://atacadinhodarafa.com.br/en/pins/${params.slug}` },
+                  ],
+                }),
+              }}
+            />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {links.slice(0, 6).map((item) => (

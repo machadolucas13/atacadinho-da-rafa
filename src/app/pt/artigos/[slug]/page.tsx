@@ -133,9 +133,49 @@ export default async function ArtigoPage({
                 title={artigo.titulo}
                 description={artigo.descricao}
                 image={artigo.imagemCapa || ""}
-                url={`/pt/artigos/${artigo.slug}`}
+                url={`https://atacadinhodarafa.com.br/pt/artigos/${artigo.slug}`}
               />
             </div>
+
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  headline: artigo.titulo,
+                  description: artigo.descricao,
+                  image: artigo.imagemCapa ? `https://atacadinhodarafa.com.br${artigo.imagemCapa}` : undefined,
+                  datePublished: artigo.publicadoEm,
+                  author: {
+                    "@type": "Organization",
+                    name: "Atacadinho da Rafa",
+                  },
+                  publisher: {
+                    "@type": "Organization",
+                    name: "Atacadinho da Rafa",
+                    logo: {
+                      "@type": "ImageObject",
+                      url: "https://atacadinhodarafa.com.br/assets/images/logo_rafa.png",
+                    },
+                  },
+                }),
+              }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
+                    { "@type": "ListItem", position: 2, name: "Artigos", item: "https://atacadinhodarafa.com.br/pt/artigos" },
+                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `https://atacadinhodarafa.com.br/pt/artigos/${artigo.slug}` },
+                  ],
+                }),
+              }}
+            />
 
             <div className="flex items-center justify-between gap-4 mb-12">
               {prevArtigo && (
