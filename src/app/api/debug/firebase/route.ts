@@ -20,9 +20,10 @@ export async function GET() {
     result.readError = String(e);
   }
   try {
-    const ref = adminDb.collection("visualizacoes").doc("__probe__");
-    await ref.set({ slug: "__probe__", views: 0, updatedAt: new Date() }, { merge: true });
+    const ref = adminDb.collection("visualizacoes").doc("debug-probe");
+    await ref.set({ slug: "debug-probe", views: 0, updatedAt: new Date() }, { merge: true });
     result.canWrite = true;
+    result.probeId = "debug-probe";
   } catch (e) {
     result.canWrite = false;
     result.writeError = String(e);
