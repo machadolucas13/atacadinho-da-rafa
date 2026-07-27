@@ -29,6 +29,9 @@ export default function AdminNav() {
           <Link href="/admin/newsletter" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
             Newsletter
           </Link>
+          <Link href="/admin/views" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+            Views
+          </Link>
         </div>
         <button
           onClick={handleLogout}
