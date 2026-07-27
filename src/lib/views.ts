@@ -1,6 +1,4 @@
-import { db } from "@/lib/firebase";
-import { collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from "firebase/firestore";
-import { unstable_cache, revalidateTag } from "next/cache";
+import { adminDb } from "@/lib/firebase-admin";
 
 const viewsCollection = "visualizacoes";
 
@@ -16,58 +14,30 @@ export function getItemViews(slug: string | undefined | null): number {
 
 export async function getItemViewsAsync(slug: string | undefined | null): Promise<number> {
   const safeSlug = slug || "fallback";
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return getItemViews(safeSlug);
+  try {
+    const snap = await adminDb.collection(viewsCollection).doc(safeSlug).get();
+    const data = snap.data();
+    if (typeof data?.views === "number") {
+      return data.views;
+    }
+  } catch (error) {
+    console.error("Erro ao buscar visualizações:", error);
   }
-  return unstable_cache(
-    async () => {
-      try {
-        const ref = doc(db, viewsCollection, safeSlug);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data?.views) {
-            return data.views;
-          }
-        }
-      } catch (error) {
-        console.error("Erro ao buscar visualizações:", error);
-      }
-      return getItemViews(safeSlug);
-    },
-    ["item-views", safeSlug],
-    { revalidate: 60, tags: ["views"] }
-  )();
+  return getItemViews(safeSlug);
 }
 
 export async function incrementItemViews(slug: string | undefined | null): Promise<number> {
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return getItemViews(slug || "fallback");
-  }
   const safeSlug = slug || "fallback";
-  const ref = doc(db, viewsCollection, safeSlug);
-
   try {
-    const snap = await getDoc(ref);
-    const current = snap.exists() ? (snap.data()?.views || 0) : 0;
+    const docRef = adminDb.collection(viewsCollection).doc(safeSlug);
+    const snap = await docRef.get();
+    const current = snap.exists ? (snap.data()?.views || 0) : 0;
     const next = current + 1;
 
-    await setDoc(
-      ref,
-      {
-        slug: safeSlug,
-        views: next,
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    revalidateTag("views");
-
+    await docRef.set({ slug: safeSlug, views: next, updatedAt: new Date() }, { merge: true });
     return next;
   } catch (error) {
     console.error("Erro ao incrementar visualizações:", error);
     return getItemViews(safeSlug);
   }
 }
-
