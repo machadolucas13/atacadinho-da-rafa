@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { incrementItemViews, getItemViewsAsync } from "@/lib/views";
+import { incrementItemViews, getItemViewsAsync } from "@/lib/increment-views";
 
 export async function GET(request: Request) {
   try {
@@ -34,4 +34,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Erro ao registrar visualização" }, { status: 500 });
   }
 }
-
