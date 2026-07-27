@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getCategorias } from "@/lib/categorias";
+import { getCategoriasUncached } from "@/lib/categorias";
 
 export async function GET() {
-  const categorias = await getCategorias();
-  return NextResponse.json({ categorias });
+  const categorias = await getCategoriasUncached();
+  return NextResponse.json({ categorias }, { headers: { "Cache-Control": "no-store" } });
 }

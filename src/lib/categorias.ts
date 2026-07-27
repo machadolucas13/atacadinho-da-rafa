@@ -19,28 +19,26 @@ function normalizeCategoria(docId: string, data: any): Categoria {
 }
 
 export async function getCategorias(): Promise<Categoria[]> {
-  return unstable_cache(
-    async () => {
-      try {
-        const snapshot = await getDocs(collection(db, "categorias"));
-        if (snapshot.empty) {
-          return categoriasLocais.map((c) => ({
-            ...c,
-            id: c.slug,
-          }));
-        }
-        return snapshot.docs.map((doc) => normalizeCategoria(doc.id, doc.data()));
-      } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-        return categoriasLocais.map((c) => ({
-          ...c,
-          id: c.slug,
-        }));
-      }
-    },
-    ["categorias"],
-    { revalidate: 60, tags: ["categorias"] }
-  )();
+  try {
+    const snapshot = await getDocs(collection(db, "categorias"));
+    if (snapshot.empty) {
+      return categoriasLocais.map((c) => ({
+        ...c,
+        id: c.slug,
+      }));
+    }
+    return snapshot.docs.map((doc) => normalizeCategoria(doc.id, doc.data()));
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+    return categoriasLocais.map((c) => ({
+      ...c,
+      id: c.slug,
+    }));
+  }
+}
+
+export async function getCategoriasUncached(): Promise<Categoria[]> {
+  return getCategorias();
 }
 
 export async function getCategoriaBySlug(slug: string): Promise<Categoria | undefined> {

@@ -13,6 +13,9 @@ export async function inscreverNewsletter(formData: FormData) {
   }
 
   try {
+    if (!adminDb) {
+      return { error: "Serviço indisponível. Tente novamente mais tarde." };
+    }
     await adminDb.collection("newsletter").add({
       email,
       prefs,
@@ -20,7 +23,7 @@ export async function inscreverNewsletter(formData: FormData) {
       ativo: true,
     });
     return { ok: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("newsletter signup error", error);
     return { error: "Erro ao se inscrever. Tente novamente." };
   }

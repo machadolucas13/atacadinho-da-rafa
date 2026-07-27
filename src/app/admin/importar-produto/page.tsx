@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
 import { criarProduto } from "@/app/actions/admin";
-import { Sparkles, ShoppingBag, ExternalLink, Loader2, Wand2, Info } from "lucide-react";
+import { Sparkles, ShoppingBag, ExternalLink, Loader2, Wand2, Info, Store } from "lucide-react";
 
-type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | null;
+type Marketplace = "shopee" | "amazon" | "mercadolivre" | "shein" | "outro";
 
 interface ProdutoForm {
   nome: string;
@@ -31,6 +31,7 @@ const marketDefaults: Record<string, { loja: string; tags: string; categoriaSuge
   amazon: { loja: "Amazon", tags: "amazon, oferta", categoriaSugerida: "tecnologia" },
   mercadolivre: { loja: "Mercado Livre", tags: "mercadolivre, oferta", categoriaSugerida: "eletronicos" },
   shein: { loja: "SHEIN", tags: "shein, moda", categoriaSugerida: "moda-feminina" },
+  outro: { loja: "Loja", tags: "oferta", categoriaSugerida: "ofertas" },
 };
 
 const slugify = (value: string) =>
@@ -47,6 +48,7 @@ async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url }),
+      next: { revalidate: 0 },
     });
 
     if (!response.ok) {
@@ -100,6 +102,7 @@ export default function ImportarProduto() {
   const [loading, setLoading] = useState(false);
   const [detectedMarketplace, setDetectedMarketplace] = useState<Marketplace>(null);
   const [categorias, setCategorias] = useState<any[]>([]);
+  const [erroImportacao, setErroImportacao] = useState("");
 
   const [form, setForm] = useState<ProdutoForm>({
     nome: "",
@@ -111,7 +114,7 @@ export default function ImportarProduto() {
     precoOriginal: "",
     linkAfiliado: "",
     loja: "",
-    marketplace: null,
+    marketplace: "outro",
     tags: "",
     categoriaId: "",
     destaque: false,
@@ -122,9 +125,10 @@ export default function ImportarProduto() {
   useEffect(() => {
     const carregarCategorias = async () => {
       try {
-        const res = await fetch("/api/admin/categorias");
+        const res = await fetch("/api/admin/categorias", { cache: "no-store" });
         const data = await res.json();
-        setCategorias(data.categorias || []);
+        const cats = data.categorias || [];
+        setCategorias(cats);
       } catch (e) {
         console.error("Erro ao carregar categorias", e);
       }
@@ -137,12 +141,13 @@ export default function ImportarProduto() {
     if (url.includes("amazon")) return "amazon";
     if (url.includes("mercadolivre") || url.includes("meli")) return "mercadolivre";
     if (url.includes("shein")) return "shein";
-    return null;
+    return "outro";
   }
 
   async function handleImportar() {
     setLoading(true);
     setStatus("");
+    setErroImportacao("");
     try {
       const marketplace = detectarMarketplace(form.linkAfiliado);
       setDetectedMarketplace(marketplace);
@@ -181,7 +186,13 @@ export default function ImportarProduto() {
         };
       });
 
-      setStatus("Produto pré-preenchido! Revise os dados e salve.");
+      if (!dadosImportados.nome && !metadadosUrl.nome) {
+        setErroImportacao("Não conseguimos extrair os dados desse link. Preencha manualmente ou tente outro link.");
+      } else if (!dadosImportados.imagemPrincipal) {
+        setErroImportacao("Imagem não extraída. Preencha manualmente ou tente outro link.");
+      } else {
+        setStatus("Produto pré-preenchido! Revise os dados e salve.");
+      }
     } catch (e) {
       setStatus("Erro ao importar produto. Tente novamente.");
     } finally {
@@ -217,10 +228,35 @@ export default function ImportarProduto() {
       <div className="mx-auto max-w-2xl px-4 py-8">
         <h1 className="text-2xl font-bold text-white">Importar Produto</h1>
         <p className="mt-2 text-sm text-gray-400">
-          Cole o link abaixo. Se a loja bloquear a extração automática, o formulário já vem com os campos prontos para edição manual.
+          Cole o link do produto ou preencha os dados manualmente. Se a loja bloquear a extração automática, o formulário continua funcionando normalmente.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Marketplace</label>
+            <select
+              value={form.marketplace}
+              onChange={(e) => {
+                const mp = e.target.value as Marketplace;
+                const defaults = marketDefaults[mp];
+                setForm((prev) => ({
+                  ...prev,
+                  marketplace: mp,
+                  loja: defaults.loja,
+                  tags: defaults.tags,
+                  categoriaId: prev.categoriaId || defaults.categoriaSugerida,
+                }));
+              }}
+              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
+            >
+              <option value="shopee">Shopee</option>
+              <option value="amazon">Amazon</option>
+              <option value="mercadolivre">Mercado Livre</option>
+              <option value="shein">SHEIN</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-300">Link do Produto</label>
             <div className="mt-1 flex gap-2">
@@ -229,11 +265,10 @@ export default function ImportarProduto() {
                 onChange={(e) => {
                   const mp = detectarMarketplace(e.target.value);
                   setDetectedMarketplace(mp);
-                  setForm({ ...form, linkAfiliado: e.target.value, marketplace: mp, loja: mp || form.loja });
+                  setForm({ ...form, linkAfiliado: e.target.value, marketplace: mp || form.marketplace, loja: mp ? marketDefaults[mp].loja : form.loja });
                 }}
                 className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white"
                 placeholder="https://shopee.com.br/produto/..."
-                required
               />
               <button
                 type="button"
@@ -252,9 +287,15 @@ export default function ImportarProduto() {
             )}
           </div>
 
+          {erroImportacao && (
+            <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-3 text-xs text-yellow-200">
+              {erroImportacao}
+            </div>
+          )}
+
           <div className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center gap-2 text-xs text-gray-300">
             <Info className="h-4 w-4 text-[#F4A7B9]" />
-            Os campos abaixo serão preenchidos automaticamente quando possível. Se ficarem vazios, é só completar manualmente.
+            Se a extração automática falhar, preencha os campos manualmente. O formulário funciona independentemente do scraping.
           </div>
 
           <div>
