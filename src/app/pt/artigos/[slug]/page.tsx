@@ -5,6 +5,7 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { sanitizeHtml } from "@/lib/sanitize";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
+import { getItemViews } from "@/lib/views";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
 import ProductCard from "@/components/pinterest/ProductCard";
 import { getProdutos } from "@/lib/produtos";

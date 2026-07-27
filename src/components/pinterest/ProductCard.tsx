@@ -10,7 +10,7 @@ import ShareButtons from "@/components/social/ShareButtons";
 import SaveButton from "@/components/ui/SaveButton";
 import TagBadge from "@/components/ui/TagBadge";
 import MarketplaceBadge from "@/components/ui/MarketplaceBadge";
-import { ViewCountBadge } from "@/components/common/ViewCountBadge";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 
 interface ProductCardProps {
   produto: Produto;
