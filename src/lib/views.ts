@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase";
-import { collection, doc, getDocs, setDoc, serverTimestamp } from "firebase/firestore";
-import { unstable_cache } from "next/cache";
+import { collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from "firebase/firestore";
+import { unstable_cache, revalidateTag } from "next/cache";
 
 const viewsCollection = "visualizacoes";
 
@@ -23,10 +23,9 @@ export async function getItemViewsAsync(slug: string | undefined | null): Promis
     async () => {
       try {
         const ref = doc(db, viewsCollection, safeSlug);
-        const snap = await getDocs(collection(db, viewsCollection));
-        const docData = snap.docs.find((d) => d.id === safeSlug);
-        if (docData) {
-          const data = docData.data();
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data();
           if (data?.views) {
             return data.views;
           }
@@ -34,7 +33,6 @@ export async function getItemViewsAsync(slug: string | undefined | null): Promis
       } catch (error) {
         console.error("Erro ao buscar visualizações:", error);
       }
-
       return getItemViews(safeSlug);
     },
     ["item-views", safeSlug],
@@ -50,10 +48,8 @@ export async function incrementItemViews(slug: string | undefined | null): Promi
   const ref = doc(db, viewsCollection, safeSlug);
 
   try {
-    const snap = await getDocs(collection(db, viewsCollection));
-    const existing = snap.docs.find((d) => d.id === safeSlug);
-    const existingData = existing?.data();
-    const current = existingData?.views || 0;
+    const snap = await getDoc(ref);
+    const current = snap.exists() ? (snap.data()?.views || 0) : 0;
     const next = current + 1;
 
     await setDoc(
@@ -65,6 +61,8 @@ export async function incrementItemViews(slug: string | undefined | null): Promi
       },
       { merge: true }
     );
+
+    revalidateTag("views");
 
     return next;
   } catch (error) {

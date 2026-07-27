@@ -6,6 +6,7 @@ import { Clock, Heart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import TagBadge from "@/components/ui/TagBadge";
+import { ViewCountBadge } from "@/components/common/ViewCountBadge";
 
 interface ArticleCardProps {
   artigo: Artigo;
@@ -78,18 +79,16 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <div className="absolute inset-x-4 bottom-4 flex items-center justify-between opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-           <div className="flex items-center gap-2">
-             <span className="badge bg-white/90 backdrop-blur-sm text-[#F4A7B9] shadow-sm">
-                  Artigo
-             </span>
-             {statusTags.map((tag) => (
-               <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
-             ))}
-           </div>
-            <span className="badge bg-white/90 backdrop-blur-sm text-white shadow-sm">
-              <Heart className="h-3 w-3" />
-            </span>
+           <div className="absolute inset-x-4 bottom-4 flex items-center justify-between opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <div className="flex items-center gap-2">
+              <span className="badge bg-white/90 backdrop-blur-sm text-[#F4A7B9] shadow-sm">
+                   Artigo
+              </span>
+              {statusTags.map((tag) => (
+                <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
+              ))}
+            </div>
+            <ViewCountBadge slug={artigo.slug} />
           </div>
         </div>
         <div className="p-5">

@@ -5,7 +5,7 @@ import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import { sanitizeHtml } from "@/lib/sanitize";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
-import { getItemViews } from "@/lib/views";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 import ProductCard from "@/components/pinterest/ProductCard";
 import { getProdutos } from "@/lib/produtos";
 
@@ -81,7 +81,6 @@ export default async function ArtigoPage({
   const prevArtigo = currentIndex > 0 ? sorted[currentIndex - 1] : null;
   const nextArtigo = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
-  const visualizacoes = getItemViews(artigo.slug);
   const produtosRelacionados = await getProdutos();
   const relacionadosFiltrados = produtosRelacionados
     .filter((p) => p.ativo && p.categoriaId === artigo.categoria?.id)
@@ -118,10 +117,7 @@ export default async function ArtigoPage({
               <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
                 {artigo.titulo}
               </h1>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
-                <Eye className="h-3 w-3" />
-                {visualizacoes.toLocaleString("pt-BR")}
-              </span>
+              <ViewCountBadge slug={artigo.slug} />
             </div>
 
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">

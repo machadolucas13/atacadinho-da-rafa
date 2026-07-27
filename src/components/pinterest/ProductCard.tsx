@@ -10,6 +10,7 @@ import ShareButtons from "@/components/social/ShareButtons";
 import SaveButton from "@/components/ui/SaveButton";
 import TagBadge from "@/components/ui/TagBadge";
 import MarketplaceBadge from "@/components/ui/MarketplaceBadge";
+import { ViewCountBadge } from "@/components/common/ViewCountBadge";
 
 interface ProductCardProps {
   produto: Produto;
@@ -149,6 +150,10 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
 
           <div className="absolute left-3 top-3">
             <MarketplaceBadge marketplace={produto.marketplace || produto.loja} />
+          </div>
+
+          <div className="absolute top-3 right-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100 md:group-hover:opacity-100">
+            <ViewCountBadge slug={produto.slug} />
           </div>
 
           <button

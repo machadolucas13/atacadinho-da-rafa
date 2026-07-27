@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { Pin } from "@/data/pins";
 import SaveButton from "@/components/ui/SaveButton";
 import TagBadge from "@/components/ui/TagBadge";
-import { getItemViews } from "@/lib/views";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 
 interface PinCardProps {
   pin: Pin;
@@ -25,7 +25,6 @@ function isRecent(date: string | undefined): boolean {
 export default function PinCard({ pin, locale }: PinCardProps) {
   const router = useRouter();
   const href = `/${locale}/pins/${pin.slug}`;
-  const visualizacoes = getItemViews(pin.slug);
   const localeForNumber = locale === "en" ? "en-US" : "pt-BR";
   const [tracked, setTracked] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -92,10 +91,7 @@ export default function PinCard({ pin, locale }: PinCardProps) {
           </div>
 
           <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100 md:group-hover:opacity-100">
-            <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
-              <Eye className="h-3 w-3" />
-              {visualizacoes.toLocaleString(localeForNumber)}
-            </span>
+            <ViewCountBadge slug={pin.slug} locale={locale} />
           </div>
         </div>
 

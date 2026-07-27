@@ -1,5 +1,20 @@
 import { NextResponse } from "next/server";
-import { incrementItemViews } from "@/lib/views";
+import { incrementItemViews, getItemViewsAsync } from "@/lib/views";
+
+export async function GET(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const slug = url.searchParams.get("slug");
+    if (!slug) {
+      return NextResponse.json({ error: "Slug obrigatório" }, { status: 400 });
+    }
+    const views = await getItemViewsAsync(slug);
+    return NextResponse.json({ views });
+  } catch (error) {
+    console.error("[views] Erro ao buscar visualizações:", error);
+    return NextResponse.json({ error: "Erro ao buscar visualizações" }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -18,9 +33,5 @@ export async function POST(request: Request) {
     console.error("[views] Erro ao registrar visualização:", error);
     return NextResponse.json({ error: "Erro ao registrar visualização" }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json({ ok: true, message: "Use POST para registrar visualização." });
 }
 

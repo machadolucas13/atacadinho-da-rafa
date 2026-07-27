@@ -6,6 +6,7 @@ import { Star, ShoppingBag, ExternalLink, ChevronLeft, Heart, Tag } from "lucide
 import { Produto } from "@/types";
 import ProductCard from "@/components/pinterest/ProductCard";
 import ShareButtons from "@/components/social/ShareButtons";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 
 function MarketplaceBadge({ marketplace }: { marketplace: string }) {
   const lower = marketplace.toLowerCase();
@@ -115,6 +116,7 @@ export default function ProdutoPage({
               <h1 className="text-3xl font-bold text-white tracking-tight">
                 {produto.nome}
               </h1>
+              <ViewCountBadge slug={produto.slug} />
 
               {produto.avaliacao && (
                 <div className="mt-3 flex items-center gap-2">

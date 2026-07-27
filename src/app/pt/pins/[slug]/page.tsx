@@ -5,7 +5,7 @@ import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight, Tag, TrendingUp } from "lucide-react";
 import { Metadata } from "next";
 import { getPinBySlug, getPins } from "@/lib/pins";
-import { getItemViews } from "@/lib/views";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 
 interface ShopeeLink {
   nome: string;
@@ -38,9 +38,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
-  const links: ShopeeLink[] = pin?.links || [];
-  const shareUrl = pin?.slug ? `/pt/pins/${pin.slug}` : "/pt/pins";
-  const visualizacoes = getItemViews(pin?.slug || params.slug);
   const allPins = await getPins("pt");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
@@ -91,10 +88,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
               <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
                 {pin.titulo}
               </h1>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
-                <Eye className="h-3 w-3" />
-                {visualizacoes.toLocaleString("pt-BR")}
-              </span>
+              <ViewCountBadge slug={pin.slug} />
             </div>
             <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               {pin.descricao}

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { db, incrementItemViews } from "@/lib/views";
+import { db } from "@/lib/firebase";
+import { incrementItemViews } from "@/lib/views";
 
 export async function GET() {
   try {

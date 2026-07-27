@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Clock, Eye } from "lucide-react";
+import { ViewCountBadge } from "@/components/common/ViewCountBadge";
 import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
@@ -99,10 +99,7 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
           </div>
 
           <div className="absolute top-3 right-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100 md:group-hover:opacity-100">
-            <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
-              <Eye className="h-3 w-3" />
-              {visualizacoes.toLocaleString("pt-BR")}
-            </span>
+            <ViewCountBadge slug={artigo.slug} locale={locale} />
           </div>
         </div>
 
