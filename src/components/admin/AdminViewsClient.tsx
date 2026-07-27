@@ -34,9 +34,10 @@ export default function AdminViewsClient() {
         const map = new Map(
           Object.entries(viewsData.views || {}).map(([k, v]) => [k, typeof v === "number" ? v : 0])
         );
-        const next = (allData.items || []).map((item: Record<string, unknown>) => ({
+        const rawItems = (allData.items || []) as Array<{ slug: string; tipo: string; titulo: string }>;
+        const next: ViewItem[] = rawItems.map((item) => ({
           slug: item.slug,
-          tipo: item.tipo,
+          tipo: item.tipo as ViewItem["tipo"],
           titulo: item.titulo,
           views: map.get(item.slug) || 0,
         }));
