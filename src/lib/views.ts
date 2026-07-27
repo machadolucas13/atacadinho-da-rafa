@@ -16,7 +16,7 @@ export function getItemViews(slug: string | undefined | null): number {
 
 export async function getItemViewsAsync(slug: string | undefined | null): Promise<number> {
   const safeSlug = slug || "fallback";
-  if (typeof window === "undefined" && process.env.NEXT_PHASE === "phase-production-build") {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
     return getItemViews(safeSlug);
   }
   return unstable_cache(
@@ -41,7 +41,7 @@ export async function getItemViewsAsync(slug: string | undefined | null): Promis
 }
 
 export async function incrementItemViews(slug: string | undefined | null): Promise<number> {
-  if (typeof window === "undefined" && process.env.NEXT_PHASE === "phase-production-build") {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
     return getItemViews(slug || "fallback");
   }
   const safeSlug = slug || "fallback";
