@@ -95,7 +95,7 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
       priceCurrency: "BRL",
       availability: "https://schema.org/InStock",
       url: produto.linkAfiliado,
-      ...(produto.precoOriginal && produto.precoOriginal > produto.preco
+      ...(produto.precoOriginal && produto.preco && produto.precoOriginal > produto.preco
         ? {
             priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
           }
