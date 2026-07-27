@@ -24,7 +24,7 @@ export default function AdminViewsClient() {
     const interval = setInterval(async () => {
       try {
         const [allRes, viewsRes] = await Promise.all([
-          fetch("/api/admin/all-content", { cache: "no-store" }),
+          fetch("/api/admin/all-content"),
           fetch("/api/admin/views"),
         ]);
         if (!allRes.ok || !viewsRes.ok) return;
