@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AdminNav from "@/components/admin/AdminNav";
 
 type ViewItem = {
   slug: string;
@@ -13,38 +14,36 @@ type AdminViewsResponse = {
   views: Record<string, number>;
 };
 
-export default function AdminViewsClient({
-  initialItems,
-}: {
-  initialItems: ViewItem[];
-}) {
-  const [items, setItems] = useState<ViewItem[]>(initialItems);
-  const [totalViews, setTotalViews] = useState(
-    initialItems.reduce((acc, item) => acc + item.views, 0)
-  );
+export default function AdminViewsClient() {
+  const [items, setItems] = useState<ViewItem[]>([]);
+  const [totalViews, setTotalViews] = useState(0);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("/api/admin/views", { cache: "no-store" });
-        if (!res.ok) return;
-        const data: AdminViewsResponse = await res.json();
+        const [allRes, viewsRes] = await Promise.all([
+          fetch("/api/admin/all-content", { cache: "no-store" }),
+          fetch("/api/admin/views"),
+        ]);
+        if (!allRes.ok || !viewsRes.ok) return;
+        const allData = await allRes.json();
+        const viewsData: AdminViewsResponse = await viewsRes.json();
         if (cancelled) return;
-        setItems((prev) => {
-          const map = new Map(
-            Object.entries(data.views || {}).map(([k, v]) => [k, typeof v === "number" ? v : 0])
-          );
-          const next = prev
-            .map((item) => ({
-              ...item,
-              views: map.get(item.slug) || 0,
-            }))
-            .sort((a, b) => b.views - a.views)
-            .slice(0, 120);
-          setTotalViews(next.reduce((acc, item) => acc + item.views, 0));
-          return next;
-        });
+        const map = new Map(
+          Object.entries(viewsData.views || {}).map(([k, v]) => [k, typeof v === "number" ? v : 0])
+        );
+        const next = (allData.items || []).map((item: Record<string, unknown>) => ({
+          slug: item.slug,
+          tipo: item.tipo,
+          titulo: item.titulo,
+          views: map.get(item.slug) || 0,
+        }));
+        next.sort((a, b) => b.views - a.views);
+        setItems(next);
+        setTotalViews(next.reduce((acc: number, item: ViewItem) => acc + item.views, 0));
+        setReady(true);
       } catch {
         // ignore
       }
@@ -93,7 +92,14 @@ export default function AdminViewsClient({
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
-            {items.length === 0 && (
+            {!ready && (
+              <tr>
+                <td colSpan={3} className="px-4 py-8 text-center text-gray-400">
+                  Carregando visualizações...
+                </td>
+              </tr>
+            )}
+            {ready && items.length === 0 && (
               <tr>
                 <td colSpan={3} className="px-4 py-8 text-center text-gray-400">
                   Nenhuma visualização registrada ainda.
