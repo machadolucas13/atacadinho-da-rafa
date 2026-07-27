@@ -6,6 +6,8 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
 import { getItemViews } from "@/lib/views";
+import ProductCard from "@/components/pinterest/ProductCard";
+import { getProdutos } from "@/lib/produtos";
 
 export async function generateStaticParams() {
   return [
@@ -80,6 +82,10 @@ export default async function ArtigoPage({
   const nextArtigo = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
   const visualizacoes = getItemViews(artigo.slug);
+  const produtosRelacionados = await getProdutos();
+  const relacionadosFiltrados = produtosRelacionados
+    .filter((p) => p.ativo && p.categoriaId === artigo.categoria?.id)
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen">
@@ -176,6 +182,17 @@ export default async function ArtigoPage({
                 }),
               }}
             />
+
+            {relacionadosFiltrados.length > 0 && (
+              <section className="mx-auto max-w-3xl py-12">
+                <h2 className="mb-6 text-2xl font-bold text-white tracking-tight">Produtos relacionados</h2>
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  {relacionadosFiltrados.map((produto) => (
+                    <ProductCard key={produto.id} produto={produto} />
+                  ))}
+                </div>
+              </section>
+            )}
 
             <div className="flex items-center justify-between gap-4 mb-12">
               {prevArtigo && (
