@@ -1,12 +1,13 @@
-import {Plus_Jakarta_Sans, Manrope} from 'next/font/google';
+import { Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import {JsonLd} from '@/components/seo/JsonLd';
-import {ScrollReveal} from '@/components/layout';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { ScrollReveal } from '@/components/layout';
 import PWAProvider from '@/components/seo/PWAProvider';
 import BackgroundStarfield from '@/components/hero/BackgroundStarfield';
 import AdSenseScript from '@/components/seo/AdSenseScript';
 import { TopAd, InContentAd, FooterAd, SmartlinkAd } from '@/components/ads/ResponsiveAds';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -137,6 +138,7 @@ export default function RootLayout({
         <Footer className="relative z-20" />
         <ScrollReveal />
         <PWAProvider />
+        <Analytics />
       </body>
     </html>
   );
