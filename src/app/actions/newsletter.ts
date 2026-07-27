@@ -57,3 +57,4 @@ export async function excluirInscritoNewsletter(id: string) {
     return { error: "Erro ao excluir inscrito" };
   }
 }
+

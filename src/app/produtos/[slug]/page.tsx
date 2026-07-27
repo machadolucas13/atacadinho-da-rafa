@@ -24,7 +24,7 @@ export async function generateMetadata({
   const produto = produtos.find((p) => p.slug === params.slug);
   if (!produto) return {};
 
-  const baseUrl = "https://atacadinhodarafa.com.br";
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
   const url = `${baseUrl}/produtos/${produto.slug}`;
   const image = produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/og-default.jpg`;
 
@@ -73,9 +73,9 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `https://atacadinhodarafa.com.br/categorias/${produto.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: produto.nome, item: `https://atacadinhodarafa.com.br/produtos/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
+      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `https://atacadinhodarafa.vercel.app/categorias/${produto.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: produto.nome, item: `https://atacadinhodarafa.vercel.app/produtos/${params.slug}` },
     ],
   };
 

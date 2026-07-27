@@ -4,11 +4,24 @@ module.exports = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "atacadinhodarafa.com.br",
+        hostname: "atacadinhodarafa.vercel.app",
       },
       {
         protocol: "https",
         hostname: "*.firebasestorage.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.shopee.com.br",
+      },
+      {
+        protocol: "https",
+        protocol: "https",
+        hostname: "*.amazon.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.mercadolivre.com.br",
       },
     ],
     formats: ["image/webp", "image/avif"],

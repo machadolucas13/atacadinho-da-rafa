@@ -5,3 +5,4 @@ export async function GET() {
   const cupons = await getCupons();
   return NextResponse.json({ cupons });
 }
+

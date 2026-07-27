@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://atacadinhodarafa.com.br/artigos",
+    url: "https://atacadinhodarafa.vercel.app/artigos",
     siteName: "Atacadinho da Rafa",
     title: "Blog de Achados e Dicas - Moda, Decoração, Beleza | Atacadinho da Rafa",
     description: "Artigos, dicas e recomendações de produtos para você economizar e descobrir achados incríveis. Conteúdo prático para brasileiras.",
     images: [
       {
-        url: "https://atacadinhodarafa.com.br/assets/images/og-home.jpg",
+        url: "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg",
         width: 1200,
         height: 630,
         alt: "Blog Atacadinho da Rafa - Achados e Dicas",
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blog de Achados e Dicas | Atacadinho da Rafa",
     description: "Artigos, dicas e recomendações de produtos para você economizar. Moda, decoração, tecnologia e beleza.",
-    images: ["https://atacadinhodarafa.com.br/assets/images/og-home.jpg"],
+    images: ["https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg"],
   },
   alternates: {
-    canonical: "https://atacadinhodarafa.com.br/artigos",
+    canonical: "https://atacadinhodarafa.vercel.app/artigos",
   },
 };
 
@@ -71,3 +71,4 @@ export default async function ArtigosPage() {
     </div>
   );
 }
+

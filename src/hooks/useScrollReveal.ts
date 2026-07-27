@@ -26,3 +26,4 @@ export function useScrollReveal(threshold = 0.15) {
 
   return { ref, inView };
 }
+

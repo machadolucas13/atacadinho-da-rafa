@@ -15,3 +15,4 @@ export function getLocaleFromPath(pathname: string): Locale {
 export function validateLocale(locale: string): locale is Locale {
   return LOCALES.includes(locale as Locale);
 }
+

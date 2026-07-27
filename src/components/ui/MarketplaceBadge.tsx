@@ -20,3 +20,4 @@ export default function MarketplaceBadge({ marketplace }: { marketplace?: string
     </div>
   );
 }
+

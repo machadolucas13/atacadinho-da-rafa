@@ -5,3 +5,4 @@ export async function GET() {
   const pastas = await getPastas();
   return NextResponse.json({ pastas });
 }
+

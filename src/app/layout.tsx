@@ -47,14 +47,14 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://atacadinhodarafa.com.br',
+    url: 'https://atacadinhodarafa.vercel.app',
     siteName: 'Atacadinho da Rafa',
     title: 'Atacadinho da Rafa - Descobertas, Achados e Ofertas',
     description:
       'Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e muito mais.',
     images: [
       {
-        url: 'https://atacadinhodarafa.com.br/assets/images/og-home.jpg',
+        url: 'https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg',
         width: 1200,
         height: 630,
         alt: 'Atacadinho da Rafa',
@@ -65,7 +65,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Atacadinho da Rafa',
     description: 'Descubra os melhores achados e ofertas',
-    images: ['https://atacadinhodarafa.com.br/assets/images/og-home.jpg'],
+    images: ['https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg'],
   },
   robots: {
     index: true,
@@ -79,7 +79,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://atacadinhodarafa.com.br',
+    canonical: 'https://atacadinhodarafa.vercel.app',
   },
   icons: {
     icon: '/assets/images/logo_rafa.png',
@@ -140,3 +140,4 @@ export default function RootLayout({
     </html>
   );
 }
+

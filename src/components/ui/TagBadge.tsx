@@ -40,3 +40,4 @@ export default function TagBadge({ label, variant = "hot", className }: TagBadge
     </span>
   );
 }
+

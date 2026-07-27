@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin/", "/api/"],
       },
     ],
-    sitemap: "https://atacadinhodarafa.com.br/sitemap.xml",
+    sitemap: "https://atacadinhodarafa.vercel.app/sitemap.xml",
   };
 }
+

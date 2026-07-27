@@ -105,3 +105,4 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
     </div>
   );
 }
+

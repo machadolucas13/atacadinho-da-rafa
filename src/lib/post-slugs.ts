@@ -22,3 +22,4 @@ export function getSlugForLocale(baseSlug: string, locale: string): string {
   }
   return baseSlug;
 }
+

@@ -8,7 +8,7 @@ interface HomeJsonLdProps {
 }
 
 export default function HomeJsonLd({ locale, pins }: HomeJsonLdProps) {
-  const baseUrl = "https://atacadinhodarafa.com.br";
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
   const url = locale === "en" ? `${baseUrl}/en` : `${baseUrl}/pt`;
 
   const jsonLd = {
@@ -52,3 +52,4 @@ export default function HomeJsonLd({ locale, pins }: HomeJsonLdProps) {
     </>
   );
 }
+

@@ -108,3 +108,4 @@ export default function ArtigoPinCard({ artigo, locale = artigo.locale }: Artigo
     </article>
   );
 }
+

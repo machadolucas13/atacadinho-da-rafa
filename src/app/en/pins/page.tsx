@@ -67,3 +67,4 @@ export default async function PinsPage({ params }: { params: { locale: string } 
     </div>
   );
 }
+

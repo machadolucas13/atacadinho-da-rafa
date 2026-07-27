@@ -50,3 +50,4 @@ export function parseProductText(text: string) {
     tags: lines.join(", ").slice(0, 120),
   };
 }
+

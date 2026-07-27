@@ -81,3 +81,4 @@ export default function PinCard({ pin, locale }: PinCardProps) {
     </article>
   );
 }
+

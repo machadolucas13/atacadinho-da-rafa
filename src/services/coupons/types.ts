@@ -32,3 +32,4 @@ export interface CollectorResult {
   expired: number;
   error?: string;
 }
+

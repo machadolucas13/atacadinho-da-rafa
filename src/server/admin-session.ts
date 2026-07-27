@@ -27,3 +27,4 @@ export async function isAdminAuthenticated(): Promise<boolean> {
   if (!ADMIN_SECRET) return false;
   return verifySession(ADMIN_SECRET, session);
 }
+

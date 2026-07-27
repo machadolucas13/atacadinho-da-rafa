@@ -29,3 +29,4 @@ export async function logoutAdmin() {
   cookies().delete(SESSION_COOKIE);
   return { ok: true };
 }
+

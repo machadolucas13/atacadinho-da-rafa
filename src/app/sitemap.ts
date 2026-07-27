@@ -5,7 +5,7 @@ import { getPastas } from "@/lib/pastas";
 import { getPins } from "@/lib/pins";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://atacadinhodarafa.com.br";
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
 
   const artigos = await getArtigos();
   const categorias = await getCategorias();
@@ -63,3 +63,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return urls;
 }
+

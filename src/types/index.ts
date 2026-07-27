@@ -88,3 +88,4 @@ export type Cupom = {
   createdAt?: string;
   updatedAt?: string;
 };
+

@@ -148,3 +148,4 @@ export const BANNER_728x90_SCRIPT = `atOptions = {
 };`;
 
 export const BANNER_728x90_INVOKE = "https://russiaexternalknew.com/1d6a72f04d50f848ad503a3e4f4889f6/invoke.js";
+

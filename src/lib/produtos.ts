@@ -28,3 +28,4 @@ export async function getProdutoBySlug(slug: string): Promise<Produto | undefine
     return undefined;
   }
 }
+

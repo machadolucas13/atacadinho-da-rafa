@@ -33,13 +33,13 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: "pt_BR",
-      url: `https://atacadinhodarafa.com.br/categorias/${params.slug}`,
+      url: `https://atacadinhodarafa.vercel.app/categorias/${params.slug}`,
       siteName: "Atacadinho da Rafa",
       title: `${categoria.nome} - Atacadinho da Rafa`,
       description: categoria.descricao || `Descubra os melhores ${categoria.nome.toLowerCase()} na nossa curadoria.`,
       images: [
         {
-          url: "https://atacadinhodarafa.com.br/assets/images/og-home.jpg",
+          url: "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg",
           width: 1200,
           height: 630,
           alt: categoria.nome,
@@ -50,10 +50,10 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${categoria.nome} - Atacadinho da Rafa`,
       description: categoria.descricao || `Descubra os melhores ${categoria.nome.toLowerCase()} na nossa curadoria.`,
-      images: ["https://atacadinhodarafa.com.br/assets/images/og-home.jpg"],
+      images: ["https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg"],
     },
     alternates: {
-      canonical: `https://atacadinhodarafa.com.br/categorias/${params.slug}`,
+      canonical: `https://atacadinhodarafa.vercel.app/categorias/${params.slug}`,
     },
   };
 }
@@ -72,8 +72,8 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-      { "@type": "ListItem", position: 2, name: categoria.nome, item: `https://atacadinhodarafa.com.br/categorias/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
+      { "@type": "ListItem", position: 2, name: categoria.nome, item: `https://atacadinhodarafa.vercel.app/categorias/${params.slug}` },
     ],
   };
 

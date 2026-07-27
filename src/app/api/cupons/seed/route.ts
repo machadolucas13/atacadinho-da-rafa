@@ -131,3 +131,4 @@ export async function GET() {
     count: INITIAL_COUPONS.length,
   });
 }
+

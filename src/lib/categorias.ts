@@ -55,3 +55,4 @@ export async function getCategoriaIdBySlug(slug: string): Promise<string | undef
   const categoria = await getCategoriaBySlug(slug);
   return categoria?.id;
 }
+

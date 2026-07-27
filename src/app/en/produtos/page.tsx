@@ -4,7 +4,7 @@ import { getProdutos } from "@/lib/produtos";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL("https://atacadinhodarafa.com.br"),
+    metadataBase: new URL("https://atacadinhodarafa.vercel.app"),
     title: {
       default: "All Products - Atacadinho da Rafa",
       template: "%s | Atacadinho da Rafa",
@@ -39,3 +39,4 @@ export default async function ProdutosPage() {
     </main>
   );
 }
+

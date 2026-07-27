@@ -8,7 +8,7 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; href: strin
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `https://atacadinhodarafa.com.br${item.href}`,
+      item: `https://atacadinhodarafa.vercel.app${item.href}`,
     })),
   };
 
@@ -19,3 +19,4 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; href: strin
     />
   );
 }
+

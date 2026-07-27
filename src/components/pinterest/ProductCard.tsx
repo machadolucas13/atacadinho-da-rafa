@@ -165,3 +165,4 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
     </article>
   );
 }
+

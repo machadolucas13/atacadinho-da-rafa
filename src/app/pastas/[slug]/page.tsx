@@ -34,13 +34,13 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: "pt_BR",
-      url: `https://atacadinhodarafa.com.br/pastas/${params.slug}`,
+      url: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}`,
       siteName: "Atacadinho da Rafa",
       title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
       images: [
         {
-          url: pasta.imagemCapa || "https://atacadinhodarafa.com.br/assets/images/og-default.jpg",
+          url: pasta.imagemCapa || "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
           width: 1200,
           height: 630,
           alt: pasta.nome,
@@ -51,10 +51,10 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
-      images: [pasta.imagemCapa || "https://atacadinhodarafa.com.br/assets/images/og-default.jpg"],
+      images: [pasta.imagemCapa || "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg"],
     },
     alternates: {
-      canonical: `https://atacadinhodarafa.com.br/pastas/${params.slug}`,
+      canonical: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}`,
     },
   };
 }
@@ -74,9 +74,9 @@ export default async function PastaPage({ params }: PastaPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.com.br/categorias/${pasta.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.com.br/pastas/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
+      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.vercel.app/categorias/${pasta.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}` },
     ],
   };
 

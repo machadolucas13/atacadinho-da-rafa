@@ -5,3 +5,4 @@ export async function GET() {
   const artigos = await getArtigos();
   return NextResponse.json({ artigos });
 }
+

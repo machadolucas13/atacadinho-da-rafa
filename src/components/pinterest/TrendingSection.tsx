@@ -36,3 +36,4 @@ export default async function TrendingSection() {
 
   return <TrendingCarousel items={allTrending} />;
 }
+

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: CupomPageProps): Promise<Meta
       title: `${cupom.codigo} - ${cupom.marketplace}`,
       description: cupom.descricao,
       type: "website",
-      url: `https://atacadinhodarafa.com.br/cupom/${cupom.id}`,
+      url: `https://atacadinhodarafa.vercel.app/cupom/${cupom.id}`,
     },
   };
 }

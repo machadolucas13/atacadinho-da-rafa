@@ -34,3 +34,4 @@ export default async function BlogPage({ params }: { params: { locale: string } 
     </div>
   );
 }
+

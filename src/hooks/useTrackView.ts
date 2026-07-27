@@ -22,3 +22,4 @@ export function useTrackView(slug: string | undefined | null) {
     };
   }, [slug]);
 }
+

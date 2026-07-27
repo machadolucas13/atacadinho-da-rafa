@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://atacadinhodarafa.com.br/pt"),
+  metadataBase: new URL("https://atacadinhodarafa.vercel.app/pt"),
   title: {
     default: "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
     template: "%s | Atacadinho da Rafa",
@@ -28,3 +28,4 @@ export const metadata: Metadata = {
 export default function PtLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
+

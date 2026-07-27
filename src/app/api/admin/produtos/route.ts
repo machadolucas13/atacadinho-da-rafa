@@ -5,3 +5,4 @@ export async function GET() {
   const produtos = await getProdutos();
   return NextResponse.json({ produtos });
 }
+

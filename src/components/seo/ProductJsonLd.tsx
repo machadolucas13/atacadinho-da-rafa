@@ -32,3 +32,4 @@ export function ProductJsonLd({ produto }: { produto: Produto }) {
     />
   );
 }
+

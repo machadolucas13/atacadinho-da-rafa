@@ -62,3 +62,4 @@ export async function getArtigoBySlug(slug: string, locale: string = "pt"): Prom
   const artigos = await getArtigos(locale);
   return artigos.find((a) => a.slug === slug);
 }
+

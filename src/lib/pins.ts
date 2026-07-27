@@ -12,3 +12,4 @@ export async function getPinBySlug(slug: string, locale: string): Promise<Pin | 
   const all = await getPins(locale);
   return all.find((p) => p.slug === slug);
 }
+

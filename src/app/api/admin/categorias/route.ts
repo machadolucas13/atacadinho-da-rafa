@@ -5,3 +5,4 @@ export async function GET() {
   const categorias = await getCategoriasUncached();
   return NextResponse.json({ categorias }, { headers: { "Cache-Control": "no-store" } });
 }
+

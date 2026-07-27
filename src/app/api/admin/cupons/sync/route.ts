@@ -35,3 +35,4 @@ export async function GET() {
     message: "Use POST para disparar a sincronização de cupons.",
   });
 }
+

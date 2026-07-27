@@ -29,3 +29,4 @@ export function sanitizeHtml(dirty: string): string {
     .replace(/\s+on\w+="[^"]*"/gi, " ")
     .replace(/\s+on\w+='[^']*'/gi, " ");
 }
+

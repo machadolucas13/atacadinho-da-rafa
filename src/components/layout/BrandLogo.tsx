@@ -41,3 +41,4 @@ export default function BrandLogo({ size = 36, showText = true, className = "" }
     </div>
   );
 }
+

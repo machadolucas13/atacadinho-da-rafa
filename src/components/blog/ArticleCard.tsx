@@ -90,3 +90,4 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
     </Link>
   );
 }
+

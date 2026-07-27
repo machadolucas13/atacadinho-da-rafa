@@ -16,7 +16,7 @@ interface ShopeeLink {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
   if (!pin) return {};
-  const baseUrl = "https://atacadinhodarafa.com.br";
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
   const url = `${baseUrl}/pt/pins/${pin.slug}`;
   const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/og-default.jpg`;
   return {
@@ -126,7 +126,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 title={pin.titulo}
                 description={pin.descricao}
                 image={pin.imagem}
-                url={`https://atacadinhodarafa.com.br/pt/pins/${pin.slug}`}
+                url={`https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}`}
               />
             </div>
 
@@ -136,7 +136,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "ImageObject",
-                  contentUrl: `https://atacadinhodarafa.com.br${pin.imagem}`,
+                  contentUrl: `https://atacadinhodarafa.vercel.app${pin.imagem}`,
                   description: pin.descricao,
                   name: pin.titulo,
                 }),
@@ -149,9 +149,9 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   "@context": "https://schema.org",
                   "@type": "BreadcrumbList",
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.com.br/pt/pins" },
-                    { "@type": "ListItem", position: 3, name: pin.titulo, item: `https://atacadinhodarafa.com.br/pt/pins/${pin.slug}` },
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
+                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.vercel.app/pt/pins" },
+                    { "@type": "ListItem", position: 3, name: pin.titulo, item: `https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}` },
                   ],
                 }),
               }}

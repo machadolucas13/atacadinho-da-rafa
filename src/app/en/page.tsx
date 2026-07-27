@@ -13,7 +13,7 @@ import { getItemViews } from "@/lib/views";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL("https://atacadinhodarafa.com.br"),
+    metadataBase: new URL("https://atacadinhodarafa.vercel.app"),
     title: {
       default: "Atacadinho da Rafa - Finds, Deals and Recommendations",
       template: "%s | Atacadinho da Rafa",
@@ -38,14 +38,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://atacadinhodarafa.com.br/en",
+      url: "https://atacadinhodarafa.vercel.app/en",
       siteName: "Atacadinho da Rafa",
       title: "Atacadinho da Rafa - Finds, Deals and Recommendations",
       description:
         "Discover the best finds, deals and recommendations. Visual curation of fashion, home, tech and beauty.",
       images: [
         {
-          url: "https://atacadinhodarafa.com.br/assets/images/og-home.jpg",
+          url: "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg",
           width: 1200,
           height: 630,
           alt: "Atacadinho da Rafa",
@@ -56,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Atacadinho da Rafa",
       description: "Discover the best finds and deals",
-      images: ["https://atacadinhodarafa.com.br/assets/images/og-home.jpg"],
+      images: ["https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg"],
     },
   };
 }
@@ -143,3 +143,4 @@ export default async function HomePage() {
     </main>
   );
 }
+

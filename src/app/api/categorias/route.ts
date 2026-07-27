@@ -5,3 +5,4 @@ export async function GET() {
   const categorias = await getCategorias();
   return NextResponse.json({ categorias });
 }
+

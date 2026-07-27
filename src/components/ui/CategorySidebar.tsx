@@ -106,3 +106,4 @@ export default function CategorySidebar({ locale = "pt", isOpen, onClose }: Cate
     </>
   );
 }
+

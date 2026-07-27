@@ -31,7 +31,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const artigo = await getArtigoBySlug(params.slug, "en");
   if (!artigo) return {};
-  const baseUrl = "https://atacadinhodarafa.com.br";
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
   const url = `${baseUrl}/en/articles/${artigo.slug}`;
   const image = artigo.imagemCapa ? `${baseUrl}${artigo.imagemCapa}` : `${baseUrl}/assets/images/og-default.jpg`;
   return {
@@ -131,7 +131,7 @@ export default async function ArtigoPage({
                   title={artigo.titulo}
                   description={artigo.descricao}
                   image={artigo.imagemCapa || ""}
-                  url={`https://atacadinhodarafa.com.br/en/articles/${artigo.slug}`}
+                  url={`https://atacadinhodarafa.vercel.app/en/articles/${artigo.slug}`}
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ export default async function ArtigoPage({
                   "@type": "Article",
                   headline: artigo.titulo,
                   description: artigo.descricao,
-                  image: artigo.imagemCapa ? `https://atacadinhodarafa.com.br${artigo.imagemCapa}` : undefined,
+                  image: artigo.imagemCapa ? `https://atacadinhodarafa.vercel.app${artigo.imagemCapa}` : undefined,
                   datePublished: artigo.publicadoEm,
                   author: {
                     "@type": "Organization",
@@ -155,7 +155,7 @@ export default async function ArtigoPage({
                     name: "Atacadinho da Rafa",
                     logo: {
                       "@type": "ImageObject",
-                      url: "https://atacadinhodarafa.com.br/assets/images/logo_rafa.png",
+                      url: "https://atacadinhodarafa.vercel.app/assets/images/logo_rafa.png",
                     },
                   },
                 }),
@@ -168,9 +168,9 @@ export default async function ArtigoPage({
                   "@context": "https://schema.org",
                   "@type": "BreadcrumbList",
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.com.br/" },
-                    { "@type": "ListItem", position: 2, name: "Articles", item: "https://atacadinhodarafa.com.br/en/articles" },
-                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `https://atacadinhodarafa.com.br/en/articles/${artigo.slug}` },
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
+                    { "@type": "ListItem", position: 2, name: "Articles", item: "https://atacadinhodarafa.vercel.app/en/articles" },
+                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `https://atacadinhodarafa.vercel.app/en/articles/${artigo.slug}` },
                   ],
                 }),
               }}

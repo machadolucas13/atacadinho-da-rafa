@@ -244,3 +244,4 @@ const categoriasData: Categoria[] = [
 ];
 
 export const categorias = categoriasData;
+

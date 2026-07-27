@@ -22,3 +22,4 @@ export async function deleteDocument(collectionName: string, id: string) {
   const ref = doc(db, collectionName, id);
   await deleteDoc(ref);
 }
+
