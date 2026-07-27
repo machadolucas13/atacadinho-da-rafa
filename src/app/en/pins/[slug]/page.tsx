@@ -3,6 +3,7 @@ import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
+import { Metadata } from "next";
 import { getPins } from "@/lib/pins";
 import { getItemViews } from "@/lib/views";
 
@@ -10,6 +11,30 @@ interface ShopeeLink {
   nome: string;
   preco: string;
   url: string;
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const allPins = await getPins("en");
+  const pin = allPins.find((p) => p.slug === params.slug);
+  if (!pin) return {};
+  const baseUrl = "https://atacadinhodarafa.com.br";
+  const url = `${baseUrl}/en/pins/${pin.slug}`;
+  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/og-default.jpg`;
+  return {
+    title: `${pin.titulo} - Atacadinho da Rafa`,
+    description: pin.descricao,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url,
+      siteName: "Atacadinho da Rafa",
+      title: pin.titulo,
+      description: pin.descricao,
+      images: [{ url: image, width: 1200, height: 630, alt: pin.titulo }],
+    },
+    twitter: { card: "summary_large_image", title: pin.titulo, description: pin.descricao, images: [image] },
+    alternates: { canonical: url },
+  };
 }
 
 const links: ShopeeLink[] = [
