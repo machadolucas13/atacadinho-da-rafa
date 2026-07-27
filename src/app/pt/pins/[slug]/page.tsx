@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
+  const links: ShopeeLink[] = pin?.links || [];
   const allPins = await getPins("pt");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
