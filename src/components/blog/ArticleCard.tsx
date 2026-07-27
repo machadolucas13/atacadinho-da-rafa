@@ -6,7 +6,7 @@ import { Clock, Heart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import TagBadge from "@/components/ui/TagBadge";
-import { ViewCountBadge } from "@/components/common/ViewCountBadge";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 
 interface ArticleCardProps {
   artigo: Artigo;
@@ -52,10 +52,7 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [artigo.slug, tracked]);
-  const statusTags = [];
-  if (artigo.destaque) statusTags.push({ label: "HOT", variant: "hot" as const });
-  if (isRecent(artigo.publicadoEm)) statusTags.push({ label: "NOVO", variant: "new" as const });
+   }, [artigo.slug, tracked]);
 
   return (
     <Link href={`/artigos/${artigo.slug}`} className="group block">

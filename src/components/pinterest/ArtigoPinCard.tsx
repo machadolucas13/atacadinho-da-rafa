@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ViewCountBadge } from "@/components/common/ViewCountBadge";
+import { Clock } from "lucide-react";
+import ViewCountBadge from "@/components/common/ViewCountBadge";
 import { useEffect, useRef, useState } from "react";
 import { Artigo } from "@/types";
 import SaveButton from "@/components/ui/SaveButton";
