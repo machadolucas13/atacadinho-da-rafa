@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { inscreverNewsletter } from "@/app/actions/newsletter";
+import { trackSignup } from "@/lib/pinterest-events";
 
 export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en" }) {
   const [email, setEmail] = useState("");
@@ -22,6 +23,7 @@ export default function NewsletterForm({ locale = "pt" }: { locale?: "pt" | "en"
         setSent(true);
         setEmail("");
         setMensagem("");
+        trackSignup("newsletter");
       }
     } catch (err) {
       setError("Erro ao se inscrever. Tente novamente.");

@@ -6,6 +6,7 @@ import { ScrollReveal } from '@/components/layout';
 import PWAProvider from '@/components/seo/PWAProvider';
 import BackgroundStarfield from '@/components/hero/BackgroundStarfield';
 import AdSenseScript from '@/components/seo/AdSenseScript';
+import PinterestTag from '@/components/seo/PinterestTag';
 import { TopAd, InContentAd, FooterAd, SmartlinkAd } from '@/components/ads/ResponsiveAds';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
@@ -122,6 +123,7 @@ export default function RootLayout({
         }}
       >
         <AdSenseScript />
+        <PinterestTag />
         <JsonLd />
         <Navbar />
         <BackgroundStarfield />

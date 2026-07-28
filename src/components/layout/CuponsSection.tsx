@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Copy, ExternalLink, Clock, Tag, Flame, Check } from "lucide-react";
+import { trackAffiliateClick } from "@/lib/pinterest-events";
 
 interface Cupom {
   id: string;
@@ -452,6 +453,7 @@ export default function CuponsSection() {
                     href={cupom.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackAffiliateClick(cupom.descricao || cupom.marketplace, cupom.marketplace)}
                     className="inline-flex items-center justify-center gap-1 rounded-xl bg-[#E11D48] px-3 py-2 text-xs font-bold text-white transition-all hover:bg-[#be123c]"
                   >
                     Ver Ofertas

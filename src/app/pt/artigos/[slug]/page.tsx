@@ -9,6 +9,7 @@ import { getItemViews } from "@/lib/views";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
 import ProductCard from "@/components/pinterest/ProductCard";
 import { getProdutos } from "@/lib/produtos";
+import PinterestProductView from "@/components/seo/PinterestProductView";
 
 export async function generateStaticParams() {
   return [
@@ -129,6 +130,11 @@ export default async function ArtigoPage({
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
               {artigo.descricao}
             </p>
+
+            <PinterestProductView
+              productName={artigo.titulo}
+              category={artigo.categoria?.nome}
+            />
 
             <div
               className="prose prose-invert max-w-none text-gray-300 leading-relaxed"

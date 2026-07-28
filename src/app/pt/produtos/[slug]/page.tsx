@@ -3,6 +3,7 @@ export const revalidate = 60;
 import { Metadata } from "next";
 import ProdutoPage from "@/components/produto/ProdutoPage";
 import { getProdutos } from "@/lib/produtos";
+import PinterestProductView from "@/components/seo/PinterestProductView";
 
 interface ProdutoDetailPageProps {
   params: {
@@ -150,6 +151,11 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+      <PinterestProductView
+        productName={produto.nome}
+        category={produto.categoria?.nome}
+        value={produto.preco}
       />
       <ProdutoPage produto={produto} relacionados={relacionados} />
     </>

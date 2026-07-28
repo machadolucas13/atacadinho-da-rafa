@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, Eye, ShoppingBag } from "lucide-react";
 import { getItemViews } from "@/lib/views";
 import { Produto } from "@/types";
+import AffiliateLink from "@/components/seo/AffiliateLink";
 
 interface ProductCarouselSectionProps {
   produtos: Produto[];
@@ -140,11 +141,12 @@ export default function ProductCarouselSection({
                 {produtos.map((produto) => {
                   const disc = discount(produto.precoOriginal, produto.preco);
                   return (
-                    <Link
+                    <AffiliateLink
                       key={produto.id}
                       href={produto.linkAfiliado}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      productName={produto.nome}
+                      marketplace={produto.loja}
+                      value={produto.preco}
                       className="snap-start flex-shrink-0 group block w-[60vw] sm:w-[40vw] md:w-[28vw] lg:w-[22vw] xl:w-[18vw] min-w-[180px]"
                     >
                       <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
@@ -188,7 +190,7 @@ export default function ProductCarouselSection({
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    </AffiliateLink>
                   );
                 })}
               </div>

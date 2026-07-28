@@ -7,6 +7,7 @@ import { Search, X } from "lucide-react";
 import ProductCard from "@/components/pinterest/ProductCard";
 import ArtigoPinCard from "@/components/pinterest/ArtigoPinCard";
 import { Produto, Artigo, Pasta } from "@/types";
+import { trackSearch } from "@/lib/pinterest-events";
 
 export default function BuscaPage() {
   const [query, setQuery] = useState("");
@@ -29,6 +30,9 @@ export default function BuscaPage() {
         const res = await fetch(`/api/busca?q=${encodeURIComponent(query)}`);
         const data = await res.json();
         setResultados(data);
+        if (query.trim()) {
+          trackSearch(query.trim());
+        }
       } catch (error) {
         console.error("Erro na busca:", error);
       } finally {

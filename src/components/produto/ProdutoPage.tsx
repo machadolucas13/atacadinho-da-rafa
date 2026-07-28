@@ -7,6 +7,7 @@ import { Produto } from "@/types";
 import ProductCard from "@/components/pinterest/ProductCard";
 import ShareButtons from "@/components/social/ShareButtons";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
+import { trackAffiliateClick } from "@/lib/pinterest-events";
 
 function MarketplaceBadge({ marketplace }: { marketplace: string }) {
   const lower = marketplace.toLowerCase();
@@ -159,6 +160,7 @@ export default function ProdutoPage({
                   href={produto.linkAfiliado}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
+                  onClick={() => trackAffiliateClick(produto.nome, produto.loja, produto.preco)}
                   className="btn-primary w-full justify-center text-base py-4"
                 >
                   <ShoppingBag className="h-5 w-5" />
