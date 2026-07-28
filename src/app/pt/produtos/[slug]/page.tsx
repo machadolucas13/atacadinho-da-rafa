@@ -25,10 +25,11 @@ export async function generateMetadata({
   if (!produto) return {};
 
   const baseUrl = "https://atacadinhodarafa.vercel.app";
-  const url = `${baseUrl}/produtos/${produto.slug}`;
+  const url = `${baseUrl}/pt/produtos/${produto.slug}`;
   const image = produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/og-default.jpg`;
 
   return {
+    metadataBase: new URL(baseUrl),
     title: `${produto.nome} - Atacadinho da Rafa`,
     description: produto.descricaoCurta || produto.descricao || `Confira ${produto.nome} na nossa curadoria.`,
     keywords: [produto.nome.toLowerCase(), produto.loja.toLowerCase(), "produto", "oferta", "Atacadinho da Rafa", ...(produto.tags || [])],
@@ -73,9 +74,9 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
-      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `https://atacadinhodarafa.vercel.app/categorias/${produto.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: produto.nome, item: `https://atacadinhodarafa.vercel.app/produtos/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/pt" },
+      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `https://atacadinhodarafa.vercel.app/pt/categorias/${produto.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: produto.nome, item: `https://atacadinhodarafa.vercel.app/pt/produtos/${params.slug}` },
     ],
   };
 
@@ -84,11 +85,12 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     "@type": "Product",
     name: produto.nome,
     description: produto.descricaoCurta || produto.descricao,
-    image: produto.imagemPrincipal,
+    image: produto.imagemPrincipal ? `https://atacadinhodarafa.vercel.app${produto.imagemPrincipal}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
     brand: {
       "@type": "Brand",
       name: produto.loja,
     },
+    url: `https://atacadinhodarafa.vercel.app/pt/produtos/${produto.slug}`,
     offers: {
       "@type": "Offer",
       price: produto.preco,

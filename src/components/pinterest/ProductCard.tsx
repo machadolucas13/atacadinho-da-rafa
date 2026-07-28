@@ -55,12 +55,12 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
     return (
       <article
         ref={ref}
-        onClick={() => router.push(`/produtos/${produto.slug}`)}
+        onClick={() => router.push(`/pt/produtos/${produto.slug}`)}
         className="group block cursor-pointer"
         role="link"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === "Enter") router.push(`/produtos/${produto.slug}`);
+          if (e.key === "Enter") router.push(`/pt/produtos/${produto.slug}`);
         }}
       >
         <div className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:border-[#F4A7B9]/40">
@@ -109,14 +109,14 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
   return (
     <article
       ref={ref}
-      onClick={() => router.push(`/produtos/${produto.slug}`)}
-      className="group block cursor-pointer"
-      role="link"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") router.push(`/produtos/${produto.slug}`);
-      }}
-    >
+    onClick={() => router.push(`/pt/produtos/${produto.slug}`)}
+        className="group block cursor-pointer"
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") router.push(`/pt/produtos/${produto.slug}`);
+        }}
+      >
       <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
         <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
           <Image
@@ -144,7 +144,7 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
               title={produto.nome}
               description={produto.descricao || `${produto.nome} por R$ ${produto.preco?.toFixed(2)} na ${produto.loja}`}
               image={produto.imagemPrincipal}
-              url={`/produtos/${produto.slug}`}
+               url={`/pt/produtos/${produto.slug}`}
             />
           </div>
 

@@ -13,21 +13,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pins = await getPins("pt");
 
   const urls: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
-    { url: `${baseUrl}/artigos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
-    { url: `${baseUrl}/busca`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
-    { url: `${baseUrl}/sobre`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
-    { url: `${baseUrl}/contato`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
-    { url: `${baseUrl}/politica-privacidade`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
+    { url: `${baseUrl}/pt`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
+    { url: `${baseUrl}/pt/artigos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/pt/busca`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
+    { url: `${baseUrl}/pt/sobre`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/pt/contato`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/pt/politica-privacidade`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
     { url: `${baseUrl}/termos-de-uso`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
-    { url: `${baseUrl}/pinterest`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.4 },
-    { url: `${baseUrl}/pins`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
-    { url: `${baseUrl}/produtos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${baseUrl}/pt/pinterest`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.4 },
+    { url: `${baseUrl}/pt/pins`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${baseUrl}/pt/produtos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
   ];
 
   categorias.forEach((cat) => {
     urls.push({
-      url: `${baseUrl}/categorias/${cat.slug}`,
+      url: `${baseUrl}/pt/categorias/${cat.slug}`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.7,
@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   artigos.forEach((artigo) => {
     urls.push({
-      url: `${baseUrl}/artigos/${artigo.slug}`,
+      url: `${baseUrl}/pt/artigos/${artigo.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.6,
@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   pins.forEach((pin) => {
     urls.push({
-      url: `${baseUrl}/pins/${pin.slug}`,
+      url: `${baseUrl}/pt/pins/${pin.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.4,
@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   pastas.forEach((pasta) => {
     urls.push({
-      url: `${baseUrl}/pastas/${pasta.slug}`,
+      url: `${baseUrl}/pt/pastas/${pasta.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.6,

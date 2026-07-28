@@ -30,6 +30,11 @@ export async function generateStaticParams() {
     { slug: "rotina-treino-feminino-perder-peso-dicas-2026" },
     { slug: "gadgets-para-quarto-2026" },
     { slug: "organizar-quarto-tecnologia-guia" },
+    { slug: "achados-pet-under-50-reais" },
+    { slug: "achados-decoracao-apartamento-pequeno-luxo" },
+    { slug: "acessorios-moto-under-50-entregador" },
+    { slug: "achados-tecnologia-under-100-reais" },
+    { slug: "produtos-beleza-under-40-skincare-barato" },
   ];
 }
 

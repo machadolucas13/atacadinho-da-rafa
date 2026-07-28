@@ -80,7 +80,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://atacadinhodarafa.vercel.app',
+    canonical: 'https://atacadinhodarafa.vercel.app/pt',
   },
   icons: {
     icon: '/assets/images/logo_rafa.png',

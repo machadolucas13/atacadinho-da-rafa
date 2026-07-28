@@ -27,20 +27,24 @@ export async function generateMetadata({
   const pasta = pastas.find((p) => p.slug === params.slug);
   if (!pasta) return {};
 
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const url = `${baseUrl}/pt/pastas/${params.slug}`;
+
   return {
+    metadataBase: new URL(baseUrl),
     title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
     description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
     keywords: [pasta.nome.toLowerCase(), "colecao", "pasta", "achados", "Atacadinho da Rafa"],
     openGraph: {
       type: "website",
       locale: "pt_BR",
-      url: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}`,
+      url,
       siteName: "Atacadinho da Rafa",
       title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
       images: [
         {
-          url: pasta.imagemCapa || "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
+          url: pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
           width: 1200,
           height: 630,
           alt: pasta.nome,
@@ -51,10 +55,10 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
-      images: [pasta.imagemCapa || "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg"],
+      images: [pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg"],
     },
     alternates: {
-      canonical: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}`,
+      canonical: url,
     },
   };
 }
@@ -74,9 +78,9 @@ export default async function PastaPage({ params }: PastaPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
-      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.vercel.app/categorias/${pasta.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.vercel.app/pastas/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/pt" },
+      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.vercel.app/pt/categorias/${pasta.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.vercel.app/pt/pastas/${params.slug}` },
     ],
   };
 
@@ -104,9 +108,9 @@ export default async function PastaPage({ params }: PastaPageProps) {
         <div className="mx-auto max-w-7xl px-4 pt-28 pb-8">
           {!pasta.imagemCapa && (
             <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-              <Link href="/" className="hover:text-[#F4A7B9] transition-colors">Home</Link>
+              <Link href="/pt" className="hover:text-[#F4A7B9] transition-colors">Home</Link>
               <span className="text-gray-600">/</span>
-              <Link href={`/categorias/${pasta.categoria.slug}`} className="hover:text-[#F4A7B9] transition-colors">
+              <Link href={`/pt/categorias/${pasta.categoria.slug}`} className="hover:text-[#F4A7B9] transition-colors">
                 {pasta.categoria.nome}
               </Link>
               <span className="text-gray-600">/</span>

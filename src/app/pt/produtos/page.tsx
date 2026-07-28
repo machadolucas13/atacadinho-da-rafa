@@ -3,8 +3,9 @@ import ProductGrid from "@/components/pinterest/ProductGrid";
 import { getProdutos } from "@/lib/produtos";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const baseUrl = "https://atacadinhodarafa.vercel.app";
   return {
-    metadataBase: new URL("https://atacadinhodarafa.vercel.app"),
+    metadataBase: new URL(baseUrl),
     title: {
       default: "Todos os Produtos - Atacadinho da Rafa",
       template: "%s | Atacadinho da Rafa",
@@ -13,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "Veja todos os produtos da nossa curadoria. Moda, decoração, tecnologia, beleza e mais.",
     keywords: ["produtos", "ofertas", "achados", "moda", "decoracao", "tecnologia", "beleza"],
     alternates: {
-      canonical: "/pt/produtos",
+      canonical: `${baseUrl}/pt/produtos`,
     },
   };
 }

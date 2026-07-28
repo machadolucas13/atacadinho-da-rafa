@@ -60,7 +60,7 @@ export default async function CategorySection() {
             return (
             <Link
               key={categoria.id}
-              href={`/categorias/${categoria.slug}`}
+              href={`/pt/categorias/${categoria.slug}`}
               className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 hover:shadow-card-hover hover:-translate-y-1"
             >
               {categoria.imagem && (

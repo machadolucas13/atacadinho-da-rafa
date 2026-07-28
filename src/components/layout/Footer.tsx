@@ -27,26 +27,26 @@ export default function Footer({ className }: { className?: string } = {}) {
               Categorias
             </h4>
             <ul className="space-y-2.5">
-              {[
-                { nome: "Moda Feminina", slug: "moda-feminina" },
-                { nome: "Casa e Decoração", slug: "casa-decoracao" },
-                { nome: "Cozinha", slug: "cozinha" },
-                { nome: "Tecnologia", slug: "tecnologia" },
-                { nome: "Beleza", slug: "beleza" },
-                { nome: "Acessórios", slug: "acessorios" },
-              ].map((item) => (
-                <li key={item.slug}>
-                  <Link
-                    href={`/categorias/${item.slug}`}
-                    className="group inline-flex items-center text-sm text-gray-400 transition-colors hover:text-[#F4A7B9]"
-                  >
-                    <span className="mr-1.5 text-gray-600 transition-colors group-hover:text-[#F4A7B9]">
-                      •
-                    </span>
-                    {item.nome}
-                  </Link>
-                </li>
-              ))}
+               {[
+                 { nome: "Moda Feminina", slug: "moda-feminina" },
+                 { nome: "Casa e Decoração", slug: "casa-decoracao" },
+                 { nome: "Cozinha", slug: "cozinha" },
+                 { nome: "Tecnologia", slug: "tecnologia" },
+                 { nome: "Beleza", slug: "beleza" },
+                 { nome: "Acessórios", slug: "acessorios" },
+               ].map((item) => (
+                 <li key={item.slug}>
+                   <LocaleAwareLink
+                     href={`/pt/categorias/${item.slug}`}
+                     className="inline-flex items-center text-sm text-gray-400 transition-colors hover:text-[#F4A7B9]"
+                   >
+                     <span className="mr-1.5 text-gray-600 transition-colors group-hover:text-[#F4A7B9]">
+                       •
+                     </span>
+                     {item.nome}
+                   </LocaleAwareLink>
+                 </li>
+               ))}
             </ul>
           </div>
 
@@ -56,9 +56,9 @@ export default function Footer({ className }: { className?: string } = {}) {
             </h4>
             <ul className="space-y-2.5">
               {[
-                { nome: "Todos os Produtos", href: "/produtos" },
-                { nome: "Pins", href: "/pins" },
-                { nome: "Artigos", href: "/artigos" },
+                { nome: "Todos os Produtos", href: "/pt/produtos" },
+                { nome: "Pins", href: "/pt/pins" },
+                { nome: "Artigos", href: "/pt/artigos" },
               ].map((item) => (
                 <li key={item.href}>
                   <LocaleAwareLink
@@ -80,12 +80,12 @@ export default function Footer({ className }: { className?: string } = {}) {
               Institucional
             </h4>
              <ul className="space-y-2.5">
-               {[
-                 { nome: "Sobre", href: "/sobre" },
-                 { nome: "Contato", href: "/contato" },
-                 { nome: "Política de Privacidade", href: "/politica-privacidade" },
-                 { nome: "Termos de Uso", href: "/termos-de-uso" },
-               ].map((item) => (
+                {[
+                  { nome: "Sobre", href: "/pt/sobre" },
+                  { nome: "Contato", href: "/pt/contato" },
+                  { nome: "Política de Privacidade", href: "/pt/politica-privacidade" },
+                  { nome: "Termos de Uso", href: "/pt/termos-de-uso" },
+                ].map((item) => (
                 <li key={item.href}>
                   <LocaleAwareLink
                     href={item.href}

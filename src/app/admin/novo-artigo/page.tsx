@@ -1,27 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
 import AdminNav from "@/components/admin/AdminNav";
 import { criarArtigo } from "@/app/actions/admin";
 
 export default function NovoArtigo() {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState("");
   const [categorias, setCategorias] = useState<any[]>([]);
-
-  useEffect(() => {
-    const carregarCategorias = async () => {
-      try {
-        const res = await fetch("/api/categorias");
-        const data = await res.json();
-        setCategorias(data.categorias || []);
-      } catch (e) {
-        console.error("Erro ao carregar categorias", e);
-      }
-    };
-    carregarCategorias();
-  }, []);
 
   const [form, setForm] = useState({
     titulo: "",
@@ -47,6 +36,36 @@ export default function NovoArtigo() {
       console.error("Erro no upload:", error);
     }
   };
+
+  useEffect(() => {
+    const carregarCategorias = async () => {
+      try {
+        const res = await fetch("/api/categorias");
+        const data = await res.json();
+        setCategorias(data.categorias || []);
+      } catch (e) {
+        console.error("Erro ao carregar categorias", e);
+      }
+    };
+    carregarCategorias();
+  }, []);
+
+  useEffect(() => {
+    const titulo = searchParams.get("titulo");
+    const slug = searchParams.get("slug");
+    const tags = searchParams.get("tags");
+    const descricao = searchParams.get("descricao");
+
+    if (titulo || slug || tags || descricao) {
+      setForm((prev) => ({
+        ...prev,
+        titulo: titulo || prev.titulo,
+        slug: slug || prev.slug,
+        tags: tags || prev.tags,
+        descricao: descricao || prev.descricao,
+      }));
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

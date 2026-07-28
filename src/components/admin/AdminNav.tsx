@@ -29,8 +29,8 @@ export default function AdminNav() {
           <Link href="/admin/newsletter" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
             Newsletter
           </Link>
-          <Link href="/admin/views" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
-            Views
+          <Link href="/admin/radar" className="text-sm font-medium text-[#F4A7B9] hover:text-white transition-colors">
+            🔍 Radar Trends
           </Link>
         </div>
         <button
