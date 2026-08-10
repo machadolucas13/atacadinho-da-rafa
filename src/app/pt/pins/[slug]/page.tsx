@@ -6,7 +6,7 @@ import { Eye, Sparkles, ArrowLeft, ArrowRight, Tag, TrendingUp } from "lucide-re
 import { Metadata } from "next";
 import { getPinBySlug, getPins } from "@/lib/pins";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
-import { trackAffiliateClick } from "@/lib/pinterest-events";
+import PinAffiliateLink from "@/components/pinterest/PinAffiliateLink";
 
 interface ShopeeLink {
   nome: string;
@@ -110,15 +110,14 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 {pin.categoriaId.replace(/-/g, ' ')}
               </LocaleAwareLink>
               {links[0] && (
-                <a
-                  href={links[0].url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackAffiliateClick(links[0].nome, "Shopee", parseFloat(links[0].preco.replace(/[^\d,]/g, "").replace(",", ".")) || undefined)}
+                <PinAffiliateLink
+                  nome={links[0].nome}
+                  preco={links[0].preco}
+                  url={links[0].url}
                   className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
                 >
                   🛒 Ver ofertas na Shopee
-                </a>
+                </PinAffiliateLink>
               )}
             </div>
 
@@ -161,17 +160,16 @@ export default async function PinClient({ params }: { params: { slug: string } }
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {links.map((item) => (
-                <a
+                <PinAffiliateLink
                   key={item.url}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackAffiliateClick(item.nome, "Shopee", parseFloat(item.preco.replace(/[^\d,]/g, "").replace(",", ".")) || undefined)}
+                  nome={item.nome}
+                  preco={item.preco}
+                  url={item.url}
                   className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-[#F4A7B9] hover:bg-white/10"
                 >
                   <span className="text-sm font-semibold text-white line-clamp-1">{item.nome}</span>
                   <span className="text-sm font-bold text-[#FFD700] whitespace-nowrap ml-3">{item.preco}</span>
-                </a>
+                </PinAffiliateLink>
               ))}
             </div>
 
