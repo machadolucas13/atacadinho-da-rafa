@@ -55,7 +55,7 @@ export default function ArticleCard({ artigo, featured = false }: ArticleCardPro
    }, [artigo.slug, tracked]);
 
   return (
-    <Link href={`/artigos/${artigo.slug}`} className="group block">
+    <Link href={`/pt/artigos/${artigo.slug}`} className="group block">
       <div
         ref={ref}
         className={`overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover ${

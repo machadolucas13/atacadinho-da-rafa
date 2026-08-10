@@ -12,31 +12,8 @@ import { getProdutos } from "@/lib/produtos";
 import PinterestProductView from "@/components/seo/PinterestProductView";
 
 export async function generateStaticParams() {
-  return [
-    { slug: "melhores-calcas-jeans-masculino-guia-2026" },
-    { slug: "melhores-calcas-jeans-feminino-guia-2026" },
-    { slug: "como-ganhar-dinheiro-como-afiliado-guia-2026" },
-    { slug: "como-montar-guarda-roupa-capsula-gastando-poco-2026" },
-    { slug: "tendencias-moda-primavera-verao-2026" },
-    { slug: "maquiagem-para-iniciantes-guia-passo-a-passo" },
-    { slug: "como-organizar-apartamento-pequeno-com-pouco-dinheiro" },
-    { slug: "decoracao-sustentavel-20-ideias-ate-100-reais" },
-    { slug: "rotina-skincare-pele-oleosa-produtos-funcionam" },
-    { slug: "como-escolher-perfume-guia-completo" },
-    { slug: "como-economizar-supermercado-dicas" },
-    { slug: "melhores-apps-financas-pessoais-2026" },
-    { slug: "como-criar-conteudo-instagram-seguidores" },
-    { slug: "guia-marketing-afiliados-iniciantes-2026" },
-    { slug: "como-fazer-mudanca-gastando-pouco" },
-    { slug: "rotina-treino-feminino-perder-peso-dicas-2026" },
-    { slug: "gadgets-para-quarto-2026" },
-    { slug: "organizar-quarto-tecnologia-guia" },
-    { slug: "achados-pet-under-50-reais" },
-    { slug: "achados-decoracao-apartamento-pequeno-luxo" },
-    { slug: "acessorios-moto-under-50-entregador" },
-    { slug: "achados-tecnologia-under-100-reais" },
-    { slug: "produtos-beleza-under-40-skincare-barato" },
-  ];
+  const artigos = await getArtigos("pt");
+  return artigos.map((artigo) => ({ slug: artigo.slug }));
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {

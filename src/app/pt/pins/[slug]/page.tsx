@@ -14,6 +14,11 @@ interface ShopeeLink {
   url: string;
 }
 
+export async function generateStaticParams() {
+  const pins = await getPins("pt");
+  return pins.map((pin) => ({ slug: pin.slug }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
   if (!pin) return {};

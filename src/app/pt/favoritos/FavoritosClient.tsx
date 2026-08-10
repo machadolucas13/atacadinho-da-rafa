@@ -65,7 +65,7 @@ export default function FavoritosClient() {
                 <p className="mt-1 text-[10px] text-gray-500 uppercase tracking-wider">{item.tipo}</p>
                 <p className="mt-1 text-[10px] text-gray-500">{new Date(item.adicionadoEm).toLocaleDateString("pt-BR")}</p>
                 <div className="mt-2 flex items-center gap-2 flex-wrap">
-                  <Link href={`/${item.tipo === 'artigo' ? 'artigos' : 'produtos'}/${item.slug}`} className="text-xs text-[#F4A7B9] hover:underline inline-flex items-center gap-1">
+                  <Link href={`/pt/${item.tipo === 'artigo' ? 'artigos' : 'produtos'}/${item.slug}`} className="text-xs text-[#F4A7B9] hover:underline inline-flex items-center gap-1">
                     Abrir <ExternalLink className="h-3 w-3" />
                   </Link>
                   <button onClick={() => remover(item.id, item.tipo, item.slug)} className="text-xs text-red-400 hover:text-red-300 inline-flex items-center gap-1">

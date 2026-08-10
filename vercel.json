@@ -1,6 +1,26 @@
 {
   "redirects": [
     {
+      "source": "/artigos/:slug",
+      "destination": "/pt/artigos/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/pins/:slug",
+      "destination": "/pt/pins/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/artigos",
+      "destination": "/pt/artigos",
+      "permanent": true
+    },
+    {
+      "source": "/pins",
+      "destination": "/pt/pins",
+      "permanent": true
+    },
+    {
       "source": "/",
       "has": [
         {
