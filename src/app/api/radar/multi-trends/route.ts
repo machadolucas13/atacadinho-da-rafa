@@ -154,67 +154,100 @@ export async function GET(request: Request) {
     const mlEnabled = platforms.includes("ml");
     const otherPlatforms = platforms.filter((p) => p !== "ml");
 
-    const mlUrl = categoryId
-      ? `https://api.mercadolibre.com/trends/MLB/${categoryId}`
-      : `https://api.mercadolibre.com/trends/MLB`;
-
-    const mlResponse = await fetch(mlUrl, {
-      headers: { Accept: "application/json" },
-      next: { revalidate: 14400 },
-    });
-
-    if (!mlResponse.ok) {
-      throw new Error(`ML API responded with ${mlResponse.status}`);
-    }
-
-    const mlData = await mlResponse.json();
-    const trends = mlData.trends || mlData || [];
-
-    const fastestGrowing = trends.slice(0, 10);
-    const mostWanted = trends.slice(10, 30);
-    const mostPopular = trends.slice(30, 50);
-
     const items: ProductItem[] = [];
-
-    if (mlEnabled) {
-      const topTrends = [
-        ...fastestGrowing.map((t: any) => ({ ...t, trendType: "crescendo" as const })),
-        ...mostWanted.map((t: any) => ({ ...t, trendType: "desejadas" as const })),
-      ].slice(0, limit);
-
-      const searchResults = await Promise.allSettled(
-        topTrends.map((trend) => fetchMLSearch(trend.keyword))
-      );
-
-      searchResults.forEach((result, index) => {
-        if (result.status === "fulfilled") {
-          const trend = topTrends[index];
-          const trendType = trend.trendType;
-
-          result.value.forEach((item, i) => {
-            items.push({
-              ...item,
-              trendType: i === 0 ? trendType : "search",
-            });
-          });
-        }
-      });
-    }
+    const usedPlatforms = new Set<string>();
+    let updatedAt = new Date().toISOString();
 
     if (otherPlatforms.length > 0 && process.env.GECKO_API_KEY) {
-      const topKeywords = fastestGrowing
-        .slice(0, 5)
-        .map((t: any) => t.keyword);
+      const fallbackKeywords = [
+        "ofertas",
+        "produtos baratos",
+        "melhores produtos",
+        "shopee",
+        "amazon",
+        "magalu",
+      ];
 
       const geckoResults = await Promise.allSettled(
         otherPlatforms.flatMap((platform) =>
-          topKeywords.map((keyword: string) => fetchGeckoAPISearch(keyword, platform))
+          fallbackKeywords.map((keyword) => fetchGeckoAPISearch(keyword, platform))
         )
       );
 
       geckoResults.forEach((result) => {
         if (result.status === "fulfilled") {
-          items.push(...result.value);
+          result.value.forEach((item) => {
+            usedPlatforms.add(item.platform);
+            items.push(item);
+          });
+        }
+      });
+    }
+
+    if (mlEnabled) {
+      const mlUrl = categoryId
+        ? `https://api.mercadolibre.com/trends/MLB/${categoryId}`
+        : `https://api.mercadolibre.com/trends/MLB`;
+
+      try {
+        const mlResponse = await fetch(mlUrl, {
+          headers: { Accept: "application/json" },
+          next: { revalidate: 14400 },
+        });
+
+        if (mlResponse.ok) {
+          const mlData = await mlResponse.json();
+          const trends = mlData.trends || mlData || [];
+
+          const fastestGrowing = trends.slice(0, 10);
+          const mostWanted = trends.slice(10, 30);
+
+          const topTrends = [
+            ...fastestGrowing.map((t: any) => ({ ...t, trendType: "crescendo" as const })),
+            ...mostWanted.map((t: any) => ({ ...t, trendType: "desejadas" as const })),
+          ].slice(0, limit);
+
+          const searchResults = await Promise.allSettled(
+            topTrends.map((trend) => fetchMLSearch(trend.keyword))
+          );
+
+          searchResults.forEach((result, index) => {
+            if (result.status === "fulfilled") {
+              const trend = topTrends[index];
+              const trendType = trend.trendType;
+
+              result.value.forEach((item, i) => {
+                items.push({
+                  ...item,
+                  trendType: i === 0 ? trendType : "search",
+                });
+              });
+            }
+          });
+
+          usedPlatforms.add("ml");
+        } else {
+          console.warn(`ML API blocked or unavailable: ${mlResponse.status}`);
+        }
+      } catch (error) {
+        console.warn("ML trends fetch failed:", error);
+      }
+    }
+
+    if (items.length === 0 && otherPlatforms.length > 0 && process.env.GECKO_API_KEY) {
+      const trendingKeywords = ["iphone", "tenis", "fone bluetooth", "camiseta", "sapato"];
+      const geckoResults = await Promise.allSettled(
+        otherPlatforms.flatMap((platform) =>
+          trendingKeywords.map((keyword) => fetchGeckoAPISearch(keyword, platform))
+        )
+      );
+
+      geckoResults.forEach((result) => {
+        if (result.status === "fulfilled") {
+          result.value.forEach((item) => {
+            usedPlatforms.add(item.platform);
+            items.push(item);
+          });
         }
       });
     }
@@ -230,10 +263,10 @@ export async function GET(request: Request) {
     uniqueItems.sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0));
 
     return NextResponse.json<MultiTrendsResponse>({
-      ok: true,
+      ok: items.length > 0,
       items: uniqueItems.slice(0, limit * 3),
-      platforms: [...new Set(uniqueItems.map((i) => i.platform))],
-      updatedAt: new Date().toISOString(),
+      platforms: [...usedPlatforms],
+      updatedAt,
     });
   } catch (error) {
     console.error("Error fetching multi-trends:", error);

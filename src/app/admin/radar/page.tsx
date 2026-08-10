@@ -275,6 +275,11 @@ export default function AdminRadar() {
             <p className="mt-1 text-sm text-gray-400">
               O que o Brasil está buscando agora — comparando todas as plataformas
             </p>
+            {data && data.platforms.length > 0 && !data.platforms.includes("ml") && (
+              <p className="mt-1 text-xs text-yellow-400">
+                Dados do Mercado Livre indisponíveis no momento. Mostrando dados de: {data.platforms.join(", ")}
+              </p>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

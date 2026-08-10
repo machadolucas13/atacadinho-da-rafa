@@ -22,7 +22,70 @@ function detectMarketplace(url: string): string {
   if (host.includes("mercadolivre") || host.includes("meli")) return "mercadolivre";
   if (host.includes("shein")) return "shein";
   if (host.includes("aliexpress")) return "aliexpress";
+  if (host.includes("magazineluiza")) return "magalu";
+  if (host.includes("temu")) return "temu";
   return "generic";
+}
+
+function getGeckoTarget(marketplace: string): string | null {
+  const map: Record<string, string | null> = {
+    shopee: "shopee.com.br",
+    amazon: "amazon.com.br",
+    mercadolivre: "mercadolivre.com.br",
+    shein: "shein.com",
+    aliexpress: "aliexpress.com",
+    magalu: "magazineluiza.com.br",
+    temu: "temu.com",
+    generic: null,
+  };
+  return map[marketplace] || null;
+}
+
+async function extractWithGeckoAPI(url: string, marketplace: string): Promise<any> {
+  const apiKey = process.env.GECKO_API_KEY;
+  if (!apiKey) return null;
+
+  const target = getGeckoTarget(marketplace);
+  if (!target) return null;
+
+  try {
+    const response = await fetch("https://api.geckoapi.com.br/v1/extract", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url,
+        target,
+        type: "pdp",
+      }),
+      next: { revalidate: 86400 },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    const item = data.data;
+    if (!item) return null;
+
+    const price = item.priceMin || item.price || 0;
+    const regularPrice = item.regularPrice || item.regularPriceMin;
+    return {
+      titulo: item.name,
+      imagem: item.thumbnail?.url || item.thumbnail,
+      preco: price,
+      precoOriginal: regularPrice,
+      descricao: item.description || item.name,
+      marketplace,
+      soldCount: item.soldCount,
+      rating: item.aggregateRating?.rating,
+    };
+  } catch {
+    return null;
+  }
 }
 
 function extractFromJsonLd(html: string): { titulo?: string; imagem?: string; preco?: number; precoOriginal?: number } {
@@ -103,6 +166,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "URL inválida" }, { status: 400 });
     }
 
+    const marketplace = detectMarketplace(baseUrl);
+    const geckoData = await extractWithGeckoAPI(baseUrl, marketplace);
+
+    if (geckoData) {
+      return NextResponse.json({
+        titulo: geckoData.titulo,
+        imagem: geckoData.imagem,
+        descricao: geckoData.descricao,
+        preco: geckoData.preco > 0 ? geckoData.preco : 0,
+        precoOriginal: geckoData.precoOriginal || 0,
+        marketplace: geckoData.marketplace,
+        soldCount: geckoData.soldCount,
+        rating: geckoData.rating,
+        source: "geckoapi",
+      });
+    }
+
     const response = await fetch(baseUrl, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -129,7 +209,6 @@ export async function POST(request: Request) {
     const jsonLd = extractFromJsonLd(html);
     const meta = extractFromMeta(html, baseUrl);
     const textPrices = extractPriceFromText(html);
-    const marketplace = detectMarketplace(baseUrl);
 
     const titulo = jsonLd.titulo || meta.titulo;
     const imagem = jsonLd.imagem || meta.imagem;
@@ -143,6 +222,7 @@ export async function POST(request: Request) {
       preco: preco > 0 ? preco : 0,
       precoOriginal: precoOriginal > 0 ? precoOriginal : 0,
       marketplace,
+      source: "scrape",
     });
   } catch (error) {
     console.error("Erro ao extrair dados do produto:", error);
