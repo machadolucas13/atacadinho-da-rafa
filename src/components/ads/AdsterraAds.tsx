@@ -50,7 +50,7 @@ export function AdBannerClient({
 
     timeout = window.setTimeout(() => {
       setStatus("error");
-    }, 4000);
+    }, 10000);
 
     const script = document.createElement("script");
     script.setAttribute("data-adsterra-invoked", invokeSrc);
@@ -62,12 +62,15 @@ export function AdBannerClient({
     invokeScript.async = true;
     invokeScript.onload = successHandler;
     invokeScript.onerror = errorHandler;
-    document.head.appendChild(invokeScript);
+    container.appendChild(invokeScript);
 
     return () => {
       clearTimeout(timeout);
       if (invokeScript.parentNode) {
         invokeScript.parentNode.removeChild(invokeScript);
+      }
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
       }
     };
   }, [scriptContent, invokeSrc, safeWidth, safeHeight]);
