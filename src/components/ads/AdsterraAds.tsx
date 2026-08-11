@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
 
 type AdProps = {
   key: string;
@@ -40,54 +41,22 @@ export function Ad({ key, format, height, width, src }: AdProps) {
       }
     }, 12000);
 
-    try {
-      const atOptionsScript = document.createElement("script");
-      atOptionsScript.type = "text/javascript";
-      atOptionsScript.textContent = `
-        window.atOptions = {
-          key: '${currentKey}',
-          format: ${format},
-          height: ${height},
-          width: ${width},
-          params: {}
-        };
-      `;
-      container.appendChild(atOptionsScript);
-
-      const invokeScript = document.createElement("script");
-      invokeScript.src = invokeSrc;
-      invokeScript.async = true;
-      invokeScript.onload = () => {
-        console.log("[Ad] invoke.js loaded", { currentKey });
-      };
-      invokeScript.onerror = () => {
-        console.log("[Ad] invoke.js error", { currentKey });
+    const observer = new MutationObserver(() => {
+      const iframe = container.querySelector("iframe");
+      if (iframe) {
+        console.log("[Ad] Iframe detected - success!", { currentKey });
         window.clearTimeout(timeout);
-        setStatus("error");
-      };
-      container.appendChild(invokeScript);
-
-      const observer = new MutationObserver(() => {
-        const iframe = container.querySelector("iframe");
-        if (iframe) {
-          console.log("[Ad] Iframe detected - success!", { currentKey });
-          window.clearTimeout(timeout);
-          setStatus("ready");
-          observer.disconnect();
-        }
-      });
-
-      observer.observe(container, { childList: true, subtree: true });
-
-      return () => {
-        window.clearTimeout(timeout);
+        setStatus("ready");
         observer.disconnect();
-      };
-    } catch (err) {
-      console.log("[Ad] Init error", err);
+      }
+    });
+
+    observer.observe(container, { childList: true, subtree: true });
+
+    return () => {
       window.clearTimeout(timeout);
-      setStatus("error");
-    }
+      observer.disconnect();
+    };
   }, [adKey, format, height, width, src]);
 
   if (status === "error") {
@@ -111,6 +80,8 @@ export function Ad({ key, format, height, width, src }: AdProps) {
     );
   }
 
+  const invokeSrc = src || ADSTERRA_INVOKE;
+
   return (
     <div
       ref={containerRef}
@@ -122,9 +93,55 @@ export function Ad({ key, format, height, width, src }: AdProps) {
         maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
-        border: "1px solid rgba(255,255,255,0.05)",
+        border: status === "loading" ? "2px solid #F4A7B9" : "1px solid rgba(255,255,255,0.05)",
+        background: status === "loading" ? "rgba(244,167,185,0.05)" : "transparent",
       }}
-    />
+    >
+      {status === "loading" && (
+        <div
+          style={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+            background: "#F4A7B9",
+            color: "#000",
+            fontSize: 9,
+            fontWeight: "bold",
+            padding: "2px 6px",
+            borderRadius: 4,
+            zIndex: 10,
+          }}
+        >
+          AD TEST
+        </div>
+      )}
+      <Script
+        id={`adsterra-at-${adKey}`}
+        strategy="afterInteractive"
+      >
+        {`
+          window.atOptions = {
+            key: '${adKey}',
+            format: ${format},
+            height: ${height},
+            width: ${width},
+            params: {}
+          };
+        `}
+      </Script>
+      <Script
+        id={`adsterra-invoke-${adKey}`}
+        src={invokeSrc}
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log("[Ad] invoke.js loaded via Next Script", { adKey });
+        }}
+        onError={() => {
+          console.log("[Ad] invoke.js failed via Next Script", { adKey });
+          setStatus("error");
+        }}
+      />
+    </div>
   );
 }
 
