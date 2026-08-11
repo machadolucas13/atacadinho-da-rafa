@@ -100,6 +100,44 @@ export default async function PinClient({ params }: { params: { slug: string } }
             <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               {pin.descricao}
             </p>
+            {pin.dicaUso && (
+              <div className="rounded-2xl border border-[#F4A7B9]/30 bg-[#F4A7B9]/10 p-5 mb-6">
+                <p className="text-sm font-semibold text-[#F4A7B9] mb-1">💡 Dica de uso</p>
+                <p className="text-gray-200 leading-relaxed">{pin.dicaUso}</p>
+              </div>
+            )}
+            {pin.imagemPrincipal && (
+              <div className="mb-6 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                <img
+                  src={pin.imagemPrincipal}
+                  alt={links[0]?.nome || "Produto"}
+                  className="w-full max-w-sm mx-auto h-auto object-contain"
+                />
+              </div>
+            )}
+            {links.length > 0 && (
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
+                <h2 className="text-lg font-bold text-white mb-4">Ofertas selecionadas</h2>
+                <div className="space-y-3">
+                  {links.slice(0, 5).map((link) => (
+                    <div key={link.url} className="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white truncate">{link.nome}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">A partir de <span className="text-[#F4A7B9] font-bold">{link.preco}</span></p>
+                      </div>
+                      <PinAffiliateLink
+                        nome={link.nome}
+                        preco={link.preco}
+                        url={link.url}
+                        className="shrink-0 rounded-lg bg-[#E11D48] px-4 py-2 text-xs font-bold text-white transition-all hover:bg-[#be123c]"
+                      >
+                        🛒 Ver oferta
+                      </PinAffiliateLink>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="flex flex-wrap gap-3 mb-8">
               <LocaleAwareLink

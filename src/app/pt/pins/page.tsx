@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import TrendingSection from "@/components/pinterest/TrendingSection";
+import PinCard from "@/components/pinterest/PinCard";
 import { getPins } from "@/lib/pins";
 
 export const metadata: Metadata = {
@@ -42,29 +43,7 @@ export default async function PinsPage({ params }: { params: { locale: string } 
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
             {pins.map((pin) => (
-              <Link key={pin.id} href={`/${locale}/pins/${pin.slug}`} className="group block">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-black/20">
-                    <img
-                      src={pin.imagem}
-                      alt={pin.titulo}
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="absolute inset-x-0 bottom-0 p-5">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#E11D48]/90 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
-                        🔥 {isPt ? "Destaque" : "Featured"}
-                      </span>
-                      <h3 className="mt-3 text-lg font-bold text-white line-clamp-2">
-                        {pin.titulo}
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-300 line-clamp-2">
-                        {pin.descricao}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+              <PinCard key={pin.id} pin={pin} locale={locale} />
             ))}
           </div>
         )}
