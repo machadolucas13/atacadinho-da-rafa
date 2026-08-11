@@ -7,14 +7,22 @@ type AdProps = {
   invokeSrc: string;
   width: number;
   height: number;
+  delay?: number;
 };
 
-export function Ad({ adKey, invokeSrc, width, height }: AdProps) {
+export function Ad({ adKey, invokeSrc, width, height, delay = 0 }: AdProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [shouldInit, setShouldInit] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !containerRef.current) return;
+    if (typeof window === "undefined") return;
+    const timer = window.setTimeout(() => setShouldInit(true), delay);
+    return () => window.clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!shouldInit || typeof window === "undefined" || !containerRef.current) return;
 
     const container = containerRef.current;
     container.innerHTML = "";
@@ -67,7 +75,7 @@ export function Ad({ adKey, invokeSrc, width, height }: AdProps) {
       window.clearTimeout(timeout);
       observer.disconnect();
     };
-  }, [adKey, invokeSrc, width, height]);
+  }, [shouldInit, adKey, invokeSrc, width, height, status]);
 
   if (status === "error") {
     return (
@@ -139,6 +147,7 @@ export function TopAd() {
         invokeSrc={isMobile ? BANNER_320x50_INVOKE : BANNER_728x90_INVOKE}
         width={isMobile ? 320 : 728}
         height={isMobile ? 50 : 90}
+        delay={0}
       />
     </div>
   );
@@ -155,6 +164,7 @@ export function InContentAd() {
         invokeSrc={BANNER_300x250_INVOKE}
         width={300}
         height={250}
+        delay={2000}
       />
     </div>
   );
@@ -171,6 +181,7 @@ export function FooterAd() {
         invokeSrc={BANNER_300x250_INVOKE}
         width={300}
         height={250}
+        delay={4000}
       />
     </div>
   );
@@ -187,6 +198,7 @@ export function SmartlinkAd() {
         invokeSrc={SMARTLINK_INVOKE}
         width={300}
         height={250}
+        delay={6000}
       />
     </div>
   );
