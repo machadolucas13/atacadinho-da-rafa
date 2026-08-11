@@ -14,7 +14,13 @@ const ADSTERRA_INVOKE = "https://russiaexternalknew.com/fvt0cu1tg/invoke.js";
 
 export function Ad({ key, format, height, width, src }: AdProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState(false);
+  const [adKey, setAdKey] = useState(key);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setAdKey(key || `ad-${Math.random().toString(36).slice(2, 9)}`);
+  }, [key]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
@@ -22,51 +28,52 @@ export function Ad({ key, format, height, width, src }: AdProps) {
     const container = containerRef.current;
     container.innerHTML = "";
 
-    const adKey = key || `ad-${Math.random().toString(36).slice(2, 9)}`;
+    const currentKey = adKey;
     const invokeSrc = src || ADSTERRA_INVOKE;
 
-    console.log("[Ad] Initializing ad", { adKey, width, height, invokeSrc });
+    console.log("[Ad] Mounting", { currentKey, width, height, invokeSrc });
 
     const timeout = window.setTimeout(() => {
-      console.log("[Ad] Timeout waiting for iframe", { adKey });
-      setError(true);
-    }, 10000);
+      console.log("[Ad] Timeout", { currentKey, status });
+      if (status === "loading") {
+        setStatus("error");
+      }
+    }, 12000);
 
     try {
-      window.atOptions = {
-        key: adKey,
-        format,
-        height,
-        width,
-        params: {},
-      };
-
-      console.log("[Ad] window.atOptions set", window.atOptions);
+      const atOptionsScript = document.createElement("script");
+      atOptionsScript.type = "text/javascript";
+      atOptionsScript.textContent = `
+        window.atOptions = {
+          key: '${currentKey}',
+          format: ${format},
+          height: ${height},
+          width: ${width},
+          params: {}
+        };
+      `;
+      container.appendChild(atOptionsScript);
 
       const invokeScript = document.createElement("script");
       invokeScript.src = invokeSrc;
       invokeScript.async = true;
       invokeScript.onload = () => {
-        console.log("[Ad] invoke.js loaded", { adKey });
+        console.log("[Ad] invoke.js loaded", { currentKey });
       };
       invokeScript.onerror = () => {
-        console.log("[Ad] invoke.js failed to load", { adKey });
+        console.log("[Ad] invoke.js error", { currentKey });
         window.clearTimeout(timeout);
-        setError(true);
+        setStatus("error");
       };
       container.appendChild(invokeScript);
 
-      const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeName === "IFRAME") {
-              console.log("[Ad] Iframe rendered!", { adKey, node });
-              window.clearTimeout(timeout);
-              setError(false);
-              observer.disconnect();
-              return;
-            }
-          }
+      const observer = new MutationObserver(() => {
+        const iframe = container.querySelector("iframe");
+        if (iframe) {
+          console.log("[Ad] Iframe detected - success!", { currentKey });
+          window.clearTimeout(timeout);
+          setStatus("ready");
+          observer.disconnect();
         }
       });
 
@@ -77,13 +84,13 @@ export function Ad({ key, format, height, width, src }: AdProps) {
         observer.disconnect();
       };
     } catch (err) {
-      console.log("[Ad] Error during init", err);
+      console.log("[Ad] Init error", err);
       window.clearTimeout(timeout);
-      setError(true);
+      setStatus("error");
     }
-  }, [key, format, height, width, src]);
+  }, [adKey, format, height, width, src]);
 
-  if (error) {
+  if (status === "error") {
     return (
       <div
         style={{
