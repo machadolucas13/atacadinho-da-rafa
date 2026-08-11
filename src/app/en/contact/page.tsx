@@ -1,79 +1,78 @@
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Contact - Atacadinho da Rafa",
-  description: "Get in touch with Atacadinho da Rafa. Questions, suggestions, partnerships or feedback.",
-};
+import { useState, FormEvent } from "react";
 
 export default function ContactPage() {
+  const [sent, setSent] = useState(false);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSent(true);
+  }
+
   return (
-    <div className="min-h-screen">
-      <div className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-24">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-rose-200/20 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-4xl px-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-[#F4A7B9] shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E11D48]" />
-            Talk to us
+    <div className="mx-auto max-w-3xl px-4 py-12">
+      <h1 className="text-3xl font-bold text-white mb-6">Contact</h1>
+      <p className="text-gray-300 leading-relaxed mb-8">
+        Send your message, topic suggestion, partnership inquiry, or question. We reply
+        within a few business days.
+      </p>
+
+      {sent ? (
+        <div className="rounded-lg border border-white/10 bg-white/5 p-6 text-gray-200">
+          Message sent successfully! We will get back to you soon.
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Name</label>
+            <input
+              required
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white outline-none focus:border-[#F4A7B9]"
+              placeholder="Your name"
+            />
           </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-white md:text-5xl">
-            Contact
-          </h1>
-          <p className="mt-4 text-lg text-gray-300 md:text-xl max-w-2xl">
-            Questions, suggestions, partnerships or feedback? We're here to listen to you.
-          </p>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-4xl px-4 py-8">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-white">Email</h2>
-            <p className="mt-2 text-gray-300">
-              For questions, suggestions or partnerships, send an email to:
-            </p>
-            <a
-              href="mailto:atacadinhodarafa@hotmail.com"
-              className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
-            >
-              atacadinhodarafa@hotmail.com
-            </a>
-            <p className="mt-4 text-sm text-gray-400">
-              We respond within 48 business hours.
-            </p>
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Email</label>
+            <input
+              required
+              type="email"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white outline-none focus:border-[#F4A7B9]"
+              placeholder="you@email.com"
+            />
           </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-white">Direct contact</h2>
-            <p className="mt-2 text-gray-300">
-              Send us an email for questions, suggestions or partnerships:
-            </p>
-            <a
-              href="mailto:atacadinhodarafa@hotmail.com"
-              className="mt-4 inline-flex items-center gap-2 text-[#F4A7B9] font-medium hover:text-white transition-colors"
-            >
-              atacadinhodarafa@hotmail.com
-            </a>
-            <p className="mt-4 text-sm text-gray-400">
-              We respond within 48 business hours.
-            </p>
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Subject</label>
+            <input
+              required
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white outline-none focus:border-[#F4A7B9]"
+              placeholder="Subject"
+            />
           </div>
-        </div>
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Message</label>
+            <textarea
+              required
+              rows={6}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white outline-none focus:border-[#F4A7B9]"
+              placeholder="Write your message..."
+            />
+          </div>
+          <button
+            type="submit"
+            className="rounded-lg bg-[#F4A7B9] px-6 py-2.5 font-semibold text-black hover:bg-[#ff8fa3]"
+          >
+            Send message
+          </button>
+        </form>
+      )}
 
-        <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <h2 className="text-xl font-bold text-white">Partnerships</h2>
-          <p className="mt-2 text-gray-300">
-            If you represent a brand, store or platform and want to propose a partnership, contact us by email above with the subject "Partnership". We love meeting new brands and bringing the best products to our community.
-          </p>
-        </div>
-
-        <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <h2 className="text-xl font-bold text-white">Product suggestions</h2>
-          <p className="mt-2 text-gray-300">
-            Have a product you love and want us to test? Send it to us! We love receiving recommendations from the community. If the product is approved in our curation, it will appear here on the site.
-          </p>
-        </div>
-      </div>
+      <p className="mt-8 text-sm text-gray-400">
+        Or email directly:{" "}
+        <a className="text-[#F4A7B9] hover:underline" href="mailto:contato@atacadinhodarafa.vercel.app">
+          contato@atacadinhodarafa.vercel.app
+        </a>
+      </p>
     </div>
   );
 }
-

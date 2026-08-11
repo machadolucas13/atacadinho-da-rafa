@@ -92,6 +92,8 @@ export default async function ArtigoPage({
             </div>
 
             <div className="flex items-center gap-4 mb-6 text-sm text-gray-400">
+              <span>Por Atacadinho da Rafa</span>
+              <span>•</span>
               <span>{new Date(artigo.publicadoEm).toLocaleDateString("pt-BR")}</span>
               <span>•</span>
               <span>{artigo.tempoLeitura} min de leitura</span>
