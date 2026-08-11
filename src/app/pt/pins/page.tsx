@@ -41,7 +41,7 @@ export default async function PinsPage({ params }: { params: { locale: string } 
             <p className="mt-2 text-xs text-gray-400">{isPt ? "Em breve: mais pins aqui." : "Coming soon: more pins here."}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
             {pins.map((pin) => (
               <PinCard key={pin.id} pin={pin} locale={locale} />
             ))}
