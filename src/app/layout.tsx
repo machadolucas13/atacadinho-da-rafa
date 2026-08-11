@@ -7,7 +7,6 @@ import PWAProvider from '@/components/seo/PWAProvider';
 import BackgroundStarfield from '@/components/hero/BackgroundStarfield';
 import AdSenseScript from '@/components/seo/AdSenseScript';
 import PinterestTag from '@/components/seo/PinterestTag';
-import { TopAd, InContentAd, FooterAd, SmartlinkAd } from '@/components/ads/AdsterraAds';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
@@ -129,7 +128,6 @@ export default function RootLayout({
         <AdSenseScript />
         <PinterestTag />
         <JsonLd />
-        <TopAd />
         <Navbar />
         <BackgroundStarfield />
         <main
@@ -137,16 +135,7 @@ export default function RootLayout({
           style={{position: 'relative', zIndex: 10}}
         >
           {children}
-          <div style={{position:'relative',zIndex:50}}>
-            <InContentAd />
-          </div>
         </main>
-        <div style={{position:'relative',zIndex:50}}>
-          <SmartlinkAd />
-        </div>
-        <div style={{position:'relative',zIndex:50}}>
-          <FooterAd />
-        </div>
         <Footer className="relative z-20" />
         <ScrollReveal />
         <PWAProvider />

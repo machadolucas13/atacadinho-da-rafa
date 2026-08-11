@@ -17,6 +17,7 @@ export default function AdDiagnosticPage() {
       hasWindow: typeof window !== "undefined",
       hasDocument: typeof document !== "undefined",
       hasDOMParser: typeof DOMParser !== "undefined",
+      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "N/A",
     };
 
     setTests(results);
@@ -27,23 +28,28 @@ export default function AdDiagnosticPage() {
       return;
     }
 
-    addLog("Container found, injecting raw HTML");
+    addLog("Container found, starting test");
 
-    const rawHtml = `
-      <script>
-        window.atOptions = {
-          'key' : 'a75d1c15fffc042a78552f24ca875571',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script src="https://russiaexternalknew.com/a75d1c15fffc042a78552f24ca875571/invoke.js"></script>
+    const script1 = document.createElement("script");
+    script1.textContent = `
+      window.atOptions = {
+        'key' : 'a75d1c15fffc042a78552f24ca875571',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
     `;
+    container.appendChild(script1);
+    addLog("atOptions script injected");
 
-    container.innerHTML = rawHtml;
-    addLog("Raw HTML injected");
+    const script2 = document.createElement("script");
+    script2.src = "https://russiaexternalknew.com/a75d1c15fffc042a78552f24ca875571/invoke.js";
+    script2.async = true;
+    script2.onload = () => addLog("invoke.js loaded");
+    script2.onerror = () => addLog("invoke.js FAILED to load");
+    container.appendChild(script2);
+    addLog("invoke.js script appended");
 
     const checkInterval = setInterval(() => {
       const iframe = container.querySelector("iframe");
@@ -108,117 +114,14 @@ export default function AdDiagnosticPage() {
         </div>
 
         <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Next.js Component Test</h2>
-          <AdComponentTest />
+          <h2 className="text-xl font-bold text-white mb-4">Interpretation</h2>
+          <div className="text-sm text-gray-300 space-y-2">
+            <p>If you see &quot;invoke.js loaded&quot; but no iframe → Adsterra has no ad for your domain/traffic right now.</p>
+            <p>If you see &quot;invoke.js FAILED to load&quot; → network/CSP issue.</p>
+            <p>If you see an iframe → ads are working! The issue is likely in how React/Next.js wraps them.</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function AdComponentTest() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [status, setStatus] = useState<string>("idle");
-  const [logs, setLogs] = useState<string[]>([]);
-
-  function log(msg: string) {
-    setLogs((l) => [...l, `${new Date().toLocaleTimeString()} - ${msg}`]);
-  }
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    log("Component mounted");
-
-    const container = containerRef.current;
-    container.innerHTML = "";
-
-    const key = "a75d1c15fffc042a78552f24ca875571";
-    const invokeSrc = "https://russiaexternalknew.com/a75d1c15fffc042a78552f24ca875571/invoke.js";
-
-    const timeout = setTimeout(() => {
-      log("Timeout - checking result");
-      const iframe = container.querySelector("iframe");
-      if (!iframe) {
-        log("FAIL: no iframe after timeout");
-        setStatus("error");
-      }
-    }, 12000);
-
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-          if (node.nodeName === "IFRAME") {
-            log(`SUCCESS: iframe detected via observer`);
-            clearTimeout(timeout);
-            setStatus("success");
-            observer.disconnect();
-            return;
-          }
-        }
-      }
-    });
-
-    observer.observe(container, { childList: true, subtree: true });
-
-    const atScript = document.createElement("script");
-    atScript.type = "text/javascript";
-    atScript.textContent = `
-      window.atOptions = {
-        key: '${key}',
-        format: 'iframe',
-        height: 250,
-        width: 300,
-        params: {}
-      };
-    `;
-    container.appendChild(atScript);
-    log("atOptions script injected");
-
-    const invokeScript = document.createElement("script");
-    invokeScript.src = invokeSrc;
-    invokeScript.async = true;
-    invokeScript.onload = () => log("invoke.js onload fired");
-    invokeScript.onerror = () => {
-      log("invoke.js onerror fired");
-      clearTimeout(timeout);
-      setStatus("error");
-    };
-    container.appendChild(invokeScript);
-    log("invoke.js script appended");
-
-    return () => {
-      clearTimeout(timeout);
-      observer.disconnect();
-    };
-  }, []);
-
-  return (
-    <div>
-      <div className="mb-4">
-        <div
-          ref={containerRef}
-          style={{
-            width: 300,
-            height: 250,
-            border: status === "success" ? "2px solid #22c55e" : "1px dashed rgba(255,255,255,0.2)",
-            background: "rgba(0,0,0,0.2)",
-          }}
-        />
-      </div>
-      <div className="space-y-1 max-h-48 overflow-y-auto">
-        {logs.map((log, i) => (
-          <div key={i} className="text-xs text-gray-400 font-mono">
-            {log}
-          </div>
-        ))}
-      </div>
-      {status === "success" && (
-        <div className="mt-2 text-sm text-green-400 font-semibold">Ad rendered successfully!</div>
-      )}
-      {status === "error" && (
-        <div className="mt-2 text-sm text-red-400 font-semibold">Ad failed to render</div>
-      )}
     </div>
   );
 }
