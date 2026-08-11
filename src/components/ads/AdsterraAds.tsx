@@ -12,32 +12,56 @@ type AdProps = {
 export function Ad({ html, src, width, height }: AdProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !ref.current) return;
+    if (typeof window === "undefined") {
+      console.log("[Ad] Server-side, skipping");
+      return;
+    }
 
     const container = ref.current;
+    if (!container) {
+      console.log("[Ad] No container ref");
+      return;
+    }
+
+    console.log(`[Ad] Mounting ad attempt ${attempt + 1}`, { width, height, src });
+
     container.innerHTML = "";
 
-    let timeout: number;
+    const timeout = window.setTimeout(() => {
+      console.log(`[Ad] Timeout after 10s, showing fallback`);
+      setError(true);
+    }, 10000);
 
     try {
+      console.log("[Ad] Creating atOptions script");
       const atOptionsScript = document.createElement("script");
       atOptionsScript.type = "text/javascript";
       atOptionsScript.textContent = html;
       container.appendChild(atOptionsScript);
+      console.log("[Ad] atOptions script appended");
 
+      console.log("[Ad] Creating invoke script");
       const invokeScript = document.createElement("script");
       invokeScript.src = src;
       invokeScript.async = true;
-      invokeScript.onload = () => setError(false);
-      invokeScript.onerror = () => setError(true);
-      container.appendChild(invokeScript);
-
-      timeout = window.setTimeout(() => {
+      invokeScript.onload = () => {
+        console.log(`[Ad] Invoke script loaded successfully`);
+        window.clearTimeout(timeout);
+        setError(false);
+      };
+      invokeScript.onerror = (e) => {
+        console.log(`[Ad] Invoke script failed to load`, e);
+        window.clearTimeout(timeout);
         setError(true);
-      }, 10000);
-    } catch {
+      };
+      container.appendChild(invokeScript);
+      console.log("[Ad] Invoke script appended, waiting...");
+    } catch (err) {
+      console.log("[Ad] Error during script creation", err);
+      window.clearTimeout(timeout);
       setError(true);
     }
 
@@ -47,15 +71,24 @@ export function Ad({ html, src, width, height }: AdProps) {
         ref.current.innerHTML = "";
       }
     };
-  }, [html, src]);
+  }, [html, src, attempt]);
+
+  const retry = () => {
+    console.log("[Ad] Retrying...");
+    setError(false);
+    setAttempt((a) => a + 1);
+  };
 
   if (error) {
+    console.log("[Ad] Showing error fallback");
     return (
       <div
+        onClick={retry}
         style={{
           width,
           height,
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           background: "rgba(255,255,255,0.03)",
@@ -63,9 +96,11 @@ export function Ad({ html, src, width, height }: AdProps) {
           color: "#6b7280",
           fontSize: 11,
           borderRadius: 8,
+          cursor: "pointer",
         }}
       >
-        Publicidade
+        <span>Publicidade</span>
+        <span style={{ fontSize: 9, marginTop: 4, opacity: 0.7 }}>clique para tentar novamente</span>
       </div>
     );
   }
@@ -81,6 +116,7 @@ export function Ad({ html, src, width, height }: AdProps) {
         maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
+        border: "1px solid rgba(255,255,255,0.05)",
       }}
     />
   );
@@ -138,7 +174,10 @@ export function TopAd() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-full overflow-hidden py-3">
+    <div
+      className="flex items-center justify-center w-full overflow-hidden"
+      style={{ position: "relative", zIndex: 50 }}
+    >
       <Ad
         html={isMobile ? BANNER_320x50 : BANNER_728x90}
         src={isMobile ? BANNER_320x50_SRC : BANNER_728x90_SRC}
@@ -151,7 +190,10 @@ export function TopAd() {
 
 export function InContentAd() {
   return (
-    <div className="flex items-center justify-center w-full overflow-hidden py-4">
+    <div
+      className="flex items-center justify-center w-full overflow-hidden"
+      style={{ position: "relative", zIndex: 50 }}
+    >
       <Ad html={BANNER_300x250} src={BANNER_300x250_SRC} width={300} height={250} />
     </div>
   );
@@ -159,7 +201,10 @@ export function InContentAd() {
 
 export function FooterAd() {
   return (
-    <div className="flex items-center justify-center w-full overflow-hidden py-4">
+    <div
+      className="flex items-center justify-center w-full overflow-hidden"
+      style={{ position: "relative", zIndex: 50 }}
+    >
       <Ad html={BANNER_300x250} src={BANNER_300x250_SRC} width={300} height={250} />
     </div>
   );
@@ -167,7 +212,10 @@ export function FooterAd() {
 
 export function SmartlinkAd() {
   return (
-    <div className="flex items-center justify-center w-full overflow-hidden py-4">
+    <div
+      className="flex items-center justify-center w-full overflow-hidden"
+      style={{ position: "relative", zIndex: 50 }}
+    >
       <Ad html={SMARTLINK} src={SMARTLINK_SRC} width={300} height={250} />
     </div>
   );
