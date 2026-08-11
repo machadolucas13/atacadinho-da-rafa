@@ -12,7 +12,6 @@ type AdProps = {
 
 export function Ad({ adKey, invokeSrc, width, height, delay = 0 }: AdProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [shouldInit, setShouldInit] = useState(false);
 
   useEffect(() => {
@@ -27,75 +26,63 @@ export function Ad({ adKey, invokeSrc, width, height, delay = 0 }: AdProps) {
     const container = containerRef.current;
     container.innerHTML = "";
 
-    const timeout = window.setTimeout(() => {
-      if (status === "loading") {
-        setStatus("error");
-      }
-    }, 12000);
+    let timeout: number;
+    let observer: MutationObserver | null = null;
 
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-          if (node.nodeName === "IFRAME") {
-            window.clearTimeout(timeout);
-            setStatus("ready");
-            observer.disconnect();
-            return;
+    const init = () => {
+      timeout = window.setTimeout(() => {
+        setShouldInit(false);
+      }, 12000);
+
+      observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeName === "IFRAME") {
+              window.clearTimeout(timeout);
+              if (observer) observer.disconnect();
+              return;
+            }
           }
         }
+      });
+
+      observer.observe(container, { childList: true, subtree: true });
+
+      try {
+        const atScript = document.createElement("script");
+        atScript.type = "text/javascript";
+        atScript.textContent = `
+          window.atOptions = {
+            key: '${adKey}',
+            format: 'iframe',
+            height: ${height},
+            width: ${width},
+            params: {}
+          };
+        `;
+        container.appendChild(atScript);
+
+        const invokeScript = document.createElement("script");
+        invokeScript.src = invokeSrc;
+        invokeScript.async = true;
+        container.appendChild(invokeScript);
+      } catch {
+        window.clearTimeout(timeout);
+        if (observer) observer.disconnect();
+        setShouldInit(false);
       }
-    });
+    };
 
-    observer.observe(container, { childList: true, subtree: true });
-
-    try {
-      const atScript = document.createElement("script");
-      atScript.type = "text/javascript";
-      atScript.textContent = `
-        window.atOptions = {
-          key: '${adKey}',
-          format: 'iframe',
-          height: ${height},
-          width: ${width},
-          params: {}
-        };
-      `;
-      container.appendChild(atScript);
-
-      const invokeScript = document.createElement("script");
-      invokeScript.src = invokeSrc;
-      invokeScript.async = true;
-      container.appendChild(invokeScript);
-    } catch {
-      window.clearTimeout(timeout);
-      setStatus("error");
-    }
+    init();
 
     return () => {
       window.clearTimeout(timeout);
-      observer.disconnect();
+      if (observer) observer.disconnect();
     };
-  }, [shouldInit, adKey, invokeSrc, width, height, status]);
+  }, [shouldInit, adKey, invokeSrc, width, height]);
 
-  if (status === "error") {
-    return (
-      <div
-        style={{
-          width,
-          height,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "rgba(255,255,255,0.03)",
-          border: "1px dashed rgba(255,255,255,0.1)",
-          color: "#6b7280",
-          fontSize: 11,
-          borderRadius: 8,
-        }}
-      >
-        Publicidade
-      </div>
-    );
+  if (!shouldInit) {
+    return null;
   }
 
   return (

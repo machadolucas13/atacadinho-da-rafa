@@ -129,9 +129,7 @@ export default function RootLayout({
         <AdSenseScript />
         <PinterestTag />
         <JsonLd />
-        <div style={{position:'relative',zIndex:50,background:'rgba(244,167,185,0.08)',borderBottom:'1px solid rgba(244,167,185,0.2)'}}>
-          <TopAd />
-        </div>
+        <TopAd />
         <Navbar />
         <BackgroundStarfield />
         <main
@@ -139,16 +137,10 @@ export default function RootLayout({
           style={{position: 'relative', zIndex: 10}}
         >
           {children}
-          <div style={{position:'relative',zIndex:50,background:'rgba(244,167,185,0.08)',borderTop:'1px solid rgba(244,167,185,0.2)',borderBottom:'1px solid rgba(244,167,185,0.2)'}}>
-            <InContentAd />
-          </div>
+          <InContentAd />
         </main>
-        <div style={{position:'relative',zIndex:50,background:'rgba(244,167,185,0.08)',borderTop:'1px solid rgba(244,167,185,0.2)',borderBottom:'1px solid rgba(244,167,185,0.2)'}}>
-          <SmartlinkAd />
-        </div>
-        <div style={{position:'relative',zIndex:50,background:'rgba(244,167,185,0.08)',borderTop:'1px solid rgba(244,167,185,0.2)'}}>
-          <FooterAd />
-        </div>
+        <SmartlinkAd />
+        <FooterAd />
         <Footer className="relative z-20" />
         <ScrollReveal />
         <PWAProvider />
