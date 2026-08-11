@@ -3,49 +3,70 @@
 import { useEffect, useRef, useState } from "react";
 
 type AdProps = {
-  html: string;
-  width: number;
+  key: string;
+  format: "iframe";
   height: number;
+  width: number;
+  src?: string;
 };
 
-export function Ad({ html, width, height }: AdProps) {
-  const ref = useRef<HTMLDivElement>(null);
+const ADSTERRA_INVOKE = "https://russiaexternalknew.com/fvt0cu1tg/invoke.js";
+
+export function Ad({ key, format, height, width, src }: AdProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !ref.current) return;
+    if (typeof window === "undefined" || !containerRef.current) return;
 
-    const container = ref.current;
-    console.log("[Ad] Container found, injecting HTML", { width, height });
+    const container = containerRef.current;
+    container.innerHTML = "";
+
+    const adKey = key || `ad-${Math.random().toString(36).slice(2, 9)}`;
+    const invokeSrc = src || ADSTERRA_INVOKE;
+
+    console.log("[Ad] Initializing ad", { adKey, width, height, invokeSrc });
 
     const timeout = window.setTimeout(() => {
-      console.log("[Ad] Timeout - no ad rendered");
+      console.log("[Ad] Timeout waiting for iframe", { adKey });
       setError(true);
-    }, 12000);
+    }, 10000);
 
     try {
-      container.innerHTML = html;
+      window.atOptions = {
+        key: adKey,
+        format,
+        height,
+        width,
+        params: {},
+      };
+
+      console.log("[Ad] window.atOptions set", window.atOptions);
 
       const invokeScript = document.createElement("script");
-      invokeScript.src = "https://russiaexternalkew.com/fvt0cu1tg/invoke.js";
+      invokeScript.src = invokeSrc;
       invokeScript.async = true;
       invokeScript.onload = () => {
-        console.log("[Ad] Invoke script loaded");
-        window.clearTimeout(timeout);
+        console.log("[Ad] invoke.js loaded", { adKey });
       };
       invokeScript.onerror = () => {
-        console.log("[Ad] Invoke script failed");
+        console.log("[Ad] invoke.js failed to load", { adKey });
         window.clearTimeout(timeout);
         setError(true);
       };
       container.appendChild(invokeScript);
 
-      const observer = new MutationObserver(() => {
-        const iframe = container.querySelector("iframe");
-        if (iframe) {
-          console.log("[Ad] Iframe detected!", iframe);
-          window.clearTimeout(timeout);
-          setError(false);
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeName === "IFRAME") {
+              console.log("[Ad] Iframe rendered!", { adKey, node });
+              window.clearTimeout(timeout);
+              setError(false);
+              observer.disconnect();
+              return;
+            }
+          }
         }
       });
 
@@ -56,11 +77,11 @@ export function Ad({ html, width, height }: AdProps) {
         observer.disconnect();
       };
     } catch (err) {
-      console.log("[Ad] Error injecting HTML", err);
+      console.log("[Ad] Error during init", err);
       window.clearTimeout(timeout);
       setError(true);
     }
-  }, [html]);
+  }, [key, format, height, width, src]);
 
   if (error) {
     return (
@@ -85,7 +106,7 @@ export function Ad({ html, width, height }: AdProps) {
 
   return (
     <div
-      ref={ref}
+      ref={containerRef}
       style={{
         width,
         height,
@@ -94,42 +115,23 @@ export function Ad({ html, width, height }: AdProps) {
         maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
+        border: "1px solid rgba(255,255,255,0.05)",
       }}
     />
   );
 }
 
-export const BANNER_320x50 = `atOptions = {
-  'key' : '7292007a1bc473f486b8326ae9244783',
-  'format' : 'iframe',
-  'height' : 50,
-  'width' : 320,
-  'params' : {}
-};<script src="https://russiaexternalknew.com/7292007a1bc473f486b8326ae9244783/invoke.js"><\/script>`;
+export const BANNER_320x50_KEY = "7292007a1bc473f486b8326ae9244783";
+export const BANNER_320x50_INVOKE = "https://russiaexternalknew.com/7292007a1bc473f486b8326ae9244783/invoke.js";
 
-export const BANNER_728x90 = `atOptions = {
-  'key' : '1d6a72f04d50f848ad503a3e4f4889f6',
-  'format' : 'iframe',
-  'height' : 90,
-  'width' : 728,
-  'params' : {}
-};<script src="https://russiaexternalknew.com/1d6a72f04d50f848ad503a3e4f4889f6/invoke.js"><\/script>`;
+export const BANNER_728x90_KEY = "1d6a72f04d50f848ad503a3e4f4889f6";
+export const BANNER_728x90_INVOKE = "https://russiaexternalknew.com/1d6a72f04d50f848ad503a3e4f4889f6/invoke.js";
 
-export const BANNER_300x250 = `atOptions = {
-  'key' : 'a75d1c15fffc042a78552f24ca875571',
-  'format' : 'iframe',
-  'height' : 250,
-  'width' : 300,
-  'params' : {}
-};<script src="https://russiaexternalknew.com/a75d1c15fffc042a78552f24ca875571/invoke.js"><\/script>`;
+export const BANNER_300x250_KEY = "a75d1c15fffc042a78552f24ca875571";
+export const BANNER_300x250_INVOKE = "https://russiaexternalknew.com/a75d1c15fffc042a78552f24ca875571/invoke.js";
 
-export const SMARTLINK = `atOptions = {
-  'key' : 'f243d170cc0bf2fcd1df74001886740a',
-  'format' : 'iframe',
-  'height' : 250,
-  'width' : 300,
-  'params' : {}
-};<script src="https://russiaexternalkew.com/fvt0cu1tg/invoke.js"><\/script>`;
+export const SMARTLINK_KEY = "f243d170cc0bf2fcd1df74001886740a";
+export const SMARTLINK_INVOKE = "https://russiaexternalknew.com/fvt0cu1tg/invoke.js";
 
 export function TopAd() {
   const [isMobile, setIsMobile] = useState(false);
@@ -148,9 +150,11 @@ export function TopAd() {
       style={{ position: "relative", zIndex: 50 }}
     >
       <Ad
-        html={isMobile ? BANNER_320x50 : BANNER_728x90}
+        key={isMobile ? BANNER_320x50_KEY : BANNER_728x90_KEY}
+        format="iframe"
         width={isMobile ? 320 : 728}
         height={isMobile ? 50 : 90}
+        src={isMobile ? BANNER_320x50_INVOKE : BANNER_728x90_INVOKE}
       />
     </div>
   );
@@ -162,7 +166,13 @@ export function InContentAd() {
       className="flex items-center justify-center w-full overflow-hidden"
       style={{ position: "relative", zIndex: 50 }}
     >
-      <Ad html={BANNER_300x250} width={300} height={250} />
+      <Ad
+        key={BANNER_300x250_KEY}
+        format="iframe"
+        width={300}
+        height={250}
+        src={BANNER_300x250_INVOKE}
+      />
     </div>
   );
 }
@@ -173,7 +183,13 @@ export function FooterAd() {
       className="flex items-center justify-center w-full overflow-hidden"
       style={{ position: "relative", zIndex: 50 }}
     >
-      <Ad html={BANNER_300x250} width={300} height={250} />
+      <Ad
+        key={BANNER_300x250_KEY}
+        format="iframe"
+        width={300}
+        height={250}
+        src={BANNER_300x250_INVOKE}
+      />
     </div>
   );
 }
@@ -184,7 +200,13 @@ export function SmartlinkAd() {
       className="flex items-center justify-center w-full overflow-hidden"
       style={{ position: "relative", zIndex: 50 }}
     >
-      <Ad html={SMARTLINK} width={300} height={250} />
+      <Ad
+        key={SMARTLINK_KEY}
+        format="iframe"
+        width={300}
+        height={250}
+        src={SMARTLINK_INVOKE}
+      />
     </div>
   );
 }
