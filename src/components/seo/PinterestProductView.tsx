@@ -7,12 +7,18 @@ interface PinterestProductViewProps {
   productName?: string;
   category?: string;
   value?: number;
+  price?: string;
+  available?: boolean;
+  image?: string;
 }
 
 export default function PinterestProductView({
   productName,
   category,
   value,
+  price,
+  available = true,
+  image,
 }: PinterestProductViewProps) {
   useEffect(() => {
     if (category) {
@@ -22,9 +28,15 @@ export default function PinterestProductView({
       trackPageVisit(`product: ${productName}`);
     }
     if (value && value > 0) {
-      trackCustomEvent("viewproduct", { value, product_name: productName, product_category: category });
+      trackCustomEvent("viewproduct", {
+        value,
+        product_name: productName,
+        product_category: category,
+        price,
+        available,
+      });
     }
-  }, [productName, category, value]);
+  }, [productName, category, value, price, available]);
 
   return null;
 }

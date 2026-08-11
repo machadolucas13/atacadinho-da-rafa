@@ -8,23 +8,27 @@ export interface Pin {
   destaque: boolean;
   categoriaId: string;
   publicadoEm?: string;
-  links?: { nome: string; preco: string; url: string }[];
+  links?: { nome: string; preco: string; url: string; imagem?: string }[];
   tags?: string[];
+  dicaUso?: string;
+  imagemPrincipal?: string;
 }
 
 export const pins: Pin[] = [
    {
-     id: "pin-jeans-pt",
-     slug: "calcaspromocaocalcas-jeans-femininas-economicas-2026",
-     locale: "pt",
-     titulo: "Calças Jeans Femininas a partir de R$ 24,90",
-     descricao: "20 modelos que empinham o bumbum: wide leg, flare, cargo, skinny e mais.",
-     imagem: "/images/pin1.png",
-     destaque: true,
-     categoriaId: "moda-feminina",
-     publicadoEm: "2026-07-22",
-     tags: ["Destaque", "Tendência", "Moda Feminina"],
-     links: [
+      id: "pin-jeans-pt",
+      slug: "calcaspromocaocalcas-jeans-femininas-economicas-2026",
+      locale: "pt",
+      titulo: "Calças Jeans Femininas a partir de R$ 24,90",
+      descricao: "20 modelos que empinham o bumbum: wide leg, flare, cargo, skinny e mais.",
+      imagem: "/images/pin1.png",
+      destaque: true,
+      categoriaId: "moda-feminina",
+      publicadoEm: "2026-07-22",
+      tags: ["Destaque", "Tendência", "Moda Feminina"],
+      dicaUso: "Perfeito para sair à noite, trabalho casual ou encontros. Combine com tênis branco ou sandália e ganhe um look moderno sem esforço.",
+      imagemPrincipal: "https://s.shopee.com.br/4AyZKPbq6n",
+      links: [
       { nome: "Calça Jeans Feminina | Bazar Brechó Desapego usada", preco: "R$ 24,90", url: "https://s.shopee.com.br/4qEG7HYQVJ" },
       { nome: "calça wide leg jeans feminina levanta bumbum", preco: "R$ 29,90", url: "https://s.shopee.com.br/5fnN74lkgj" },
       { nome: "calça jeans feminina levanta bumbum cintura alta com lycra", preco: "R$ 36,90", url: "https://s.shopee.com.br/1Vxo9SwHGb" },
@@ -48,17 +52,19 @@ export const pins: Pin[] = [
     ],
   },
    {
-     id: "pin-tenis-pt",
-     slug: "tenis-corrida-masculino-feminino-2026",
-     locale: "pt",
-     titulo: "Tênis de Corrida Masculino e Feminino: os melhores modelos para você treinar com estilo",
-     descricao: "Selecionamos tênis de corrida masculinos e femininos que combinam conforto, performance e estilo.",
-     imagem: "/images/pin2.png",
-     destaque: true,
-     categoriaId: "calcados",
-     publicadoEm: "2026-07-23",
-     tags: ["Esporte", "Fitness", "Tendência"],
-     links: [
+      id: "pin-tenis-pt",
+      slug: "tenis-corrida-masculino-feminino-2026",
+      locale: "pt",
+      titulo: "Tênis de Corrida Masculino e Feminino: os melhores modelos para você treinar com estilo",
+      descricao: "Selecionamos tênis de corrida masculinos e femininos que combinam conforto, performance e estilo.",
+      imagem: "/images/pin2.png",
+      destaque: true,
+      categoriaId: "calcados",
+      publicadoEm: "2026-07-23",
+      tags: ["Esporte", "Fitness", "Tendência"],
+      dicaUso: "Use para corrida, academia, caminhada ou looks casuais. Dica: escolha modelos com amortecimento se treinar mais de 3 vezes por semana.",
+      imagemPrincipal: "https://s.shopee.com.br/3qLjBG86H9",
+      links: [
       { nome: "Tênis New Balance 530 Feminino Original Casual Retrô Conforto Academia Caminhada Dia a Dia Leve", preco: "R$ 591,40", url: "https://s.shopee.com.br/3qLjBG86H9" },
       { nome: "Tênis Feminino New Balance 530 Esportivo Casual Respirável Solado Robusto Confortável Original", preco: "R$ 572,91", url: "https://s.shopee.com.br/9KgfjTaZXr" },
       { nome: "Tênis New Balance Fresh Foam Arishi V4 Feminino Original com Nota Fiscal e Garantia", preco: "R$ 345,21", url: "https://s.shopee.com.br/Llr11YRzl" },
@@ -142,18 +148,20 @@ export const pins: Pin[] = [
     ],
   },
    {
-     id: "pin-lembrancinhas-pt",
-     slug: "lembrancinhas-para-festas",
-     locale: "pt",
-     titulo: "Lembrancinhas para festas: ideias criativas para aniversário, maternidade e eventos",
-     descricao: "20 sugestões de lembrancinhas para festas com precinho, link direto e dicas para encantar os convidados.",
-     imagem: "/images/pin3.png",
-     destaque: true,
-     categoriaId: "festas",
-     publicadoEm: "2026-07-24",
-     tags: ["Festas", "Criativo", "Novo"],
-     links: [
-      { nome: "Sabonete lembrancinha maternidade nome personalizado", preco: "R$ 78,00 - R$ 281,58", url: "https://s.shopee.com.br/2VqOlfAgHE" },
+      id: "pin-lembrancinhas-pt",
+      slug: "lembrancinhas-para-festas",
+      locale: "pt",
+      titulo: "Lembrancinhas para festas: ideias criativas para aniversário, maternidade e eventos",
+      descricao: "20 sugestões de lembrancinhas para festas com precinho, link direto e dicas para encantar os convidados.",
+      imagem: "/images/pin3.png",
+      destaque: true,
+      categoriaId: "festas",
+      publicadoEm: "2026-07-24",
+      tags: ["Festas", "Criativo", "Novo"],
+      dicaUso: "Ideal para festas de aniversário infantil, chá revelação, maternidade e eventos escolares. Combine 2 a 3 itens diferentes para criar kits personalizados.",
+      imagemPrincipal: "https://s.shopee.com.br/2VqOlfAgHE",
+      links: [
+       { nome: "Sabonete lembrancinha maternidade nome personalizado", preco: "R$ 78,00 - R$ 281,58", url: "https://s.shopee.com.br/2VqOlfAgHE", imagem: "https://s.shopee.com.br/2VqOlfAgHE" },
       { nome: "Maleta fazendinha aniversário lembrancinha kits 10/20/30 unidades", preco: "R$ 67,50 - R$ 270,00", url: "https://s.shopee.com.br/4VbT9Mkw31" },
       { nome: "Copos Mini Bucks 250ml lembrancinha aniversário Princesas Aquarela", preco: "R$ 60,00 - R$ 120,00", url: "https://s.shopee.com.br/1BL1BFsoyK" },
       { nome: "Kit festas chá revelação neutro lembrancinha personalizadas", preco: "R$ 35,91 - R$ 71,01", url: "https://s.shopee.com.br/AUsgIQEUDZ" },
@@ -183,16 +191,18 @@ export const pins: Pin[] = [
     ],
   },
    {
-     id: "pin-quarto-infantil-pt",
-     slug: "gadgets-para-quarto-2026",
-     locale: "pt",
-     titulo: "gadgets: quarto de criança e bebê — 25 achados que decoram, organizam e deixam o quarto perfeito",
-     descricao: "Selecionamos achados para quarto infantil e de bebê que combinam praticidade, decoração e carinho em 2026.",
-     imagem: "/images/pin4.png",
-     destaque: true,
-     categoriaId: "tecnologia",
-     publicadoEm: "2026-07-25",
-     tags: ["Quarto Infantil", "Bebê", "Decoração"],
+      id: "pin-quarto-infantil-pt",
+      slug: "gadgets-para-quarto-2026",
+      locale: "pt",
+      titulo: "gadgets: quarto de criança e bebê — 25 achados que decoram, organizam e deixam o quarto perfeito",
+      descricao: "Selecionamos achados para quarto infantil e de bebê que combinam praticidade, decoração e carinho em 2026.",
+      imagem: "/images/pin4.png",
+      destaque: true,
+      categoriaId: "tecnologia",
+      publicadoEm: "2026-07-25",
+      tags: ["Quarto Infantil", "Bebê", "Decoração"],
+      dicaUso: "Use para organizar brinquedos, iluminar o quarto à noite e deixar o ambiente mais fofo. Ideal para chá de bebê e decoração infantil.",
+      imagemPrincipal: "https://s.shopee.com.br/9V096vaCzl",
       links: [
        { nome: "Luminária Led Luz Noturna com Sensor Automático Quarto Bebê", preco: "R$ 19,99", url: "https://s.shopee.com.br/9V096vaCzl" },
        { nome: "Lixeira Antiodor Para Quarto do Bebê Banheiro Fraldas Anti Bacteriana 10 Litros", preco: "R$ 169,90", url: "https://s.shopee.com.br/3qLmMaOpI2" },
