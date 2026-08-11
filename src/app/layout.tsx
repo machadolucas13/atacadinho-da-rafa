@@ -147,10 +147,6 @@ export default function RootLayout({
         <div style={{position:'relative',zIndex:50}}>
           <FooterAd />
         </div>
-        {/* TEST: temporary debug banner - REMOVE AFTER TESTING */}
-        <div style={{position:'relative',zIndex:50,background:'red',color:'white',padding:'10px',textAlign:'center',margin:'10px 0'}}>
-          TESTE VISIBILIDADE ADS - SE VOCE VE ISSO, O LAYOUT ESTA RENDERIZANDO
-        </div>
         <Footer className="relative z-20" />
         <ScrollReveal />
         <PWAProvider />
