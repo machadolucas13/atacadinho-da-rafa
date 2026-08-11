@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 type AdProps = {
   html: string;
+  src: string;
   width: number;
   height: number;
 };
 
-export function Ad({ html, width, height }: AdProps) {
+export function Ad({ html, src, width, height }: AdProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
 
@@ -18,20 +19,35 @@ export function Ad({ html, width, height }: AdProps) {
     const container = ref.current;
     container.innerHTML = "";
 
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.innerHTML = html;
-    container.appendChild(script);
+    let timeout: number;
 
-    const timeout = window.setTimeout(() => {
+    try {
+      const atOptionsScript = document.createElement("script");
+      atOptionsScript.type = "text/javascript";
+      atOptionsScript.textContent = html;
+      container.appendChild(atOptionsScript);
+
+      const invokeScript = document.createElement("script");
+      invokeScript.src = src;
+      invokeScript.async = true;
+      invokeScript.onload = () => setError(false);
+      invokeScript.onerror = () => setError(true);
+      container.appendChild(invokeScript);
+
+      timeout = window.setTimeout(() => {
+        setError(true);
+      }, 10000);
+    } catch {
       setError(true);
-    }, 8000);
+    }
 
     return () => {
       window.clearTimeout(timeout);
-      container.innerHTML = "";
+      if (ref.current) {
+        ref.current.innerHTML = "";
+      }
     };
-  }, [html]);
+  }, [html, src]);
 
   if (error) {
     return (
@@ -125,6 +141,7 @@ export function TopAd() {
     <div className="flex items-center justify-center w-full overflow-hidden py-3">
       <Ad
         html={isMobile ? BANNER_320x50 : BANNER_728x90}
+        src={isMobile ? BANNER_320x50_SRC : BANNER_728x90_SRC}
         width={isMobile ? 320 : 728}
         height={isMobile ? 50 : 90}
       />
@@ -135,7 +152,7 @@ export function TopAd() {
 export function InContentAd() {
   return (
     <div className="flex items-center justify-center w-full overflow-hidden py-4">
-      <Ad html={BANNER_300x250} width={300} height={250} />
+      <Ad html={BANNER_300x250} src={BANNER_300x250_SRC} width={300} height={250} />
     </div>
   );
 }
@@ -143,7 +160,7 @@ export function InContentAd() {
 export function FooterAd() {
   return (
     <div className="flex items-center justify-center w-full overflow-hidden py-4">
-      <Ad html={BANNER_300x250} width={300} height={250} />
+      <Ad html={BANNER_300x250} src={BANNER_300x250_SRC} width={300} height={250} />
     </div>
   );
 }
@@ -151,7 +168,7 @@ export function FooterAd() {
 export function SmartlinkAd() {
   return (
     <div className="flex items-center justify-center w-full overflow-hidden py-4">
-      <Ad html={SMARTLINK} width={300} height={250} />
+      <Ad html={SMARTLINK} src={SMARTLINK_SRC} width={300} height={250} />
     </div>
   );
 }
