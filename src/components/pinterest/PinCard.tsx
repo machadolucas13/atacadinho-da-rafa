@@ -147,7 +147,6 @@ export default function PinCard({ pin, locale }: PinCardProps) {
                   slug: pin.slug,
                   imagemCapa: pin.imagem,
                 }}
-                className="rounded-full bg-white/10 p-2 backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-110"
               />
             </div>
           </div>
