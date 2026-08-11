@@ -1,27 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
 
 type AdProps = {
-  key: string;
-  format: "iframe";
-  height: number;
+  adKey: string;
+  invokeSrc: string;
   width: number;
-  src?: string;
+  height: number;
 };
 
-const ADSTERRA_INVOKE = "https://russiaexternalknew.com/fvt0cu1tg/invoke.js";
-
-export function Ad({ key, format, height, width, src }: AdProps) {
+export function Ad({ adKey, invokeSrc, width, height }: AdProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [adKey, setAdKey] = useState(key);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    setAdKey(key || `ad-${Math.random().toString(36).slice(2, 9)}`);
-  }, [key]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
@@ -29,35 +19,55 @@ export function Ad({ key, format, height, width, src }: AdProps) {
     const container = containerRef.current;
     container.innerHTML = "";
 
-    const currentKey = adKey;
-    const invokeSrc = src || ADSTERRA_INVOKE;
-
-    console.log("[Ad] Mounting", { currentKey, width, height, invokeSrc });
-
     const timeout = window.setTimeout(() => {
-      console.log("[Ad] Timeout", { currentKey, status });
       if (status === "loading") {
         setStatus("error");
       }
     }, 12000);
 
-    const observer = new MutationObserver(() => {
-      const iframe = container.querySelector("iframe");
-      if (iframe) {
-        console.log("[Ad] Iframe detected - success!", { currentKey });
-        window.clearTimeout(timeout);
-        setStatus("ready");
-        observer.disconnect();
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeName === "IFRAME") {
+            window.clearTimeout(timeout);
+            setStatus("ready");
+            observer.disconnect();
+            return;
+          }
+        }
       }
     });
 
     observer.observe(container, { childList: true, subtree: true });
 
+    try {
+      const atScript = document.createElement("script");
+      atScript.type = "text/javascript";
+      atScript.textContent = `
+        window.atOptions = {
+          key: '${adKey}',
+          format: 'iframe',
+          height: ${height},
+          width: ${width},
+          params: {}
+        };
+      `;
+      container.appendChild(atScript);
+
+      const invokeScript = document.createElement("script");
+      invokeScript.src = invokeSrc;
+      invokeScript.async = true;
+      container.appendChild(invokeScript);
+    } catch {
+      window.clearTimeout(timeout);
+      setStatus("error");
+    }
+
     return () => {
       window.clearTimeout(timeout);
       observer.disconnect();
     };
-  }, [adKey, format, height, width, src]);
+  }, [adKey, invokeSrc, width, height]);
 
   if (status === "error") {
     return (
@@ -80,8 +90,6 @@ export function Ad({ key, format, height, width, src }: AdProps) {
     );
   }
 
-  const invokeSrc = src || ADSTERRA_INVOKE;
-
   return (
     <div
       ref={containerRef}
@@ -93,55 +101,8 @@ export function Ad({ key, format, height, width, src }: AdProps) {
         maxWidth: "100%",
         overflow: "hidden",
         position: "relative",
-        border: status === "loading" ? "2px solid #F4A7B9" : "1px solid rgba(255,255,255,0.05)",
-        background: status === "loading" ? "rgba(244,167,185,0.05)" : "transparent",
       }}
-    >
-      {status === "loading" && (
-        <div
-          style={{
-            position: "absolute",
-            top: 4,
-            right: 4,
-            background: "#F4A7B9",
-            color: "#000",
-            fontSize: 9,
-            fontWeight: "bold",
-            padding: "2px 6px",
-            borderRadius: 4,
-            zIndex: 10,
-          }}
-        >
-          AD TEST
-        </div>
-      )}
-      <Script
-        id={`adsterra-at-${adKey}`}
-        strategy="afterInteractive"
-      >
-        {`
-          window.atOptions = {
-            key: '${adKey}',
-            format: ${format},
-            height: ${height},
-            width: ${width},
-            params: {}
-          };
-        `}
-      </Script>
-      <Script
-        id={`adsterra-invoke-${adKey}`}
-        src={invokeSrc}
-        strategy="afterInteractive"
-        onLoad={() => {
-          console.log("[Ad] invoke.js loaded via Next Script", { adKey });
-        }}
-        onError={() => {
-          console.log("[Ad] invoke.js failed via Next Script", { adKey });
-          setStatus("error");
-        }}
-      />
-    </div>
+    />
   );
 }
 
@@ -174,11 +135,10 @@ export function TopAd() {
       style={{ position: "relative", zIndex: 50 }}
     >
       <Ad
-        key={isMobile ? BANNER_320x50_KEY : BANNER_728x90_KEY}
-        format="iframe"
+        adKey={isMobile ? BANNER_320x50_KEY : BANNER_728x90_KEY}
+        invokeSrc={isMobile ? BANNER_320x50_INVOKE : BANNER_728x90_INVOKE}
         width={isMobile ? 320 : 728}
         height={isMobile ? 50 : 90}
-        src={isMobile ? BANNER_320x50_INVOKE : BANNER_728x90_INVOKE}
       />
     </div>
   );
@@ -191,11 +151,10 @@ export function InContentAd() {
       style={{ position: "relative", zIndex: 50 }}
     >
       <Ad
-        key={BANNER_300x250_KEY}
-        format="iframe"
+        adKey={BANNER_300x250_KEY}
+        invokeSrc={BANNER_300x250_INVOKE}
         width={300}
         height={250}
-        src={BANNER_300x250_INVOKE}
       />
     </div>
   );
@@ -208,11 +167,10 @@ export function FooterAd() {
       style={{ position: "relative", zIndex: 50 }}
     >
       <Ad
-        key={BANNER_300x250_KEY}
-        format="iframe"
+        adKey={BANNER_300x250_KEY}
+        invokeSrc={BANNER_300x250_INVOKE}
         width={300}
         height={250}
-        src={BANNER_300x250_INVOKE}
       />
     </div>
   );
@@ -225,11 +183,10 @@ export function SmartlinkAd() {
       style={{ position: "relative", zIndex: 50 }}
     >
       <Ad
-        key={SMARTLINK_KEY}
-        format="iframe"
+        adKey={SMARTLINK_KEY}
+        invokeSrc={SMARTLINK_INVOKE}
         width={300}
         height={250}
-        src={SMARTLINK_INVOKE}
       />
     </div>
   );
