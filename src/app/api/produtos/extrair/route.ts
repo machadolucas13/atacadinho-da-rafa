@@ -183,29 +183,42 @@ export async function POST(request: Request) {
       });
     }
 
-    const response = await fetch(baseUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        Connection: "keep-alive",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Upgrade-Insecure-Requests": "1",
-      },
-      redirect: "follow",
-    });
+    let html = "";
+    let scrapeError = "";
+    try {
+      const response = await fetch(baseUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+          "Accept-Encoding": "gzip, deflate, br",
+          Connection: "keep-alive",
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-Site": "none",
+          "Upgrade-Insecure-Requests": "1",
+        },
+        redirect: "follow",
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        scrapeError = `HTTP ${response.status}`;
+      } else {
+        html = await response.text();
+      }
+    } catch (e) {
+      scrapeError = "Erro de conexao ou bloqueio";
+    }
+
+    if (!html) {
       return NextResponse.json(
-        { error: `HTTP ${response.status}` },
-        { status: response.status }
+        {
+          error: `Nao foi possivel acessar a pagina. ${scrapeError}. Tente colar a imagem e preco manualmente.`,
+        },
+        { status: 422 }
       );
     }
 
-    const html = await response.text();
     const jsonLd = extractFromJsonLd(html);
     const meta = extractFromMeta(html, baseUrl);
     const textPrices = extractPriceFromText(html);
@@ -214,6 +227,15 @@ export async function POST(request: Request) {
     const imagem = jsonLd.imagem || meta.imagem;
     const preco = jsonLd.preco || meta.preco || textPrices.preco || 0;
     const precoOriginal = meta.precoOriginal || textPrices.precoOriginal || 0;
+
+    if (!titulo && !imagem) {
+      return NextResponse.json(
+        {
+          error: "Pagina carregou mas nao foi possivel extrair titulo nem imagem. Preencha manualmente.",
+        },
+        { status: 422 }
+      );
+    }
 
     return NextResponse.json({
       titulo,

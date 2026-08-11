@@ -16,7 +16,6 @@ module.exports = {
       },
       {
         protocol: "https",
-        protocol: "https",
         hostname: "*.amazon.com",
       },
       {
@@ -41,7 +40,7 @@ module.exports = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://russiaexternalkew.com https://*.googlesyndication.com https://*.google-analytics.com https://*.facebook.net https://*.fbcdn.net https://*.g.doubleclick.net https://*.google.com https://*.googleapis.com https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://*.googleapis.com; img-src 'self' data: blob: https: http:; frame-src 'self' https://*.facebook.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net; connect-src 'self' https://*.google-analytics.com https://*.firebase.com https://*.firebaseio.com https://*.googleapis.com https://*.gstatic.com https://*.shopee.com.br https://*.amazon.com https://*.mercadolivre.com.br; font-src 'self' https://*.gstatic.com https://*.googleapis.com; object-src 'none'; frame-ancestors 'none';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://russiaexternalkew.com https://*.googlesyndication.com https://*.google-analytics.com https://*.facebook.net https://*.fbcdn.net https://*.g.doubleclick.net https://*.google.com https://*.googleapis.com https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://*.googleapis.com; img-src 'self' data: blob: https: http:; frame-src 'self' https://*.facebook.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net https://russiaexternalkew.com https://*.adsterra.com; connect-src 'self' https://*.google-analytics.com https://*.firebase.com https://*.firebaseio.com https://*.googleapis.com https://*.gstatic.com https://*.shopee.com.br https://*.amazon.com https://*.mercadolivre.com.br https://russiaexternalkew.com https://*.adsterra.com; font-src 'self' https://*.gstatic.com https://*.googleapis.com; object-src 'none'; frame-ancestors 'none';",
           },
         ],
       },

@@ -7,10 +7,13 @@ import { getPins } from "@/lib/pins";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://atacadinhodarafa.vercel.app";
 
-  const artigos = await getArtigos();
-  const categorias = await getCategorias();
-  const pastas = await getPastas();
-  const pins = await getPins("pt");
+  const [artigosPt, artigosEn, categorias, pastas, pinsPt] = await Promise.all([
+    getArtigos("pt"),
+    getArtigos("en"),
+    getCategorias(),
+    getPastas(),
+    getPins("pt"),
+  ]);
 
   const urls: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/pt`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
@@ -23,6 +26,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/pt/pinterest`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.4 },
     { url: `${baseUrl}/pt/pins`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
     { url: `${baseUrl}/pt/produtos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${baseUrl}/en`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
+    { url: `${baseUrl}/en/articles`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/en/search`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
+    { url: `${baseUrl}/en/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/en/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/en/privacy-policy`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
+    { url: `${baseUrl}/en/terms-of-use`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.2 },
+    { url: `${baseUrl}/en/pinterest`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.4 },
+    { url: `${baseUrl}/en/pins`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${baseUrl}/en/produtos`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
   ];
 
   categorias.forEach((cat) => {
@@ -34,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  artigos.forEach((artigo) => {
+  artigosPt.forEach((artigo) => {
     urls.push({
       url: `${baseUrl}/pt/artigos/${artigo.slug}`,
       lastModified: new Date(),
@@ -43,7 +56,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  pins.forEach((pin) => {
+  artigosEn.forEach((artigo) => {
+    urls.push({
+      url: `${baseUrl}/en/articles/${artigo.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.6,
+    });
+  });
+
+  pinsPt.forEach((pin) => {
     urls.push({
       url: `${baseUrl}/pt/pins/${pin.slug}`,
       lastModified: new Date(),

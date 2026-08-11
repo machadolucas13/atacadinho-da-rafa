@@ -42,7 +42,7 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> {
+async function extrairDadosPublicos(url: string): Promise<{ data: Partial<ProdutoForm>; error?: string }> {
   try {
     const response = await fetch("/api/produtos/extrair", {
       method: "POST",
@@ -52,24 +52,31 @@ async function extrairDadosPublicos(url: string): Promise<Partial<ProdutoForm>> 
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      throw new Error(`HTTP ${response.status}: ${text}`);
     }
 
     const data = await response.json();
+    if (data.error) {
+      return { data: {}, error: data.error };
+    }
+
     return {
-      nome: data.titulo || "",
-      imagemPrincipal: data.imagem || "",
-      preco: data.preco ? data.preco.toString() : "",
-      precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
-      descricao: data.descricao || data.titulo || "",
-      descricaoCurta: data.descricao || data.titulo || "",
-      marketplace: data.marketplace || "outro",
-      loja: data.marketplace ? marketDefaults[data.marketplace]?.loja || "Loja" : "Loja",
-      tags: data.marketplace ? marketDefaults[data.marketplace]?.tags || "oferta" : "oferta",
-      categoriaId: data.marketplace ? marketDefaults[data.marketplace]?.categoriaSugerida || "" : "",
+      data: {
+        nome: data.titulo || "",
+        imagemPrincipal: data.imagem || "",
+        preco: data.preco ? data.preco.toString() : "",
+        precoOriginal: data.precoOriginal ? data.precoOriginal.toString() : "",
+        descricao: data.descricao || data.titulo || "",
+        descricaoCurta: data.descricao || data.titulo || "",
+        marketplace: data.marketplace || "outro",
+        loja: data.marketplace ? marketDefaults[data.marketplace]?.loja || "Loja" : "Loja",
+        tags: data.marketplace ? marketDefaults[data.marketplace]?.tags || "oferta" : "oferta",
+        categoriaId: data.marketplace ? marketDefaults[data.marketplace]?.categoriaSugerida || "" : "",
+      },
     };
-  } catch {
-    return {};
+  } catch (e: any) {
+    return { data: {}, error: e?.message || "Erro de conexão" };
   }
 }
 
@@ -156,17 +163,19 @@ export default function ImportarProduto() {
       const marketplace = detectarMarketplace(form.linkAfiliado);
       setDetectedMarketplace(marketplace);
 
-      if (!marketplace) {
-        setStatus("Não foi possível identificar o marketplace. Verifique o link.");
+      if (!form.linkAfiliado) {
+        setErroImportacao("Cole um link do produto antes de importar.");
         setLoading(false);
         return;
       }
 
       const defaults = marketDefaults[marketplace];
-      const [dadosImportados, metadadosUrl] = await Promise.all([
-        extrairDadosPublicos(form.linkAfiliado),
-        Promise.resolve(copiarMetadadosDaUrl(form.linkAfiliado)),
-      ]);
+      const { data: dadosImportados, error: erroExtracao } = await extrairDadosPublicos(form.linkAfiliado);
+      const metadadosUrl = copiarMetadadosDaUrl(form.linkAfiliado);
+
+      if (erroExtracao) {
+        setErroImportacao(`Extracao automatica falhou: ${erroExtracao}. Preencha os dados manualmente.`);
+      }
 
       const nome = dadosImportados.nome || metadadosUrl.nome || form.nome || `Produto ${marketplace}`;
       const categoriaId = form.categoriaId || defaults.categoriaSugerida;
@@ -176,29 +185,27 @@ export default function ImportarProduto() {
         const loja = dadosImportados.preco ? prev.loja || defaults.loja : defaults.loja;
         return {
           ...prev,
-          nome: nome || prev.nome,
+          nome: dadosImportados.nome || metadadosUrl.nome || prev.nome,
           slug: slug || prev.slug,
           imagemPrincipal: dadosImportados.imagemPrincipal || prev.imagemPrincipal || "",
           preco: dadosImportados.preco || prev.preco || "",
           precoOriginal: dadosImportados.precoOriginal || prev.precoOriginal || "",
-          descricao: nome || prev.descricao,
-          descricaoCurta: nome || prev.descricaoCurta,
-          loja,
+          descricao: dadosImportados.descricao || metadadosUrl.nome || prev.descricao || nome,
+          descricaoCurta: dadosImportados.descricaoCurta || metadadosUrl.nome || prev.descricaoCurta || nome,
+          loja: dadosImportados.loja || loja,
           marketplace,
           categoriaId: categoriaId || prev.categoriaId,
           tags: prev.tags || defaults.tags,
         };
       });
 
-      if (!dadosImportados.nome && !metadadosUrl.nome) {
-        setErroImportacao("Não conseguimos extrair os dados desse link. Preencha manualmente ou tente outro link.");
-      } else if (!dadosImportados.imagemPrincipal) {
-        setErroImportacao("Imagem não extraída. Preencha manualmente ou tente outro link.");
-      } else {
-        setStatus("Produto pré-preenchido! Revise os dados e salve.");
+      if (dadosImportados.nome || dadosImportados.imagemPrincipal) {
+        setStatus("Dados extraidos! Revise e salve.");
+      } else if (!erroExtracao) {
+        setErroImportacao("Nenhum dado foi extraido. Preencha manualmente.");
       }
     } catch (e) {
-      setStatus("Erro ao importar produto. Tente novamente.");
+      setStatus("Erro ao importar. Tente novamente.");
     } finally {
       setLoading(false);
     }

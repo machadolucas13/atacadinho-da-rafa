@@ -82,6 +82,10 @@ export const metadata = {
   },
   alternates: {
     canonical: 'https://atacadinhodarafa.vercel.app/pt',
+    languages: {
+      'pt-BR': 'https://atacadinhodarafa.vercel.app/pt',
+      'en': 'https://atacadinhodarafa.vercel.app/en',
+    },
   },
   icons: {
     icon: '/assets/images/logo_rafa.png',
