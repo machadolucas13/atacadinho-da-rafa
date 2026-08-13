@@ -119,12 +119,15 @@ export default async function PinClient({ params }: { params: { slug: string } }
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
                 <h2 className="text-lg font-bold text-white mb-4">Ofertas selecionadas</h2>
                 <div className="space-y-3">
-                  {links.slice(0, 5).map((link) => (
-                    <div key={link.url} className="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-4">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">{link.nome}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">A partir de <span className="text-[#F4A7B9] font-bold">{link.preco}</span></p>
-                      </div>
+                   {links.slice(0, 5).map((link) => (
+                     <div key={link.url} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-white/5 bg-white/5 p-4">
+                       <div className="flex-1 min-w-0">
+                         <p className="text-sm font-medium text-white truncate">{link.nome}</p>
+                         <p className="text-xs text-gray-400 mt-0.5">A partir de <span className="text-[#F4A7B9] font-bold">{link.preco}</span></p>
+                         {link.dica && (
+                           <p className="text-xs text-gray-300 mt-1 leading-relaxed">{link.dica}</p>
+                         )}
+                       </div>
                       <PinAffiliateLink
                         nome={link.nome}
                         preco={link.preco}

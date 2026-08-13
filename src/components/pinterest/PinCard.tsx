@@ -207,13 +207,18 @@ export default function PinCard({ pin, locale }: PinCardProps) {
               {pin.links.slice(0, 2).map((link, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between rounded-lg border border-white/5 bg-white/5 p-2.5 transition-all hover:border-[#F4A7B9]/20 hover:bg-white/10"
+                  className="flex flex-col gap-1 rounded-lg border border-white/5 bg-white/5 p-2.5 transition-all hover:border-[#F4A7B9]/20 hover:bg-white/10"
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-white truncate">{link.nome}</p>
-                    <p className="text-xs text-[#F4A7B9] font-bold">{link.preco}</p>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-white truncate">{link.nome}</p>
+                      <p className="text-xs text-[#F4A7B9] font-bold">{link.preco}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-gray-400 shrink-0" />
                   </div>
-                  <ChevronRight className="h-4 w-4 text-gray-400 shrink-0" />
+                  {link.dica && (
+                    <p className="text-[11px] text-gray-400 leading-snug line-clamp-2">{link.dica}</p>
+                  )}
                 </div>
               ))}
               {pin.links.length > 2 && (
