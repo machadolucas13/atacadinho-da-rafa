@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LocaleAwareLink from "@/components/common/LocaleAwareLink";
 import ShareButtons from "@/components/social/ShareButtons";
-import { Eye, Sparkles, ArrowLeft, ArrowRight, Tag, TrendingUp } from "lucide-react";
+import { Eye, Sparkles, ArrowLeft, ArrowRight, Tag, TrendingUp, ShoppingBag } from "lucide-react";
 import { Metadata } from "next";
 import { getPinBySlug, getPins } from "@/lib/pins";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
