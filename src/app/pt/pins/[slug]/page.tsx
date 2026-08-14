@@ -116,32 +116,57 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 />
               </div>
             )}
-            {links.length > 0 && (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
-                <h2 className="text-lg font-bold text-white mb-4">Ofertas selecionadas</h2>
-                <div className="space-y-3">
-                   {links.slice(0, 5).map((link) => (
-                     <div key={link.url} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-white/5 bg-white/5 p-4">
-                       <div className="flex-1 min-w-0">
-                         <p className="text-sm font-medium text-white truncate">{link.nome}</p>
-                         <p className="text-xs text-gray-400 mt-0.5">A partir de <span className="text-[#F4A7B9] font-bold">{link.preco}</span></p>
-                         {link.dica && (
-                           <p className="text-xs text-gray-300 mt-1 leading-relaxed">{link.dica}</p>
-                         )}
-                       </div>
-                      <PinAffiliateLink
-                        nome={link.nome}
-                        preco={link.preco}
-                        url={link.url}
-                        className="shrink-0 rounded-lg bg-[#E11D48] px-4 py-2 text-xs font-bold text-white transition-all hover:bg-[#be123c]"
-                      >
-                        🛒 Ver oferta
-                      </PinAffiliateLink>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+             {links.length > 0 && (
+               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
+                 <div className="flex items-center gap-2 mb-5">
+                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E11D48]/10">
+                     <ShoppingBag className="h-4 w-4 text-[#E11D48]" />
+                   </div>
+                   <h2 className="text-lg font-bold text-white">Ofertas selecionadas</h2>
+                   <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-gray-300">
+                     {links.length} {links.length === 1 ? 'oferta' : 'ofertas'}
+                   </span>
+                 </div>
+                 <div className="grid gap-3">
+                    {links.map((link, index) => (
+                      <div key={link.url} className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-4 transition-all duration-300 hover:border-[#F4A7B9]/30 hover:bg-white/10 hover:shadow-lg hover:shadow-[#F4A7B9]/5">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start gap-2.5">
+                              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F4A7B9]/10 text-[10px] font-bold text-[#F4A7B9]">
+                                {index + 1}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-white leading-tight group-hover:text-[#F4A7B9] transition-colors">
+                                  {link.nome}
+                                </p>
+                                <div className="mt-1.5 flex items-center gap-2">
+                                  <span className="text-lg font-bold text-[#E11D48]">{link.preco}</span>
+                                  <span className="text-[10px] text-gray-500 uppercase tracking-wide">na Shopee</span>
+                                </div>
+                                {link.dica && (
+                                  <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-[#F4A7B9]/5 p-2.5">
+                                    <Sparkles className="h-3.5 w-3.5 text-[#F4A7B9] mt-0.5 shrink-0" />
+                                    <p className="text-xs text-gray-300 leading-relaxed">{link.dica}</p>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <PinAffiliateLink
+                            nome={link.nome}
+                            preco={link.preco}
+                            url={link.url}
+                            className="shrink-0 rounded-xl bg-[#E11D48] px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
+                          >
+                            🛒 Ver oferta
+                          </PinAffiliateLink>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+               </div>
+             )}
 
             <div className="flex flex-wrap gap-3 mb-8">
               <LocaleAwareLink
