@@ -190,12 +190,14 @@ export default async function PinClient({ params }: { params: { slug: string } }
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 mb-8">
               <h2 className="text-lg font-bold text-white mb-4">Compartilhar</h2>
-              <ShareButtons
-                title={pin.titulo}
-                description={pin.descricao}
-                image={pin.imagem}
-                url={`https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}`}
-              />
+              <div className="flex flex-wrap items-center gap-3">
+                <ShareButtons
+                  title={pin.titulo}
+                  description={pin.descricao}
+                  image={pin.imagem}
+                  url={`https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}`}
+                />
+              </div>
             </div>
 
             <script
