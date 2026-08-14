@@ -12,6 +12,7 @@ interface ShopeeLink {
   nome: string;
   preco: string;
   url: string;
+  dica?: string;
 }
 
 export async function generateStaticParams() {
