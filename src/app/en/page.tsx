@@ -131,7 +131,7 @@ export default async function HomePage() {
         locale="en"
       />
 
-      <TrendingSection />
+      <TrendingSection locale="en" />
 
       <CuponsSection />
 

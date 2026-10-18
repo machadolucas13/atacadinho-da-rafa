@@ -15,9 +15,10 @@ import ViewCountBadge from "@/components/common/ViewCountBadge";
 interface ProductCardProps {
   produto: Produto;
   variant?: "default" | "horizontal";
+  locale?: string;
 }
 
-export default function ProductCard({ produto, variant = "default" }: ProductCardProps) {
+export default function ProductCard({ produto, variant = "default", locale = "pt" }: ProductCardProps) {
   const router = useRouter();
   const [tracked, setTracked] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -55,12 +56,12 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
     return (
       <article
         ref={ref}
-        onClick={() => router.push(`/pt/produtos/${produto.slug}`)}
+        onClick={() => router.push(`/${locale}/produtos/${produto.slug}`)}
         className="group block cursor-pointer"
         role="link"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === "Enter") router.push(`/pt/produtos/${produto.slug}`);
+          if (e.key === "Enter") router.push(`/${locale}/produtos/${produto.slug}`);
         }}
       >
         <div className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-soft transition-all duration-300 hover:shadow-card-hover hover:border-[#F4A7B9]/40">
@@ -109,12 +110,12 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
   return (
     <article
       ref={ref}
-    onClick={() => router.push(`/pt/produtos/${produto.slug}`)}
+    onClick={() => router.push(`/${locale}/produtos/${produto.slug}`)}
         className="group block cursor-pointer"
         role="link"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === "Enter") router.push(`/pt/produtos/${produto.slug}`);
+          if (e.key === "Enter") router.push(`/${locale}/produtos/${produto.slug}`);
         }}
       >
       <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soft transition-all duration-400 card-hover">
@@ -144,7 +145,7 @@ export default function ProductCard({ produto, variant = "default" }: ProductCar
               title={produto.nome}
               description={produto.descricao || `${produto.nome} por R$ ${produto.preco?.toFixed(2)} na ${produto.loja}`}
               image={produto.imagemPrincipal}
-               url={`/pt/produtos/${produto.slug}`}
+               url={`/${locale}/produtos/${produto.slug}`}
             />
           </div>
 

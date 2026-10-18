@@ -128,7 +128,7 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
           </div>
 
           {produtosCategoria.length > 0 && (
-            <ProductGrid produtos={produtosCategoria} titulo={`Products in ${nome}`} />
+            <ProductGrid produtos={produtosCategoria} titulo={`Products in ${nome}`} locale="en" />
           )}
 
           {pinsCategoria.length > 0 && (

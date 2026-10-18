@@ -131,7 +131,7 @@ export default async function PastaPage({ params }: PastaPageProps) {
         </div>
 
         <div className="mx-auto max-w-7xl px-4 pb-16">
-          <ProductGrid produtos={produtosPasta} titulo="Achados da coleção" />
+          <ProductGrid produtos={produtosPasta} titulo="Achados da coleção" locale="pt" />
         </div>
       </div>
     </>

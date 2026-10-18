@@ -34,7 +34,7 @@ export default async function ProdutosPage() {
               Nossa curadoria completa de achados
             </p>
           </div>
-          <ProductGrid produtos={produtos} />
+          <ProductGrid produtos={produtos} locale="pt" />
         </div>
       </section>
     </main>

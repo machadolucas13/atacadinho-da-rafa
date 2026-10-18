@@ -154,7 +154,7 @@ export default async function HomePage() {
         viewAllHref="/pt/artigos"
       />
 
-      <TrendingSection />
+      <TrendingSection locale="pt" />
 
       <CuponsSection />
 

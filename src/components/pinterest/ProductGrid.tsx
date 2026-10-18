@@ -10,6 +10,7 @@ interface ProductGridProps {
   titulo?: string;
   subtitle?: string;
   limite?: number;
+  locale?: string;
 }
 
 export default function ProductGrid({
@@ -17,6 +18,7 @@ export default function ProductGrid({
   titulo,
   subtitle,
   limite = 20,
+  locale = "pt",
 }: ProductGridProps) {
   const [displayedProdutos, setDisplayedProdutos] = useState<Produto[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +59,7 @@ export default function ProductGrid({
       <div className="masonry-grid">
         {displayedProdutos.map((produto) => (
           <div key={produto.id} className="masonry-item">
-            <ProductCard produto={produto} />
+            <ProductCard produto={produto} locale={locale} />
           </div>
         ))}
       </div>

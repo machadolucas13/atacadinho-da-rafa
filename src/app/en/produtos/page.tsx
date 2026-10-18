@@ -33,7 +33,7 @@ export default async function ProdutosPage() {
               Our complete curation of finds
             </p>
           </div>
-          <ProductGrid produtos={produtos} />
+          <ProductGrid produtos={produtos} locale="en" />
         </div>
       </section>
     </main>
