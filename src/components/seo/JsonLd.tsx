@@ -6,10 +6,10 @@ export function JsonLd() {
     "@type": "WebSite",
     name: "Atacadinho da Rafa",
     description: "Achados, ofertas e recomendações de produtos",
-    url: "https://atacadinhodarafa.vercel.app",
+    url: "https://v0-atacadinhodarafa.vercel.app",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://atacadinhodarafa.vercel.app/busca?q={search_term_string}",
+      target: "https://v0-atacadinhodarafa.vercel.app/busca?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   };

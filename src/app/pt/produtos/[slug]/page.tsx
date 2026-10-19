@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import ProdutoPage from "@/components/produto/ProdutoPage";
 import { getProdutos } from "@/lib/produtos";
 import PinterestProductView from "@/components/seo/PinterestProductView";
+import { getBaseUrl } from "@/lib/base-url";
 
 interface ProdutoDetailPageProps {
   params: {
@@ -25,9 +26,9 @@ export async function generateMetadata({
   const produto = produtos.find((p) => p.slug === params.slug);
   if (!produto) return {};
 
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/pt/produtos/${produto.slug}`;
-  const image = produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/og-default.jpg`;
+  const image = produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/logo_rafa.png`;
 
   return {
     metadataBase: new URL(baseUrl),
@@ -63,6 +64,7 @@ export async function generateMetadata({
 export default async function ProdutoDetailPage({ params }: ProdutoDetailPageProps) {
   const produtos = await getProdutos();
   const produto = produtos.find((p) => p.slug === params.slug);
+  const baseUrl = getBaseUrl();
   const relacionados = produtos
     .filter((p) => p.categoriaId === produto?.categoriaId && p.id !== produto?.id)
     .slice(0, 5);
@@ -75,9 +77,9 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/pt" },
-      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `https://atacadinhodarafa.vercel.app/pt/categorias/${produto.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: produto.nome, item: `https://atacadinhodarafa.vercel.app/pt/produtos/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/pt` },
+      { "@type": "ListItem", position: 2, name: produto.categoria?.nome || "Produtos", item: `${baseUrl}/pt/categorias/${produto.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: produto.nome, item: `${baseUrl}/pt/produtos/${params.slug}` },
     ],
   };
 
@@ -86,12 +88,12 @@ export default async function ProdutoDetailPage({ params }: ProdutoDetailPagePro
     "@type": "Product",
     name: produto.nome,
     description: produto.descricaoCurta || produto.descricao,
-    image: produto.imagemPrincipal ? `https://atacadinhodarafa.vercel.app${produto.imagemPrincipal}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
+    image: produto.imagemPrincipal ? `${baseUrl}${produto.imagemPrincipal}` : `${baseUrl}/assets/images/logo_rafa.png`,
     brand: {
       "@type": "Brand",
       name: produto.loja,
     },
-    url: `https://atacadinhodarafa.vercel.app/pt/produtos/${produto.slug}`,
+    url: `${baseUrl}/pt/produtos/${produto.slug}`,
     offers: {
       "@type": "Offer",
       price: produto.preco,

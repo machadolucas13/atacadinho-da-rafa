@@ -3,7 +3,7 @@ import ProductGrid from "@/components/pinterest/ProductGrid";
 import { getProdutos } from "@/lib/produtos";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = "https://v0-atacadinhodarafa.vercel.app";
   return {
     metadataBase: new URL(baseUrl),
     title: {

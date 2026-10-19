@@ -4,7 +4,7 @@ import { getProdutos } from "@/lib/produtos";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL("https://atacadinhodarafa.vercel.app"),
+    metadataBase: new URL("https://v0-atacadinhodarafa.vercel.app"),
     title: {
       default: "All Products - Atacadinho da Rafa",
       template: "%s | Atacadinho da Rafa",

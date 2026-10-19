@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { getPinBySlug, getPins } from "@/lib/pins";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
 import PinAffiliateLink from "@/components/pinterest/PinAffiliateLink";
+import { getBaseUrl } from "@/lib/base-url";
 
 interface ShopeeLink {
   nome: string;
@@ -23,9 +24,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
   if (!pin) return {};
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/pt/pins/${pin.slug}`;
-  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/og-default.jpg`;
+  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/logo_rafa.png`;
   return {
     title: `${pin.titulo} - Atacadinho da Rafa`,
     description: pin.descricao,
@@ -45,6 +46,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const pin = await getPinBySlug(params.slug, "pt");
+  const baseUrl = getBaseUrl();
   const links: ShopeeLink[] = pin?.links || [];
   const allPins = await getPins("pt");
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
@@ -195,7 +197,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   title={pin.titulo}
                   description={pin.descricao}
                   image={pin.imagem}
-                  url={`https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}`}
+                  url={`${baseUrl}/pt/pins/${pin.slug}`}
                 />
               </div>
             </div>
@@ -206,7 +208,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "ImageObject",
-                  contentUrl: `https://atacadinhodarafa.vercel.app${pin.imagem}`,
+                  contentUrl: `${baseUrl}${pin.imagem}`,
                   description: pin.descricao,
                   name: pin.titulo,
                 }),
@@ -219,9 +221,9 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   "@context": "https://schema.org",
                   "@type": "BreadcrumbList",
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
-                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.vercel.app/pt/pins" },
-                    { "@type": "ListItem", position: 3, name: pin.titulo, item: `https://atacadinhodarafa.vercel.app/pt/pins/${pin.slug}` },
+                    { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/` },
+                    { "@type": "ListItem", position: 2, name: "Pins", item: `${baseUrl}/pt/pins` },
+                    { "@type": "ListItem", position: 3, name: pin.titulo, item: `${baseUrl}/pt/pins/${pin.slug}` },
                   ],
                 }),
               }}

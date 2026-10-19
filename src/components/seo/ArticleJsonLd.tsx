@@ -8,7 +8,7 @@ export function ArticleJsonLd({ artigo }: { artigo: Artigo }) {
     "@type": "Article",
     headline: artigo.titulo,
     description: artigo.descricao,
-    image: artigo.imagemCapa || "https://atacadinhodarafa.vercel.app/images/og-default.jpg",
+    image: artigo.imagemCapa || "/assets/images/logo_rafa.png",
     datePublished: artigo.publicadoEm,
     author: {
       "@type": "Organization",
@@ -19,7 +19,7 @@ export function ArticleJsonLd({ artigo }: { artigo: Artigo }) {
       name: "Atacadinho da Rafa",
       logo: {
         "@type": "ImageObject",
-        url: "https://atacadinhodarafa.vercel.app/assets/images/logo_rafa.png",
+                      url: "/assets/images/logo_rafa.png",
       },
     },
   };

@@ -5,7 +5,7 @@ import { getPastas } from "@/lib/pastas";
 import { getPins } from "@/lib/pins";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = "https://v0-atacadinhodarafa.vercel.app";
 
   const [artigosPt, artigosEn, categorias, pastas, pinsPt] = await Promise.all([
     getArtigos("pt"),

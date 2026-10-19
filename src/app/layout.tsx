@@ -9,6 +9,7 @@ import AdSenseScript from '@/components/seo/AdSenseScript';
 import PinterestTag from '@/components/seo/PinterestTag';
 import { TopAd, InContentAd, FooterAd, SmartlinkAd } from '@/components/ads/AdsterraAds';
 import { Analytics } from '@vercel/analytics/next';
+import { getBaseUrl } from '@/lib/base-url';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -24,6 +25,7 @@ const manrope = Manrope({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://v0-atacadinhodarafa.vercel.app'),
   title: {
     default: 'Atacadinho da Rafa - Descobertas, Achados e Ofertas',
     template: '%s | Atacadinho da Rafa',
@@ -49,14 +51,14 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://atacadinhodarafa.vercel.app',
+    url: 'https://v0-atacadinhodarafa.vercel.app',
     siteName: 'Atacadinho da Rafa',
     title: 'Atacadinho da Rafa - Descobertas, Achados e Ofertas',
     description:
       'Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e muito mais.',
     images: [
       {
-        url: 'https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg',
+        url: 'https://v0-atacadinhodarafa.vercel.app/assets/images/logo_rafa.png',
         width: 1200,
         height: 630,
         alt: 'Atacadinho da Rafa',
@@ -67,7 +69,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Atacadinho da Rafa',
     description: 'Descubra os melhores achados e ofertas',
-    images: ['https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg'],
+    images: ['https://v0-atacadinhodarafa.vercel.app/assets/images/logo_rafa.png'],
   },
   robots: {
     index: true,
@@ -81,10 +83,10 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://atacadinhodarafa.vercel.app/pt',
+    canonical: 'https://v0-atacadinhodarafa.vercel.app/pt',
     languages: {
-      'pt-BR': 'https://atacadinhodarafa.vercel.app/pt',
-      'en': 'https://atacadinhodarafa.vercel.app/en',
+      'pt-BR': 'https://v0-atacadinhodarafa.vercel.app/pt',
+      'en': 'https://v0-atacadinhodarafa.vercel.app/en',
     },
   },
   icons: {

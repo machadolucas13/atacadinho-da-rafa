@@ -8,6 +8,7 @@ import { getCategorias } from "@/lib/categorias";
 import { getProdutos } from "@/lib/produtos";
 import { getPins } from "@/lib/pins";
 import { getArtigos } from "@/server/artigos";
+import { getBaseUrl } from "@/lib/base-url";
 
 interface CategoriaPageProps {
   params: { slug: string };
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
 
   const nome = categoria.nome;
   const descricao = categoria.descricao || `Descubra os melhores ${nome.toLowerCase()} na nossa curadoria.`;
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/pt/categorias/${params.slug}`;
 
   return {
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
       description: descricao,
       images: [
         {
-          url: categoria.imagem ? `${baseUrl}${categoria.imagem}` : "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg",
+          url: categoria.imagem ? `${baseUrl}${categoria.imagem}` : `${baseUrl}/assets/images/logo_rafa.png`,
           width: 1200,
           height: 630,
           alt: nome,
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
       card: "summary_large_image",
       title: `${nome} - Atacadinho da Rafa`,
       description: descricao,
-      images: [categoria.imagem ? `${baseUrl}${categoria.imagem}` : "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg"],
+      images: [categoria.imagem ? `${baseUrl}${categoria.imagem}` : `${baseUrl}/assets/images/logo_rafa.png`],
     },
     alternates: {
       canonical: url,
@@ -64,6 +65,7 @@ export async function generateMetadata({ params }: CategoriaPageProps): Promise<
 export default async function CategoriaPage({ params }: CategoriaPageProps) {
   const categorias = await getCategorias();
   const categoria = categorias.find((c) => c.slug === params.slug);
+  const baseUrl = getBaseUrl();
   const [produtos, pins, artigos] = await Promise.all([
     getProdutos(),
     getPins("pt"),
@@ -85,8 +87,8 @@ export default async function CategoriaPage({ params }: CategoriaPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/pt" },
-      { "@type": "ListItem", position: 2, name: nome, item: `https://atacadinhodarafa.vercel.app/pt/categorias/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/pt` },
+      { "@type": "ListItem", position: 2, name: nome, item: `${baseUrl}/pt/categorias/${params.slug}` },
     ],
   };
 

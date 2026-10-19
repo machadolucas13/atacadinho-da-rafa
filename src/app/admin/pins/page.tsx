@@ -39,7 +39,7 @@ export default function AdminPinsPage() {
   }, []);
 
   const getPinterestShareUrl = (pin: Pin) => {
-    const baseUrl = "https://atacadinhodarafa.vercel.app";
+    const baseUrl = "https://v0-atacadinhodarafa.vercel.app";
     const pinUrl = `${baseUrl}/pt/pins/${pin.slug}`;
     const imageUrl = pin.imagem.startsWith("http") ? pin.imagem : `${baseUrl}${pin.imagem}`;
     const description = `${pin.titulo}\n\n${pin.descricao}\n\n${pin.tags?.map(t => `#${t.replace(/\s+/g, "")}`).join(" ") || ""}`;
@@ -48,7 +48,7 @@ export default function AdminPinsPage() {
   };
 
   const copyPinText = async (pin: Pin) => {
-    const baseUrl = "https://atacadinhodarafa.vercel.app";
+    const baseUrl = "https://v0-atacadinhodarafa.vercel.app";
     const pinUrl = `${baseUrl}/pt/pins/${pin.slug}`;
     const text = `${pin.titulo}\n\n${pin.descricao}\n\n${pin.tags?.map(t => `#${t.replace(/\s+/g, "")}`).join(" ") || ""}\n\n${pinUrl}`;
 

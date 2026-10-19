@@ -6,6 +6,7 @@ import Link from "next/link";
 import ProductGrid from "@/components/pinterest/ProductGrid";
 import { getPastas } from "@/lib/pastas";
 import { getProdutos } from "@/lib/produtos";
+import { getBaseUrl } from "@/lib/base-url";
 
 interface PastaPageProps {
   params: {
@@ -27,7 +28,7 @@ export async function generateMetadata({
   const pasta = pastas.find((p) => p.slug === params.slug);
   if (!pasta) return {};
 
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/pt/pastas/${params.slug}`;
 
   return {
@@ -44,7 +45,7 @@ export async function generateMetadata({
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
       images: [
         {
-          url: pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg",
+          url: pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : `${baseUrl}/assets/images/logo_rafa.png`,
           width: 1200,
           height: 630,
           alt: pasta.nome,
@@ -55,7 +56,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${pasta.nome} - Coleção - Atacadinho da Rafa`,
       description: pasta.descricao || `Coleção especial ${pasta.nome} no Atacadinho da Rafa.`,
-      images: [pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : "https://atacadinhodarafa.vercel.app/assets/images/og-default.jpg"],
+      images: [pasta.imagemCapa ? `${baseUrl}${pasta.imagemCapa}` : `${baseUrl}/assets/images/logo_rafa.png`],
     },
     alternates: {
       canonical: url,
@@ -66,6 +67,7 @@ export async function generateMetadata({
 export default async function PastaPage({ params }: PastaPageProps) {
   const pastas = await getPastas();
   const pasta = pastas.find((p) => p.slug === params.slug);
+  const baseUrl = getBaseUrl();
 
   if (!pasta) {
     return <div>Pasta não encontrada</div>;
@@ -78,9 +80,9 @@ export default async function PastaPage({ params }: PastaPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/pt" },
-      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `https://atacadinhodarafa.vercel.app/pt/categorias/${pasta.categoria?.slug || ""}` },
-      { "@type": "ListItem", position: 3, name: pasta.nome, item: `https://atacadinhodarafa.vercel.app/pt/pastas/${params.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/pt` },
+      { "@type": "ListItem", position: 2, name: pasta.categoria?.nome || "Categoria", item: `${baseUrl}/pt/categorias/${pasta.categoria?.slug || ""}` },
+      { "@type": "ListItem", position: 3, name: pasta.nome, item: `${baseUrl}/pt/pastas/${params.slug}` },
     ],
   };
 

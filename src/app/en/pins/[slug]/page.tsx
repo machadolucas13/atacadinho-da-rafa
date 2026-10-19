@@ -6,6 +6,7 @@ import { Eye, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
 import { Metadata } from "next";
 import { getPins } from "@/lib/pins";
 import { getItemViews } from "@/lib/views";
+import { getBaseUrl } from "@/lib/base-url";
 
 interface ShopeeLink {
   nome: string;
@@ -17,9 +18,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const allPins = await getPins("en");
   const pin = allPins.find((p) => p.slug === params.slug);
   if (!pin) return {};
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/en/pins/${pin.slug}`;
-  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/og-default.jpg`;
+  const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/logo_rafa.png`;
   return {
     title: `${pin.titulo} - Atacadinho da Rafa`,
     description: pin.descricao,
@@ -49,6 +50,7 @@ const links: ShopeeLink[] = [
 export default async function PinClient({ params }: { params: { slug: string } }) {
   const allPins = await getPins("en");
   const pin = allPins.find((p) => p.slug === params.slug);
+  const baseUrl = getBaseUrl();
   const currentIndex = allPins.findIndex((p) => p.slug === params.slug);
   const prevPin = currentIndex > 0 ? allPins[currentIndex - 1] : null;
   const nextPin = currentIndex < allPins.length - 1 ? allPins[currentIndex + 1] : null;
@@ -124,7 +126,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 title="Best Women's Jeans Under R$50"
                 description="20 models that lift and shape: wide leg, flare, cargo, skinny and more."
                 image="/posts/calcas-jeans-femininas-economicas-2026.png"
-                url={`https://atacadinhodarafa.vercel.app/en/pins/${params.slug}`}
+                url={`${baseUrl}/en/pins/${params.slug}`}
               />
             </div>
 
@@ -134,7 +136,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "ImageObject",
-                  contentUrl: "https://atacadinhodarafa.vercel.app/posts/calcas-jeans-femininas-economicas-2026.png",
+                  contentUrl: `${baseUrl}/posts/calcas-jeans-femininas-economicas-2026.png`,
                   description: "20 models that lift and shape: wide leg, flare, cargo, skinny and more.",
                   name: "Best Women's Jeans Under R$50",
                 }),
@@ -147,9 +149,9 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   "@context": "https://schema.org",
                   "@type": "BreadcrumbList",
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
-                    { "@type": "ListItem", position: 2, name: "Pins", item: "https://atacadinhodarafa.vercel.app/en/pins" },
-                    { "@type": "ListItem", position: 3, name: "Best Women's Jeans", item: `https://atacadinhodarafa.vercel.app/en/pins/${params.slug}` },
+                    { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/` },
+                    { "@type": "ListItem", position: 2, name: "Pins", item: `${baseUrl}/en/pins` },
+                    { "@type": "ListItem", position: 3, name: "Best Women's Jeans", item: `${baseUrl}/en/pins/${params.slug}` },
                   ],
                 }),
               }}

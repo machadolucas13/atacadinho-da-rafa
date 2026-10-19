@@ -11,10 +11,11 @@ import { getArtigos } from "@/lib/artigos";
 import { getPins } from "@/lib/pins";
 import { getProdutos } from "@/lib/produtos";
 import { getItemViews } from "@/lib/views";
+import { getBaseUrl } from "@/lib/base-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL("https://atacadinhodarafa.vercel.app"),
+    metadataBase: new URL(getBaseUrl()),
     title: {
       default: "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
       template: "%s | Atacadinho da Rafa",
@@ -42,14 +43,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "pt_BR",
-      url: "https://atacadinhodarafa.vercel.app/pt",
+      url: `${getBaseUrl()}/pt`,
       siteName: "Atacadinho da Rafa",
       title: "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
       description:
         "Descubra os melhores achados, ofertas e recomendações. Curadoria visual de moda, decoração, tecnologia e beleza.",
       images: [
         {
-          url: "https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg",
+          url: `${getBaseUrl()}/assets/images/logo_rafa.png`,
           width: 1200,
           height: 630,
           alt: "Atacadinho da Rafa",
@@ -60,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Atacadinho da Rafa",
       description: "Descubra os melhores achados e ofertas",
-      images: ["https://atacadinhodarafa.vercel.app/assets/images/og-home.jpg"],
+      images: [`${getBaseUrl()}/assets/images/logo_rafa.png`],
     },
   };
 }
@@ -172,10 +173,10 @@ export default async function HomePage() {
             "@type": "WebSite",
             name: "Atacadinho da Rafa",
             description: "Curadoria de achados especiais: moda, decoração, tecnologia e muito mais.",
-            url: "https://atacadinhodarafa.vercel.app/",
+            url: `${getBaseUrl()}/`,
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://atacadinhodarafa.vercel.app/pt/busca?q={search_term_string}",
+              target: `${getBaseUrl()}/pt/busca?q={search_term_string}`,
               "query-input": "required name=search_term_string",
             },
           }),

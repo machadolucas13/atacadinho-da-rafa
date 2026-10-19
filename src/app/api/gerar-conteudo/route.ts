@@ -118,7 +118,7 @@ function gerarFacebook(
   descricao: string,
   hashtags: string[]
 ): string {
-  return `${titulo}\n\n${descricao}\n\n${hashtags.join(" ")}\n\nConfira mais em: https://atacadinhodarafa.vercel.app`;
+  return `${titulo}\n\n${descricao}\n\n${hashtags.join(" ")}\n\nConfira mais em: https://v0-atacadinhodarafa.vercel.app`;
 }
 
 function gerarPinterest(

@@ -7,6 +7,7 @@ import ShareButtons from "@/components/social/ShareButtons";
 import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
 import { getItemViews } from "@/lib/views";
 import ViewCountBadge from "@/components/common/ViewCountBadge";
+import { getBaseUrl } from "@/lib/base-url";
 
 export async function generateStaticParams() {
   return [
@@ -32,9 +33,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const artigo = await getArtigoBySlug(params.slug, "en");
   if (!artigo) return {};
-  const baseUrl = "https://atacadinhodarafa.vercel.app";
+  const baseUrl = getBaseUrl();
   const url = `${baseUrl}/en/articles/${artigo.slug}`;
-  const image = artigo.imagemCapa ? `${baseUrl}${artigo.imagemCapa}` : `${baseUrl}/assets/images/og-default.jpg`;
+  const image = artigo.imagemCapa ? `${baseUrl}${artigo.imagemCapa}` : `${baseUrl}/assets/images/logo_rafa.png`;
   return {
     title: `${artigo.titulo} - Atacadinho da Rafa`,
     description: artigo.descricao,
@@ -58,6 +59,7 @@ export default async function ArtigoPage({
   params: { slug: string };
 }) {
   const artigo = await getArtigoBySlug(params.slug, "en");
+  const baseUrl = getBaseUrl();
   if (!artigo || !artigo.ativo) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -129,7 +131,7 @@ export default async function ArtigoPage({
                   title={artigo.titulo}
                   description={artigo.descricao}
                   image={artigo.imagemCapa || ""}
-                  url={`https://atacadinhodarafa.vercel.app/en/articles/${artigo.slug}`}
+                  url={`${baseUrl}/en/articles/${artigo.slug}`}
                 />
               </div>
             </div>
@@ -142,7 +144,7 @@ export default async function ArtigoPage({
                   "@type": "Article",
                   headline: artigo.titulo,
                   description: artigo.descricao,
-                  image: artigo.imagemCapa ? `https://atacadinhodarafa.vercel.app${artigo.imagemCapa}` : undefined,
+                  image: artigo.imagemCapa ? `${baseUrl}${artigo.imagemCapa}` : `${baseUrl}/assets/images/logo_rafa.png`,
                   datePublished: artigo.publicadoEm,
                   author: {
                     "@type": "Organization",
@@ -153,7 +155,7 @@ export default async function ArtigoPage({
                     name: "Atacadinho da Rafa",
                     logo: {
                       "@type": "ImageObject",
-                      url: "https://atacadinhodarafa.vercel.app/assets/images/logo_rafa.png",
+                      url: `${baseUrl}/assets/images/logo_rafa.png`,
                     },
                   },
                 }),
@@ -166,9 +168,9 @@ export default async function ArtigoPage({
                   "@context": "https://schema.org",
                   "@type": "BreadcrumbList",
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "https://atacadinhodarafa.vercel.app/" },
-                    { "@type": "ListItem", position: 2, name: "Articles", item: "https://atacadinhodarafa.vercel.app/en/articles" },
-                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `https://atacadinhodarafa.vercel.app/en/articles/${artigo.slug}` },
+                    { "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/` },
+                    { "@type": "ListItem", position: 2, name: "Articles", item: `${baseUrl}/en/articles` },
+                    { "@type": "ListItem", position: 3, name: artigo.titulo, item: `${baseUrl}/en/articles/${artigo.slug}` },
                   ],
                 }),
               }}

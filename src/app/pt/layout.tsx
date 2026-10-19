@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://atacadinhodarafa.vercel.app/pt"),
+  metadataBase: new URL("https://v0-atacadinhodarafa.vercel.app/pt"),
   title: {
     default: "Atacadinho da Rafa - Descobertas, Achados e Ofertas",
     template: "%s | Atacadinho da Rafa",
