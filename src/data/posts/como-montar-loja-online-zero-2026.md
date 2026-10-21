@@ -1,7 +1,7 @@
 ---
 titulo: "Como Montar uma Loja Online do Zero em 2026: Guia Passo a Passo"
 descricao: "Aprenda a montar sua loja online do zero em 2026. Passo a passo completo para mulheres que querem empreender no digital e vender pela internet."
-imagemCapa: "/posts/como-montar-loja-online-zero-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-21"
 categoriaId: "empreendedorismo"
 tags: ["loja online", "ecommerce", "montar loja virtual", "empreendedorismo digital", "vender online", "mulher empreendedora", "negócio online"]

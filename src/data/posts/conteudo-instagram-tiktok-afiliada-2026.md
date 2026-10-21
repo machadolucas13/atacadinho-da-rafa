@@ -1,7 +1,7 @@
 ---
 titulo: "Como Criar Conteúdo para Instagram e TikTok como Afiliada em 2026"
 descricao: "Aprenda a criar conteúdo que vende no Instagram e TikTok como afiliada. Formatos, estratégias, calendário editorial e dicas práticas para aumentar suas vendas."
-imagemCapa: "/posts/conteudo-instagram-tiktok-afiliada-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-20"
 categoriaId: "afiliados"
 tags: ["conteúdo instagram afiliada", "tiktok afiliada", "estratégia conteúdo", "reels afiliada", "vídeos afiliado", "marketing digital", "criação de conteúdo"]

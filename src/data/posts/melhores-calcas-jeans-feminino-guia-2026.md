@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores calças jeans femininas: guia de cortes, modelos e dicas de estilo 2026"
 descricao: "Guia completo de calça jeans feminina: os principais cortes (skinny, mom fit, straight leg, wide leg, flare, baggy), como escolher por tipo de corpo, tendências 2026, lavagens e dicas de looks para cada ocasião."
-imagemCapa: "/posts/melhores-calcas-jeans-feminino-guia-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 tags: ["jeans feminino", "calça jeans mulher", "corte skinny", "mom fit", "moda feminina", "tendências 2026", "guia de compras"]
 tempoLeitura: 10

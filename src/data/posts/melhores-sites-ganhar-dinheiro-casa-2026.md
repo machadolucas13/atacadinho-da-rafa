@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores Sites para Ganhar Dinheiro Extra em Casa em 2026"
 descricao: "Descubra os melhores sites e plataformas para ganhar dinheiro extra em casa. Renda extra online para mulheres que querem independência financeira."
-imagemCapa: "/posts/melhores-sites-ganhar-dinheiro-casa-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-21"
 categoriaId: "renda-extra"
 tags: ["ganhar dinheiro em casa", "renda extra online", "sites para ganhar dinheiro", "trabalho remoto", "freelancer", "mulher empreendedora", "renda passiva"]

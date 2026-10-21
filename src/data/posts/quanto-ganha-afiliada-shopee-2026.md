@@ -1,7 +1,7 @@
 ---
 titulo: "Quanto uma Afiliada Shopee Ganha por Mês: Valores Reais em 2026"
 descricao: "Descubra quanto afiliadas da Shopee realmente ganham por mês. Valores reais, expectativas realistas e como aumentar seus ganhos como afiliada."
-imagemCapa: "/posts/quanto-ganha-afiliada-shopee-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-20"
 categoriaId: "afiliados"
 tags: ["quanto ganha afiliada shopee", "renda afiliada", "salario afiliada", "ganhos afiliado", "comissão shopee", "renda extra online", "trabalho em casa"]

@@ -1,7 +1,7 @@
 ---
 titulo: "12 Produtos de Beleza Under R$40 que Parecem de R200 - Skincare Barato"
 descricao: "Óleo essencial é destaque em SC. Mostramos rotina de skincare completa com produtos acessíveis que realmente funcionam, sem gastar fortunas."
-imagemCapa: "/posts/produtos-beleza-under-40-skincare-barato.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-27"
 categoriaId: "beleza"
 tags: ["skincare barato", "beleza under 40", "produtos beleza acessiveis", "rotina skincare", "oleo essencial", "protetor solar barato", "skincare economico", "beleza Brasil"]

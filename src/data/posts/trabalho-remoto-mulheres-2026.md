@@ -1,7 +1,7 @@
 ---
 titulo: "Trabalho Remoto para Mulheres: Vagas e Oportunidades em 2026"
 descricao: "Descubra as melhores vagas e oportunidades de trabalho remoto para mulheres em 2026. Trabalhe de casa com flexibilidade e independência."
-imagemCapa: "/posts/trabalho-remoto-mulheres-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-21"
 categoriaId: "trabalho-remoto"
 tags: ["trabalho remoto", "vagas home office", "trabalho em casa", "mulher empreendedora", "renda extra", "freelancer", "oportunidades online"]

@@ -1,7 +1,7 @@
 ---
 titulo: "7 Erros que Afiliadas Iniciantes Cometem (e Como Evitar em 2026)"
 descricao: "Descubra os 7 erros mais comuns que afiliadas iniciantes cometem e como evitá-los. Aprenda com os erros dos outros para acelerar seus resultados."
-imagemCapa: "/posts/erros-afiliadas-iniciantes-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-20"
 categoriaId: "afiliados"
 tags: ["erros afiliada", "afiliada iniciante", "como evitar erros", "dicas afiliada", "marketing afiliados", "shopee afiliados", "aprendizado"]

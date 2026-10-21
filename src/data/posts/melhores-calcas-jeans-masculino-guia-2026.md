@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores calças jeans masculinas: guia de cortes, modelos e como escolher 2026"
 descricao: "Guia completo de calça jeans masculina: os melhores cortes (slim, straight, relaxed, wide leg, baggy), como escolher por tipo de corpo, tendências 2026, lavagens e dicas de estilo para o dia a dia."
-imagemCapa: "/posts/melhores-calcas-jeans-masculino-guia-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 tags: ["jeans masculino", "calça jeans homem", "corte slim", "corte straight", "moda masculina", "tendências 2026", "guia de compras", "achados shopee", "brechó online"]
 tempoLeitura: 10

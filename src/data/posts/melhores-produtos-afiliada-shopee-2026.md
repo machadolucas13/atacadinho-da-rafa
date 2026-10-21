@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores Produtos para Vender como Afiliada na Shopee em 2026"
 descricao: "Descubra quais produtos mais convertem para afiliadas na Shopee. Lista com os melhores nichos, categorias e produtos para ganhar mais comissão."
-imagemCapa: "/posts/melhores-produtos-afiliada-shopee-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-20"
 categoriaId: "afiliados"
 tags: ["melhores produtos afiliada", "produtos que vendem", "alta conversão", "nicho afiliada", "curadoria produtos", "shopee afiliados", "comissão alta"]

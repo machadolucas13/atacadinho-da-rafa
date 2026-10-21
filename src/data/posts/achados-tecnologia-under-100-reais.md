@@ -1,7 +1,7 @@
 ---
 titulo: "25 Achados de Tecnologia Under R$100 que Valem a Pena em 2026"
 descricao: "Drones, caixas de som e smartwatch estão entre os mais buscados. Selecionamos produtos tecnológicos funcionais, não gadgets inúteis, com preço acessível."
-imagemCapa: "/posts/achados-tecnologia-under-100-reais.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-27"
 categoriaId: "tecnologia"
 tags: ["tecnologia barata", "gadgets under 100", "smartwatch barato", "caixa de som bluetooth", "drone barato", "eletronicos baratos", "tecnologia funcional", "achados tecnologia"]

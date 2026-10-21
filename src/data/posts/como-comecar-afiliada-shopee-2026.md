@@ -1,7 +1,7 @@
 ---
 titulo: "Como Começar como Afiliada na Shopee do Zero em 2026: Guia Completo"
 descricao: "Aprenda passo a passo como se tornar afiliada da Shopee, desde o cadastro até a primeira venda. Guia completo para mulheres que querem ganhar dinheiro em casa."
-imagemCapa: "/posts/como-comecar-afiliada-shopee-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-20"
 categoriaId: "afiliados"
 tags: ["afiliada shopee", "como ser afiliada", "ganhar dinheiro em casa", "marketing de afiliados", "renda extra", "shopee afiliados", "trabalho em casa", "mulher empreendedora"]

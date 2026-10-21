@@ -1,7 +1,7 @@
 ---
 titulo: "Como organizar apartamento pequeno com pouco dinheiro: 25 dicas práticas"
 descricao: "Aprenda a organizar apartamento pequeno com pouco dinheiro. Dicas praticas de organizacao, otimizacao de espaco e decoracao economica para voce ter mais espaco e menos bagunça."
-imagemCapa: "/posts/como-organizar-apartamento-pequeno-com-pouco-dinheiro.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 categoriaId: "casa-decoracao"
 tags: ["organizar apartamento pequeno", "apartamento pequeno", "organizacao", "decoracao economica", "otimizar espaco", "dicas de organizacao", "casa pequena"]

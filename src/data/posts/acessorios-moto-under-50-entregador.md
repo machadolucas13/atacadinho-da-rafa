@@ -1,7 +1,7 @@
 ---
 titulo: "10 Acessórios de Moto Under R$50 que Todo Entregador Precisa Ter"
 descricao: "Retrovisor e escapamento são os produtos mais buscados no Nordeste. Listamos acessórios essenciais para moto com preço de oficina que todo entregador precisa."
-imagemCapa: "/posts/acessorios-moto-under-50-entregador.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-27"
 categoriaId: "auto-moto"
 tags: ["acessorios moto", "moto entregador", "peças moto baratas", "retrovisor moto", "escapamento moto", "manutenção moto", "auto e moto", "moto taxi"]

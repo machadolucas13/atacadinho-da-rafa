@@ -1,7 +1,7 @@
 ---
 titulo: "DIY lembrancinhas para aniversário faça você mesmo: ideias criativas e baratas"
 descricao: "Ideias de lembrancinhas para aniversário DIY fáceis de fazer em casa: passo a passo, materiais baratos e dicas para surpreender os convidados sem gastar muito."
-imagemCapa: "/posts/diy-lembrancinhas-aniversario-faca-voce-mesmo.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-25"
 categoriaId: "festas"
 tags: ["lembrancinhas diy", "lembrancinhas aniversário", "faça você mesmo", "festa infantil", "decoração festa", "economia festa"]

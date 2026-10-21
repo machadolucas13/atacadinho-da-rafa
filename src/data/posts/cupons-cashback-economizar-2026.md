@@ -1,7 +1,7 @@
 ---
 titulo: "Cupons e Cashback: Como Economizar em Cada Compra Online em 2026"
 descricao: "Aprenda a usar cupons de desconto e cashback para economizar em cada compra online. Dicas práticas para pagar menos em tudo que você compra."
-imagemCapa: "/posts/cupons-cashback-economizar-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-21"
 categoriaId: "compras"
 tags: ["cupons desconto", "cashback", "economizar compras", "desconto online", "melhores cupons", "méliuz", "honey", "pelando"]

@@ -1,7 +1,7 @@
 ---
 titulo: "Organizar quarto com tecnologia: guia prático de gadgets que realmente funcionam"
 descricao: "Guia completo para organizar o quarto com tecnologia: iluminação, som, organizadores e gadgets que melhoram o dia a dia sem gastar muito."
-imagemCapa: "/posts/organizar-quarto-tecnologia-guia.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-25"
 categoriaId: "tecnologia"
 tags: ["organizar quarto", "tecnologia", "gadgets", "produtividade", "decoração"]

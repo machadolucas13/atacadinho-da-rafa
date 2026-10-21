@@ -1,7 +1,7 @@
 ---
 titulo: "Como economizar no supermercado: dicas que realmente funcionam"
 descricao: "Dicas práticas de como economizar no supermercado em 2026: planejamento semanal, lista de compras inteligente, comparação de preços e estratégias que reduzem a conta sem abrir mão de qualidade."
-imagemCapa: "/posts/como-economizar-supermercado-dicas.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 categoriaId: "casa-decoracao"
 tags: ["economizar no supermercado", "dicas supermercado", "economia doméstica", "compras inteligentes", "planejamento semanal", "finanças pessoais"]

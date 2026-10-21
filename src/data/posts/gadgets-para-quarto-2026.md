@@ -1,7 +1,7 @@
 ---
 titulo: "Gadgets para quarto: 25 itens que organizam, iluminam e deixam o ambiente tecnológico"
 descricao: "Selecionamos os melhores gadgets para quarto que combinam praticidade e estilo em 2026: organizers, luzes LED, speakers e acessórios tech."
-imagemCapa: "/posts/gadgets-para-quarto-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-25"
 categoriaId: "tecnologia"
 tags: ["gadgets", "quarto", "organização", "tecnologia", "decoração", "LED"]

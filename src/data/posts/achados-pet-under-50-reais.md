@@ -1,7 +1,7 @@
 ---
 titulo: "15 Achados de Pet Under R$50 que Parecem Caríssimos"
 descricao: "Areia biodegradável para gato é o produto #1 em SP na Shopee. Selecionamos 15 achados pet under R$50 que deixam seu animal feliz sem pesar no bolso."
-imagemCapa: "/posts/achados-pet-under-50-reais.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-27"
 categoriaId: "pets"
 tags: ["pet shop", "produtos para gatos", "produtos para cachorro", "achados pet", "pet barato", "areia para gato", "Shopee pet", "cuidador de pets"]

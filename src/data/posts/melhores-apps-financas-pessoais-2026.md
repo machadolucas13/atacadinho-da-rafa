@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores apps para finanças pessoais em 2026"
 descricao: "Conheça os melhores apps para finanças pessoais em 2026: organizador de gastos, investimentos, metas e dicas para escolher a ferramenta ideal para o seu bolso."
-imagemCapa: "/posts/melhores-apps-financas-pessoais-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 categoriaId: "tecnologia"
 tags: ["apps finanças pessoais", "organizar gastos", "finanças pessoais 2026", "controle financeiro", "apps gratuitos finanças", "investimentos app"]

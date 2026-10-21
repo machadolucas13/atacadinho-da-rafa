@@ -1,7 +1,7 @@
 ---
 titulo: "Melhores calças jeans femininas baratas em 2026: 25 achados até R$400"
 descricao: "Guia completo de calças jeans femininas baratas até R$400. Dicas de escolha por tipo de corpo, durabilidade e estilo para economizar sem abrir mão da qualidade."
-imagemCapa: "/posts/melhores-calcas-jeans-ate-150-reais.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 categoriaId: "moda-feminina"
 tags: ["calça jeans", "jeans barato", "moda feminina", "low cost", "achados", "compras"]

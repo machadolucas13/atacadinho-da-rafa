@@ -1,7 +1,7 @@
 ---
 titulo: "20 Achados de Decoração para Apartamento Pequeno que Parecem de Luxo"
 descricao: "Cortina blackout é o produto mais buscado no RJ. Mostramos como transformar 1 ambiente com R$80 em produtos de decoração que parecem R$500."
-imagemCapa: "/posts/achados-decoracao-apartamento-pequeno-luxo.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-27"
 categoriaId: "casa-decoracao"
 tags: ["decoracao apartamento pequeno", "decoracao barata", "cortina blackout", "decoracao sala", "decoracao quarto", "organizacao casa", "decoração econômica", "casa e decoracao"]

@@ -1,7 +1,7 @@
 ---
 titulo: "Como organizar uma festinha de aniversário de criança sozinha: dicas para mães"
 descricao: "Guia completo para mães que querem organizar uma festinha de aniversário de criança sozinhas: do orçamento à decoração, lembrancinhas e dicas de tranquilidade."
-imagemCapa: "/posts/como-organizar-festinha-aniversario-sozinha.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-25"
 categoriaId: "festas"
 tags: ["festinha de aniversário", "aniversário infantil", "dicas para mães", "festa em casa", "organização de festa", "lembrancinhas"]

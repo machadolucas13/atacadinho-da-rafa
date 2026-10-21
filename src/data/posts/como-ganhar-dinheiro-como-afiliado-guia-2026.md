@@ -1,7 +1,7 @@
 ---
 titulo: "Como ganhar dinheiro como afiliado: guia completo para iniciantes 2026"
 descricao: "Aprenda como ganhar dinheiro como afiliado em 2026. Guia completo com plataformas, nichos lucrativos, erros para evitar e como fazer a primeira venda como afiliado de Shopee, Amazon e Mercado Livre."
-imagemCapa: "/posts/como-ganhar-dinheiro-como-afiliado-guia-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-22"
 categoriaId: "tecnologia"
 tags: ["afiliado", "renda extra", "home office", "ganhar dinheiro", "marketing digital", "iniciantes", "shopee", "amazon", "mercado livre", "afiliado shopee"]

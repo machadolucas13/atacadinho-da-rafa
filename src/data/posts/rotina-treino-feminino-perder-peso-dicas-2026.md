@@ -1,7 +1,7 @@
 ---
 titulo: "Rotina de treino feminino para perder peso: passo a passo que realmente funciona"
 descricao: "Rotina de treino feminino para perder peso: semana completa, exercícios em casa, alimentação simples e produtos que ajudam no resultado sem gastar muito."
-imagemCapa: "/posts/rotina-treino-feminino-perder-peso-dicas-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-07-23"
 tags: ["treino feminino", "perder peso", "exercícios para mulheres", "rotina fitness", "academia em casa", "emagrecimento saudável"]
 tempoLeitura: 11

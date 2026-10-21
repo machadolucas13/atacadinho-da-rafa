@@ -1,7 +1,7 @@
 ---
 titulo: "Como Comprar Online com Segurança e Economizar em 2026"
 descricao: "Aprenda a comprar online com segurança e economizar em cada compra. Dicas práticas para evitar golpes, comparar preços e usar cupons de desconto."
-imagemCapa: "/posts/como-comprar-online-seguro-2026.png"
+imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-21"
 categoriaId: "compras"
 tags: ["comprar online", "segurança online", "economizar compras", "cupons desconto", "cashback", "compras seguras", "dicas compras"]
