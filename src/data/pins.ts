@@ -20,7 +20,7 @@ export const pins: Pin[] = [
     slug: "brinquedos-achadinhos-mercadolivre-2026",
     locale: "pt",
     titulo: "33 Brinquedos e Pelúcias: Achadinhos a partir de R$ 15 no Mercado Livre",
-    descricao: "Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Confira os 33 achadinhos no Mercado Livre. Preços informados em 24/10/2026, sujeitos a alteração.",
+    descricao: "Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Confira os 33 achadinhos no Mercado Livre. Aproveite as promoções de 11/11! Preços informados em 24/10/2026, sujeitos a alteração.",
     imagem: "/assets/images/pin brinquedos.png",
     destaque: true,
     categoriaId: "ofertas",
@@ -287,7 +287,7 @@ export const pins: Pin[] = [
       categoriaId: "infantil",
       publicadoEm: "2026-10-24",
       tags: ["Destaque", "Infantil", "Brinquedos"],
-      dicaUso: "Brinquedos que estimulam a criatividade e o aprendizado. Ideal para crianças de 3 a 12 anos.",
+      dicaUso: "Brinquedos que estimulam a criatividade e o aprendizado. Aproveite as promoções de 11/11 no Mercado Livre! Ideal para crianças de 3 a 12 anos.",
       links: [
         { nome: "Brinquedo Educativo Montessori", preco: "R$ 49,90", url: "https://www.mercadolivre.com.br/brinquedo-montessori", dica: "Brinquedo educativo Montessori: estimula a coordenação motora e a concentração." },
         { nome: "Kit Blocos de Montar 100 Peças", preco: "R$ 39,90", url: "https://www.mercadolivre.com.br/kit-blocos-montar", dica: "100 peças coloridas: desenvolve criatividade e coordenação. Ideal para crianças de 3+ anos." },
