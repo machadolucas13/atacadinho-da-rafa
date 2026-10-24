@@ -289,11 +289,11 @@ export const pins: Pin[] = [
       tags: ["Destaque", "Infantil", "Brinquedos"],
       dicaUso: "Brinquedos que estimulam a criatividade e o aprendizado. Ideal para crianças de 3 a 12 anos.",
       links: [
-        { nome: "Brinquedo Educativo Montessori", preco: "R$ 49,90", url: "https://s.shopee.com.br/brinquedo-montessori", dica: "Brinquedo educativo Montessori: estimula a coordenação motora e a concentração." },
-        { nome: "Kit Blocos de Montar 100 Peças", preco: "R$ 39,90", url: "https://s.shopee.com.br/kit-blocos-montar", dica: "100 peças coloridas: desenvolve criatividade e coordenação. Ideal para crianças de 3+ anos." },
-        { nome: "Boneca Interativa com Acessórios", preco: "R$ 59,90", url: "https://s.shopee.com.br/boneca-interativa", dica: "Boneca que fala e canta: as crianças adoram. Inclui acessórios para brincar de casinha." },
-        { nome: "Carrinho de Controle Remoto", preco: "R$ 79,90", url: "https://s.shopee.com.br/carrinho-controle-remoto", dica: "Carrinho RC de alta velocidade: diversão garantida para meninos e meninas." },
-        { nome: "Quebra-Cabeça 500 Peças", preco: "R$ 29,90", url: "https://s.shopee.com.br/quebra-cabeca-500", dica: "500 peças: desafio e diversão para toda a família. Desenvolve paciência e raciocínio." },
+        { nome: "Brinquedo Educativo Montessori", preco: "R$ 49,90", url: "https://www.mercadolivre.com.br/brinquedo-montessori", dica: "Brinquedo educativo Montessori: estimula a coordenação motora e a concentração." },
+        { nome: "Kit Blocos de Montar 100 Peças", preco: "R$ 39,90", url: "https://www.mercadolivre.com.br/kit-blocos-montar", dica: "100 peças coloridas: desenvolve criatividade e coordenação. Ideal para crianças de 3+ anos." },
+        { nome: "Boneca Interativa com Acessórios", preco: "R$ 59,90", url: "https://www.mercadolivre.com.br/boneca-interativa", dica: "Boneca que fala e canta: as crianças adoram. Inclui acessórios para brincar de casinha." },
+        { nome: "Carrinho de Controle Remoto", preco: "R$ 79,90", url: "https://www.mercadolivre.com.br/carrinho-controle-remoto", dica: "Carrinho RC de alta velocidade: diversão garantida para meninos e meninas." },
+        { nome: "Quebra-Cabeça 500 Peças", preco: "R$ 29,90", url: "https://www.mercadolivre.com.br/quebra-cabeca-500", dica: "500 peças: desafio e diversão para toda a família. Desenvolve paciência e raciocínio." },
       ],
    },
 ];
