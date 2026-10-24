@@ -17,11 +17,11 @@ export interface Pin {
 export const pins: Pin[] = [
   {
     id: "pin-brinquedos-rafa-2026",
-    slug: "33-brinquedos-pelucias-atacadinho-da-rafa",
+    slug: "brinquedos-achadinhos-mercadolivre-2026",
     locale: "pt",
-    titulo: "33 brinquedos e pelúcias: achadinhos a partir de R$ 15",
+    titulo: "33 Brinquedos e Pelúcias: Achadinhos a partir de R$ 15 no Mercado Livre",
     descricao: "Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Confira os 33 achadinhos no Mercado Livre. Preços informados em 24/10/2026, sujeitos a alteração.",
-    imagem: "/posts/capa-padrao.png",
+    imagem: "/assets/images/pin brinquedos.png",
     destaque: true,
     categoriaId: "ofertas",
     publicadoEm: "2026-10-24",
