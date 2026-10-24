@@ -21,7 +21,7 @@ export const pins: Pin[] = [
     locale: "pt",
     titulo: "33 brinquedos e pelúcias: achadinhos a partir de R$ 15",
     descricao: "Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Confira os 33 achadinhos no Mercado Livre. Preços informados em 24/10/2026, sujeitos a alteração.",
-    imagem: "/images/pin-brinquedos-rafa-2026.png",
+    imagem: "/posts/capa-padrao.png",
     destaque: true,
     categoriaId: "ofertas",
     publicadoEm: "2026-10-24",
