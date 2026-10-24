@@ -3,7 +3,7 @@ titulo: "33 Brinquedos e Pelúcias para Presentear: Achadinhos a partir de R$ 15
 descricao: "Confira 33 brinquedos, bonecas e pelúcias com links diretos para o Mercado Livre. Labubu, Stitch, capivaras, bebês reborn e muito mais."
 imagemCapa: "/posts/capa-padrao.png"
 publicadoEm: "2026-10-24"
-categoriaId: "infantil"
+categoriaId: "ofertas"
 tags: ["brinquedos", "pelúcias", "presentes infantis", "achadinhos", "Mercado Livre", "Labubu", "Stitch", "bonecas reborn"]
 tempoLeitura: 7
 destaque: true
