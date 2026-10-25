@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${pin.titulo} - Atacadinho da Rafa`,
     description: pin.descricao,
+    keywords: pin.tags?.join(", ") || "brinquedos, pelúcias, mercado livre, 11.11, descontos, cupons, ofertas, presentes",
     openGraph: {
       type: "website",
       locale: "pt_BR",
@@ -144,7 +145,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                                 </p>
                                 <div className="mt-1.5 flex items-center gap-2">
                                   <span className="text-lg font-bold text-[#E11D48]">{link.preco}</span>
-                                  <span className="text-[10px] text-gray-500 uppercase tracking-wide">na Shopee</span>
+<span className="text-[10px] text-gray-500 uppercase tracking-wide">no Mercado Livre</span>
                                 </div>
                                 {link.dica && (
                                   <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-[#F4A7B9]/5 p-2.5">
@@ -185,7 +186,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   url={links[0].url}
                   className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
                 >
-                  🛒 Ver ofertas na Shopee
+                  🛒 Ver ofertas no Mercado Livre
                 </PinAffiliateLink>
               )}
             </div>

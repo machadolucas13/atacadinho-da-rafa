@@ -28,8 +28,8 @@ export default async function PinsPage({ params }: { params: { locale: string } 
             </h1>
             <p className="mt-3 text-gray-400 max-w-lg mx-auto">
               {isPt
-                ? "Clique e confira direto na Shopee os melhores achados selecionados."
-                : "Click and check the best curated finds directly on Shopee."}
+                ? "Clique e confira direto no Mercado Livre os melhores achados selecionados."
+                : "Click and check the best curated finds directly on Mercado Livre."}
             </p>
           </div>
         </div>

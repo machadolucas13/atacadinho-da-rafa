@@ -20,12 +20,12 @@ export const pins: Pin[] = [
     slug: "brinquedos-achadinhos-mercadolivre-2026",
     locale: "pt",
     titulo: "33 Brinquedos e Pelúcias: Achadinhos a partir de R$ 15 no Mercado Livre",
-    descricao: "Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Confira os 33 achadinhos no Mercado Livre. Aproveite as promoções de 11/11! Preços informados em 24/10/2026, sujeitos a alteração.",
+    descricao: "33 Brinquedos e Pelúcias achadinhos no Mercado Livre a partir de R$ 15! Labubu, Stitch, capivaras, bonecas reborn, unicórnios e muito mais. Aproveite as promoções de 11/11 com descontos e cupons especiais. Presentes para crianças de todas as idades. Preços informados em 24/10/2026, sujeitos a alteração.",
     imagem: "/assets/images/pin brinquedos.png",
     destaque: true,
     categoriaId: "ofertas",
     publicadoEm: "2026-10-24",
-    tags: ["Brinquedos", "Pelúcias", "Mercado Livre", "Presentes"],
+    tags: ["Brinquedos", "Pelúcias", "Mercado Livre", "Presentes", "11.11", "Descontos", "Cupons", "Brinquedos Infantis", "Achadinhos", "Ofertas"],
     links: [
       { nome: "Labubu", preco: "R$ 15,00", url: "https://meli.la/2iAiQmd" },
       { nome: "Labubu Dragão Branco", preco: "R$ 66,80", url: "https://meli.la/2Lq6Fv2" },
@@ -276,27 +276,8 @@ export const pins: Pin[] = [
        { nome: "Luminária Pendente Avião Vermelho Infantil Quarto Criança Bebê Menino Menina infantil criança lustre", preco: "R$ 99,90", url: "https://s.shopee.com.br/2BDYO9FYQK", dica: "Avião pendente: tema que meninos adoram. Vermelho combina com decoração vibrante." },
      ],
    },
-   {
-      id: "pin-brinquedos-pt",
-      slug: "brinquedos-infantis-2026",
-      locale: "pt",
-      titulo: "Brinquedos Infantis: Os Melhores Achados para Crianças em 2026",
-      descricao: "Selecionamos os melhores brinquedos infantis com preço baixo e qualidade. Encontre brinquedos educativos, divertidos e seguros para seus filhos.",
-      imagem: "/assets/images/pin brinquedos.png",
-      destaque: true,
-      categoriaId: "infantil",
-      publicadoEm: "2026-10-24",
-      tags: ["Destaque", "Infantil", "Brinquedos"],
-      dicaUso: "Brinquedos que estimulam a criatividade e o aprendizado. Aproveite as promoções de 11/11 no Mercado Livre! Ideal para crianças de 3 a 12 anos.",
-      links: [
-        { nome: "Brinquedo Educativo Montessori", preco: "R$ 49,90", url: "https://www.mercadolivre.com.br/brinquedo-montessori", dica: "Brinquedo educativo Montessori: estimula a coordenação motora e a concentração." },
-        { nome: "Kit Blocos de Montar 100 Peças", preco: "R$ 39,90", url: "https://www.mercadolivre.com.br/kit-blocos-montar", dica: "100 peças coloridas: desenvolve criatividade e coordenação. Ideal para crianças de 3+ anos." },
-        { nome: "Boneca Interativa com Acessórios", preco: "R$ 59,90", url: "https://www.mercadolivre.com.br/boneca-interativa", dica: "Boneca que fala e canta: as crianças adoram. Inclui acessórios para brincar de casinha." },
-        { nome: "Carrinho de Controle Remoto", preco: "R$ 79,90", url: "https://www.mercadolivre.com.br/carrinho-controle-remoto", dica: "Carrinho RC de alta velocidade: diversão garantida para meninos e meninas." },
-        { nome: "Quebra-Cabeça 500 Peças", preco: "R$ 29,90", url: "https://www.mercadolivre.com.br/quebra-cabeca-500", dica: "500 peças: desafio e diversão para toda a família. Desenvolve paciência e raciocínio." },
-      ],
-   },
 ];
+
 
 export async function getPins(locale?: string): Promise<Pin[]> {
   if (locale) {
