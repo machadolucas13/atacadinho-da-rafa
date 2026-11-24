@@ -16,6 +16,314 @@ export interface Pin {
 
 export const pins: Pin[] = [
   {
+    "id": "pin-46-achadinhos-mercado-livre-2026",
+    "slug": "46-achadinhos-mercado-livre-tecnologia-casa-2026",
+    "locale": "pt",
+    "titulo": "46 Achadinhos do Mercado Livre: TVs, Celulares, Casa e Eletrodomésticos",
+    "descricao": "Explore 46 produtos do Mercado Livre: TVs 4K, celulares Samsung e Motorola, notebooks, videogames, air fryers, geladeiras, ar-condicionado, ferramentas e itens para casa. Veja dicas para comparar modelos, voltagem, garantia e frete antes de comprar. Preços e disponibilidade podem mudar; confira sempre o anúncio.",
+    "imagem": "/assets/images/IMG-20261124-WA1903.jpg",
+    "destaque": true,
+    "categoriaId": "ofertas",
+    "publicadoEm": "2026-11-24",
+    "tags": [
+      "achadinhos Mercado Livre",
+      "46 ofertas Mercado Livre",
+      "eletrônicos",
+      "smart TV 4K",
+      "celulares Samsung",
+      "notebooks",
+      "PlayStation 5 Pro",
+      "Nintendo Switch 2",
+      "air fryer",
+      "geladeira",
+      "ar-condicionado inverter",
+      "ferramentas",
+      "eletrodomésticos",
+      "produtos para casa",
+      "ideias de presentes",
+      "comparar preços"
+    ],
+    "dicaUso": "Guia de compra: em eletrônicos, confira memória, modelo e garantia; em eletrodomésticos, tensão (127 V ou 220 V), medidas e consumo; em ferramentas, acessórios e capacidade. Compare o preço total com frete e a reputação do vendedor. Os links podem gerar comissão de afiliado, sem custo extra informado ao comprador.",
+    "links": [
+      {
+        "nome": "Smart TV AOC 50 polegadas Roku 4K 50U7066",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2y6P5Gh",
+        "dica": "Compare resolução, sistema, conexões HDMI e medidas da tela com o espaço disponível."
+      },
+      {
+        "nome": "Notebook Samsung Galaxy Book Go",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2ocfXww",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "Nintendo Switch 2 + EA Sports FC 27",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/24GBvCV",
+        "dica": "Confira edição, acessórios, jogos incluídos e condições da garantia."
+      },
+      {
+        "nome": "Notebook Acer Aspire Go 15 i3-1215U 8GB 256GB",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/11t7FQb",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "Samsung Galaxy Tab S10 FE 128GB",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/33RMxq5",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "Samsung Galaxy Z Flip7 5G 256GB",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1ruavWW",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "PlayStation 5 Pro 2TB",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1hheyLG",
+        "dica": "Confira edição, acessórios, jogos incluídos e condições da garantia."
+      },
+      {
+        "nome": "Samsung Galaxy S26 5G 256GB 12GB RAM",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1CXYdrK",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "PlayStation 4 com mais de 20 jogos e 2 controles",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2CAAWNY",
+        "dica": "Confira edição, acessórios, jogos incluídos e condições da garantia."
+      },
+      {
+        "nome": "Controle sem fio Xbox Series X/S Robot",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2TkjGrw",
+        "dica": "Confira edição, acessórios, jogos incluídos e condições da garantia."
+      },
+      {
+        "nome": "Motorola Moto G17 128GB 4G",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2eTY8cm",
+        "dica": "Confira memória, armazenamento, versão exata e garantia antes de escolher."
+      },
+      {
+        "nome": "Smart TV Philco 32 polegadas Roku P32VIK",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1dfdsj3",
+        "dica": "Compare resolução, sistema, conexões HDMI e medidas da tela com o espaço disponível."
+      },
+      {
+        "nome": "Teclado mecânico sem fio RGB tri-mode com tela",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1smkcce",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Ar-condicionado Split Prime Air 9FC 9.000 BTU/h",
+        "preco": "R$ 1.484",
+        "url": "https://meli.la/1gPSLva",
+        "dica": "Verifique BTUs adequados ao ambiente, tensão elétrica, instalação e consumo."
+      },
+      {
+        "nome": "Geladeira HQ duplex 230 litros HQ230RDFS",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/11Zyp1c",
+        "dica": "Confira dimensões, capacidade útil, abertura da porta e voltagem."
+      },
+      {
+        "nome": "Air Fryer Britânia 6,5L digital BAF65A",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1qCTewJ",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Micro-ondas Electrolux Efficient 20L ME20B",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/32Gonwh",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Fritadeira forno Mondial Oven 12L AFON-12L-BG",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2NRq1Cz",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Air Fryer Philco 6,5L Glass PAF65A 127V",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1vsEoeo",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Ar-condicionado Midea AI Ecomaster Inverter 9.000 BTUs",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2TYPMkM",
+        "dica": "Verifique BTUs adequados ao ambiente, tensão elétrica, instalação e consumo."
+      },
+      {
+        "nome": "Mixer EOS EMX02 600W",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2Sz8etz",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Marmita elétrica portátil 1,05L bivolt",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2aiqj9U",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Descascador de alho elétrico automático",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1RbcNEJ",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Sanduicheira Cadence SanduGrill SAN230",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/11ktCMP",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Ar-condicionado LG Inverter Smart Voice AI 12.000 BTUs",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2xDcS5f",
+        "dica": "Verifique BTUs adequados ao ambiente, tensão elétrica, instalação e consumo."
+      },
+      {
+        "nome": "Climatizador portátil Luxside 600ml",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/15SREoG",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Kit 3 pendentes retrô Nordic Judaluz",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1JLyEvk",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Ventilador Mondial Super Power VSP40C 40cm",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1RYUNtA",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Liquidificador Philco PH900 1200W 3L",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1FsBhN7",
+        "dica": "Compare capacidade, potência, tensão e espaço disponível na bancada."
+      },
+      {
+        "nome": "Geladeira duplex RT554 410L Inverter",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/29hHkmJ",
+        "dica": "Confira dimensões, capacidade útil, abertura da porta e voltagem."
+      },
+      {
+        "nome": "Limpadora de pisos sem fio Arno X-Clean 4",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2zQx3UP",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Torneira gourmet monocomando Holtter retrátil",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1riP96f",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Carregador inteligente 12V 6A bivolt para baterias",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1teCnwb",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Caixa de som LG XBOOM XG8T Bluetooth",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2H4Hs7t",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Patinete elétrico dobrável 350W com aplicativo e GPS",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2PUXzPD",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Robô aspirador WAP W200 3 em 1",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1vnWn37",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Lavadora de alta pressão Kärcher 1.500 PSI 1400W",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/296sLDF",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Parafusadeira e furadeira WAP WF12K3.2 12V",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/26Jrvai",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Parafusadeira de impacto Inova Cases SCR-12948 12V",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2siDah6",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Aparador de pelos Kemei KM-6776 3 em 1",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2whaJ4n",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Ventilador de teto LED E26/E27 com controle remoto",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/2Caox4Y",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Babá eletrônica Motorola PIP1510 HD Wi-Fi",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1Ur3uxx",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      },
+      {
+        "nome": "Macaco hidráulico tipo garrafa 2 toneladas",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1MM4DSH",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Parafusadeira sem fio The Black Tools com maleta",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1aDGmGb",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Aspirador de pó e água WAP GTW 10 1400W",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1e2WrBW",
+        "dica": "Confira especificações, acessórios incluídos e compatibilidade com a tarefa."
+      },
+      {
+        "nome": "Escova elétrica de limpeza DeckCasa JY-6010",
+        "preco": "Consultar preço",
+        "url": "https://meli.la/1c4bCpp",
+        "dica": "Confira medidas, especificações, avaliações e o que acompanha o produto."
+      }
+    ]
+  },
+  {
     "id": "pin-garrafas-termicas-shopee-2026",
     "slug": "garrafas-copos-termicos-achadinhos-shopee-2026",
     "locale": "pt",
