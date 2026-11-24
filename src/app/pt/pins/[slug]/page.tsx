@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const url = `${baseUrl}/pt/pins/${pin.slug}`;
   const image = pin.imagem ? `${baseUrl}${pin.imagem}` : `${baseUrl}/assets/images/logo_rafa.png`;
   return {
-    title: `${pin.titulo} - Atacadinho da Rafa`,
+    title: `${pin.titulo} | Atacadinho da Rafa`,
     description: pin.descricao,
     keywords: pin.tags?.join(", ") || "brinquedos, pelúcias, mercado livre, 11.11, descontos, cupons, ofertas, presentes",
     openGraph: {
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       siteName: "Atacadinho da Rafa",
       title: pin.titulo,
       description: pin.descricao,
-      images: [{ url: image, width: 1200, height: 630, alt: pin.titulo }],
+      images: [{ url: image, alt: pin.titulo }],
     },
     twitter: { card: "summary_large_image", title: pin.titulo, description: pin.descricao, images: [image] },
     alternates: { canonical: url },
@@ -145,7 +145,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                                 </p>
                                 <div className="mt-1.5 flex items-center gap-2">
                                   <span className="text-lg font-bold text-[#E11D48]">{link.preco}</span>
-<span className="text-[10px] text-gray-500 uppercase tracking-wide">no Mercado Livre</span>
+<span className="text-[10px] text-gray-500 uppercase tracking-wide">{link.url.includes("shopee.com.br") ? "na Shopee" : link.url.includes("meli.la") || link.url.includes("mercadolivre") ? "no Mercado Livre" : "na loja"}</span>
                                 </div>
                                 {link.dica && (
                                   <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-[#F4A7B9]/5 p-2.5">
@@ -186,7 +186,7 @@ export default async function PinClient({ params }: { params: { slug: string } }
                   url={links[0].url}
                   className="inline-flex items-center gap-2 rounded-full bg-[#E11D48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#be123c] hover:shadow-lg hover:shadow-[#E11D48]/25"
                 >
-                  🛒 Ver ofertas no Mercado Livre
+                  🛒 Ver ofertas {links[0].url.includes("shopee.com.br") ? "na Shopee" : "na loja"}
                 </PinAffiliateLink>
               )}
             </div>
