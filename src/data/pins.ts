@@ -21,7 +21,7 @@ export const pins: Pin[] = [
     "locale": "pt",
     "titulo": "64 Garrafas e Copos Térmicos: Achadinhos na Shopee a partir de R$ 24",
     "descricao": "Seleção de garrafas e copos térmicos para academia, trabalho, escola e viagens: modelos inox, florais, infantis, personalizados, com canudo, alça e kits. Valores informados em 24/11/2026 e sujeitos a alterações. Confira o preço final e as características no anúncio da Shopee.",
-    "imagem": "/assets/images/logo_rafa.png",
+    "imagem": "/assets/images/pin-garrafas.jpg",
     "destaque": true,
     "categoriaId": "ofertas",
     "publicadoEm": "2026-11-24",
