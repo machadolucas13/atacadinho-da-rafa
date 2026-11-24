@@ -16,6 +16,349 @@ export interface Pin {
 
 export const pins: Pin[] = [
   {
+    "id": "pin-garrafas-termicas-shopee-2026",
+    "slug": "garrafas-copos-termicos-achadinhos-shopee-2026",
+    "locale": "pt",
+    "titulo": "64 Garrafas e Copos Térmicos: Achadinhos na Shopee a partir de R$ 24",
+    "descricao": "Seleção de garrafas e copos térmicos para academia, trabalho, escola e viagens: modelos inox, florais, infantis, personalizados, com canudo, alça e kits. Valores informados em 24/11/2026 e sujeitos a alterações. Confira o preço final e as características no anúncio da Shopee.",
+    "imagem": "/assets/images/logo_rafa.png",
+    "destaque": true,
+    "categoriaId": "ofertas",
+    "publicadoEm": "2026-11-24",
+    "tags": [
+      "Garrafas térmicas",
+      "Copos térmicos",
+      "Shopee",
+      "Achadinhos",
+      "Academia",
+      "Infantil",
+      "Presentes"
+    ],
+    "links": [
+      {
+        "nome": "Garrafa térmica inox 550ml",
+        "preco": "R$ 31,99 - 33,99",
+        "url": "https://s.shopee.com.br/20xHVfrAUz"
+      },
+      {
+        "nome": "ROMANTIC CROWN copo 1200/600ml",
+        "preco": "R$ 34,98 - 49,98",
+        "url": "https://s.shopee.com.br/7KynrUFH2v"
+      },
+      {
+        "nome": "ROMANTIC CROWN garrafa 800ml",
+        "preco": "R$ 44,98 - 44,99",
+        "url": "https://s.shopee.com.br/qlK7YZHgB"
+      },
+      {
+        "nome": "Copo térmico personalizado 1200ml",
+        "preco": "R$ 39,90 - 79,90",
+        "url": "https://s.shopee.com.br/5AuJHYMNZc"
+      },
+      {
+        "nome": "MODUS garrafa térmica 2,4 litros",
+        "preco": "R$ 146,28 - 199,99",
+        "url": "https://s.shopee.com.br/9zzZ2RptYf"
+      },
+      {
+        "nome": "Garrafa floral 1200ml com base silicone",
+        "preco": "R$ 46,99",
+        "url": "https://s.shopee.com.br/9V3IRXnPKk"
+      },
+      {
+        "nome": "WATERSY garrafa 500ml",
+        "preco": "R$ 27,98 - 59,00",
+        "url": "https://s.shopee.com.br/8fUBS1UB3g"
+      },
+      {
+        "nome": "Kit bolsa térmica, garrafa e marmita",
+        "preco": "R$ 138,70 - 171,90",
+        "url": "https://s.shopee.com.br/1LhaiYiYmk"
+      },
+      {
+        "nome": "Garrafa térmica flip 900ml",
+        "preco": "R$ 36,70 - 38,99",
+        "url": "https://s.shopee.com.br/6VPgs46t8r"
+      },
+      {
+        "nome": "ROMANTIC CROWN copo flip 1200ml",
+        "preco": "R$ 49,98",
+        "url": "https://s.shopee.com.br/6fj74NoBN4"
+      },
+      {
+        "nome": "Copo térmico floral 1200ml com canudo",
+        "preco": "R$ 49,99 - 52,99",
+        "url": "https://s.shopee.com.br/1qdrJW1qb1"
+      },
+      {
+        "nome": "Copo inox portátil 1200ml sem logo",
+        "preco": "R$ 43,99",
+        "url": "https://s.shopee.com.br/1LhaibyoHA"
+      },
+      {
+        "nome": "GAW Sport squeeze inox 500ml",
+        "preco": "R$ 35,90",
+        "url": "https://s.shopee.com.br/4B1m5pisNm"
+      },
+      {
+        "nome": "MODUS esportiva 750ml com paracord",
+        "preco": "R$ 39,99 - 59,99",
+        "url": "https://s.shopee.com.br/70LxT3gxyH"
+      },
+      {
+        "nome": "Kit garrafa 500ml e três xícaras",
+        "preco": "R$ 26,98 - 31,98",
+        "url": "https://s.shopee.com.br/5fqZse7AEl"
+      },
+      {
+        "nome": "ROMANTIC CROWN garrafa 800ml (outra oferta)",
+        "preco": "R$ 44,98 - 44,99",
+        "url": "https://s.shopee.com.br/80EUewxSwj"
+      },
+      {
+        "nome": "Hilee Free Sip inox 304",
+        "preco": "R$ 79,00 - 94,00",
+        "url": "https://s.shopee.com.br/9AQS371pc4"
+      },
+      {
+        "nome": "Garrafa inox 900/1700ml com alça",
+        "preco": "R$ 56,99",
+        "url": "https://s.shopee.com.br/BVdKadg2L"
+      },
+      {
+        "nome": "WATERSY copo térmico 591ml",
+        "preco": "R$ 25,99 - 44,80",
+        "url": "https://s.shopee.com.br/qlK7qAPjs"
+      },
+      {
+        "nome": "Garrafa infantil 500/520ml com canudo",
+        "preco": "R$ 30,90 - 43,90",
+        "url": "https://s.shopee.com.br/1W10v52w3W"
+      },
+      {
+        "nome": "Garrafa esportiva 32 oz",
+        "preco": "R$ 41,30 - 62,00",
+        "url": "https://s.shopee.com.br/2La7ud3te7"
+      },
+      {
+        "nome": "Garrafa infantil inox 550ml",
+        "preco": "R$ 33,96 - 39,96",
+        "url": "https://s.shopee.com.br/2gCyJG68r2"
+      },
+      {
+        "nome": "TOURO garrafas 350 a 1000ml",
+        "preco": "R$ 25,99 - 65,00",
+        "url": "https://s.shopee.com.br/1BOAWWbqX9"
+      },
+      {
+        "nome": "Termolar garrafão térmico 5 litros",
+        "preco": "R$ 52,99 - 55,99",
+        "url": "https://s.shopee.com.br/5VX9gVPLTC"
+      },
+      {
+        "nome": "ROMANTIC CROWN copo portátil 1200/600ml",
+        "preco": "R$ 34,99 - 49,99",
+        "url": "https://s.shopee.com.br/5VX9fsFBO8"
+      },
+      {
+        "nome": "Garrafa inox com proteção silicone 350 a 1000ml",
+        "preco": "R$ 31,99 - 37,99",
+        "url": "https://s.shopee.com.br/8VAlFaPAvQ"
+      },
+      {
+        "nome": "Garrafa floral 1200ml (outra oferta)",
+        "preco": "R$ 52,99",
+        "url": "https://s.shopee.com.br/6AmqTJTK4s"
+      },
+      {
+        "nome": "Garrafa aesthetic floral 800ml",
+        "preco": "R$ 63,90",
+        "url": "https://s.shopee.com.br/2VtY7MWM9k"
+      },
+      {
+        "nome": "Copo térmico strass 1200ml",
+        "preco": "R$ 74,88 - 78,89",
+        "url": "https://s.shopee.com.br/3B9Eubtg0q"
+      },
+      {
+        "nome": "Garrafa fofa 700ml com dois bicos",
+        "preco": "R$ 45,80 - 46,80",
+        "url": "https://s.shopee.com.br/9071rLK0DH"
+      },
+      {
+        "nome": "MODUS esportiva 1 litro a vácuo",
+        "preco": "R$ 69,99 - 79,99",
+        "url": "https://s.shopee.com.br/AKcPRo5iuc"
+      },
+      {
+        "nome": "Garrafa onça preta 600ml",
+        "preco": "R$ 59,90",
+        "url": "https://s.shopee.com.br/3B9EueNK1d"
+      },
+      {
+        "nome": "Garrafa laço rosa 900ml",
+        "preco": "R$ 65,90",
+        "url": "https://s.shopee.com.br/9zzZ3DbJkN"
+      },
+      {
+        "nome": "Copo térmico 600ml com alça",
+        "preco": "R$ 38,00 - 45,00",
+        "url": "https://s.shopee.com.br/9fMiecKaGn"
+      },
+      {
+        "nome": "UCOCOLLA Monet Garden 750ml",
+        "preco": "R$ 54,90 - 64,90",
+        "url": "https://s.shopee.com.br/1gKR7vWy4D"
+      },
+      {
+        "nome": "Copo Stray Kids K-pop 1200ml",
+        "preco": "R$ 75,00 - 90,00",
+        "url": "https://s.shopee.com.br/W8TjoNXV1"
+      },
+      {
+        "nome": "Garrafa glitter arco-íris",
+        "preco": "R$ 36,99 - 56,90",
+        "url": "https://s.shopee.com.br/9KjsG42ht5"
+      },
+      {
+        "nome": "ROMANTIC CROWN kit dois copos",
+        "preco": "R$ 79,98",
+        "url": "https://s.shopee.com.br/5fqZtLBNeq"
+      },
+      {
+        "nome": "KUBB garrafa personalizada 420 a 1050ml",
+        "preco": "R$ 59,90 - 95,90",
+        "url": "https://s.shopee.com.br/1W10vh9imF"
+      },
+      {
+        "nome": "Garrafa tropical aves 1200ml",
+        "preco": "R$ 52,99",
+        "url": "https://s.shopee.com.br/114kKmtU5H"
+      },
+      {
+        "nome": "CIVAGO copo 770ml interior cerâmico",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/Lp3XZVHyA"
+      },
+      {
+        "nome": "Garrafa kawaii 500ml com canudo",
+        "preco": "R$ 33,00 - 68,12",
+        "url": "https://s.shopee.com.br/8KrL4Hipa3"
+      },
+      {
+        "nome": "CIVAGO fashion 770ml com pingente",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/6AmqUJmH7m"
+      },
+      {
+        "nome": "Garrafa infantil 530ml inox 304",
+        "preco": "R$ 54,99 - 59,98",
+        "url": "https://s.shopee.com.br/1LhajRiCka"
+      },
+      {
+        "nome": "Copo floral blogueirinho 1200ml",
+        "preco": "R$ 74,00 - 120,00",
+        "url": "https://s.shopee.com.br/114kKqN4QS"
+      },
+      {
+        "nome": "Copo floral inox 304 1 litro",
+        "preco": "R$ 64,98 - 74,98",
+        "url": "https://s.shopee.com.br/9pg8r5XRMe"
+      },
+      {
+        "nome": "Garrafa inox 316L 750ml com flor",
+        "preco": "R$ 45,99 - 65,99",
+        "url": "https://s.shopee.com.br/6VPgsyfKGR"
+      },
+      {
+        "nome": "Garrafa fashion estampada 1 litro",
+        "preco": "R$ 64,98 - 74,98",
+        "url": "https://s.shopee.com.br/4VecVK3n60"
+      },
+      {
+        "nome": "Garrafa infantil desenhada 500ml",
+        "preco": "R$ 40,80",
+        "url": "https://s.shopee.com.br/4qHStxFf42"
+      },
+      {
+        "nome": "Garrafa Hello Kitty 900ml",
+        "preco": "R$ 69,99",
+        "url": "https://s.shopee.com.br/60TQI7FHfV"
+      },
+      {
+        "nome": "Copo Hello Kitty 1200ml",
+        "preco": "R$ 50,63 - 59,99",
+        "url": "https://s.shopee.com.br/30poic8ha3"
+      },
+      {
+        "nome": "Hilee coleção cachorros fofos",
+        "preco": "R$ 79,00 - 89,00",
+        "url": "https://s.shopee.com.br/Lp3XjINgQ"
+      },
+      {
+        "nome": "Copo Snoopy 900ml",
+        "preco": "R$ 69,99",
+        "url": "https://s.shopee.com.br/9zzZ3VTyfz"
+      },
+      {
+        "nome": "Garrafa Sonic LED 500ml",
+        "preco": "R$ 24,00 - 50,00",
+        "url": "https://s.shopee.com.br/2VtY7jrrdP"
+      },
+      {
+        "nome": "Garrafa cerejas 900ml",
+        "preco": "R$ 65,90",
+        "url": "https://s.shopee.com.br/5fqZtZfP7f"
+      },
+      {
+        "nome": "Garrafa LED personalizada 500ml",
+        "preco": "R$ 33,55 - 37,88",
+        "url": "https://s.shopee.com.br/2qWOWNy6Yb"
+      },
+      {
+        "nome": "Garrafa leopardo 800ml",
+        "preco": "R$ 65,90",
+        "url": "https://s.shopee.com.br/1qdrKYfVeo"
+      },
+      {
+        "nome": "Garrafa tigre 800ml",
+        "preco": "R$ 65,90",
+        "url": "https://s.shopee.com.br/5VX9hJR99S"
+      },
+      {
+        "nome": "Squeeze Três Palavrinhas personalizada",
+        "preco": "R$ 39,90 - 75,90",
+        "url": "https://s.shopee.com.br/9zzZ3bIp6Y"
+      },
+      {
+        "nome": "Garrafa personalizada laser 800ml",
+        "preco": "R$ 39,90 - 53,00",
+        "url": "https://s.shopee.com.br/1Lhajh2gHA"
+      },
+      {
+        "nome": "Garrafa cereja feminina 800ml",
+        "preco": "R$ 57,99",
+        "url": "https://s.shopee.com.br/6AmqUab0Zt"
+      },
+      {
+        "nome": "Garrafa com canudo 600 a 1000ml",
+        "preco": "R$ 49,69 - 67,49",
+        "url": "https://s.shopee.com.br/6fj75Wly7z"
+      },
+      {
+        "nome": "Garrafa infantil escolar com trava 350ml",
+        "preco": "R$ 38,53",
+        "url": "https://s.shopee.com.br/3B9Ev72oBK"
+      },
+      {
+        "nome": "Copo Stitch 900ml",
+        "preco": "R$ 69,99",
+        "url": "https://s.shopee.com.br/9pg8rO3psv"
+      }
+    ]
+  },
+
+  {
     id: "pin-brinquedos-rafa-2026",
     slug: "brinquedos-achadinhos-mercadolivre-2026",
     locale: "pt",
