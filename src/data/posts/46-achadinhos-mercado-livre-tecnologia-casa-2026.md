@@ -1,7 +1,7 @@
 ---
 titulo: "46 Achadinhos do Mercado Livre: Tecnologia, Casa, Eletrodomésticos e Mais"
 descricao: "Seleção de 46 produtos do Mercado Livre, incluindo TVs, celulares, notebooks, air fryers, ferramentas e eletrodomésticos. Confira os anúncios e preços atualizados."
-imagemCapa: "/assets/images/logo_rafa.png"
+imagemCapa: "/assets/images/IMG-20261124-WA1903.jpg"
 categoriaId: "ofertas"
 destaque: true
 publicadoEm: "2026-11-24"
