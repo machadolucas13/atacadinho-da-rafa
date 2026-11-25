@@ -16,6 +16,318 @@ export interface Pin {
 
 export const pins: Pin[] = [
   {
+    "id": "pin-moda-feminina-primavera-verao-2026",
+    "slug": "primavera-verao-2026-looks-femininos-shopee",
+    "locale": "pt",
+    "titulo": "46 Looks Femininos Primavera-Verão 2026: Vestidos, Conjuntos e Moda Shopee",
+    "descricao": "Inspirações de moda feminina para a primavera e o verão: 46 opções de vestidos curtos e midi, conjuntos de cropped e short-saia, alfaiataria, tricot, crochê, macaquinhos, sandália e acessórios. Confira nomes, preços informados e links da Shopee. Os valores e descontos podem mudar; verifique medidas, frete e disponibilidade antes de comprar.",
+    "imagem": "/assets/images/logo_rafa.png",
+    "destaque": true,
+    "categoriaId": "moda",
+    "publicadoEm": "2026-11-25",
+    "tags": [
+      "moda primavera verão 2026",
+      "looks primavera verão",
+      "moda feminina Shopee",
+      "vestidos de verão",
+      "vestido curto feminino",
+      "conjunto feminino verão",
+      "cropped e short saia",
+      "vestido tricot modal",
+      "look boho chic",
+      "moda praia",
+      "vestido para festa",
+      "alfaiataria feminina",
+      "vestidos com renda",
+      "crochê feminino",
+      "macaquinho feminino",
+      "achadinhos Shopee",
+      "tendências moda feminina",
+      "roupas femininas baratas",
+      "looks para calor",
+      "inspiração Pinterest moda"
+    ],
+    "dicaUso": "Primavera-verão pede peças adequadas ao clima e à ocasião: conjuntos leves e vestidos para passeios, tricot e crochê para looks de praia e alfaiataria ou cetim para eventos. Compare composição do tecido, transparência, forro, comprimento e tabela de medidas. Os preços foram informados na seleção e podem variar por tamanho, cor, frete e data. Os links são de afiliados.",
+    "links": [
+      {
+        "nome": "Conjunto cropped manga curta + short-saia plissado",
+        "preco": "R$ 47,13",
+        "url": "https://s.shopee.com.br/6AmsBRFZwZ",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto top costas abertas com amarração + shorts 6030",
+        "preco": "R$ 76,01",
+        "url": "https://s.shopee.com.br/Lp5EyM6xY",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto tropical bandana cropped + short",
+        "preco": "R$ 46,80",
+        "url": "https://s.shopee.com.br/80EWN5EvoH",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto short-saia + blusa frente única decotada",
+        "preco": "R$ 39,99",
+        "url": "https://s.shopee.com.br/1BOCEZHK6W",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto com babadinhos, decote e bojo",
+        "preco": "R$ 56,90 a 61,90",
+        "url": "https://s.shopee.com.br/9pgAYY5Wsg",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido curto tricot modal listrado tomara que caia",
+        "preco": "R$ 55,00",
+        "url": "https://s.shopee.com.br/9KjtxfSYOP",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto crepe Duna frente única estilo macaquinho",
+        "preco": "R$ 45,00",
+        "url": "https://s.shopee.com.br/W8VRTz2S4",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto Duna blusa frente única + short-saia boho chic",
+        "preco": "R$ 58,00",
+        "url": "https://s.shopee.com.br/BVf2w74wE",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto Duna 3 peças cropped + capa + short-saia",
+        "preco": "R$ 45,00",
+        "url": "https://s.shopee.com.br/5VXBOm7xxp",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Sandália feminina plataforma tamanco flat",
+        "preco": "R$ 74,99",
+        "url": "https://s.shopee.com.br/qlLqLHhEv",
+        "dica": "Verifique material, tamanho e avaliações com fotos antes da compra."
+      },
+      {
+        "nome": "Conjunto blusa floral sem mangas + shorts lisos",
+        "preco": "R$ 62,99",
+        "url": "https://s.shopee.com.br/2qWQE2nl14",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto Antonela short-saia + blusa assimétrica",
+        "preco": "R$ 64,90",
+        "url": "https://s.shopee.com.br/7KypaMZfzd",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto alfaiataria tomara que caia + calça pantalona",
+        "preco": "R$ 102,60",
+        "url": "https://s.shopee.com.br/8AXwZvIUtt",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto babado busto meia-taça para balada",
+        "preco": "R$ 63,00",
+        "url": "https://s.shopee.com.br/114m2oHppN",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido curto de tule com body Mini Gigi",
+        "preco": "R$ 48,79",
+        "url": "https://s.shopee.com.br/qlLqYyqHl",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto Yasminyy",
+        "preco": "R$ 70,00",
+        "url": "https://s.shopee.com.br/4LLE13Jurs",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto ajustado com amarração na cintura e plissado",
+        "preco": "R$ 121,60",
+        "url": "https://s.shopee.com.br/2gD021uBN6",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto Agnes em renda cropped + saia curta",
+        "preco": "R$ 64,90",
+        "url": "https://s.shopee.com.br/9073Zi03vv",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Blusa cropped suplex manga longa com amarração lateral",
+        "preco": "R$ 35,01",
+        "url": "https://s.shopee.com.br/3g5XDwjxJj",
+        "dica": "Verifique material, tamanho e avaliações com fotos antes da compra."
+      },
+      {
+        "nome": "Vestido alfaiataria tomara que caia com babado Barbei",
+        "preco": "R$ 65,94",
+        "url": "https://s.shopee.com.br/9pgAZKGrvD",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto Tropicana com zíper frontal, amarração e ilhós",
+        "preco": "R$ 67,99",
+        "url": "https://s.shopee.com.br/3g5XE3lfLy",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido frente única com renda francesa",
+        "preco": "R$ 85,50",
+        "url": "https://s.shopee.com.br/9zzalmH8UO",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido sem alças com manga longa de renda marrom",
+        "preco": "R$ 132,05",
+        "url": "https://s.shopee.com.br/6AmsCmypkY",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto Liv cropped tomara que caia + saia com cinto",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/5qA1oETgln",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Macaquinho Bia alças finas e costas trançadas",
+        "preco": "R$ 49,00 a 64,60",
+        "url": "https://s.shopee.com.br/2gD02T9KXZ",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto com franjas Tobinoone",
+        "preco": "R$ 91,20",
+        "url": "https://s.shopee.com.br/1qdt33NDar",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido Rubi brilhante",
+        "preco": "R$ 123,50",
+        "url": "https://s.shopee.com.br/1CErjFr5N",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto de tule",
+        "preco": "R$ 142,50",
+        "url": "https://s.shopee.com.br/2La9e3JMaS",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido jeans Kissmelady 8337/8507 com brilho",
+        "preco": "R$ 85,08",
+        "url": "https://s.shopee.com.br/5LDlDbOK1L",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto colete cropped + saia-short alfaiataria",
+        "preco": "R$ 114,00",
+        "url": "https://s.shopee.com.br/9zzamFisgC",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Acessório corporal de correntes e strass dourado",
+        "preco": "R$ 18,01",
+        "url": "https://s.shopee.com.br/4LLE1syqIo",
+        "dica": "Verifique material, tamanho e avaliações com fotos antes da compra."
+      },
+      {
+        "nome": "Conjunto alfaiataria tomara que caia + short",
+        "preco": "R$ 94,05",
+        "url": "https://s.shopee.com.br/3qOxR1qT37",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto alfaiataria regata peplum + short cerejinhas",
+        "preco": "R$ 78,38 a 79,99",
+        "url": "https://s.shopee.com.br/20xJFi9Mj5",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto cetim premium drapeado para festa",
+        "preco": "R$ 80,75",
+        "url": "https://s.shopee.com.br/3Vm72X6N1l",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido midi de tule em camadas assimétricas",
+        "preco": "R$ 111,15",
+        "url": "https://s.shopee.com.br/60TS1FpDpV",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Macacão frente única com argola estilo Aladim",
+        "preco": "R$ 98,90",
+        "url": "https://s.shopee.com.br/2BGjTaQkEK",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Conjunto tricot modal cropped + saia multiformas",
+        "preco": "R$ 79,21",
+        "url": "https://s.shopee.com.br/9zzao28you",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido curto tricot modal listrado com fenda lateral",
+        "preco": "R$ 59,90",
+        "url": "https://s.shopee.com.br/7AfPQsIUAe",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido sereia branco off-white crochê com franjas",
+        "preco": "R$ 379,00",
+        "url": "https://s.shopee.com.br/6AmsF4yfZR",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido curto renda manga longa gola alta com recorte",
+        "preco": "R$ 139,99",
+        "url": "https://s.shopee.com.br/2La9g5GraM",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido curto chiffon manga longa com forro",
+        "preco": "R$ 76,89",
+        "url": "https://s.shopee.com.br/80EWQXpg9T",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Conjunto tricot crochê cropped + saia com franjas",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/60TS30BjEm",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Top tomara que caia Luxury",
+        "preco": "R$ 260,00",
+        "url": "https://s.shopee.com.br/8VAn1djKf9",
+        "dica": "Verifique material, tamanho e avaliações com fotos antes da compra."
+      },
+      {
+        "nome": "Conjunto cropped com brilho + short-saia festa",
+        "preco": "R$ 79,89 a 79,90",
+        "url": "https://s.shopee.com.br/AAJ10lfMIR",
+        "dica": "Confira medidas de cada peça, tecido e opções de cor antes de escolher."
+      },
+      {
+        "nome": "Vestido Lovito cáqui casual evasê gola U",
+        "preco": "R$ 59,90",
+        "url": "https://s.shopee.com.br/5AuL3dANe0",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      },
+      {
+        "nome": "Vestido midi tricot modal listrado costas trançadas",
+        "preco": "R$ 59,99",
+        "url": "https://s.shopee.com.br/5AuL3fnVuV",
+        "dica": "Confira comprimento, tecido, forro e tabela de medidas do vendedor."
+      }
+    ]
+  },
+  {
     "id": "pin-46-achadinhos-mercado-livre-2026",
     "slug": "46-achadinhos-mercado-livre-tecnologia-casa-2026",
     "locale": "pt",
