@@ -21,7 +21,7 @@ export const pins: Pin[] = [
     "locale": "pt",
     "titulo": "46 Looks Femininos Primavera-Verão 2026: Vestidos, Conjuntos e Moda Shopee",
     "descricao": "Inspirações de moda feminina para a primavera e o verão: 46 opções de vestidos curtos e midi, conjuntos de cropped e short-saia, alfaiataria, tricot, crochê, macaquinhos, sandália e acessórios. Confira nomes, preços informados e links da Shopee. Os valores e descontos podem mudar; verifique medidas, frete e disponibilidade antes de comprar.",
-    "imagem": "/assets/images/logo_rafa.png",
+    "imagem": "/assets/images/primavera-verao-2026-capa.png",
     "destaque": true,
     "categoriaId": "moda",
     "publicadoEm": "2026-11-25",
