@@ -16,6 +16,414 @@ export interface Pin {
 
 export const pins: Pin[] = [
   {
+    "id": "pin-achadinhos-pets-cuidados-caes-gatos-2026",
+    "slug": "achadinhos-pets-caes-gatos-higiene-brinquedos-shopee-2026",
+    "locale": "pt",
+    "titulo": "62 Achadinhos Pet na Shopee: Higiene, Camas, Brinquedos e Passeios",
+    "descricao": "Seleção de 62 itens para cães e gatos com nomes, preços informados e links individuais da Shopee: tapetes higiênicos, camas, fontes de água, brinquedos, coleiras, transporte, banho e cuidados. Compare medidas, quantidade, materiais e avaliações antes de comprar. Valores podem variar.",
+    "imagem": "/assets/images/logo_rafa.png",
+    "destaque": true,
+    "categoriaId": "pets",
+    "publicadoEm": "2026-11-27",
+    "tags": [
+      "achadinhos pet Shopee",
+      "produtos para cachorro",
+      "produtos para gatos",
+      "tapete higiênico cachorro",
+      "cama pet",
+      "brinquedos para cachorro",
+      "brinquedos para gato",
+      "bebedouro automático pet",
+      "fonte de água gatos",
+      "coleira personalizada",
+      "transporte de animais",
+      "bolsa pet",
+      "banho e tosa",
+      "areia biodegradável gatos",
+      "comedouro pet",
+      "higiene pet",
+      "acessórios para pets",
+      "cuidados com cães e gatos",
+      "presentes para pets",
+      "loja pet online"
+    ],
+    "dicaUso": "Para escolher melhor: compare preço por unidade nos tapetes e fraldas, medidas das camas e transportadoras, capacidade dos bebedouros e facilidade de higienização. Brinquedos devem ser adequados ao porte e supervisionados. Produtos antiparasitários, suplementos, itens odontológicos e petiscos exigem atenção à composição e orientação veterinária. Preços são os informados nos anúncios e podem mudar. Links de afiliado.",
+    "links": [
+      {
+        "nome": "Tapete higiênico Doguitto Pads 80x60cm 30 unidades",
+        "preco": "R$ 45,51",
+        "url": "https://s.shopee.com.br/AUvtVK6Yjw",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Tapete higiênico 60x60cm 50 unidades",
+        "preco": "R$ 69,89",
+        "url": "https://s.shopee.com.br/2LaBmPZE2M",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Tapete higiênico Espaço de Bicho 50 unidades",
+        "preco": "R$ 61,90",
+        "url": "https://s.shopee.com.br/1CH09KowA",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Bolsa transportadora com janela para cães e gatos pequenos",
+        "preco": "R$ 49,39",
+        "url": "https://s.shopee.com.br/114oC3FsZH",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Brinquedo interativo de pelúcia pato com som",
+        "preco": "R$ 27,54 - R$ 44,00",
+        "url": "https://s.shopee.com.br/9AQVv5SNlw",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit 6 ou 10 brinquedos mordedores para filhotes",
+        "preco": "R$ 26,89 - R$ 43,99",
+        "url": "https://s.shopee.com.br/4qHWlAhWvV",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Postinho educador de xixi formato hidrante",
+        "preco": "R$ 24,53 - R$ 62,40",
+        "url": "https://s.shopee.com.br/20xLO5Xcgu",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Tapete gelado refrescante Great Pets",
+        "preco": "R$ 95,00",
+        "url": "https://s.shopee.com.br/30psa1aByg",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Tapete higiênico Doguitto Pads 80x60cm 60 unidades",
+        "preco": "R$ 123,50",
+        "url": "https://s.shopee.com.br/W8XbSE6Ub",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Cama pet luxo suede tamanhos M e G",
+        "preco": "R$ 58,66 - R$ 65,19",
+        "url": "https://s.shopee.com.br/2LaBn4rnCi",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit 6 mordedores com macaco e brinquedos com apito",
+        "preco": "R$ 36,99",
+        "url": "https://s.shopee.com.br/6AmuMAbzIu",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Bebedouro automático de água corrente 2L",
+        "preco": "R$ 55,99",
+        "url": "https://s.shopee.com.br/W8Xbmnss1",
+        "dica": "Confira capacidade, material e facilidade de limpeza."
+      },
+      {
+        "nome": "Kit 2 areias higiênicas biodegradáveis tofu Presti Pet 5kg",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/1qdvCGQXUl",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Kit 100 tapetes higiênicos Espaço de Bicho 50x60cm",
+        "preco": "R$ 107,99",
+        "url": "https://s.shopee.com.br/9AQVvn64VB",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Brinquedo pato dispensador de ração e petiscos",
+        "preco": "R$ 31,99",
+        "url": "https://s.shopee.com.br/gRxoCxcan",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Assento pet acolchoado para carro até 10kg",
+        "preco": "R$ 207,00",
+        "url": "https://s.shopee.com.br/AUvtWKTuc0",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Boné para cachorro e gato vários modelos",
+        "preco": "R$ 26,90 - R$ 39,90",
+        "url": "https://s.shopee.com.br/9fMmWqivxI",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Coleira com plaquinha personalizada e QR Code",
+        "preco": "R$ 37,20",
+        "url": "https://s.shopee.com.br/9zzcvVXeZY",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Tigela elevada de aço inox 400ml para pets",
+        "preco": "R$ 28,49",
+        "url": "https://s.shopee.com.br/2qWSOMgWvl",
+        "dica": "Confira capacidade, material e facilidade de limpeza."
+      },
+      {
+        "nome": "Brinquedo macaco de pelúcia com apito",
+        "preco": "R$ 23,74",
+        "url": "https://s.shopee.com.br/8fUFL76Nvu",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit escova dupla e creme dental Pet Clean",
+        "preco": "R$ 26,99",
+        "url": "https://s.shopee.com.br/1qdvCZs3tI",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit máquina de tosa com tesoura pente e lixa",
+        "preco": "R$ 39,00",
+        "url": "https://s.shopee.com.br/9fMmWzfR4S",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Comedouro e bebedouro automático 2 em 1 2200ml + 800ml",
+        "preco": "R$ 59,99",
+        "url": "https://s.shopee.com.br/2gD2CB0P91",
+        "dica": "Confira capacidade, material e facilidade de limpeza."
+      },
+      {
+        "nome": "Protetor acústico de orelhas para cães",
+        "preco": "R$ 37,99 - R$ 41,99",
+        "url": "https://s.shopee.com.br/8pnfXX6uTG",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Arnês refletivo ajustável respirável para pets",
+        "preco": "R$ 22,50 - R$ 26,50",
+        "url": "https://s.shopee.com.br/5fqdlkw69D",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Vestido pet ajustável com guia de passeio",
+        "preco": "R$ 21,99 - R$ 40,99",
+        "url": "https://s.shopee.com.br/5VXDZTIKLq",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Bolsa cápsula espacial de transporte pet",
+        "preco": "R$ 103,54",
+        "url": "https://s.shopee.com.br/8AXykQFttw",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Bolsa de transporte pet Skapetshop",
+        "preco": "R$ 49,90 - R$ 64,90",
+        "url": "https://s.shopee.com.br/9AQVwLenrp",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Kit escova dupla e creme dental Pet Clean (outro anúncio)",
+        "preco": "R$ 26,99",
+        "url": "https://s.shopee.com.br/60TUAdAVFe",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit shampoo branqueador e condicionador Peluche Blueberry 2x500ml",
+        "preco": "R$ 69,90",
+        "url": "https://s.shopee.com.br/9zzcw4x73h",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Fonte de água em aço inox com sensor inteligente",
+        "preco": "R$ 279,99",
+        "url": "https://s.shopee.com.br/2LaBo6nwGi",
+        "dica": "Confira capacidade, material e facilidade de limpeza."
+      },
+      {
+        "nome": "Cama pet removível e lavável peluda",
+        "preco": "R$ 79,99",
+        "url": "https://s.shopee.com.br/8AXykshhpv",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Bebedouro para Shih Tzu sem molhar pelos com comedouro",
+        "preco": "R$ 54,90",
+        "url": "https://s.shopee.com.br/2gD2CoB7J2",
+        "dica": "Confira capacidade, material e facilidade de limpeza."
+      },
+      {
+        "nome": "Kit completo pet com transporte comedouro peitoral e sanitário",
+        "preco": "R$ 119,99",
+        "url": "https://s.shopee.com.br/114oDmGaMU",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Escova tira pelos pet com spray 3 em 1 USB-C",
+        "preco": "R$ 29,99 - R$ 32,99",
+        "url": "https://s.shopee.com.br/80EYYgfzi8",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit transporte para cachorro pequeno porte 7 itens",
+        "preco": "R$ 119,99",
+        "url": "https://s.shopee.com.br/6q2bAaEQSN",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Bandana pet com nome bordado",
+        "preco": "R$ 31,90",
+        "url": "https://s.shopee.com.br/80EYYnLQlo",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Seringa aplicadora de comprimidos para pets",
+        "preco": "R$ 11,18 - R$ 27,90",
+        "url": "https://s.shopee.com.br/6q2bAgpSiL",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      },
+      {
+        "nome": "Kit coleira luxo com pérolas e laços",
+        "preco": "R$ 35,55 - R$ 39,11",
+        "url": "https://s.shopee.com.br/2LaBoSEipw",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Osso nó natural premium Best Bone 1kg",
+        "preco": "R$ 92,89 - R$ 95,90",
+        "url": "https://s.shopee.com.br/4qHWn736ld",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      },
+      {
+        "nome": "Fralda higiênica Newpet para cães machos 12 unidades",
+        "preco": "R$ 32,90 - R$ 42,90",
+        "url": "https://s.shopee.com.br/4B1pzus7Wq",
+        "dica": "Compare dimensões, quantidade, absorção e custo por unidade."
+      },
+      {
+        "nome": "Máquina profissional de tosa para cães",
+        "preco": "R$ 99,99 - R$ 193,99",
+        "url": "https://s.shopee.com.br/7VIHy4VgZx",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit shampoo condicionador e colônia Genial Pet Cereja e Avelã",
+        "preco": "R$ 153,36",
+        "url": "https://s.shopee.com.br/9pgCkOm37A",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Produto anti-tártaro Lavizoo 100g para cães e gatos",
+        "preco": "R$ 45,35",
+        "url": "https://s.shopee.com.br/9Kjw9eJWXJ",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      },
+      {
+        "nome": "Kit banho Pet Clean Melancia para cães",
+        "preco": "R$ 42,99",
+        "url": "https://s.shopee.com.br/114oEN62UT",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Mesa de tosa dobrável para cães e gatos",
+        "preco": "R$ 175,00",
+        "url": "https://s.shopee.com.br/4LLGCXW8hd",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit 5 mantas soft fleece para cães e gatos",
+        "preco": "R$ 55,98",
+        "url": "https://s.shopee.com.br/1BOEQkYejH",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Coleira antiparasitária anunciada como natural 62cm",
+        "preco": "R$ 35,72",
+        "url": "https://s.shopee.com.br/gRxprZGoM",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      },
+      {
+        "nome": "Kit filhotes Genial Pet shampoo condicionador e colônia",
+        "preco": "R$ 41,50",
+        "url": "https://s.shopee.com.br/4qHWnY5Oto",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Kit cama pet com cesto tapete e travesseiro",
+        "preco": "R$ 121,26 - R$ 155,10",
+        "url": "https://s.shopee.com.br/Lp7RJLivd",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Cama redonda pétala dupla face até 84cm",
+        "preco": "R$ 189,90",
+        "url": "https://s.shopee.com.br/1BOEQsdk5s",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Mochila pet panorâmica ventilada LEGNA",
+        "preco": "R$ 79,98 - R$ 119,99",
+        "url": "https://s.shopee.com.br/AUvtY4898r",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Cadeirinha pet veicular com cinto até 10kg",
+        "preco": "R$ 64,88 - R$ 76,89",
+        "url": "https://s.shopee.com.br/AKcTLnLEzL",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Rampa pet antiderrapante regulável 4 níveis",
+        "preco": "R$ 131,00",
+        "url": "https://s.shopee.com.br/3LSj11AGh5",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Coleira com tag de aço inox gravada a laser",
+        "preco": "R$ 27,93 - R$ 38,43",
+        "url": "https://s.shopee.com.br/BVhFEhaB3",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Suplemento Petskin anunciado para dermatite e leishmaniose",
+        "preco": "R$ 154,70",
+        "url": "https://s.shopee.com.br/AAJ39fqhNc",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      },
+      {
+        "nome": "Caminha pet grande quadrada com cabeceira",
+        "preco": "R$ 54,89 - R$ 69,89",
+        "url": "https://s.shopee.com.br/3LSj1AxQej",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Brinquedo polvo de pelúcia com som",
+        "preco": "R$ 24,69",
+        "url": "https://s.shopee.com.br/1BOERE4wDQ",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Capa impermeável para banco de carro transporte pet",
+        "preco": "R$ 97,90 - R$ 177,90",
+        "url": "https://s.shopee.com.br/4qHWo17IVV",
+        "dica": "Confira dimensões, ventilação, limite de peso e sistema de fixação; acessórios não substituem dispositivos de retenção adequados."
+      },
+      {
+        "nome": "Cama pet rebaixada personalizada coroa rosa",
+        "preco": "R$ 75,20 - R$ 93,06",
+        "url": "https://s.shopee.com.br/1gKV2F9GzA",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Cabana cama tenda toca pet para cães e gatos",
+        "preco": "R$ 38,94 - R$ 43,00",
+        "url": "https://s.shopee.com.br/9fMmYzUSjZ",
+        "dica": "Confira tamanho, material, modo de uso e avaliações do anúncio."
+      },
+      {
+        "nome": "Osso natural 3–4 LBF Dog's para cães pequenos",
+        "preco": "R$ 50,39",
+        "url": "https://s.shopee.com.br/4VegPiMozU",
+        "dica": "Consulte um veterinário antes do uso; confira indicação, composição, idade e porte do animal."
+      }
+    ]
+  },
+  {
     "id": "pin-moda-feminina-primavera-verao-2026",
     "slug": "primavera-verao-2026-looks-femininos-shopee",
     "locale": "pt",
