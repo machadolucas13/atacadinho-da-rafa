@@ -21,7 +21,7 @@ export const pins: Pin[] = [
     "locale": "pt",
     "titulo": "62 Achadinhos Pet na Shopee: Higiene, Camas, Brinquedos e Passeios",
     "descricao": "Seleção de 62 itens para cães e gatos com nomes, preços informados e links individuais da Shopee: tapetes higiênicos, camas, fontes de água, brinquedos, coleiras, transporte, banho e cuidados. Compare medidas, quantidade, materiais e avaliações antes de comprar. Valores podem variar.",
-    "imagem": "/assets/images/logo_rafa.png",
+    "imagem": "/assets/images/capa-especial-pets.png",
     "destaque": true,
     "categoriaId": "pets",
     "publicadoEm": "2026-11-27",
